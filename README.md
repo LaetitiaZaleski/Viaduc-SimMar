@@ -1,7 +1,7 @@
 # Eco Games
 ### Le gestion eco responsable
 
-![](https://storage.googleapis.com/gopherizeme.appspot.com/gophers/187bac3508450b1bc3ae2d4a2519b9d445d4dec6.png =100x100)
+<img src="https://storage.googleapis.com/gopherizeme.appspot.com/gophers/187bac3508450b1bc3ae2d4a2519b9d445d4dec6.png" alt="alt text" width="200px" height="200px">
 
 
 ## Instructions
