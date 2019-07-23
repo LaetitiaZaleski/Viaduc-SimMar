@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Viaduc</title>
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <script type="text/javascript" src="sources/js/tools.js"></script>
+</head>
+<body>
+<div>statut : <div id="status-value" style="display: inline">{{.Status}}</div></div>
+<div class="txt-center">
+<div><img src="sources/img/logo.png" width="200px"></img></div>
+    <div class="send-mail-container">
+        <div>
+            <div class="green" style="font-size: 20pt;">Créer ou rejoindre une partie</div><br /><br />
+            <select id="room-id" class="input-style" onchange="if (this.value == '0') {document.getElementById('room-name').classList.remove('d-none');this.classList.add('d-none')}">
+                <option value="">Choisir une partie...</option>
+                <option value="0">Créer une partie</option>
+                {{.RoomList}}
+            </select> <input id="room-name" type="text" placeholder="Nom de la partie" class="input-style d-none"><br /><br />
+            <select id="class-id"class="input-style">{{.ClassList}}</select> <br /><br />
+            <button id="start" onclick="joinRoom()" class="button-style"> OK </button> <br />
+        </div>
+    </div>
+</div>
+
+
+<script src="sources/js/home.js"></script>
+</body>
+</html>

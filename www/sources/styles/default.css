@@ -1,0 +1,115 @@
+body {
+/*background-color: red;*/
+    font-family: "Gill Sans MT";
+
+}
+
+.green {
+    color:green;
+}
+.txt-center {
+    text-align: center;
+}
+
+.d-none {
+    display: none;
+}
+
+.send-mail-container {
+
+    padding: 10px 0px;
+}
+
+
+
+
+#remoteVideos > video {
+    border: green 1px solid;
+    max-height: calc(100vh - 150px);
+    max-width: calc(100vw - 20px);
+    height: 100vh;
+    width: auto;
+    /*max-width: calc(100vw - 150px);*/
+}
+
+.video-ret {
+    border: green 1px solid;
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+}
+
+.input-style {
+    font-weight: 500;
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 2px solid green;
+    border-radius: 25px;
+    font-size: 15pt;
+}
+
+.input-style:focus {
+
+    outline: none !important;
+    border:2px solid green;
+    box-shadow: 0 0 5px green;
+}
+
+
+
+.button-style {
+
+    color: green;
+    font-size: 15pt;
+    font-weight: 600;
+    /*background-color: #DE2827;*/
+    border-radius: 25px;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 2px solid green;
+    padding: 7px 20px 7px 20px;
+    cursor: pointer;
+}
+.button-style:disabled {
+
+
+    background-color: #eeeeee;
+
+    cursor: not-allowed;
+}
+
+.button-style:hover{
+    text-decoration: none;
+    color: white;
+    background-color: green;
+    border: 2px solid white;
+}
+
+.button-style:focus{
+    outline: none !important;
+    border:2px solid green;
+    box-shadow: 0 0 5px green;
+}
+
+@media screen and (max-width: 1200px) {
+    body {
+        font-size: 30pt;
+    }
+    #remoteVideos > video {
+        max-height: calc(100vh - 87px);
+    }
+
+    .video-ret {
+        height: 33vh;
+        width: 33vw;
+}
+
+
+
+
+}
