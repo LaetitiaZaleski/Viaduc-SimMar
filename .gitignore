@@ -1,0 +1,4 @@
+.idea/
+main
+viaduc-simmar*
+!viaduc-simmar.go

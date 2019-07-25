@@ -9,5 +9,5 @@ function joinRoom() {
         alert("Erreur de selection !");
         return;
     }
-    location.replace("?r="+roomId+"&n=" + roomName + "&c=" + classId);
+    location.replace("?p=rules&n=" + roomName + "&c=" + classId);
 }
