@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Viaduc</title>
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <script type="text/javascript" src="sources/js/tools.js"></script>
+</head>
+<body>
+
+<div class="txt-center">
+<div><img src="sources/img/logo.png" width="100px"></img></div>
+    <div class="rules-container">
+        <div>
+            <img src="{{.Url1stPict}}" width="150px"></img><br>
+            <img src="{{.Url2ndPict}}" width="150px"></img>
+        </div>
+        <div><input type="range" min="0" max="100"></div>
+        <div>{{.Desc}}</div>
+
+    </div>
+    <div style="padding-top: 50px"><button id="start" onclick="joinRoom()" class="button-style"> Commencer </button> <br /></div>
+
+</div>
+
+
+<script src="sources/js/home.js"></script>
+</body>
+</html>

@@ -14,12 +14,10 @@ body {
 .d-none {
     display: none;
 }
-
-.send-mail-container {
-
-    padding: 10px 0px;
+.rules-container > div {
+    display: inline-block;
+    width: 20%;
 }
-
 
 
 
