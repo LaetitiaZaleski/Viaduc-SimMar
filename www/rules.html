@@ -9,17 +9,19 @@
 <body>
 
 <div class="txt-center">
-<div><img src="sources/img/logo.png" width="100px"></img></div>
+    <h1>
+        Informations sur la réserve :
+    </h1>
     <div class="rules-container">
         <div>
-            <img src="{{.Url1stPict}}" width="150px"></img><br>
-            <img src="{{.Url2ndPict}}" width="150px"></img>
+            <img src="{{.Url1stPict}}" width="300px"></img><br>
+            <img src="{{.Url2ndPict}}" width="300px"></img>
         </div>
-        <div><input type="range" min="0" max="100"></div>
+
         <div>{{.Desc}}</div>
 
     </div>
-    <div style="padding-top: 50px"><button id="start" onclick="joinRoom()" class="button-style"> Commencer </button> <br /></div>
+    <div style="padding-top: 50px"><button id="start" onclick="joinSettings()" class="button-style"> Commencer </button> <br /></div>
 
 </div>
 

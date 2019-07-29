@@ -8,35 +8,60 @@
 
 </head>
 <body>
-<h1>
-    Informations sur la dynamique :
-</h1>
+    <h1>
+        Informations sur la dynamique :
+    </h1>
 
-<div><img src="sources/img/dynamique.png" width="500px"></div>
 
-<div> Attraction des touristes pour les infrastructures de pêche
-    <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+    <div class="settings-topcontainer">
+        <div class="txt-center">
+            <div>
+                <div>
+                    <span>Attraction des touristes pour les infrastructures de pêche : </span>
+                    <span> 50 </span>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="attPeche" onchange="setMyValue(this)">
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <span>Attraction des touristes pour les tortues : </span>
+                    <span> 50 </span>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="attPeche" onchange="setMyValue(this)">
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <span> Prix du poisson (en Reais): </span>
+                    <span> 50 </span>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="attPeche" onchange="setMyValue(this)">
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <span> Taux de reproduction des tortues : </span>
+                    <span> 50 </span>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="attPeche" onchange="setMyValue(this)">
+                </div>
+            </div>
+        </div>
+
+        <div><img src="sources/img/dynamique.png" width="700px"></div>
+
     </div>
-</div>
+    <div style="border: red solid 1px">
 
-<div> Attraction des touristes pour les tortues
-    <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
     </div>
-</div>
-
-<div> Prix du poisson
-    <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-    </div>
-</div>
-
-<div> Taux de reproduction des tortues
-    <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-    </div>
-</div>
 
 </body>
 </html>
