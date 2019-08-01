@@ -56,7 +56,7 @@ func (g *Games) AddClass(nameRoom string, idClass int64) {
 	room.ClassList = append(room.ClassList, class)
 }
 
-func (g Games) GetRoom(name string) *Room {
+func (g *Games) GetRoom(name string) *Room {
 
 	for i := 0; i < len(g.RoomList); i++ {
 		if g.RoomList[i].Name == name {
@@ -66,7 +66,7 @@ func (g Games) GetRoom(name string) *Room {
 	return nil
 }
 
-func (g Games) getClassFromRoom(room *Room, id int64) *Class {
+func (g *Games) getClassFromRoom(room *Room, id int64) *Class {
 	if room != nil {
 		for i := 0; i < len(room.ClassList); i++ {
 			if room.ClassList[i].Id == id {
@@ -78,7 +78,7 @@ func (g Games) getClassFromRoom(room *Room, id int64) *Class {
 	return nil
 }
 
-func (g Games) getClass(id int64) *Class {
+func (g *Games) getClass(id int64) *Class {
 
 	for i := 0; i < len(g.ClassList); i++ {
 		if g.ClassList[i].Id == id {
@@ -88,7 +88,7 @@ func (g Games) getClass(id int64) *Class {
 	return nil
 }
 
-func (g Games) showRules(w http.ResponseWriter, r *http.Request) {
+func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 	param := r.URL.Query()
 	if IsInMap(param, "n") && IsInMap(param, "c") {
 		/*
@@ -152,7 +152,7 @@ func (g Games) showRules(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-func (g Games) showSettings(w http.ResponseWriter, r *http.Request) {
+func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
 		Status    string
 		RoomList  template.HTML
@@ -165,7 +165,7 @@ func (g Games) showSettings(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, data)
 }
 
-func (g Games) showHome(w http.ResponseWriter, r *http.Request) {
+func (g *Games) showHome(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
 		Status    string
 		RoomList  template.HTML
@@ -189,7 +189,7 @@ func (g Games) showHome(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, data)
 }
 
-func (g Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
+func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 
 	/*
 		Etape 3 :Gestion des vues en HTML : ce que voit l'utilisateur en fonction des parametres de l'URL.

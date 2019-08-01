@@ -1,6 +1,7 @@
 
 
-var graph=[];
+var graph1=[];
+var graph2=[];
 var len = 10;
 
 
@@ -33,7 +34,8 @@ function draw() {
         .curve(d3.curveMonotoneX) // apply smoothing to the line
 
 // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-    var dataset = d3.range(len).map(function(d) { return {"y": graph[d] } })
+    var dataset1 = d3.range(len).map(function(d) { return {"y": graph1[d] } })
+    var dataset2 = d3.range(len).map(function(d) { return {"y": graph2[d] } })
 
 // 1. Add the SVG to the page and employ #2
     var svg = d3.select("div#graph").append("svg")
@@ -56,11 +58,15 @@ function draw() {
 
 // 9. Append the path, bind the data, and call the line generator
     svg.append("path")
-        .datum(dataset) // 10. Binds data to the line
+        .datum(dataset1) // 10. Binds data to the line
+        .attr("class", "line") // Assign a class for styling
+        .attr("d", line); // 11. Calls the line generator
+     svg.append("path")
+        .datum(dataset2) // 10. Binds data to the line
         .attr("class", "line") // Assign a class for styling
         .attr("d", line); // 11. Calls the line generator
 // 12. Appends a circle for each datapoint
-    svg.selectAll(".dot")
+    /*svg.selectAll(".dot")
         .data(dataset)
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dot") // Assign a class for styling
@@ -73,7 +79,7 @@ function draw() {
             // this.setAttribute('class', 'focus');
         })
         .on("mouseout", function() {  //this.setAttribute('class', 'dot');
-        });
+        });*/
 
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
@@ -93,7 +99,8 @@ function calc() {
     c = parseInt(roomId = document.getElementById('c').value);
 
     for (i = 0; i < len; i++) {
-        graph[i] = ((a + i) * (a + i)) / b * c;
+        graph1[i] = ((a + i) * (a + i)) / b * c;
+        graph2[i] = ((a + i) * (a + i)) / b * c;
     }
 
     draw() ;
