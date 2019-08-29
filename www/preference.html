@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preference</title>
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/preference.css">
+    <link rel="stylesheet" href="sources/styles/home2.css">
+    <script src="https://unpkg.com/mathjs@6.0.3/dist/math.min.js"></script>
+    <script type="text/javascript" src="sources/lib/d3.min.js"></script>
+</head>
+<body>
+
+<div class="txt-center">
+    <h1>
+        Coherence du projet personnel :
+    </h1>
+
+
+    <div class="preference-container">
+        <div class="">
+            <div>
+                <div>
+                    <span>Attraction des touristes pour les infrastructures de pêche : </span>
+                    <span> 50 </span>
+                </div>
+                <section class="range-slider ">
+                    <span class="rangeValues"></span>
+                    <input value="5" min="0" max="15" step="0.5" type="range"  class="slider ">
+                    <input value="10" min="0" max="15" step="0.5" type="range" class="slider ">
+                </section>
+            </div>
+
+
+        </div>
+
+        <div><img src="sources/img/dynamique.png" width="700px"></div>
+
+    </div>
+    <div style="padding: 50px">
+        <button id="start" onclick="joinPreference()" class="button-style"> Lancer le calcul </button>
+        <br/></div>
+</div>
+
+<script type="text/javascript" src="sources/js/preference.js"></script>
+<script type="text/javascript" src="sources/js/home.js"></script>
+
+</body>
+</html>

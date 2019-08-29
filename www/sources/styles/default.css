@@ -14,10 +14,6 @@ body {
 .d-none {
     display: none;
 }
-.rules-container > div {
-    display: inline-block;
-    width: 45%;
-}
 
 
 

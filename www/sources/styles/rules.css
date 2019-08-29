@@ -1,0 +1,23 @@
+.rules-container {
+    display: flex;
+    padding: 20px;
+}
+
+.rules-container > div {
+    margin: auto;
+}
+
+
+.rules-container > div:first-child {
+    width: 45%;
+    margin-right: 0px;
+    padding: 10px;
+    padding-right: 20px;
+}
+
+.rules-container > div:last-child {
+    width: 45%;
+    margin-left: 0px;
+    padding: 10px;
+    padding-left: 20px;
+}

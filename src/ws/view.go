@@ -25,6 +25,11 @@ type Class struct {
 	Id          int64
 	Name        string
 	Description string
+
+}
+
+type Data struct {
+
 }
 
 /*
@@ -152,6 +157,7 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
 func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
 		Status    string
@@ -161,6 +167,19 @@ func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 
 	data := Data{"Ok", "", ""}
 	view := "www/dynamique.html"
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, data)
+}
+
+func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
+	type Data struct {
+		Status    string
+		RoomList  template.HTML
+		ClassList template.HTML
+	}
+
+	data := Data{"Ok", "", ""}
+	view := "www/preference.html"
 	t, _ := template.ParseFiles(view)
 	t.Execute(w, data)
 }
@@ -211,8 +230,9 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 	case "settings":
 		g.showSettings(w, r)
 		break
-	case "games":
-		//TODO : page du jeu > check si resultat dispo
+	case "preference":
+		g.showPreference(w, r)
+		//TODO : page des prefences du joueurs  puis check si resultat dispo
 		break
 	case "result":
 		//TODO : page des resulats

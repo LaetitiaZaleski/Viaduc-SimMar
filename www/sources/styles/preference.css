@@ -9,23 +9,23 @@ html, body {
 }
 
 
-.dynamique-container {
+.preference-container {
     display: flex;
     padding: 20px;
 }
 
-.dynamique-container > div {
+.preference-container > div {
     margin: auto;
 }
 
-.dynamique-container > div:first-child {
+.preference-container > div:first-child {
     width: 45%;
     margin-right: 0px;
     padding: 10px;
     padding-right: 20px;
 }
 
-.dynamique-container > div:last-child {
+.preference-container > div:last-child {
     width: 45%;
     margin-left: 0px;
     padding: 10px;
@@ -45,14 +45,8 @@ html, body {
     height: 25px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
@@ -72,6 +66,57 @@ html, body {
     cursor: pointer; /* Cursor on hover */
 }
 
-.txt-center {
+
+
+section.range-slider {
+    margin: auto;
+    position: relative;
+    width: 400px;
+    height: 35px;
     text-align: center;
 }
+
+section.range-slider input {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 15px;
+    width: 400px;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+section.range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+}
+
+section.range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+}
+
+section.range-slider input::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 1);
+    border: 0;
+}
+section.range-slider input:last-of-type::-moz-range-track {
+    -moz-appearance: none;
+    background: none transparent;
+    border: 0;
+}
+section.range-slider input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+
+

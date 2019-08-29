@@ -9,12 +9,19 @@ function joinRoom() {
         alert("Erreur de selection !");
         return;
     }
-    location.replace("?p=rules&n=" + roomName + "&c=" + classId);
+    window.location.href = "?p=rules&n=" + roomName + "&c=" + classId;
 }
 
 function joinSettings() {
     let url = window.location.href;
     let newParam = url.split("?")[1].replace("rules", "settings")
 
-    location.replace("?" + newParam );
+    window.location.href = "?" + newParam;
+}
+
+function joinPreference() {
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("settings", "preference")
+
+    window.location.href = "?" + newParam;
 }
