@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -12,6 +13,7 @@ import (
 	PARTIE DE DECLARATION DES STRUCTURES
 */
 type Games struct {
+	Param url.Values
 	RoomList  []Room
 	ClassList []Class
 }
@@ -19,16 +21,26 @@ type Games struct {
 type Room struct {
 	Name      string
 	ClassList []Class
+	Settings Settings
 }
 
 type Class struct {
 	Id          int64
 	Name        string
 	Description string
+	Settings Settings
+	Preferences Preferences
 
 }
 
-type Data struct {
+type Settings struct {
+	ValuePeche int64
+	ValueTortue int64
+	ValuePoisson int64
+	ValueRepro int64
+}
+
+type Preferences struct {
 
 }
 
@@ -38,16 +50,16 @@ type Data struct {
 func Initialisation() Games {
 
 	var g Games
-	g.ClassList = append(g.ClassList, Class{1, "Maire", ""})
-	g.ClassList = append(g.ClassList, Class{2, "Industriel", ""})
-	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", ""})
+	g.ClassList = append(g.ClassList, Class{1, "Maire", "", Settings{}, Preferences{}})
+	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{}, Preferences{}})
+	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{}, Preferences{}})
 
 	return g
 }
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil}
+	room := Room{name, nil, Settings{50,50,50,50}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -62,7 +74,6 @@ func (g *Games) AddClass(nameRoom string, idClass int64) {
 }
 
 func (g *Games) GetRoom(name string) *Room {
-
 	for i := 0; i < len(g.RoomList); i++ {
 		if g.RoomList[i].Name == name {
 			return &g.RoomList[i]
@@ -101,9 +112,11 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 		*/
 		check := false
 		room := g.GetRoom(param["n"][0])
+
 		classId, err := strconv.ParseInt(param["c"][0], 10, 64)
 		if err != nil {
 			fmt.Println("ERROR CLASS ID")
+			http.Error(w, "400 - rules error!", 400)
 			return
 		}
 		class := g.getClassFromRoom(room, classId)
@@ -112,6 +125,7 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 			class = g.getClass(classId)
 			if class == nil {
 				fmt.Println("ERROR CLASS ID")
+				http.Error(w, "400 - rules error!", 400)
 				return
 			}
 			addClass = true
@@ -159,16 +173,17 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 }
 
 func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
-	type Data struct {
-		Status    string
-		RoomList  template.HTML
-		ClassList template.HTML
-	}
 
-	data := Data{"Ok", "", ""}
+
+	room := g.GetRoom(g.Param["n"][0])
+	if room == nil {
+		g.showHome(w,r)
+		return
+	}
 	view := "www/dynamique.html"
 	t, _ := template.ParseFiles(view)
-	t.Execute(w, data)
+    t.Execute(w, room.Settings)
+
 }
 
 func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
@@ -218,10 +233,10 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 				n = Name (nom de la partie)
 				c = Classe (classe du joueur)
 	*/
-	param := r.URL.Query()
+	g.Param = r.URL.Query()
 	view := "home"
-	if IsInMap(param, "p") {
-		view = param["p"][0]
+	if IsInMap(g.Param, "p") {
+		view = g.Param["p"][0]
 	}
 	switch view {
 	case "rules":
