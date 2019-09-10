@@ -19,23 +19,88 @@
 
     <div class="preference-container">
         <div class="">
+
             <div>
+                <h2>
+                    Choix des objectifs :
+                </h2>
                 <div>
-                    <span>Attraction des touristes pour les infrastructures de pêche : </span>
-                    <span> 50 </span>
+                    <div>
+                        <span> Nombres d'animaux </span>
+                        <span> 50 </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input value="{.ValueAniMin}" min="500" max="20000" step="5" type="range" class="slider ">
+                        <input value="{.ValueAniMax}" min="500" max="20000" step="5" type="range" class="slider ">
+                    </section>
                 </div>
-                <section class="range-slider ">
-                    <span class="rangeValues"></span>
-                    <input value="5" min="0" max="15" step="0.5" type="range"  class="slider ">
-                    <input value="10" min="0" max="15" step="0.5" type="range" class="slider ">
-                </section>
+
+                <div>
+                    <div>
+                        <span> Capital des infrastructures de pêche </span>
+                        <span> 50 </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input value="{.ValueCapMin}" min="500" max="20000" step="5" type="range" class="slider ">
+                        <input value="{.ValueCapMax}" min="500" max="20000" step="5" type="range" class="slider ">
+                    </section>
+                </div>
+                <div>
+                    <div>
+                        <span> Nombre de touristes </span>
+                        <span> 50 </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input value="{.ValueTourMin}" min="500" max="20000" step="5" type="range" class="slider ">
+                        <input value="{.ValueTourMax}" min="500" max="20000" step="5" type="range" class="slider ">
+                    </section>
+                </div>
+            </div>
+            <div>
+                <h2>
+                    Choix des moyens d'actions :
+                </h2>
+                <div>
+                    <div>
+                        <span> Restauration de l'environement </span>
+                        <span> 50 </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input value="{.ValueEnvMin}" min="0" max="100" step="10" type="range"  class="slider ">
+                        <input value="{.ValueEnvMax}" min="0" max="100" step="10" type="range" class="slider ">
+                    </section>
+                </div>
+
+                <div>
+                    <div>
+                        <span> Proportion du parc ouverte au tourisme </span>
+                        <span> 50 </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input value="{.ValueOuvMin}" min="0" max="50" step="5" type="range" class="slider ">
+                        <input value="{.ValueOuvMax}" min="0" max="50" step="5" type="range" class="slider ">
+                    </section>
+                </div>
             </div>
 
 
         </div>
 
-        <div><img src="sources/img/dynamique.png" width="700px"></div>
-
+        <div>
+            <span>
+                La viabilité permet de savoir si les contraintes et les contrôles
+                sont compatibles avec le modèle.
+                Si le noyau est vide il nécéssaire de changer l'un ou l'autre.
+            </span>
+            <div>
+            <img src="sources/img/noyau.png" width="700px">
+            </div>
+        </div>
     </div>
     <div style="padding: 50px">
         <button id="start" onclick="joinPreference()" class="button-style"> Lancer le calcul </button>

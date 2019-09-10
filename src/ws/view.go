@@ -41,6 +41,20 @@ type Settings struct {
 }
 
 type Preferences struct {
+	ValueAniMin int64
+	ValueCapMin int64
+	ValueTourMin int64
+
+	ValueAniMax int64
+	ValueCapMax int64
+	ValueTourMax int64
+
+	ValueEnvMin int64
+	ValueOuvMin int64
+
+	ValueEnvMax int64
+	ValueOuvMax int64
+
 
 }
 
