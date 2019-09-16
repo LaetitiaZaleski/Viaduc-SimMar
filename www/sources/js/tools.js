@@ -27,7 +27,8 @@ function postXMLHttp(options, callback)
         if (xhr.status != 500)
             callback(xhr.response);
         else {
-            alert("ERROR !");
+            alert("ERROR (Voir console)");
+            console.log(xhr.responseText)
         }
     };
 

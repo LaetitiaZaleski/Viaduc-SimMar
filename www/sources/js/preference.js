@@ -24,4 +24,51 @@ window.onload = function(){
             }
         }
     }
+};
+
+function letsCalc() {
+        roomName = localStorage.getItem("roomName");
+        classId = localStorage.getItem("classId");
+        ValueAniMin =  document.getElementById('valueAniMin').value;
+        ValueAniMax =  document.getElementById('valueAniMax').value;
+        ValueTourMin =  document.getElementById('valueTourMin').value;
+        ValueTourMax =  document.getElementById('valueTourMax').value;
+        ValueCapMin =  document.getElementById('valueCapMin').value;
+        ValueCapMax =  document.getElementById('valueCapMax').value;
+
+        ValueEnvMin =  document.getElementById('valueEnvMin').value;
+        ValueEnvMax =  document.getElementById('valueEnvMax').value;
+        ValueOuvMin =  document.getElementById('valueOuvMin').value;
+        ValueOuvMax =  document.getElementById('valueOuvMax').value;
+
+        console.log('&room_name=' + roomName +
+            '&class_id=' + classId +
+            '&value_ani_min=' + ValueAniMin +
+            '&value_ani_max=' + ValueAniMax +
+            '&value_tour_min=' + ValueTourMin +
+            '&value_tour_max=' + ValueTourMax +
+            '&value_cap_min=' + ValueCapMin +
+            '&value_cap_max=' + ValueCapMax +
+            '&value_env_min=' + ValueEnvMin +
+            '&value_env_max=' + ValueEnvMax +
+            '&value_ouv_min=' + ValueOuvMin +
+            '&value_ouv_max=' + ValueOuvMax);
+
+        postXMLHttp('fct=lets_calc' +
+            '&room_name=' + roomName +
+            '&class_id=' + classId +
+            '&value_ani_min=' + ValueAniMin +
+            '&value_ani_max=' + ValueAniMax +
+            '&value_tour_min=' + ValueTourMin +
+            '&value_tour_max=' + ValueTourMax +
+            '&value_cap_min=' + ValueCapMin +
+            '&value_cap_max=' + ValueCapMax +
+            '&value_env_min=' + ValueEnvMin +
+            '&value_env_max=' + ValueEnvMax +
+            '&value_ouv_min=' + ValueOuvMin +
+            '&value_ouv_max=' + ValueOuvMax
+             ,  function (ret) {
+            alert("LE CALCUL EST FINI. ret = " + ret);
+        });
+
 }

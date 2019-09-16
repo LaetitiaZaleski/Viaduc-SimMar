@@ -27,35 +27,32 @@
                 <div>
                     <div>
                         <span> Nombres d'animaux </span>
-                        <span> 50 </span>
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{.ValueAniMin}" min="500" max="20000" step="5" type="range" class="slider ">
-                        <input value="{.ValueAniMax}" min="500" max="20000" step="5" type="range" class="slider ">
+                        <input value="{{.ValueAniMin}}" min="500" max="20000" step="5" type="range" id="valueAniMin" >
+                        <input value="{{.ValueAniMax}}" min="500" max="20000" step="5" type="range" id="valueAniMax" >
                     </section>
                 </div>
 
                 <div>
                     <div>
                         <span> Capital des infrastructures de pêche </span>
-                        <span> 50 </span>
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{.ValueCapMin}" min="500" max="20000" step="5" type="range" class="slider ">
-                        <input value="{.ValueCapMax}" min="500" max="20000" step="5" type="range" class="slider ">
+                        <input value="{{.ValueCapMin}}" id="valueCapMin" min="500" max="20000" step="5" type="range" >
+                        <input value="{{.ValueCapMax}}" id="valueCapMax" min="500" max="20000" step="5" type="range" >
                     </section>
                 </div>
                 <div>
                     <div>
                         <span> Nombre de touristes </span>
-                        <span> 50 </span>
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{.ValueTourMin}" min="500" max="20000" step="5" type="range" class="slider ">
-                        <input value="{.ValueTourMax}" min="500" max="20000" step="5" type="range" class="slider ">
+                        <input value="{{.ValueTourMin}}" id="valueTourMin" min="500" max="20000" step="5" type="range" >
+                        <input value="{{.ValueTourMax}}" id="valueTourMax" min="500" max="20000" step="5" type="range">
                     </section>
                 </div>
             </div>
@@ -66,24 +63,24 @@
                 <div>
                     <div>
                         <span> Restauration de l'environement </span>
-                        <span> 50 </span>
+
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{.ValueEnvMin}" min="0" max="100" step="10" type="range"  class="slider ">
-                        <input value="{.ValueEnvMax}" min="0" max="100" step="10" type="range" class="slider ">
+                        <input value="{{.ValueEnvMin}}" id="valueEnvMin" min="0" max="100" step="10" type="range"  >
+                        <input value="{{.ValueEnvMax}}" id="valueEnvMax" min="0" max="100" step="10" type="range" >
                     </section>
                 </div>
 
                 <div>
                     <div>
                         <span> Proportion du parc ouverte au tourisme </span>
-                        <span> 50 </span>
+
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{.ValueOuvMin}" min="0" max="50" step="5" type="range" class="slider ">
-                        <input value="{.ValueOuvMax}" min="0" max="50" step="5" type="range" class="slider ">
+                        <input value="{{.ValueOuvMin}}" id="valueOuvMin" min="0" max="50" step="5" type="range" >
+                        <input value="{{.ValueOuvMax}}" id="valueOuvMax" min="0" max="50" step="5" type="range" >
                     </section>
                 </div>
             </div>
@@ -103,12 +100,18 @@
         </div>
     </div>
     <div style="padding: 50px">
-        <button id="start" onclick="joinPreference()" class="button-style"> Lancer le calcul </button>
+        <button id="start" onclick="letsCalc()" class="button-style"> Lancer le calcul </button>
         <br/></div>
 </div>
 
+<script>
+    localStorage.setItem("roomName",{{.RoomName}});
+    localStorage.setItem("classId",{{.ClassId}});
+</script>
+
 <script type="text/javascript" src="sources/js/preference.js"></script>
 <script type="text/javascript" src="sources/js/home.js"></script>
+<script type="text/javascript" src="sources/js/tools.js"></script>
 
 </body>
 </html>

@@ -17,6 +17,7 @@
     </h1>
 
 
+
     <div class="dynamique-container">
         <div class="">
             <div>
@@ -25,7 +26,7 @@
                     <span> {{.ValuePeche}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{.ValuePeche}" class="slider" id="valuePeche"
+                    <input type="range" min="1" max="100" value="{{.ValuePeche}}" class="slider" id="valuePeche"
                            onchange="setMyValue(this);calc();">
                 </div>
             </div>
@@ -36,7 +37,7 @@
                     <span> {{.ValueTortue}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{.ValueTortue}" class="slider" id="valueTortue"
+                    <input type="range" min="1" max="100" value="{{.ValueTortue}}" class="slider" id="valueTortue"
                            onchange="setMyValue(this);calc();">
                 </div>
             </div>
@@ -47,7 +48,7 @@
                     <span> {{.ValuePoisson}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{.ValuePoisson}" class="slider" id="valuePoisson"
+                    <input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">
                 </div>
             </div>
@@ -58,7 +59,7 @@
                     <span> {{.ValueRepro}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{.ValueRepro}" class="slider" id="valueRepro"
+                    <input type="range" min="1" max="100" value="{{.ValueRepro}}" class="slider" id="valueRepro"
                            onchange="setMyValue(this);calc();">
                 </div>
             </div>
@@ -71,12 +72,19 @@
 
     </div>
     <div style="padding: 50px">
-        <button id="start" onclick="joinPreference()" class="button-style"> Continuer </button>
-        <br/></div>
+        <button id="start" onclick="setSettings()" class="button-style"> Continuer </button>
+        <br/>
+    </div>
 </div>
 
+<script>
+    localStorage.setItem("roomName",{{.RoomName}});
+    localStorage.setItem("classId",{{.ClassId}});
+</script>
+
+<script type="text/javascript" src="sources/js/tools.js"></script>
 <script type="text/javascript" src="sources/js/slider.js"></script>
-<script type="text/javascript" src="sources/js/home.js"></script>
 <script type="text/javascript" src="sources/js/home2.js"></script>
+<script type="text/javascript" src="sources/js/settings.js"></script>
 </body>
 </html>

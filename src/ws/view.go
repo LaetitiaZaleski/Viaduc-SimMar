@@ -34,6 +34,8 @@ type Class struct {
 }
 
 type Settings struct {
+	RoomName string
+	ClassId string
 	ValuePeche int64
 	ValueTortue int64
 	ValuePoisson int64
@@ -41,6 +43,9 @@ type Settings struct {
 }
 
 type Preferences struct {
+	RoomName string
+	ClassId string
+
 	ValueAniMin int64
 	ValueCapMin int64
 	ValueTourMin int64
@@ -54,8 +59,6 @@ type Preferences struct {
 
 	ValueEnvMax int64
 	ValueOuvMax int64
-
-
 }
 
 /*
@@ -64,16 +67,20 @@ type Preferences struct {
 func Initialisation() Games {
 
 	var g Games
-	g.ClassList = append(g.ClassList, Class{1, "Maire", "", Settings{}, Preferences{}})
-	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{}, Preferences{}})
-	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{}, Preferences{}})
+	g.ClassList = append(g.ClassList, Class{1, "Maire", "", Settings{},
+		Preferences{"","",1000, 1500, 1000, 2500,
+			20000, 10000, 50, 0, 100, 20 }})
+	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{}, Preferences{"", "",500, 1500, 1000, 2500,
+		20000, 10000, 0, 0, 100, 20 }})
+	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{}, Preferences{"", "", 1000, 1500, 500, 20000,
+		15000, 15000, 50, 10, 100, 50 }})
 
 	return g
 }
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{50,50,50,50}}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -119,15 +126,16 @@ func (g *Games) getClass(id int64) *Class {
 }
 
 func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
-	param := r.URL.Query()
-	if IsInMap(param, "n") && IsInMap(param, "c") {
+
+	if IsInMap(g.Param, "n") && IsInMap(g.Param, "c") &&
+		len(g.Param["n"][0]) > 0 && len(g.Param["n"][0]) > 0 {
 		/*
 			Check ET / OU creation de la partie et de la class
 		*/
-		check := false
-		room := g.GetRoom(param["n"][0])
+		//check := false
+		room := g.GetRoom(g.Param["n"][0])
 
-		classId, err := strconv.ParseInt(param["c"][0], 10, 64)
+		classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
 		if err != nil {
 			fmt.Println("ERROR CLASS ID")
 			http.Error(w, "400 - rules error!", 400)
@@ -145,17 +153,17 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 			addClass = true
 		}
 		if room == nil { // create room
-			g.AddRoom(param["n"][0], classId)
+			g.AddRoom(g.Param["n"][0], classId)
 		}
 		fmt.Printf("GAMES : %+v\n", g)
 		if addClass { //ajout d'une class a une room
-			g.AddClass(param["n"][0], classId)
+			g.AddClass(g.Param["n"][0], classId)
 		}
 
-		if len(g.RoomList) == 0 || check == false {
+/*		if len(g.RoomList) == 0 || check == false {
 			//creation d'une nouvelle partie
 			g.RoomList = append(g.RoomList, Room{})
-		}
+		}*/
 
 		/*
 			Affichage de la page RULES
@@ -187,30 +195,71 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 }
 
 func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
+	if !IsInMap(g.Param, "n") || !IsInMap(g.Param, "c") ||
+		len(g.Param["n"][0]) == 0 || len(g.Param["n"][0]) == 0 {
+		http.Error(w, "400 - Settings error!", 400)
+		return
+	}
 
-
-	room := g.GetRoom(g.Param["n"][0])
-	if room == nil {
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	var setting Settings
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
 		g.showHome(w,r)
 		return
 	}
+	if class.Settings.ValueTortue == 0 { // NOT SET
+		room := g.GetRoom(g.Param["n"][0])
+		if room == nil {
+			g.showHome(w,r)
+			return
+		}
+		setting = room.Settings
+
+	} else {
+		setting = class.Settings
+
+	}
+	setting.RoomName = g.Param["n"][0]
+	setting.ClassId = g.Param["c"][0]
 	view := "www/dynamique.html"
 	t, _ := template.ParseFiles(view)
-    t.Execute(w, room.Settings)
+	t.Execute(w, setting)
+
+
 
 }
 
 func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
-	type Data struct {
-		Status    string
-		RoomList  template.HTML
-		ClassList template.HTML
+	if !IsInMap(g.Param, "n") || !IsInMap(g.Param, "c") ||
+		len(g.Param["n"][0]) == 0 || len(g.Param["n"][0]) == 0 {
+		http.Error(w, "400 - Settings error!", 400)
+		return
+	}
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
+		g.showHome(w,r)
+		return
 	}
 
-	data := Data{"Ok", "", ""}
+	pref := class.Preferences
+	pref.RoomName = g.Param["n"][0]
+	pref.ClassId = g.Param["c"][0]
+	fmt.Printf("pref : %+v\n", pref)
 	view := "www/preference.html"
 	t, _ := template.ParseFiles(view)
-	t.Execute(w, data)
+	t.Execute(w, pref)
 }
 
 func (g *Games) showHome(w http.ResponseWriter, r *http.Request) {

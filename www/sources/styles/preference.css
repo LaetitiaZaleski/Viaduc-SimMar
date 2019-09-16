@@ -33,41 +33,6 @@ html, body {
 }
 
 
-.slidecontainer {
-    width: 100%; /* Width of the outside container */
-}
-
-/* The slider itself */
-.slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 30%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
-
-
-
 section.range-slider {
     margin: auto;
     position: relative;
@@ -87,6 +52,16 @@ section.range-slider input {
     height: 18px;
     margin: 0;
     padding: 0;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    background: #d3d3d3; /* Grey background */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+section.range-slider input:last-child {
+    background: transparent; /* Grey background */
+
 }
 
 section.range-slider input::-webkit-slider-thumb {
@@ -94,6 +69,12 @@ section.range-slider input::-webkit-slider-thumb {
     position: relative;
     z-index: 1;
     outline: 0;
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
 }
 
 section.range-slider input::-moz-range-thumb {
@@ -102,12 +83,15 @@ section.range-slider input::-moz-range-thumb {
     z-index: 10;
     -moz-appearance: none;
     width: 9px;
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
 }
 
 section.range-slider input::-moz-range-track {
     position: relative;
     z-index: -1;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: #d3d3d3;
     border: 0;
 }
 section.range-slider input:last-of-type::-moz-range-track {

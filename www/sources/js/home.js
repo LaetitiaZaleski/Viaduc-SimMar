@@ -8,8 +8,11 @@ function joinRoom() {
 
         alert("Erreur de selection !");
         return;
+    } else if (roomId == "0" && roomName.length > 0) {
+        roomId = roomName;
     }
-    window.location.href = "?p=rules&n=" + roomName + "&c=" + classId;
+
+    window.location.href = "?p=rules&n=" + roomId + "&c=" + classId;
 }
 
 function joinSettings() {
@@ -19,9 +22,4 @@ function joinSettings() {
     window.location.href = "?" + newParam;
 }
 
-function joinPreference() {
-    let url = window.location.href;
-    let newParam = url.split("?")[1].replace("settings", "preference")
 
-    window.location.href = "?" + newParam;
-}
