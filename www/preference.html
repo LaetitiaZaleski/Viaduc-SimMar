@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="sources/styles/home2.css">
     <script src="https://unpkg.com/mathjs@6.0.3/dist/math.min.js"></script>
     <script type="text/javascript" src="sources/lib/d3.min.js"></script>
+    <script src="sources/lib/plotly-latest.min.js"></script>
 </head>
 <body>
 
@@ -101,8 +102,15 @@
     </div>
     <div style="padding: 50px">
         <button id="start" onclick="letsCalc()" class="button-style"> Lancer le calcul </button>
-        <br/></div>
+        <button id="draw" onclick="letsDraw()" class="button-style"> Afficher le noyau </button>
+        <br/>
+    </div>
+    <div id="myDiv">
+
+    </div>
+
 </div>
+
 
 <script>
     localStorage.setItem("roomName",{{.RoomName}});

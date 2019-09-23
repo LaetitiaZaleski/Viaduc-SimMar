@@ -244,10 +244,42 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 		/*
 				Lancement du Viablab.exe :)
+
+			del = atof(argv[1]);
+		      a = atof(argv[2]);
+		      mp = atof(argv[3]);
+		      g = atof(argv[4]);
+
+		      localAMin = atof(argv[5]);
+		      localAMax = atof(argv[6]);
+		      localCMin = atof(argv[7]);
+		      localCMax = atof(argv[8]);
+		      localTMin = atof(argv[9]);
+		      localTMax = atof(argv[10]);
+
+		      localEpsMin = atof(argv[11]);
+		      localEpsMax = atof(argv[12]);
+		      localZetaMin = atof(argv[13]);
+		      localZetaMax = atof(argv[14]);
 		*/
+
 		var paramExec []string
-		paramExec = append(paramExec, "1", "2","3", "2","1")
-		cmd := exec.Command("./viabLabExe", paramExec... )
+		paramExec = append(paramExec,
+			strconv.FormatInt(room.ClassList[0].Settings.ValuePeche,10),
+			strconv.FormatInt(room.ClassList[0].Settings.ValueTortue,10),
+			strconv.FormatInt(room.ClassList[0].Settings.ValuePoisson,10),
+			strconv.FormatInt(room.ClassList[0].Settings.ValueRepro,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))
+		cmd := exec.Command("./bin/viabLabExe", paramExec... )
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
 		cmd.Stdout = &stdout
@@ -256,19 +288,28 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 		}
 		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
-		RCtx := r.Context()
-		ch := make(chan string)
-		go GetFile(param["room_name"][0], ch)
-		select {
-		case result := <-ch:
-			w.WriteHeader(http.StatusOK)
-			fmt.Fprint(w, result)
-			return
-		case <-RCtx.Done():
-			fmt.Println("Client has disconnected.")
-		}
-		<-ch
+		done := make(chan error, 1)
+		go func() {
+			done <-cmd.Wait()
+		}()
+		ticker :=time.NewTicker(time.Second*1)
+		for range ticker.C {
+			select {
+			case err := <-done :
+				if err != nil {
 
+					MyExit(w, errors.New("err : "+err.Error()))
+					return
+
+				}
+				var paramMv []string
+				paramMv = append(paramMv,
+					"./OUTPUT/*", "./www/output")
+				cmdMv := exec.Command("mv",paramMv... )
+				cmdMv.Run()
+				fmt.Printf("success \n")
+			}
+		}
 
 	} else {
 		MyExit(w, errors.New("wrong format POST"))
