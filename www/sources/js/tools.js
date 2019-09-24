@@ -1,4 +1,4 @@
-let addr = "api?";
+let addr = "";
 
 
 function getXMLHttp(options, callback)
@@ -8,13 +8,16 @@ function getXMLHttp(options, callback)
     //xhr.responseType = 'json';
     xhr.send();
     xhr.onload = function() {
-        if (xhr.status != 500)
+        if (xhr.status != 500) {
             callback(xhr.response);
+        }
         else {
             alert("ERROR !");
         }
     };
-
+    xhr.onerror = function () {
+        alert("ERROR")
+    }
 }
 
 function postXMLHttp(options, callback)
