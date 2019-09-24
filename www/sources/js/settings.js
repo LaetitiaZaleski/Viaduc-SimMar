@@ -13,7 +13,7 @@ function setSettings() {
     valuePoisson =  document.getElementById('valuePoisson').value;
     valueRepro =  document.getElementById('valueRepro').value;
 
-    postXMLHttp('fct=set_settings' +
+    postXMLHttp('api?fct=set_settings' +
         '&room_name=' + roomName +
         '&class_id=' + classId +
         '&value_peche=' + valuePeche +
