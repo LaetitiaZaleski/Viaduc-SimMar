@@ -54,7 +54,7 @@ function letsCalc() {
             '&value_ouv_min=' + ValueOuvMin +
             '&value_ouv_max=' + ValueOuvMax);
 
-        postXMLHttp('api?fct=lets_calc' +
+        postXMLHttp('fct=lets_calc' +
             '&room_name=' + roomName +
             '&class_id=' + classId +
             '&value_ani_min=' + ValueAniMin +
