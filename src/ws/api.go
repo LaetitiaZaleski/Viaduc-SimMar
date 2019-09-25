@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -39,14 +38,6 @@ func GetFile(roomName string, ch chan<- string) {
 	}
 }
 
-func Exists(name string) bool {
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
-}
 
 func IsInMap(dic url.Values, key string) bool {
 	_, ok := dic[key]
@@ -239,9 +230,11 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		class.Preferences.ValueOuvMin = ValueOuvMin
 		class.Preferences.ValueOuvMax = ValueOuvMax
 
+		fmt.Printf("room: %+v \n", room)
+		fmt.Printf("classlist: %+v \n", room.ClassList[0])
 
-
-
+		file := CreateFile(room.Name,strconv.FormatInt(room.ClassList[0].Id, 10),room.ClassList[0].Settings, room.ClassList[0].Preferences)
+		fileOut := strings.Replace(strings.Replace(file, "input", "output",1), ".json", "-viab-0-bound.dat", -1)
 		/*
 				Lancement du Viablab.exe :)
 
@@ -262,8 +255,12 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		      localZetaMin = atof(argv[13]);
 		      localZetaMax = atof(argv[14]);
 		*/
+		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
+		RCtx := r.Context()
+		//go GetFile(param["room_name"][0], ch)
 
-		var paramExec []string
+
+		/*var paramExec []string
 		paramExec = append(paramExec,
 			strconv.FormatInt(room.ClassList[0].Settings.ValuePeche,10),
 			strconv.FormatInt(room.ClassList[0].Settings.ValueTortue,10),
@@ -278,8 +275,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMin,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))
-		cmd := exec.Command("./bin/viabLabExe", paramExec... )
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
+		cmd := exec.Command("./bin/viabLabExe", file )
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
 		cmd.Stdout = &stdout
@@ -287,6 +284,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		if err := cmd.Start(); err != nil { //lancement de l'exe
 
 		}
+
 		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
 		done := make(chan error, 1)
 		go func() {
@@ -296,6 +294,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		for range ticker.C {
 			select {
 			case err := <-done :
+
 				if err != nil {
 
 					MyExit(w, errors.New("err : "+err.Error()))
@@ -308,6 +307,10 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 				cmdMv := exec.Command("mv",paramMv... )
 				cmdMv.Run()
 				fmt.Printf("success \n")
+				w.WriteHeader(http.StatusOK)
+				fmt.Fprint(w, fileOut)
+			case <-RCtx.Done():
+				fmt.Println("Client has disconnected.")
 			}
 		}
 

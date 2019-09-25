@@ -34,31 +34,31 @@ type Class struct {
 }
 
 type Settings struct {
-	RoomName string
-	ClassId string
-	ValuePeche int64
-	ValueTortue int64
-	ValuePoisson int64
-	ValueRepro int64
+	RoomName string `json:"room_name"`
+	ClassId string `json:"class_id"`
+	ValuePeche int64 `json:"valuePeche"`
+	ValueTortue int64 `json:"value_tortue"`
+	ValuePoisson int64 `json:"value_poisson"`
+	ValueRepro int64 `json:"value_repro"`
 }
 
 type Preferences struct {
-	RoomName string
-	ClassId string
+	RoomName string `json:"room_name"`
+	ClassId string `json:"class_id"`
 
-	ValueAniMin int64
-	ValueCapMin int64
-	ValueTourMin int64
+	ValueAniMin int64 `json:"value_ani_min"`
+	ValueCapMin int64 `json:"value_cap_min"`
+	ValueTourMin int64 `json:"value_tour_min"`
 
-	ValueAniMax int64
-	ValueCapMax int64
-	ValueTourMax int64
+	ValueAniMax int64 `json:"value_ani_max"`
+	ValueCapMax int64 `json:"value_cap_max"`
+	ValueTourMax int64 `json:"value_tour_max"`
 
-	ValueEnvMin int64
-	ValueOuvMin int64
+	ValueEnvMin int64 `json:"value_env_min"`
+	ValueOuvMin int64 `json:"value_ouv_min"`
 
-	ValueEnvMax int64
-	ValueOuvMax int64
+	ValueEnvMax int64 `json:"value_env_max"`
+	ValueOuvMax int64 `json:"value_ouv_max"`
 }
 
 /*

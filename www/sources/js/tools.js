@@ -23,7 +23,7 @@ function getXMLHttp(options, callback)
 function postXMLHttp(options, callback)
 {
     let xhr= new XMLHttpRequest();
-    xhr.open("POST", addr, true);
+    xhr.open("POST", options, true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(options);
     xhr.onload = function() {
