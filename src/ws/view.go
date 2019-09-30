@@ -36,7 +36,7 @@ type Class struct {
 type Settings struct {
 	RoomName string `json:"room_name"`
 	ClassId string `json:"class_id"`
-	ValuePeche int64 `json:"valuePeche"`
+	ValuePeche int64 `json:"value_peche"`
 	ValueTortue int64 `json:"value_tortue"`
 	ValuePoisson int64 `json:"value_poisson"`
 	ValueRepro int64 `json:"value_repro"`
