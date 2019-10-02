@@ -5,7 +5,7 @@
 html, body {
     height: 100%;
     font-family: "Verdana";
-    color:green;
+    color:black;
 }
 
 
@@ -102,5 +102,10 @@ section.range-slider input:last-of-type::-moz-range-track {
 section.range-slider input[type=range]::-moz-focus-outer {
     border: 0;
 }
+
+
+#tortues { color: #166c05; }
+#touristes { color: #417da5; }
+#capital { color: #a58d39;}
 
 

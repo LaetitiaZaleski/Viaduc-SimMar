@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Preference</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="sources/styles/default.css">
     <link rel="stylesheet" href="sources/styles/preference.css">
     <link rel="stylesheet" href="sources/styles/home2.css">
@@ -27,18 +28,22 @@
                 <h2>
                     Choix des objectifs :
                 </h2>
-                <div>
+                <div id="tortues">
                     <div>
                         <span> Nombres d'animaux </span>
                     </div>
-                    <section class="range-slider ">
-                        <span class="rangeValues"></span>
-                        <input value="{{.ValueAniMin}}" min="500" max="20000" step="5" type="range" id="valueAniMin" >
-                        <input value="{{.ValueAniMax}}" min="500" max="20000" step="5" type="range" id="valueAniMax" >
-                    </section>
+                    <div>
+                        <section class="range-slider ">
+                            <span class="rangeValues"></span>
+                            <div> <span >  </span></div>
+                            <input value="{{.ValueAniMin}}" min="500" max="20000" step="5" type="range" id="valueAniMin" >
+                            <input value="{{.ValueAniMax}}" min="500" max="20000" step="5" type="range" id="valueAniMax" >
+
+                        </section>
+                    </div>
                 </div>
 
-                <div>
+                <div id="capital">
                     <div>
                         <span> Capital des infrastructures de pêche </span>
                     </div>
@@ -48,7 +53,7 @@
                         <input value="{{.ValueCapMax}}" id="valueCapMax" min="500" max="20000" step="5" type="range" >
                     </section>
                 </div>
-                <div>
+                <div id="touristes">
                     <div>
                         <span> Nombre de touristes </span>
                     </div>
@@ -65,7 +70,7 @@
                 </h2>
                 <div>
                     <div>
-                        <span> Restauration de l'environement </span>
+                        <span> Restauration de l'environnement </span>
 
                     </div>
                     <section class="range-slider ">
@@ -77,7 +82,7 @@
 
                 <div>
                     <div>
-                        <span> Proportion du parc ouverte au tourisme </span>
+                        <span> Proportion de l'aire protégée ouverte au tourisme </span>
 
                     </div>
                     <section class="range-slider ">
@@ -105,6 +110,7 @@
     <div style="padding: 50px">
         <button id="start" onclick="letsCalc()" class="button-style"> Lancer le calcul </button>
         <button id="draw" onclick="letsDraw()" class="button-style"> Afficher le noyau </button>
+        <button  onclick="letsFinish()" class="button-style"> Continuer </button>
         <br/>
     </div>
 

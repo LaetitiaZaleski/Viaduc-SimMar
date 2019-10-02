@@ -8,10 +8,8 @@
 // TODO faire des test sur execution, plusieurs personnes, plusieurs rooms
 // TODO dans preference : un bouton pour mettre à jour le kernel et un bouton pour
 //  l'afficher et un bouton pour mettre à jour les preference
-// TODO |OK| passer les variables en json
 // TODO Commenter
-// TODO faire le chat
 // TODO faire un fichier de config (json)
-// TODO calcul des noyaux avec plusieurs personnes > Maintenant c'est par role.
-// TODO parser un fichier json pour les parametres
-// TODO pourquoi c'est aussi lent ? :(
+// TODO déroulement : calcul du noyau par joueur, si non vide --> page résultats --> calcul des intervals, si non vide re-calcul de noyau dans l'interval pour toutes les pref
+// TODO faire en sorte que l'exe marche
+// TODO affichage de noyaux a la page result

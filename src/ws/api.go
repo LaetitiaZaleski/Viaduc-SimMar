@@ -70,7 +70,7 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 			MyExit(w, err)
 			return
 		}
-		messageList := room.getMessage(lastId)
+		messageList := room.GetMessage(lastId)
 		json,err := json.Marshal(messageList)
 		if err != nil {
 			MyExit(w, err)
@@ -170,7 +170,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
-		cmd := exec.Command("./bin/viabLabExe", file )
+		//cmd := exec.Command("./bin/viabLabExe", file )
+		cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
 		cmd.Stdout = &stdout
@@ -234,6 +235,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			ClassId string `json:"class_id"`
 			Message  string `json:"message"`
 		}
+
 		var data Data
 		err := json.Unmarshal([]byte(param["data"][0]), &data)
 		if err != nil {
@@ -242,9 +244,11 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		room := g.GetRoom(data.RoomName)
+		fmt.Printf("room : %+v\n", room)
 		classId, err := strconv.ParseInt(data.ClassId, 10, 64)
 		class := g.getClassFromRoom(room, classId)
-		room.MessageList = append(room.MessageList, Message{room.LastId() + 1, class.Name,time.Now(),data.Message})
+		room.MessageList = append(room.MessageList, Message{room.LastId() + 1, class.Name, time.Now().Format("15:04:05"),data.Message})
+		fmt.Printf("room : %+v\n", room)
 	} else {
 		MyExit(w, errors.New("wrong format POST"))
 		return

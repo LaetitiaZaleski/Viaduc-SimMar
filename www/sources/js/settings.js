@@ -9,10 +9,10 @@ function setSettings() {
     var jsonObj = {
         "room_name": localStorage.getItem("roomName"),
         "class_id": localStorage.getItem("classId"),
-        "value_peche": document.getElementById('valuePeche').value,
-        "value_tortue": document.getElementById('valueTortue').value,
-        "value_poisson": document.getElementById('valuePoisson').value,
-        "value_repro": document.getElementById('valueRepro').value
+        "value_peche": parseInt(document.getElementById('valuePeche').value),
+        "value_tortue": parseInt(document.getElementById('valueTortue').value),
+        "value_poisson": parseInt(document.getElementById('valuePoisson').value),
+        "value_repro": parseInt(document.getElementById('valueRepro').value)
     };
     data = JSON.stringify(jsonObj);
 

@@ -81,7 +81,7 @@ func Initialisation() Games {
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",50,50,50,50}, nil}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -265,18 +265,17 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 
 func (g *Games) showResult(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
-		messageList  template.HTML
+		MessageList  template.HTML
 	}
 	room := g.GetRoom(g.Param["n"][0])
 	data := Data{}
 	view := "www/result.html"
-	MessageList := room.getMessage(0)
+	MessageList := room.GetMessage(0)
 	for i := 0; i < len(MessageList); i++ {
-		data.messageList += template.HTML("<li id=\"message-id-" + MessageList[i].Id + "\">(" + MessageList[i].Date + ") "+ MessageList[i].ClassName + " : " + MessageList[i].Message  +  "</option>")
+		data.MessageList += template.HTML("<li id=\"message-id-" + strconv.FormatInt(MessageList[i].Id,10) + "\">(" + MessageList[i].Date + ") "+ MessageList[i].ClassName + " : " + MessageList[i].Message  +  "</option>")
 	}
 
 
-	//TODO : Gerer la connexion a une partie et une classe deja prise.
 
 	t, _ := template.ParseFiles(view)
 	t.Execute(w, data)
@@ -324,8 +323,8 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	switch view {
 	case "rules":
-		g.showResult(w,r)
-		//g.showRules(w, r)
+		//g.showResult(w,r)
+		g.showRules(w, r)
 		break
 	case "settings":
 		g.showSettings(w, r)

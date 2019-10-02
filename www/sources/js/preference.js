@@ -30,16 +30,16 @@ function letsCalc() {
         var jsonObj = {
             "room_name": localStorage.getItem("roomName"),
             "class_id": localStorage.getItem("classId"),
-            "value_ani_min": document.getElementById('valueAniMin').value,
-            "value_ani_max": document.getElementById('valueAniMax').value,
-            "value_tour_min": document.getElementById('valueTourMin').value,
-            "value_tour_max": document.getElementById('valueTourMax').value,
-            "value_cap_min": document.getElementById('valueCapMin').value,
-            "value_cap_max": document.getElementById('valueCapMax').value,
-            "value_env_min": document.getElementById('valueEnvMin').value,
-            "value_env_max": document.getElementById('valueEnvMax').value,
-            "value_ouv_min": document.getElementById('valueOuvMin').value,
-            "value_ouv_max": document.getElementById('valueOuvMax').value
+            "value_ani_min": parseInt(document.getElementById('valueAniMin').value),
+            "value_ani_max": parseInt(document.getElementById('valueAniMax').value),
+            "value_tour_min": parseInt(document.getElementById('valueTourMin').value),
+            "value_tour_max": parseInt(document.getElementById('valueTourMax').value),
+            "value_cap_min": parseInt(document.getElementById('valueCapMin').value),
+            "value_cap_max": parseInt(document.getElementById('valueCapMax').value),
+            "value_env_min": parseInt(document.getElementById('valueEnvMin').value),
+            "value_env_max": parseInt(document.getElementById('valueEnvMax').value),
+            "value_ouv_min": parseInt(document.getElementById('valueOuvMin').value),
+            "value_ouv_max": parseInt(document.getElementById('valueOuvMax').value)
         };
         data = JSON.stringify(jsonObj);
 
@@ -51,6 +51,13 @@ function letsCalc() {
             //getFile();
         });
 
+}
+
+function letsFinish() {
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("preference", "result")
+
+    window.location.href = "?" + newParam;
 }
 
 function letsDraw() {

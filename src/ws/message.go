@@ -1,16 +1,18 @@
 package ws
 
-import "time"
+import (
+	"fmt"
+)
 
 type Message struct {
 	Id int64
 	ClassName string
-	Date 		time.Time
+	Date 		string
 	Message  string
 }
 
 func (r *Room) LastId() (ret int64) {
-	for i := 0; i < len(r.MessageList); i++ {
+	for i := 0; r.MessageList != nil && i < len(r.MessageList); i++ {
 		if r.MessageList[i].Id > ret {
 			ret = r.MessageList[i].Id
 		}
@@ -19,8 +21,9 @@ func (r *Room) LastId() (ret int64) {
 }
 
 
-func (r *Room) getMessage(last int64) (ret []Message) {
-	for i := 0; i < len(r.MessageList); i++ {
+func (r *Room) GetMessage(last int64) (ret []Message) {
+	fmt.Printf("%+v \n", r)
+	for i := 0; r.MessageList != nil && i < len(r.MessageList); i++ {
 		if r.MessageList[i].Id > last {
 			ret = append(ret, r.MessageList[i])
 		}
