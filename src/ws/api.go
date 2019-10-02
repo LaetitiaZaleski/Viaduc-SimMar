@@ -2,9 +2,11 @@ package ws
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"os/exec"
@@ -58,10 +60,24 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 	}
 	fnct := param["fct"][0]
 
-	if strings.Compare(fnct, "get_func") == 0 &&
-		IsInMap(param, "param1") &&
-		IsInMap(param, "param1") {
-		//Do some stuff
+	if strings.Compare(fnct, "get_message") == 0 &&
+		IsInMap(param, "room_name") &&
+		IsInMap(param, "class_id") &&
+		IsInMap(param, "last_message_id") {
+		room := g.GetRoom(param["room_name"][0])
+		lastId, err := strconv.ParseInt(param["last_message_id"][0], 10, 64)
+		if err != nil {
+			MyExit(w, err)
+			return
+		}
+		messageList := room.getMessage(lastId)
+		json,err := json.Marshal(messageList)
+		if err != nil {
+			MyExit(w, err)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, string(json))
 	} else {
 		MyExit(w, errors.New("wrong format GET"))
 		return
@@ -74,166 +90,44 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 	param := r.Form
 	if IsInMap(param, "fct") && param["fct"][0] == "set_settings" &&
-		IsInMap(param, "room_name") &&
-		IsInMap(param, "class_id") &&
-		IsInMap(param, "value_peche") &&
-		IsInMap(param, "value_tortue") &&
-		IsInMap(param, "value_poisson") &&
-		IsInMap(param, "value_repro") &&
-		len(param["room_name"][0]) > 0 &&
-		len(param["class_id"][0]) > 0 &&
-		len(param["value_peche"][0]) > 0 &&
-		len(param["value_tortue"][0]) > 0 &&
-		len(param["value_poisson"][0]) > 0 &&
-		len(param["value_repro"][0]) > 0 {
-		room := g.GetRoom(param["room_name"][0])
+		IsInMap(param, "data") &&
+		len(param["data"][0]) > 0 {
 
-		classId, err := strconv.ParseInt(param["class_id"][0], 10, 64)
+		var setting Settings
+		err := json.Unmarshal([]byte(param["data"][0]), &setting)
 		if err != nil {
-			http.Error(w, "500 - set_settings error! (err conv class_id) " + err.Error(), 500)
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
+		room := g.GetRoom(setting.RoomName)
+		classId, err := strconv.ParseInt(setting.ClassId, 10, 64)
 		class := g.getClassFromRoom(room, classId)
-
-		ValuePeche, err := strconv.ParseInt(param["value_peche"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - set_settings error! (err conv value_peche) " + err.Error(), 500)
-			return
-		}
-		ValueTortue, err := strconv.ParseInt(param["value_tortue"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - set_settings error! (err conv value_tortue) " + err.Error(), 500)
-			return
-		}
-
-		ValuePoisson, err := strconv.ParseInt(param["value_poisson"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - set_settings error! (err conv value_poisson) " + err.Error(), 500)
-			return
-		}
-		ValueRepro, err := strconv.ParseInt(param["value_repro"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - set_settings error! (err conv value_repro) " + err.Error(), 500)
-			return
-		}
-		class.Settings.ValuePeche = ValuePeche
-		class.Settings.ValueTortue = ValueTortue
-		class.Settings.ValuePoisson = ValuePoisson
-		class.Settings.ValueRepro = ValueRepro
+		class.Settings = setting
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, "ok")
 	} else if IsInMap(param, "fct") && param["fct"][0] == "lets_calc" &&
-		IsInMap(param, "room_name") &&
-		IsInMap(param, "class_id") &&
-		IsInMap(param, "value_ani_min") &&
-		IsInMap(param, "value_ani_max") &&
-		IsInMap(param, "value_tour_min") &&
-		IsInMap(param, "value_tour_max") &&
-		IsInMap(param, "value_cap_min") &&
-		IsInMap(param, "value_cap_max") &&
-		IsInMap(param, "value_env_min") &&
-		IsInMap(param, "value_env_max") &&
-		IsInMap(param, "value_ouv_min") &&
-		IsInMap(param, "value_ouv_max") &&
-		len(param["room_name"][0]) > 0 &&
-		len(param["class_id"][0]) > 0 &&
-		len(param["value_ani_min"][0]) > 0 &&
-		len(param["value_ani_max"][0]) > 0 &&
-		len(param["value_tour_min"][0]) > 0 &&
-		len(param["value_tour_max"][0]) > 0 &&
-		len(param["value_cap_min"][0]) > 0 &&
-		len(param["value_cap_max"][0]) > 0 &&
-		len(param["value_env_min"][0]) > 0 &&
-		len(param["value_env_max"][0]) > 0 &&
-		len(param["value_ouv_min"][0]) > 0 &&
-		len(param["value_ouv_max"][0]) > 0 {
-		room := g.GetRoom(param["room_name"][0])
+		IsInMap(param, "data") &&
+		len(param["data"][0]) > 0 {
 
-		classId, err := strconv.ParseInt(param["class_id"][0], 10, 64)
+		var preference Preferences
+		err := json.Unmarshal([]byte(param["data"][0]), &preference)
 		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv class_id) " + err.Error(), 500)
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-
+		room := g.GetRoom(preference.RoomName)
+		classId, err := strconv.ParseInt(preference.ClassId, 10, 64)
 		class := g.getClassFromRoom(room, classId)
-
-		ValueAniMin, err := strconv.ParseInt(param["value_ani_min"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_ani_min) " + err.Error(), 500)
-			return
-		}
-
-		ValueAniMax, err := strconv.ParseInt(param["value_ani_max"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_ani_max) " + err.Error(), 500)
-			return
-		}
-
-		ValueTourMin, err := strconv.ParseInt(param["value_tour_min"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_tour_min) " + err.Error(), 500)
-			return
-		}
-
-		ValueTourMax, err := strconv.ParseInt(param["value_tour_max"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_tour_max) " + err.Error(), 500)
-			return
-		}
-
-		ValueCapMin, err := strconv.ParseInt(param["value_cap_min"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_cap_min) " + err.Error(), 500)
-			return
-		}
-
-		ValueCapMax, err := strconv.ParseInt(param["value_cap_max"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_cap_max) " + err.Error(), 500)
-			return
-		}
-
-		ValueEnvMin, err := strconv.ParseInt(param["value_env_min"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_env_min) " + err.Error(), 500)
-			return
-		}
-
-		ValueEnvMax, err := strconv.ParseInt(param["value_env_max"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_env_max) " + err.Error(), 500)
-			return
-		}
-
-		ValueOuvMin, err := strconv.ParseInt(param["value_ouv_min"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_ouv_min) " + err.Error(), 500)
-			return
-		}
-
-		ValueOuvMax, err := strconv.ParseInt(param["value_ouv_max"][0], 10, 64)
-		if err != nil {
-			http.Error(w, "500 - lets_calc error! (err conv value_ouv_max) " + err.Error(), 500)
-			return
-		}
+		class.Preferences = preference
 
 
-		class.Preferences.ValueAniMin = ValueAniMin
-		class.Preferences.ValueAniMax = ValueAniMax
-		class.Preferences.ValueTourMin = ValueTourMin
-		class.Preferences.ValueTourMax = ValueTourMax
-		class.Preferences.ValueCapMin = ValueCapMin
-		class.Preferences.ValueCapMax = ValueCapMax
-		class.Preferences.ValueEnvMin = ValueEnvMin
-		class.Preferences.ValueEnvMax = ValueEnvMax
-		class.Preferences.ValueOuvMin = ValueOuvMin
-		class.Preferences.ValueOuvMax = ValueOuvMax
-
-		fmt.Printf("room: %+v \n", room)
-		fmt.Printf("classlist: %+v \n", room.ClassList[0])
-
-		file := CreateFile(room.Name,strconv.FormatInt(room.ClassList[0].Id, 10),room.ClassList[0].Settings, room.ClassList[0].Preferences)
+		/*
+			Lancement du calcul / creation du fichier
+		*/
+		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
 		fileOut := strings.Replace(strings.Replace(file, "input", "output",1), ".json", "-viab-0-bound.dat", -1)
 		/*
 				Lancement du Viablab.exe :)
@@ -256,7 +150,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		      localZetaMax = atof(argv[14]);
 		*/
 		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
-		RCtx := r.Context()
+		//RCtx := r.Context()
 		//go GetFile(param["room_name"][0], ch)
 
 
@@ -290,7 +184,25 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		go func() {
 			done <-cmd.Wait()
 		}()
-		ticker :=time.NewTicker(time.Second*1)
+		select {
+		case err := <-done :
+
+			if err != nil {
+
+				MyExit(w, errors.New("err : "+err.Error()))
+				return
+
+			}
+			var paramMv []string
+			paramMv = append(paramMv,
+				"./OUTPUT/*", "./www/output")
+			cmdMv := exec.Command("mv",paramMv... )
+			cmdMv.Run()
+			fmt.Printf("success \n")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(w, fileOut)
+		}
+		/*ticker :=time.NewTicker(time.Second*1)
 		for range ticker.C {
 			select {
 			case err := <-done :
@@ -312,8 +224,27 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			case <-RCtx.Done():
 				fmt.Println("Client has disconnected.")
 			}
-		}
+		}*/
 
+	} else if IsInMap(param, "fct") && param["fct"][0] == "send_message" &&
+		IsInMap(param, "data") &&
+		len(param["data"][0]) > 0 {
+		type Data struct {
+			RoomName string `json:"room_name"`
+			ClassId string `json:"class_id"`
+			Message  string `json:"message"`
+		}
+		var data Data
+		err := json.Unmarshal([]byte(param["data"][0]), &data)
+		if err != nil {
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		room := g.GetRoom(data.RoomName)
+		classId, err := strconv.ParseInt(data.ClassId, 10, 64)
+		class := g.getClassFromRoom(room, classId)
+		room.MessageList = append(room.MessageList, Message{room.LastId() + 1, class.Name,time.Now(),data.Message})
 	} else {
 		MyExit(w, errors.New("wrong format POST"))
 		return

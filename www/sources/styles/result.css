@@ -1,0 +1,14 @@
+#messageList {
+    text-align: left;
+    width: 100%;
+    height: 100px;
+    max-height: 100px;
+    overflow-y: scroll;
+    list-style:none;
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+#messageList > li {
+    width: 100%;
+}

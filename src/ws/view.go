@@ -22,6 +22,7 @@ type Room struct {
 	Name      string
 	ClassList []Class
 	Settings Settings
+	MessageList []Message
 }
 
 type Class struct {
@@ -80,7 +81,7 @@ func Initialisation() Games {
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",50,50,50,50}}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}, nil}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -262,6 +263,25 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pref)
 }
 
+func (g *Games) showResult(w http.ResponseWriter, r *http.Request) {
+	type Data struct {
+		messageList  template.HTML
+	}
+	room := g.GetRoom(g.Param["n"][0])
+	data := Data{}
+	view := "www/result.html"
+	MessageList := room.getMessage(0)
+	for i := 0; i < len(MessageList); i++ {
+		data.messageList += template.HTML("<li id=\"message-id-" + MessageList[i].Id + "\">(" + MessageList[i].Date + ") "+ MessageList[i].ClassName + " : " + MessageList[i].Message  +  "</option>")
+	}
+
+
+	//TODO : Gerer la connexion a une partie et une classe deja prise.
+
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, data)
+}
+
 func (g *Games) showHome(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
 		Status    string
@@ -296,6 +316,7 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 				n = Name (nom de la partie)
 				c = Classe (classe du joueur)
 	*/
+
 	g.Param = r.URL.Query()
 	view := "home"
 	if IsInMap(g.Param, "p") {
@@ -303,7 +324,8 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	switch view {
 	case "rules":
-		g.showRules(w, r)
+		g.showResult(w,r)
+		//g.showRules(w, r)
 		break
 	case "settings":
 		g.showSettings(w, r)
@@ -313,6 +335,7 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		//TODO : page des prefences du joueurs  puis check si resultat dispo
 		break
 	case "result":
+		g.showResult(w,r)
 		//TODO : page des resulats
 		break
 	default:

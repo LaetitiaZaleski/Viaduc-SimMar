@@ -27,47 +27,26 @@ window.onload = function(){
 };
 
 function letsCalc() {
-        roomName = localStorage.getItem("roomName");
-        classId = localStorage.getItem("classId");
-        ValueAniMin =  document.getElementById('valueAniMin').value;
-        ValueAniMax =  document.getElementById('valueAniMax').value;
-        ValueTourMin =  document.getElementById('valueTourMin').value;
-        ValueTourMax =  document.getElementById('valueTourMax').value;
-        ValueCapMin =  document.getElementById('valueCapMin').value;
-        ValueCapMax =  document.getElementById('valueCapMax').value;
+        var jsonObj = {
+            "room_name": localStorage.getItem("roomName"),
+            "class_id": localStorage.getItem("classId"),
+            "value_ani_min": document.getElementById('valueAniMin').value,
+            "value_ani_max": document.getElementById('valueAniMax').value,
+            "value_tour_min": document.getElementById('valueTourMin').value,
+            "value_tour_max": document.getElementById('valueTourMax').value,
+            "value_cap_min": document.getElementById('valueCapMin').value,
+            "value_cap_max": document.getElementById('valueCapMax').value,
+            "value_env_min": document.getElementById('valueEnvMin').value,
+            "value_env_max": document.getElementById('valueEnvMax').value,
+            "value_ouv_min": document.getElementById('valueOuvMin').value,
+            "value_ouv_max": document.getElementById('valueOuvMax').value
+        };
+        data = JSON.stringify(jsonObj);
 
-        ValueEnvMin =  document.getElementById('valueEnvMin').value;
-        ValueEnvMax =  document.getElementById('valueEnvMax').value;
-        ValueOuvMin =  document.getElementById('valueOuvMin').value;
-        ValueOuvMax =  document.getElementById('valueOuvMax').value;
-
-        console.log('&room_name=' + roomName +
-            '&class_id=' + classId +
-            '&value_ani_min=' + ValueAniMin +
-            '&value_ani_max=' + ValueAniMax +
-            '&value_tour_min=' + ValueTourMin +
-            '&value_tour_max=' + ValueTourMax +
-            '&value_cap_min=' + ValueCapMin +
-            '&value_cap_max=' + ValueCapMax +
-            '&value_env_min=' + ValueEnvMin +
-            '&value_env_max=' + ValueEnvMax +
-            '&value_ouv_min=' + ValueOuvMin +
-            '&value_ouv_max=' + ValueOuvMax);
+        console.log(data);
 
         postXMLHttp('/api?fct=lets_calc' +
-            '&room_name=' + roomName +
-            '&class_id=' + classId +
-            '&value_ani_min=' + ValueAniMin +
-            '&value_ani_max=' + ValueAniMax +
-            '&value_tour_min=' + ValueTourMin +
-            '&value_tour_max=' + ValueTourMax +
-            '&value_cap_min=' + ValueCapMin +
-            '&value_cap_max=' + ValueCapMax +
-            '&value_env_min=' + ValueEnvMin +
-            '&value_env_max=' + ValueEnvMax +
-            '&value_ouv_min=' + ValueOuvMin +
-            '&value_ouv_max=' + ValueOuvMax
-             ,  function (ret) {
+            '&data=' + data,  function (ret) {
             alert("LE CALCUL EST FINI. ret = " + ret);
             //getFile();
         });

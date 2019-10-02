@@ -6,20 +6,18 @@ function joinPreference() {
 }
 
 function setSettings() {
-    roomName = localStorage.getItem("roomName");
-    classId = localStorage.getItem("classId");
-    valuePeche =  document.getElementById('valuePeche').value;
-    valueTortue =  document.getElementById('valueTortue').value;
-    valuePoisson =  document.getElementById('valuePoisson').value;
-    valueRepro =  document.getElementById('valueRepro').value;
+    var jsonObj = {
+        "room_name": localStorage.getItem("roomName"),
+        "class_id": localStorage.getItem("classId"),
+        "value_peche": document.getElementById('valuePeche').value,
+        "value_tortue": document.getElementById('valueTortue').value,
+        "value_poisson": document.getElementById('valuePoisson').value,
+        "value_repro": document.getElementById('valueRepro').value
+    };
+    data = JSON.stringify(jsonObj);
 
     postXMLHttp('api?fct=set_settings' +
-        '&room_name=' + roomName +
-        '&class_id=' + classId +
-        '&value_peche=' + valuePeche +
-        '&value_tortue=' + valueTortue +
-        '&value_poisson=' + valuePoisson +
-        '&value_repro=' + valueRepro,  function (json) {
+        '&data=' + data,  function (json) {
         joinPreference();
     });
 }
