@@ -128,7 +128,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			Lancement du calcul / creation du fichier
 		*/
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
-		fileOut := strings.Replace(strings.Replace(file, "input", "output",1), ".json", "-viab-0-bound.dat", -1)
+		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
 		/*
 				Lancement du Viablab.exe :)
 
@@ -170,8 +171,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
-		//cmd := exec.Command("./bin/viabLabExe", file )
-		cmd := exec.Command("./bin/tmpexe")
+		cmd := exec.Command("./bin/viabLabExe", file )
+		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
 		cmd.Stdout = &stdout
@@ -195,10 +196,20 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 			}
 			var paramMv []string
+			var pathOut = "./"+fileOut
 			paramMv = append(paramMv,
-				"./OUTPUT/*", "./www/output")
+				pathOut, "./www/output")
 			cmdMv := exec.Command("mv",paramMv... )
+			fmt.Printf("mv" + pathOut+ "./www/output \n")
 			cmdMv.Run()
+			// supression du fichier inutile
+			var paramRm []string
+			var pathToRemove = "./"+fileToRemove
+			paramRm = append(paramRm, pathToRemove)
+			cmdRm := exec.Command("rm",paramRm... )
+			fmt.Printf("rm" + pathToRemove+" \n")
+			cmdRm.Run()
+
 			fmt.Printf("success \n")
 			w.WriteHeader(http.StatusOK)
 			fmt.Fprint(w, fileOut)
@@ -216,7 +227,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 				}
 				var paramMv []string
 				paramMv = append(paramMv,
-					"./OUTPUT/*", "./www/output")
+					"./output/*", "./www/output")
 				cmdMv := exec.Command("mv",paramMv... )
 				cmdMv.Run()
 				fmt.Printf("success \n")
