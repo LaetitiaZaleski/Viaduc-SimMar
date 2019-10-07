@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -209,9 +210,21 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			cmdRm := exec.Command("rm",paramRm... )
 			cmdRm.Run()
 
+
 			fmt.Printf("success \n")
 			w.WriteHeader(http.StatusOK)
-			fmt.Fprint(w, fileOut)
+
+			fileOut := strings.Replace(fileOut, "input", "www/sources/output", -1)
+
+			fo, err := os.Stat(fileOut);
+			size := fo.Size()
+			var alerte = " "
+			if size == 0 {
+				alerte = "Ce noyau est vide !"
+			} else {
+				alerte = "Votre noyau n'est pas vide !"
+			}
+			fmt.Fprint(w, alerte )
 		}
 		/*ticker :=time.NewTicker(time.Second*1)
 		for range ticker.C {
