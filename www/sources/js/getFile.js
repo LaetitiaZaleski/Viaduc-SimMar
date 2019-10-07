@@ -1,6 +1,26 @@
-function getFile() {
+function getFile(RoomName, ClassId) {
 
-    getXMLHttp("sources/output/SimMar_A0.000000_10.000000_C0.000000_10.000000_T0.000000_10.000000_eps0.000000_100.000000_zeta0.000000_20.000000_del0.100000_a100.000000_mp10.000000_g2.000000-viab-0-bound.dat", function (data) {
+
+
+    // recuperer le dernier fichier créé :
+    var i = -1;
+    var http = new XMLHttpRequest();
+
+    do {
+        i++;
+        let tmpPath = "sources/output/"+RoomName+"_"+ClassId+"_"+i+"-viab-0-bound.dat";
+        console.log("tmpPath : " + tmpPath);
+        http.open('HEAD', tmpPath, false);
+        http.send();
+    }
+    while (http.status!=404);
+    let numFile = i - 1;
+    let path = "sources/output/"+RoomName+"_"+ClassId+"_"+numFile+"-viab-0-bound.dat";
+
+
+
+
+    getXMLHttp(path, function (data) {
         // getXMLHttp("sources/output/SimMar_A0.000000_10.000000_C0.000000_10.000000_T0.000000_10.000000_eps0.000000_100.000000_zeta0.000000_20.000000_del0.100000_a100.000000_mp10.000000_g2.000000-viab-0-bound.dat", function (data) {
         let lineTab = data.split('\n');
         let aniTab = [];
@@ -11,7 +31,7 @@ function getFile() {
         for (i = 0; i < lineTab.length; i++) {
             let valueTab = lineTab[i].split('  ');
             if (valueTab.length >= 3 ) {
-                if(i%15 == 0){ // on prend 1 point sur 10
+                if(i%10 == 0){ // on prend 1 point sur 10
                     aniTab.push(parseFloat(valueTab[0]));
                     capTab.push(parseFloat(valueTab[1]));
                     tourTab.push(parseFloat(valueTab[2]));

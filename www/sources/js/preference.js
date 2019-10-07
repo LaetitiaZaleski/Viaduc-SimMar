@@ -47,7 +47,7 @@ function letsCalc() {
 
         postXMLHttp('/api?fct=lets_calc' +
             '&data=' + data,  function (ret) {
-            alert("LE CALCUL EST FINI. ret = " + ret);
+            alert("LE CALCUL EST FINI.");// ret = " + ret);
             //getFile();
         });
 

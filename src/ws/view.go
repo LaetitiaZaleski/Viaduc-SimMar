@@ -182,8 +182,8 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 
 		data := Data{string(content),
 
-			"sources/img/carte1.png",
-			"sources/img/carte2.png"}
+			"sources/img/carte.png",
+			"sources/img/carte.png"}
 		view := "www/rules.html"
 
 		t, _ := template.ParseFiles(view)

@@ -198,16 +198,15 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			var paramMv []string
 			var pathOut = "./"+fileOut
 			paramMv = append(paramMv,
-				pathOut, "./www/output")
+				pathOut, "./www/sources/output")
 			cmdMv := exec.Command("mv",paramMv... )
-			fmt.Printf("mv" + pathOut+ "./www/output \n")
+
 			cmdMv.Run()
 			// supression du fichier inutile
 			var paramRm []string
 			var pathToRemove = "./"+fileToRemove
 			paramRm = append(paramRm, pathToRemove)
 			cmdRm := exec.Command("rm",paramRm... )
-			fmt.Printf("rm" + pathToRemove+" \n")
 			cmdRm.Run()
 
 			fmt.Printf("success \n")
