@@ -50,6 +50,7 @@ func IsInMap(dic url.Values, key string) bool {
 func MyExit(w http.ResponseWriter, err error) {
 	fmt.Println("ERROR:", err)
 	w.WriteHeader(http.StatusInternalServerError)
+	io.WriteString(w, "ko")
 }
 
 
@@ -73,6 +74,25 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		}
 		messageList := room.GetMessage(lastId)
 		json,err := json.Marshal(messageList)
+		if err != nil {
+			MyExit(w, err)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, string(json))
+	} else if strings.Compare(fnct, "get_preference") == 0 &&
+		IsInMap(param, "room_name"){
+		room := g.GetRoom(param["room_name"][0])
+		type AllPref struct {
+			ClassName string `json:"class_name"`
+			Preferences Preferences `json:"preference"`
+		}
+		var allpref []AllPref
+
+		for i:=0; i<len(room.ClassList); i++ {
+			allpref = append(allpref, AllPref{room.ClassList[i].Name, room.ClassList[i].Preferences})
+		}
+		json,err := json.Marshal(allpref)
 		if err != nil {
 			MyExit(w, err)
 			return

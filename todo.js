@@ -11,5 +11,4 @@
 // TODO Commenter
 // TODO faire un fichier de config (json)
 // TODO déroulement : calcul du noyau par joueur, si non vide --> page résultats --> calcul des intervals, si non vide re-calcul de noyau dans l'interval pour toutes les pref
-// TODO faire en sorte que l'exe marche
 // TODO affichage de noyaux a la page result

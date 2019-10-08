@@ -5,6 +5,7 @@
     <title>Viaduc</title>
     <link rel="stylesheet" href="sources/styles/default.css">
     <link rel="stylesheet" href="sources/styles/result.css">
+    <link rel="stylesheet" href="sources/styles/preference.css">
     <script type="text/javascript" src="sources/js/tools.js"></script>
 </head>
 <body>
@@ -13,11 +14,90 @@
     <h1>
         User :
     </h1>
-    <ul id="messageList">{{.MessageList}}</ul>
-    <div style="padding-top: 50px">
-        <input id="send-message" type="text">
-        <button  onclick="sendMessage()" class="button-style"> Envoyer </button>
+
+    <div>
+        <div class="">
+            <div>
+                <h2>
+                    Maire :
+                </h2>
+                <div id="tortues">
+                    <div>
+                        <span> Nombres d'animaux </span>
+                    </div>
+                    <div>
+                        <section class="range-slider ">
+                            <span class="rangeValues"></span>
+                            <div> <span >  </span></div>
+                            <input id="MaireValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
+                            <input id="MaireValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
+
+                        </section>
+                    </div>
+                </div>
+
+                <div id="capital">
+                    <div>
+                        <span> Capital des infrastructures de pêche </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input  id="MaireValueCapMin" min="500" max="20000" step="5" type="range" >
+                        <input  id="MaireValueCapMax" min="500" max="20000" step="5" type="range" >
+                    </section>
+                </div>
+                <div id="touristes">
+                    <div>
+                        <span> Nombre de touristes </span>
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input  id="MaireValueTourMin" min="500" max="20000" step="5" type="range" >
+                        <input  id="MaireValueTourMax" min="500" max="20000" step="5" type="range">
+                    </section>
+                </div>
+            </div>
+            <div>
+                <h2>
+                    Choix des moyens d'actions :
+                </h2>
+                <div>
+                    <div>
+                        <span> Restauration de l'environnement </span>
+
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input  id="MaireValueEnvMin" min="0" max="100" step="10" type="range"  >
+                        <input  id="MaireValueEnvMax" min="0" max="100" step="10" type="range" >
+                    </section>
+                </div>
+
+                <div>
+                    <div>
+                        <span> Proportion de l'aire protégée ouverte au tourisme </span>
+
+                    </div>
+                    <section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input id="MaireValueOuvMin" min="0" max="50" step="5" type="range" >
+                        <input id="MaireValueOuvMax" min="0" max="50" step="5" type="range" >
+                    </section>
+                </div>
+            </div>
+
+
+        </div>
     </div>
+
+    <div>
+        <ul id="messageList">{{.MessageList}}</ul>
+        <div style="padding-top: 50px">
+            <input id="send-message" type="text">
+            <button  onclick="sendMessage()" class="button-style"> Envoyer </button>
+        </div>
+    </div>
+
 
 
 </div>

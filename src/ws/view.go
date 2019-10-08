@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -89,10 +90,12 @@ func (g *Games) AddRoom(name string, idFirstClass int64) {
 }
 
 func (g *Games) AddClass(nameRoom string, idClass int64) {
-	class := *g.getClass(idClass)
-	room := *g.GetRoom(nameRoom)
-	fmt.Printf("%v \n %v\n", class, room)
-	room.ClassList = append(room.ClassList, class)
+	class := g.getClass(idClass)
+	room := g.GetRoom(nameRoom)
+	fmt.Printf(" add class : %v \n %v\n \n", class, room)
+	room.ClassList = append(room.ClassList, *class)
+
+	fmt.Printf(" add class 2 : %v \n %v\n \n", class, room)
 }
 
 func (g *Games) GetRoom(name string) *Room {
@@ -151,15 +154,17 @@ func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "400 - rules error!", 400)
 				return
 			}
+
 			addClass = true
 		}
+		fmt.Printf("add class : %v \n", addClass)
 		if room == nil { // create room
 			g.AddRoom(g.Param["n"][0], classId)
-		}
-		fmt.Printf("GAMES : %+v\n", g)
-		if addClass { //ajout d'une class a une room
+		} else if addClass { //ajout d'une class a une room
 			g.AddClass(g.Param["n"][0], classId)
 		}
+		js, _ := json.Marshal(g)
+		fmt.Printf("GAMES : %+v\n", string(js))
 
 /*		if len(g.RoomList) == 0 || check == false {
 			//creation d'une nouvelle partie
@@ -214,6 +219,7 @@ func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 		g.showHome(w,r)
 		return
 	}
+
 	if class.Settings.ValueTortue == 0 { // NOT SET
 		room := g.GetRoom(g.Param["n"][0])
 		if room == nil {
