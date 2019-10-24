@@ -32,6 +32,17 @@ html, body {
     padding-left: 20px;
 }
 
+#logo, #texte {cursor:pointer}
+#info {
+    display:none;
+    position:absolute;
+    left:40%;
+    top:20px;
+    background:#eee;
+    padding:20px;
+    border:2px dotted blue
+}
+
 
 
 

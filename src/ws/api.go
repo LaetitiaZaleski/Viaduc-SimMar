@@ -132,7 +132,10 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		IsInMap(param, "data") &&
 		len(param["data"][0]) > 0 {
 
+		log.Println(fmt.Sprintf("c'est partit pour le calcul \n"))
+
 		var preference Preferences
+
 		err := json.Unmarshal([]byte(param["data"][0]), &preference)
 		if err != nil {
 			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
@@ -141,9 +144,15 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		}
 		room := g.GetRoom(preference.RoomName)
 		classId, err := strconv.ParseInt(preference.ClassId, 10, 64)
+		if err != nil {
+			log.Println(fmt.Sprintf("ERREUR 2 !!"))
+		}
 		class := g.getClassFromRoom(room, classId)
 		class.Preferences = preference
 
+		log.Println(fmt.Sprintf("preferences : %v \n", preference))
+		log.Println(fmt.Sprintf("classID : %v \n", classId))
+		log.Println(fmt.Sprintf("Settings : %v \n", class.Settings))
 
 		/*
 			Lancement du calcul / creation du fichier

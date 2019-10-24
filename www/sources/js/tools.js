@@ -1,5 +1,8 @@
 let addr = "";
 
+window.onload = function () {
+    $('[data-toggle="tooltip"]').tooltip();
+};
 
 function getXMLHttp(options, callback)
 {
@@ -18,6 +21,7 @@ function getXMLHttp(options, callback)
     xhr.onerror = function () {
         alert("ERROR")
     }
+
 }
 
 function postXMLHttp(options, callback)
@@ -36,5 +40,8 @@ function postXMLHttp(options, callback)
     };
 
 }
+
+
+
 
 

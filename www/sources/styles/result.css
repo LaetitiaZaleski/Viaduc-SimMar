@@ -12,3 +12,78 @@
 #messageList > li {
     width: 100%;
 }
+
+
+
+section.disabled-range-slider {
+    margin: auto;
+    position: relative;
+    width: 400px;
+    height: 35px;
+    text-align: center;
+}
+
+section.disabled-range-slider input {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 15px;
+    width: 400px;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    background: #d3d3d3; /* Grey background */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+section.disabled-range-slider input:last-child {
+    background: transparent; /* Grey background */
+
+}
+
+section.disabled-range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+section.disabled-range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: not-allowed; /* Cursor on hover */
+}
+
+section.disabled-range-slider input::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-color: #d3d3d3;
+    border: 0;
+}
+section.disabled-range-slider input:last-of-type::-moz-range-track {
+    -moz-appearance: none;
+    background: none transparent;
+    border: 0;
+}
+section.disabled-range-slider input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+
+
+

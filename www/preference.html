@@ -12,12 +12,13 @@
     <script src="sources/lib/plotly-latest.min.js"></script>
     <script type="text/javascript" src="sources/js/tools.js"></script>
     <script type="text/javascript" src="sources/js/getFile.js"></script>
+    <script type="text/javascript" src="sources/js/slideshow.js"></script>
 </head>
 <body>
 
 <div class="txt-center">
     <h1>
-        Coherence du projet personnel :
+        Préférences :
     </h1>
 
 
@@ -36,8 +37,8 @@
                         <section class="range-slider ">
                             <span class="rangeValues"></span>
                             <div> <span >  </span></div>
-                            <input value="{{.ValueAniMin}}" min="500" max="20000" step="5" type="range" id="valueAniMin" >
-                            <input value="{{.ValueAniMax}}" min="500" max="20000" step="5" type="range" id="valueAniMax" >
+                            <input value="{{.ValueAniMin}}" min="0" max="20000" step="5" type="range" id="valueAniMin" >
+                            <input value="{{.ValueAniMax}}" min="0" max="20000" step="5" type="range" id="valueAniMax" >
 
                         </section>
                     </div>
@@ -45,22 +46,22 @@
 
                 <div id="capital">
                     <div>
-                        <span> Capital des infrastructures de pêche </span>
+                        <span> Capital des infrastructures de pêche (en dollards)</span>
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{{.ValueCapMin}}" id="valueCapMin" min="500" max="20000" step="5" type="range" >
-                        <input value="{{.ValueCapMax}}" id="valueCapMax" min="500" max="20000" step="5" type="range" >
+                        <input value="{{.ValueCapMin}}" id="valueCapMin" min="0" max="20000" step="5" type="range" >
+                        <input value="{{.ValueCapMax}}" id="valueCapMax" min="0" max="20000" step="5" type="range" >
                     </section>
                 </div>
                 <div id="touristes">
                     <div>
-                        <span> Nombre de touristes </span>
+                        <span> Nombre de touristes par mois en moyenne sur un an </span>
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{{.ValueTourMin}}" id="valueTourMin" min="500" max="20000" step="5" type="range" >
-                        <input value="{{.ValueTourMax}}" id="valueTourMax" min="500" max="20000" step="5" type="range">
+                        <input value="{{.ValueTourMin}}" id="valueTourMin" min="0" max="20000" step="5" type="range" >
+                        <input value="{{.ValueTourMax}}" id="valueTourMax" min="0" max="20000" step="5" type="range">
                     </section>
                 </div>
             </div>
@@ -75,14 +76,14 @@
                     </div>
                     <section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{{.ValueEnvMin}}" id="valueEnvMin" min="0" max="100" step="10" type="range"  >
+                        <input value="{{.ValueEnvMin}}" id="valueEnvMin" min="0" max="100" step="10" type="range" >
                         <input value="{{.ValueEnvMax}}" id="valueEnvMax" min="0" max="100" step="10" type="range" >
                     </section>
                 </div>
 
                 <div>
                     <div>
-                        <span> Proportion de l'aire protégée ouverte au tourisme </span>
+                        <span> Proportion de l'aire protégée fermée au tourisme </span>
 
                     </div>
                     <section class="range-slider ">
@@ -94,28 +95,74 @@
             </div>
 
 
+
         </div>
 
-        <div>
-            <span>
-                La viabilité permet de savoir si les contraintes et les contrôles
-                sont compatibles avec le modèle.
-                Si le noyau est vide il nécéssaire de changer l'un ou l'autre.
+
+        <div class="slideshow-container">
+
+            <span> Nous allons à présent calculer le noyau de viabilité : c’est à dire que nous allons regarder si vos objectifs
+                par rapport au nombre de tortues,
+                de touristes et des l’infrastructures de pêche sont cohérents avec les moyens que vous vous donner pour y arriver.
+                Appuyer sur les flèches droite et gauche pour faire défiler les explications.
             </span>
-            <div>
-            <img src="sources/img/noyau.png" width="700px">
-            </div>
-        </div>
+
+             <div class="mySlides">
+
+                 <img src="sources/img/noyau1.png" width="700px">
+             </div>
+
+
+
+             <div class="mySlides" id="hideSlides">
+
+                 <img src="sources/img/noyau2.png" width="700px">
+
+             </div>
+
+
+
+             <div class="mySlides" id="hideSlides">
+
+                 <img src="sources/img/noyau3.png" width="700px">
+
+             </div>
+
+
+             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+             <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+         </div>
+
+
+
+        <br>
+
+
+
     </div>
+
+    </div>
+
+<div>
+                <span> Les noyaux et les préférences seront affichés en bas de page.
+        Dans la légende à droite vous pourrez voir les noms des différents noyaux que vous calculer.
+        Les noms se lisent ainsi : Le premier mot est votre rôle, puis "A" et deux nombres correspondant aux limites inférieures
+    et suppérieures sur le nombre d'animaux, puis "C" et les limites sur le capital des infrastructures, puis T et les limites sur les touristes
+    ,puis "Env" et les limites sur la restauration de l'environement, et enfin "Ouv" et les limites sur l'ouverture du parc.   </span>
+    <span> Pour faire disparaitre un noyaux, cliquez sur son nom. Pour isoler un noyau double cliquer sur son nom. </span>
+</div>
+
+
+
+
     <div style="padding: 50px">
-        <button id="start" onclick="letsCalc()" class="button-style"> Lancer le calcul </button>
-        <button id="draw" onclick="getFile({{.RoomName}},{{.ClassId}})" class="button-style"> Afficher le noyau </button>
+        <button id="draw" onclick="getFile(true)" class="button-style"> Calculer et afficher le noyau </button>
         <button  onclick="letsFinish()" class="button-style"> Continuer </button>
         <br/>
     </div>
 
     <div id="kernelDiv" style="width:100%;height:100%"></div>
-
 
 </div>
 

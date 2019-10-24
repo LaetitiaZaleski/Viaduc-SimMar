@@ -76,12 +76,12 @@ svg.append("path")
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate("+ (-margin.left + 10) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-        .text("Nombre");
+        .text("Valeurs en moyenne sur l'année ");
 
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate("+ (width/2) +","+(height+ margin.bottom - 10)+")")  // centre below axis
-        .text("Temps");
+        .text("Années");
 }
 function ndsolve(f, x0, dt, tmax) {
 
@@ -144,8 +144,6 @@ console.log("1")
     sim.evaluate("phi2 = 1.0");
     let d = 1.0;
     sim.evaluate("d = 1.0");
-    let del = 0.1;
-    sim.evaluate("del = 0.1");
     let h = 12000.0;
     sim.evaluate("h = 12000.0");
     //let mp = 20.0;
@@ -157,24 +155,23 @@ console.log("1")
     let zeta= 0.02;
     sim.evaluate("zeta= 0.02");
 
-    let b = parseInt(roomId = document.getElementById('valuePeche').value);
-    sim.evaluate(`b = ${b}`);
+    let del = parseInt(roomId = document.getElementById('valuePeche').value);
+    sim.evaluate(`del = ${del}`);
     let a = parseInt(roomId = document.getElementById('valueTortue').value);
-    sim.evaluate(`a = ${a}`);
+    sim.evaluate(`a = ${a}*2`);
     let mp = parseInt(roomId = document.getElementById('valuePoisson').value);
-    sim.evaluate(`mp = ${mp}`);
+    sim.evaluate(`mp = ${mp}*10`);
     let g = parseInt(roomId = document.getElementById('valueRepro').value);
     sim.evaluate(`g = ${g}`);
 
     sim.evaluate(" C0 =  10000");
-    sim.evaluate(" A0 =  3000");
-    let T0 = sim.evaluate(" T0 =  5000");
+    sim.evaluate(" A0 =  2000");
+    let T0 = sim.evaluate(" T0 =  3000");
     //console.log(T0);
-
 
     sim.evaluate("dCdt(C, A, T) =  -del * C + p * A * mp + mt * T");
     sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p *  A;");
-    sim.evaluate("dTdt(C, A, T) = T * (-c * T / (T + phi))  + a * zeta *  A");
+    sim.evaluate("dTdt(C, A, T) = T * (-c * T / (T + phi))  + a * zeta * A");
     sim.evaluate("result = ndsolve([dCdt, dAdt, dTdt], [C0, A0, T0], dt, tfinal)");
 
 

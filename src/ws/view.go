@@ -70,19 +70,19 @@ func Initialisation() Games {
 
 	var g Games
 	g.ClassList = append(g.ClassList, Class{1, "Maire", "", Settings{},
-		Preferences{"","",1000, 1500, 1000, 2500,
-			20000, 10000, 50, 0, 100, 20 }})
+		Preferences{"","",500, 1500, 1000, 5000,
+			20000, 10000, 0, 0, 50, 30 }})
 	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{}, Preferences{"", "",500, 1500, 1000, 2500,
 		20000, 10000, 0, 0, 100, 20 }})
-	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{}, Preferences{"", "", 1000, 1500, 500, 20000,
-		15000, 15000, 50, 10, 100, 50 }})
+	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{}, Preferences{"", "", 2000, 1500, 500, 20000,
+		20000, 20000, 20, 10, 100, 50 }})
 
 	return g
 }
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{}}
+	room := Room{name, nil, Settings{"", "",10,50,10,5}, []Message{}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)

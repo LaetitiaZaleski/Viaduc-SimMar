@@ -3,38 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <title>Dynamique</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+    <script  type="text/javascript" src="sources/lib/math/math.min.js"></script>
+    <script type="text/javascript" src="sources/lib/d3/d3.min.js"></script>
+
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
     <link rel="stylesheet" href="sources/styles/default.css">
     <link rel="stylesheet" href="sources/styles/dynamique.css">
     <link rel="stylesheet" href="sources/styles/home2.css">
-    <script src="https://unpkg.com/mathjs@6.0.3/dist/math.min.js"></script>
-    <script type="text/javascript" src="sources/lib/d3.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <title>Dynamique</title>
+
+    <script type="text/javascript">
+        var infos = new Array();
+        infos[1]= "<span style='color:#1c6c06;font:italic 14px arial'>En économie, une dépréciation est une perte de valeur d'un bien. Ici il s'agit de la perte de la valeurs des infrastructures de pêches (bateaux, filets, local,...). Chaque année la valeur de ces bien est dimunée d'un certain pourcentga à definir ici.<\/span>";
+        infos[2]= "<span style='color:#1c6c06;font:italic 14px arial'>Avec ce paramètre vous pouvez moduler l'attraction des touristes pour les infrastructures de pêche, c'est à dire si les infrastructures des pêcheurs (bateaux, services proposés, temps d'attente,...) jouent un rôle important ou non dans la venue des touristes. <\/span>";
+        infos[3]= "<span style='color:#1c6c06;font:italic 14px arial'>En moyenne pour les poissons pêchés dans cette région. <\/span>";
+        infos[4]= "<span style='color:#1c6c06;font:italic 14px arial'>Il s'agit de la différence entre le nombre de tortues un à un moment donné et le nombre de tortues un an avant, sans compter l'influence des pêcheurs et touristes.<\/span>";
+
+        function afficher(msg){
+            document.getElementById('info').style.display = "block";
+            document.getElementById('info').innerHTML = msg;
+        }
+        function masquer(){
+            document.getElementById('info').style.display = "none";
+        }
+    </script>
+
 </head>
 <body>
 
 <div class="txt-center">
     <h1>
-        Informations sur la dynamique :
+        Informations sur la dynamique et choix des paramètres :
     </h1>
 
-
-
     <div class="dynamique-container">
-        <div class="">
+        <h4 class="">
             <div>
                 <div>
-                    <span>Attraction des touristes pour les infrastructures de pêche : </span>
+
+                    <span data-toggle="tooltip" data-placement="top" title="En économie, une dépréciation est une perte de valeur d'un bien. Ici il s'agit de la perte de la valeurs des infrastructures de pêches (bateaux, filets, local,...). Chaque année la valeur de ces bien est dimunée d'un certain pourcentga à definir ici.">Dépreciation des infrastructures de pêche (en % par an) : </span>
                     <span> {{.ValuePeche}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{{.ValuePeche}}" class="slider" id="valuePeche"
-                           onchange="setMyValue(this);calc();">
+                    <input id="valuePeche" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);calc();"/>
+                    {{/*                    <input type="range" min="1" max="100" value="{{.ValuePeche}}" class="slider" id="valuePeche"
+                           onchange="setMyValue(this);calc();">*/}}
                 </div>
             </div>
 
             <div id="tortues">
                 <div>
                     <span>Attraction des touristes pour les tortues : </span>
+                    <span> {{.ValueTortue}} </span>
+                </div>
+                <div class="slidecontainer">
+                    <input id="valueTortue" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueTortue}}" onchange="setMyValue(this);calc();"/>
+                    {{/*<input type="range" min="1" max="100" value="{{.ValueTortue}}" class="slider" id="valueTortue"
+                           onchange="setMyValue(this);calc();">*/}}
+                </div>
+            </div>
+
+            <div id="poisson">
+                <div>
+                    <span> Prix du kilo de poisson (en dollard $): </span>
+                    <span> {{.ValuePoisson}} </span>
+                </div>
+                <div class="slidecontainer">
+                    <input id="valuePoisson" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePoisson}}" onchange="setMyValue(this);calc();"/>
+                    {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
+                           onchange="setMyValue(this);calc();">*/}}
+                </div>
+            </div>
+
+            <div id="repro">
+                <div >
+                    <span> Taux de reproduction des tortues : </span>
+                    <span> {{.ValueRepro}} </span>
+                </div>
+                <div class="slidecontainer">
+                    <input id="valueRepro" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueRepro}}" onchange="setMyValue(this);calc();"/>
+                    {{/*<input type="range" min="1" max="100" value="{{.ValueRepro}}" class="slider" id="valueRepro"
+                           onchange="setMyValue(this);calc();">*/}}
+                </div>
+            </div>
+            <div id="graph">
+
+            </div>
+        </h4>
+
+        <div><img src="sources/img/dynamique.png" class="img-dyna-size" ></div>
+
+    </div>
+<!--
+    <div class="dynamique-container">
+        <div class="">
+            <div >
+                <div>
+                    <div id="info"></div>
+                    <span id="texte" onmouseover="afficher(infos[1]);return false;" onmouseout="masquer();"> Dépreciation des infrastructures de pêche (en % par an) : </span>
+                    <span> {{.ValuePeche}} </span>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="50" value="{{.ValuePeche}}" class="slider" id="valuePeche"
+                           onchange="setMyValue(this);calc();">
+                </div>
+
+            </div>
+
+            <div id="tortues">
+                <div>
+                    <span onmouseover="afficher(infos[2]);return false;" onmouseout="masquer();">Attraction des touristes pour les tortues : </span>
                     <span> {{.ValueTortue}} </span>
                 </div>
                 <div class="slidecontainer">
@@ -45,22 +140,22 @@
 
             <div id="poisson">
                 <div>
-                    <span> Prix du kilo de poisson (en dollard $): </span>
+                    <span onmouseover="afficher(infos[3]);return false;" onmouseout="masquer();"> Prix de la tonne de poisson (en dollard $): </span>
                     <span> {{.ValuePoisson}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
+                    <input type="range" min="1" max="20" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">
                 </div>
             </div>
 
             <div id="repro">
                 <div >
-                    <span> Taux de reproduction des tortues : </span>
+                    <span onmouseover="afficher(infos[4]);return false;" onmouseout="masquer();"> Taux de croissance des tortues : </span>
                     <span> {{.ValueRepro}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{{.ValueRepro}}" class="slider" id="valueRepro"
+                    <input type="range" min="1" max="10" value="{{.ValueRepro}}" class="slider" id="valueRepro"
                            onchange="setMyValue(this);calc();">
                 </div>
             </div>
@@ -71,7 +166,8 @@
 
         <div><img src="sources/img/dynamique.png" width="700px"></div>
 
-    </div>
+    </div> -->
+
     <div style="padding: 50px">
         <button id="start" onclick="setSettings()" class="button-style"> Continuer </button>
         <br/>
@@ -86,6 +182,7 @@
 <script type="text/javascript" src="sources/js/tools.js"></script>
 <script type="text/javascript" src="sources/js/slider.js"></script>
 <script type="text/javascript" src="sources/js/home2.js"></script>
+<script type="text/javascript" src="sources/js/hover.js"></script>
 <script type="text/javascript" src="sources/js/settings.js"></script>
 </body>
 </html>
