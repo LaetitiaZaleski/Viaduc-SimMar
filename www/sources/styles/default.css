@@ -1,5 +1,5 @@
 body {
-/*background-color: red;*/
+    /*background-color: red;*/
     font-family: "Gill Sans MT";
 
 }
@@ -12,7 +12,7 @@ body {
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 
@@ -91,17 +91,9 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
-    body {
-        font-size: 30pt;
+    .btn {
+        font-size: 20pt;
     }
-    #remoteVideos > video {
-        max-height: calc(100vh - 87px);
-    }
-
-    .video-ret {
-        height: 33vh;
-        width: 33vw;
-}
 
 
 

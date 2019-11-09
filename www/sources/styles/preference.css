@@ -5,9 +5,17 @@
 html, body {
     height: 100%;
     font-family: "Verdana";
-    color:black;
 }
 
+.img-pref-size {
+    width: 700px;
+}
+
+@media screen and (max-width: 1200px) {
+    .img-pref-size {
+        width: 400px;
+    }
+}
 
 .preference-container {
     display: flex;
@@ -102,6 +110,7 @@ section.range-slider input:last-of-type::-moz-range-track {
 section.range-slider input[type=range]::-moz-focus-outer {
     border: 0;
 }
+
 
 
 

@@ -3,25 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Viaduc</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
     <link rel="stylesheet" href="sources/styles/default.css">
     <script type="text/javascript" src="sources/js/tools.js"></script>
 </head>
+
 <body>
 <div>statut : <div id="status-value" style="display: inline">{{.Status}}</div></div>
-<div class="txt-center">
+<div class="txt-center p-2">
     <h1>Bienvenue sur Viaduc !</h1>
-<div><img src="sources/img/logo.png" width="400px"></img></div>
+    <div><img src="sources/img/logo.png" width="400px"></img></div>
     <div class="">
         <div>
             <div class="green" style="font-size: 20pt;">Créer ou rejoindre une partie</div><br /><br />
-            <select id="room-id" class="input-style" onchange="if (this.value == '0') {document.getElementById('room-name').classList.remove('d-none');this.classList.add('d-none')}">
+            <select id="room-id" class="custom-select d-inline w-auto" onchange="if (this.value == '0') {document.getElementById('room-name').classList.remove('d-none');this.classList.add('d-none')}">
                 <option value="">Choisir une partie...</option>
                 <option value="0">Créer une partie</option>
                 {{.RoomList}}
-            </select> <input id="room-name" type="text" placeholder="Nom de la partie" class="input-style d-none"><br /><br />
-            <select id="class-id"class="input-style">{{.ClassList}}</select> <br /><br />
-            <button id="start" onclick="joinRoom()" class="button-style"> OK </button> <br />
+            </select> <input id="room-name" type="text" placeholder="Nom de la partie" class="form-control d-inline w-auto d-none"><br /><br />
+            <select id="class-id"class="custom-select d-inline w-auto">{{.ClassList}}</select> <br /><br />
+            <button id="start" onclick="joinRoom()" class="btn btn-primary"> OK </button> <br />
         </div>
     </div>
 </div>

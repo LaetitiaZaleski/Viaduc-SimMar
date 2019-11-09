@@ -281,10 +281,26 @@ func (g *Games) showResult(w http.ResponseWriter, r *http.Request) {
 		data.MessageList += template.HTML("<li id=\"message-id-" + strconv.FormatInt(MessageList[i].Id,10) + "\">(" + MessageList[i].Date + ") "+ MessageList[i].ClassName + " : " + MessageList[i].Message  +  "</option>")
 	}
 
-
-
 	t, _ := template.ParseFiles(view)
 	t.Execute(w, data)
+}
+
+func (g *Games) showNonVide(w http.ResponseWriter, r *http.Request) {
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
+		g.showHome(w,r)
+		return
+	}
+	pref := class.Preferences
+	view := "www/nonvide.html"
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, pref)
 }
 
 func (g *Games) showHome(w http.ResponseWriter, r *http.Request) {
@@ -343,6 +359,8 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		g.showResult(w,r)
 		//TODO : page des resulats
 		break
+	case "nonvide":
+		g.showNonVide(w,r)
 	default:
 		g.showHome(w, r)
 		break

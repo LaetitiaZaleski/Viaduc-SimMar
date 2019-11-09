@@ -3,12 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Viaduc</title>
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+
+    <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
     <link rel="stylesheet" href="sources/styles/default.css">
-    <link rel="stylesheet" href="sources/styles/result.css">
     <link rel="stylesheet" href="sources/styles/preference.css">
-    <script src="sources/lib/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="sources/styles/home2.css">
+    <link rel="stylesheet" href="sources/styles/result.css">
+
     <script type="text/javascript" src="sources/js/tools.js"></script>
     <script type="text/javascript" src="sources/js/getFile.js"></script>
+    <script type="text/javascript" src="sources/js/preference.js"></script>
+
+
 </head>
 <body>
 
@@ -22,7 +43,7 @@
         satisfaisant les préférences de tout les utilisateurs. Pour cela, nous commençons par regarder
         si les préférences des utilisateurs ont une intersection non vide.</span>
     <span>
-        En bas de pages vous pouvez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
+        En bas de page vous pouvez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
         En bleu celui du maire, en rose celui de l'Industriel et en vert celui de l'Ecologiste.
     </span>
     <span>
@@ -46,17 +67,17 @@
             <div>
 
                 <div id="tortues">
-                    <div>
-                        <span> <b>Nombres d'animaux </b></span>
-                    </div>
-                    <div>
-                        <div> <span > Maire : </span></div>
-                        <section class="disabled-range-slider ">
-                            <span class="rangeValues"></span>
+                    <div> <span > Maire : </span></div>
 
-                            <input id="MaireValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
-                            <input id="MaireValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
-                        </section>
+                    <section class="disabled-range-slider ">
+
+                        <input id="MaireValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
+                        <input id="MaireValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
+
+                    </section>
+
+                    <div>
+
                         <div> <span > Ecologiste : </span></div>
 
                         <section class="disabled-range-slider ">
@@ -65,13 +86,15 @@
                             <input id="EcologisteValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
 
                         </section>
-                            <div> <span > Industriel : </span></div>
-                            <section class="disabled-range-slider ">
+
+                        <div> <span > Industriel : </span></div>
+
+                        <section class="disabled-range-slider ">
 
                             <input id="IndustrielValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
                             <input id="IndustrielValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
 
-                            </section>
+                        </section>
                     </div>
                 </div>
 

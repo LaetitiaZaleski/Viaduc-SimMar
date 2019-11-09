@@ -11,7 +11,7 @@ function getVals(){
     displayElement.innerHTML = slide1 + " - " + slide2;
 }
 
-window.onload = function(){
+/*window.onload = function(){
     // Initialize Sliders
     var sliderSections = document.getElementsByClassName("range-slider");
     for( var x = 0; x < sliderSections.length; x++ ){
@@ -24,7 +24,7 @@ window.onload = function(){
             }
         }
     }
-};
+};*/
 
 async function letsCalc() {
 
@@ -43,8 +43,8 @@ async function letsCalc() {
     while (http.status != 404);
     // nb File = le nombre de fichier de cette partie pour ce joueur +1
 
-    var TourMin = parseInt(document.getElementById('valueTourMin').value);
-    var TourMax = parseInt(document.getElementById('valueTourMax').value);
+    var TourMin = parseInt(document.getElementById('valueTourSliderVal').innerText.split(",")[0]);
+    var TourMax = parseInt(document.getElementById('valueTourSliderVal').innerText.split(",")[1]);
     if (TourMin>TourMax){
         var aux = TourMin;
         TourMin = TourMax;
@@ -54,16 +54,16 @@ async function letsCalc() {
     var jsonObj = {
         "room_name": localStorage.getItem("roomName"),
         "class_id": localStorage.getItem("classId"),
-        "value_ani_min": parseInt(document.getElementById('valueAniMin').value),
-        "value_ani_max": parseInt(document.getElementById('valueAniMax').value),
+        "value_ani_min": parseInt(document.getElementById('valueAniSliderVal').innerText.split(",")[0]),
+        "value_ani_max": parseInt(document.getElementById('valueAniSliderVal').innerText.split(",")[1]),
         "value_tour_min": TourMin,
         "value_tour_max": TourMax,
-        "value_cap_min": parseInt(document.getElementById('valueCapMin').value),
-        "value_cap_max": parseInt(document.getElementById('valueCapMax').value),
-        "value_env_min": parseInt(document.getElementById('valueEnvMin').value),
-        "value_env_max": parseInt(document.getElementById('valueEnvMax').value),
-        "value_ouv_min": parseInt(document.getElementById('valueOuvMin').value),
-        "value_ouv_max": parseInt(document.getElementById('valueOuvMax').value)
+        "value_cap_min": parseInt(document.getElementById('valueCapSliderVal').innerText.split(",")[0]),
+        "value_cap_max": parseInt(document.getElementById('valueCapSliderVal').innerText.split(",")[1]),
+        "value_env_min": parseInt(document.getElementById('valueEnvSliderVal').innerText.split(",")[0]),
+        "value_env_max": parseInt(document.getElementById('valueEnvSliderVal').innerText.split(",")[1]),
+        "value_ouv_min": parseInt(document.getElementById('valueOuvSliderVal').innerText.split(",")[0]),
+        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal').innerText.split(",")[1])
     };
     data = JSON.stringify(jsonObj);
 
@@ -76,7 +76,7 @@ async function letsCalc() {
     });
 
      // on attend que le fichier soit créé :
-    nbFile = nbFile -1
+    nbFile = nbFile -1;
 
     do {
         let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
@@ -126,16 +126,16 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 
     //var ClassId = localStorage.getItem("classId");
 
-    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniMin`).value);
-    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniMax`).value);
-    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourMin`).value);
-    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourMax`).value);
-    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapMin`).value);
-    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapMax`).value);
-    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvMin`).value);
-    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvMax`).value);
-    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvMin`).value);
-    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvMax`).value);
+    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split(",")[0]);
+    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split(",")[1]);
+    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split(",")[0]);
+    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split(",")[1]);
+    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split(",")[0]);
+    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split(",")[1]);
+    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split(",")[0]);
+    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split(",")[1]);
+    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split(",")[0]);
+    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split(",")[1]);
 
 
 

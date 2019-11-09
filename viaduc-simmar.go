@@ -40,8 +40,5 @@ func main() {
 	http.HandleFunc ("/api", games.Api) // Définition de L'URL pour les requetes serveurs.
 	log.Fatal(http.ListenAndServe(":8083", nil)) // lancement du serveur en HTTP sur le port 8080
 
-
-
-
 }
 

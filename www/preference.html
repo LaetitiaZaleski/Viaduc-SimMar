@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Preference</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+    <script  type="text/javascript" src="sources/lib/math/math.min.js"></script>
+    <script type="text/javascript" src="sources/lib/d3/d3.min.js"></script>
+    <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
     <link rel="stylesheet" href="sources/styles/default.css">
     <link rel="stylesheet" href="sources/styles/preference.css">
     <link rel="stylesheet" href="sources/styles/home2.css">
-    <script src="https://unpkg.com/mathjs@6.0.3/dist/math.min.js"></script>
-    <script type="text/javascript" src="sources/lib/d3.min.js"></script>
-    <script src="sources/lib/plotly-latest.min.js"></script>
+
     <script type="text/javascript" src="sources/js/tools.js"></script>
     <script type="text/javascript" src="sources/js/getFile.js"></script>
     <script type="text/javascript" src="sources/js/slideshow.js"></script>
@@ -29,69 +45,85 @@
                 <h2>
                     Choix des objectifs :
                 </h2>
-                <div id="tortues">
+                <h4 id="tortues">
                     <div>
-                        <span> Nombres d'animaux </span>
+                        <span> Nombres d'animaux : </span> <span id="valueAniSliderVal">{{.ValueAniMin}},{{.ValueAniMax}}</span>
                     </div>
                     <div>
-                        <section class="range-slider ">
+                        <input id="valueAni" type="text" data-slider-min="500" data-slider-max="20000" data-slider-step="1" data-slider-value="[{{.ValueAniMin}},{{.ValueAniMax}}]"/>
+                        {{/*<section class="range-slider ">
                             <span class="rangeValues"></span>
                             <div> <span >  </span></div>
-                            <input value="{{.ValueAniMin}}" min="0" max="20000" step="5" type="range" id="valueAniMin" >
-                            <input value="{{.ValueAniMax}}" min="0" max="20000" step="5" type="range" id="valueAniMax" >
+                            <input value="{{.ValueAniMin}}" min="500" max="20000" step="5" type="range" id="valueAniMin" >
+                            <input value="{{.ValueAniMax}}" min="500" max="20000" step="5" type="range" id="valueAniMax" >
 
-                        </section>
+                        </section>*/}}
                     </div>
-                </div>
+                </h4>
 
-                <div id="capital">
+                <h4 id="capital">
                     <div>
-                        <span> Capital des infrastructures de pêche (en dollards)</span>
+                        <span> Capital des infrastructures de pêche : </span> <span id="valueCapSliderVal">{{.ValueCapMin}},{{.ValueCapMax}}</span>
                     </div>
-                    <section class="range-slider ">
-                        <span class="rangeValues"></span>
-                        <input value="{{.ValueCapMin}}" id="valueCapMin" min="0" max="20000" step="5" type="range" >
-                        <input value="{{.ValueCapMax}}" id="valueCapMax" min="0" max="20000" step="5" type="range" >
-                    </section>
-                </div>
-                <div id="touristes">
                     <div>
-                        <span> Nombre de touristes par mois en moyenne sur un an </span>
+                        <input id="valueCap" type="text" data-slider-min="500" data-slider-max="20000" data-slider-step="1" data-slider-value="[{{.ValueCapMin}},{{.ValueCapMax}}]"/>
                     </div>
-                    <section class="range-slider ">
+                    {{/*<section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{{.ValueTourMin}}" id="valueTourMin" min="0" max="20000" step="5" type="range" >
-                        <input value="{{.ValueTourMax}}" id="valueTourMax" min="0" max="20000" step="5" type="range">
-                    </section>
-                </div>
+                        <input value="{{.ValueCapMin}}" id="valueCapMin" min="500" max="20000" step="5" type="range" >
+                        <input value="{{.ValueCapMax}}" id="valueCapMax" min="500" max="20000" step="5" type="range" >
+                    </section>*/}}
+                </h4>
+
+                <h4 id="touristes">
+                    <div>
+                        <span> Nombre de touristes : </span> <span id="valueTourSliderVal">{{.ValueTourMin}},{{.ValueTourMax}}</span>
+                    </div>
+                    <div>
+                        <input id="valueTour" type="text" data-slider-min="500" data-slider-max="20000" data-slider-step="1" data-slider-value="[{{.ValueTourMin}},{{.ValueTourMax}}]"/>
+                    </div>
+                    {{/*<section class="range-slider ">
+                        <span class="rangeValues"></span>
+                        <input value="{{.ValueTourMin}}" id="valueTourMin" min="500" max="20000" step="5" type="range" >
+                        <input value="{{.ValueTourMax}}" id="valueTourMax" min="500" max="20000" step="5" type="range">
+                    </section>*/}}
+                </h4>
             </div>
             <div>
                 <h2>
                     Choix des moyens d'actions :
                 </h2>
-                <div>
+                <h4>
                     <div>
-                        <span> Restauration de l'environnement </span>
+                        <span> Restauration de l'environnement : </span> <span id="valueEnvSliderVal">{{.ValueEnvMin}},{{.ValueEnvMax}}</span>
 
                     </div>
-                    <section class="range-slider ">
+                    <div>
+                        <input id="valueEnv" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[{{.ValueEnvMin}},{{.ValueEnvMax}}]"/>
+                    </div>
+
+                    {{/*<section class="range-slider ">
                         <span class="rangeValues"></span>
-                        <input value="{{.ValueEnvMin}}" id="valueEnvMin" min="0" max="100" step="10" type="range" >
+                        <input value="{{.ValueEnvMin}}" id="valueEnvMin" min="0" max="100" step="10" type="range"  >
                         <input value="{{.ValueEnvMax}}" id="valueEnvMax" min="0" max="100" step="10" type="range" >
-                    </section>
-                </div>
+                    </section>*/}}
+                </h4>
 
-                <div>
+                <h4>
                     <div>
-                        <span> Proportion de l'aire protégée fermée au tourisme </span>
+                        <span> Proportion de l'aire protégée ouverte au tourisme : </span> <span id="valueOuvSliderVal">{{.ValueOuvMin}},{{.ValueOuvMax}}</span>
 
                     </div>
-                    <section class="range-slider ">
+                    <div>
+                        <input id="valueOuv" type="text" data-slider-min="0" data-slider-max="50" data-slider-step="1" data-slider-value="[{{.ValueOuvMin}},{{.ValueOuvMax}}]" />
+                    </div>
+
+                    {{/*<section class="range-slider ">
                         <span class="rangeValues"></span>
                         <input value="{{.ValueOuvMin}}" id="valueOuvMin" min="0" max="50" step="5" type="range" >
                         <input value="{{.ValueOuvMax}}" id="valueOuvMax" min="0" max="50" step="5" type="range" >
-                    </section>
-                </div>
+                    </section>*/}}
+                </h4>
             </div>
 
 
@@ -134,8 +166,6 @@
 
          </div>
 
-
-
         <br>
 
 
@@ -159,6 +189,7 @@
     <div style="padding: 50px">
         <button id="draw" onclick="getFile(true)" class="button-style"> Calculer et afficher le noyau </button>
         <button  onclick="letsFinish()" class="button-style"> Continuer </button>
+        <button  onclick="letsNotEmpty()" class="button-style"> Aide pour trouver un noyau non-vide </button>
         <br/>
     </div>
 
@@ -167,13 +198,13 @@
 </div>
 
 
+<script type="text/javascript" src="sources/js/preference.js"></script>
+<script type="text/javascript" src="sources/js/home.js"></script>
+
 <script>
     localStorage.setItem("roomName",{{.RoomName}});
     localStorage.setItem("classId",{{.ClassId}});
 </script>
-
-<script type="text/javascript" src="sources/js/preference.js"></script>
-<script type="text/javascript" src="sources/js/home.js"></script>
 
 </body>
 </html>
