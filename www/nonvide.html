@@ -28,45 +28,135 @@
     <script type="text/javascript" src="sources/js/tools.js"></script>
     <script type="text/javascript" src="sources/js/getFile.js"></script>
     <script type="text/javascript" src="sources/js/preference.js"></script>
-    <script type="text/javascript" src="sources/js/nonvide.js"></script>
+
 </head>
 <body>
 
 <h1>
-    Nous allons à présent vous aider à trouver un noyaux non vide qui vous convienne
+    Recherche de noyaux non-vides
 </h1>
 
 <div>  <span>
-        Pour cela nous avons identifier les préférences (en termes d'objectifs ou de moyens d'actions) qui semblent poser problème.
-        Parmis ces préférences, lesquelles êtes vous prêt à modifier (plusieurs choix possibles, plus vous sélectionner de préférences
-        plus le calcul sera long mais plus il sera facile de trouver un noyau non vide qui vous convienne.
+        Nous allons à présent vous aider à trouver un noyaux non vide qui vous convienne.
+        Pour chacunes des préférences, associer un niveau d'importance.
     </span>
 </div>
 
 <div>
-    <input type="checkbox" id="pire1" checked>
-    <label for="scales"> </label>
+    <div class="preference-container">
+        <h4>
+            <ul>
+                <li> <div>
+                <span> Le nombre minimum d'animaux </span> (<span id="valueAniSliderVal">{{.ValueAniMin}}</span>) <span> est <select  id="ImportanceAniMin">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+                 </div>
+    <li>  <div>
+                <span> Le nombre maximum d'animaux </span> (<span id="valueAniSliderVal">{{.ValueAniMax}}</span>) <span> est <select id="ImportanceAniMax">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+                 </div>
+                <li>  <div>
+                <span> Capital minimum des pêcheurs </span> (<span id="valueCapSliderVal">{{.ValueCapMin}}</span>) <span> est <select id="ImportanceCapMin">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+                 </div>
+    <li> <div>
+                <span> Capital maximum des pêcheurs </span> (<span id="valueCapSliderVal">{{.ValueCapMax}}</span>) <span> est <select id="ImportanceCapMax">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+                 </div>
+    <li> <div>
+                <span> Le nombre minimum de touristes </span> (<span id="valueTourSliderVal">{{.ValueTourMin}}</span>) <span> est <select id="ImportanceTourMin">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+            </div>
+
+    <li> <div>
+                <span> Le nombre maximum de touristes </span> (<span id="valueTourSliderVal">{{.ValueTourMax}}</span>) <span> est <select id="ImportanceTourMax">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+            </div>
+
+    <li>  <div>
+                <span> Effort minimum de restauration de l'environement </span> (<span id="valueEnvSliderVal">{{.ValueEnvMin}}</span>) <span> est <select id="ImportanceEnvMin">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+            </div>
+
+    <li> <div>
+                <span> Effort maximum de restauration de l'environement </span> (<span id="valueEnvSliderVal">{{.ValueEnvMax}}</span>) <span> est <select id="ImportanceEnvMax">
+                        <option>très important</option>
+                        <option>important</option>
+                        <option>neutre</option>
+                        <option selected="yes"> peu important </option>
+
+                    </select> pour moi. </span>
+            </div>
+
+                <li>  <div>
+                <span> La proportion minimum du parc fermée aux tourites </span> (<span id="valueEnvSliderVal">{{.ValueEnvMin}}</span>) <span> est <select id="ImportanceOuvMin">
+                        <option>très importante</option>
+                        <option>importante</option>
+                        <option>neutre</option>
+                        <option selected="yes">peu importante</option>
+
+                    </select> pour moi. </span>
+            </div>
+
+                <li>  <div>
+                <span> La proportion maximum du parc fermée aux tourites </span> (<span id="valueEnvSliderVal">{{.ValueEnvMax}}</span>) <span> est <select id="ImportanceOuvMax">
+                        <option>très importante</option>
+                        <option>importante</option>
+                        <option>neutre</option>
+                        <option selected="yes">peu importante</option>
+
+                    </select> pour moi. </span>
+            </div>
+            </ul>
+
+
+        </h4>
+
+    </div>
 </div>
 
-<div>
-    <input type="checkbox" id="pire2" checked>
-    <label for="horns"> </label>
-</div>
 
-<div>
-    <input type="checkbox" id="pire3" checked>
-    <label for="scales"> </label>
-</div>
 
-<div>
-    <input type="checkbox" id="pire4" checked>
-    <label for="horns"></label>
-</div>
+<button  onclick="letsNotEmpty2()" class="button-style"> Continuer </button>
 
-<div>
-    <input type="checkbox" id="pire5" checked>
-    <label for="horns"> </label>
-</div>
+
+
+<script type="text/javascript" src="sources/js/preference.js"></script>
+<script type="text/javascript" src="sources/js/home.js"></script>
 
 
 
