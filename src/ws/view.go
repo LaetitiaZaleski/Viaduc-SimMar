@@ -303,6 +303,24 @@ func (g *Games) showNonVide(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pref)
 }
 
+func (g *Games) showNonVidep2(w http.ResponseWriter, r *http.Request) {
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
+		g.showHome(w,r)
+		return
+	}
+	pref := class.Preferences
+	view := "www/nonvidep2.html"
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, pref)
+}
+
 func (g *Games) showHome(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
 		Status    string
@@ -361,6 +379,8 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		break
 	case "nonvide":
 		g.showNonVide(w,r)
+	case "nonvidep2":
+		g.showNonVidep2(w,r)
 	default:
 		g.showHome(w, r)
 		break

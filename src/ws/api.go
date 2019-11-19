@@ -279,6 +279,157 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			}
 		}*/
 
+	} else if IsInMap(param, "fct") && param["fct"][0] == "lets_calc" &&
+		IsInMap(param, "data") &&
+		len(param["data"][0]) > 0 {
+
+		log.Println(fmt.Sprintf("c'est partit pour le calcul \n"))
+
+		var preference Preferences
+
+		err := json.Unmarshal([]byte(param["data"][0]), &preference)
+		if err != nil {
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		room := g.GetRoom(preference.RoomName)
+		classId, err := strconv.ParseInt(preference.ClassId, 10, 64)
+		if err != nil {
+			log.Println(fmt.Sprintf("ERREUR 2 !!"))
+		}
+		class := g.getClassFromRoom(room, classId)
+		class.Preferences = preference
+
+		log.Println(fmt.Sprintf("preferences : %v \n", preference))
+		log.Println(fmt.Sprintf("classID : %v \n", classId))
+		log.Println(fmt.Sprintf("Settings : %v \n", class.Settings))
+
+		/*
+			Lancement du calcul / creation du fichier
+		*/
+		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
+		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
+		/*
+					Lancement du Viablab.exe :)
+
+				del = atof(argv[1]);
+			      a = atof(argv[2]);
+			      mp = atof(argv[3]);
+			      g = atof(argv[4]);
+
+			      localAMin = atof(argv[5]);
+			      localAMax = atof(argv[6]);
+			      localCMin = atof(argv[7]);
+			      localCMax = atof(argv[8]);
+			      localTMin = atof(argv[9]);
+			      localTMax = atof(argv[10]);
+
+			      localEpsMin = atof(argv[11]);
+			      localEpsMax = atof(argv[12]);
+			      localZetaMin = atof(argv[13]);
+			      localZetaMax = atof(argv[14]);
+		*/
+		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
+		//RCtx := r.Context()
+		//go GetFile(param["room_name"][0], ch)
+
+
+		/*var paramExec []string
+		paramExec = append(paramExec,
+			strconv.FormatInt(room.ClassList[0].Settings.ValuePeche,10),
+			strconv.FormatInt(room.ClassList[0].Settings.ValueTortue,10),
+			strconv.FormatInt(room.ClassList[0].Settings.ValuePoisson,10),
+			strconv.FormatInt(room.ClassList[0].Settings.ValueRepro,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
+			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
+		cmd := exec.Command("./bin/viabLabExe", file )
+		//cmd := exec.Command("./bin/tmpexe")
+		var stdout bytes.Buffer
+		var stderr bytes.Buffer
+		cmd.Stdout = &stdout
+		cmd.Stderr = &stderr
+		if err := cmd.Start(); err != nil { //lancement de l'exe
+
+		}
+
+		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
+		done := make(chan error, 1)
+		go func() {
+			done <-cmd.Wait()
+		}()
+		select {
+		case err := <-done :
+
+			if err != nil {
+
+				MyExit(w, errors.New("err : "+err.Error()))
+				return
+
+			}
+			var paramMv []string
+			var pathOut = "./"+fileOut
+			paramMv = append(paramMv,
+				pathOut, "./www/sources/output")
+			cmdMv := exec.Command("mv",paramMv... )
+
+			cmdMv.Run()
+			// supression du fichier inutile
+			var paramRm []string
+			var pathToRemove = "./"+fileToRemove
+			paramRm = append(paramRm, pathToRemove)
+			cmdRm := exec.Command("rm",paramRm... )
+			cmdRm.Run()
+
+
+			fmt.Printf("success \n")
+			w.WriteHeader(http.StatusOK)
+
+			fileOut := strings.Replace(fileOut, "input", "www/sources/output", -1)
+
+			fo, err := os.Stat(fileOut);
+			size := fo.Size()
+			var alerte = " "
+			if size == 0 {
+				alerte = "Ce noyau est vide !"
+			} else {
+				alerte = "Votre noyau n'est pas vide !"
+			}
+			fmt.Fprint(w, alerte )
+		}
+		/*ticker :=time.NewTicker(time.Second*1)
+		for range ticker.C {
+			select {
+			case err := <-done :
+
+				if err != nil {
+
+					MyExit(w, errors.New("err : "+err.Error()))
+					return
+
+				}
+				var paramMv []string
+				paramMv = append(paramMv,
+					"./output/*", "./www/output")
+				cmdMv := exec.Command("mv",paramMv... )
+				cmdMv.Run()
+				fmt.Printf("success \n")
+				w.WriteHeader(http.StatusOK)
+				fmt.Fprint(w, fileOut)
+			case <-RCtx.Done():
+				fmt.Println("Client has disconnected.")
+			}
+		}*/
+
 	} else if IsInMap(param, "fct") && param["fct"][0] == "send_message" &&
 		IsInMap(param, "data") &&
 		len(param["data"][0]) > 0 {

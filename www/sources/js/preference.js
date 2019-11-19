@@ -51,23 +51,5 @@ function letsNotEmpty() {
     window.location.href = "?" + newParam;
 }
 
-function letsNotEmpty2(){
-    let url = window.location.href;
-    let newParam = url.split("?")[1].replace("nonvide", "nonvidep2");
 
-    var importances = ["ImportanceAniMin", "ImportanceAniMax", "ImportanceTourMin", "ImportanceTourMax",
-        "ImportanceCapMin", "ImportanceCapMax", "ImportanceEnvMin", "ImportanceEnvMax", "ImportanceOuvMin",
-        "ImportanceOuvMax"];
-
-    for (var i= 0; i < importances.length; i++) {
-        var imp =importances[i];
-        console.log(imp);
-        var e = document.getElementById(imp);
-        localStorage.setItem(imp,e.options[e.selectedIndex].text);
-    }
-
-
-
-    window.location.href = "?" + newParam;
-}
 

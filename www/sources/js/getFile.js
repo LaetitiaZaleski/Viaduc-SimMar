@@ -69,13 +69,13 @@ async function letsCalc() {
 
     console.log(data);
 
-     postXMLHttp('/api?fct=lets_calc' +
+    postXMLHttp('/api?fct=lets_calc' +
         '&data=' + data,  function (ret) {
         alert("LE CALCUL EST FINI : " + ret);
         //getFile();
     });
 
-     // on attend que le fichier soit créé :
+    // on attend que le fichier soit créé :
     nbFile = nbFile -1;
 
     do {
