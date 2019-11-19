@@ -8,9 +8,6 @@ $("#valueCap").on("slide", function(slideEvt) {
 
 
 function getImportances(){
-    let url = window.location.href;
-    let newParam = url.split("?")[1].replace("nonvide", "nonvidep2");
-
     var importances = ["ImportanceAniMin", "ImportanceAniMax", "ImportanceTourMin", "ImportanceTourMax",
         "ImportanceCapMin", "ImportanceCapMax", "ImportanceEnvMin", "ImportanceEnvMax", "ImportanceOuvMin",
         "ImportanceOuvMax"];
