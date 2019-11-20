@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -247,11 +248,37 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 			fo, err := os.Stat(fileOut);
 			size := fo.Size()
+
 			var alerte = " "
 			if size == 0 {
 				alerte = "Ce noyau est vide !"
 			} else {
-				alerte = "Votre noyau n'est pas vide !"
+				data, err2 := ioutil.ReadFile(strings.Replace(fileOut, "input", "www/sources/output", -1))
+				if err2 != nil {
+					fmt.Println(err2)
+				}
+				var vals = strings.Split(string(data), " ")
+				v1, err := strconv.ParseFloat(vals[1], 32)
+				if err != nil {
+					fmt.Println("v1")
+					fmt.Println(err)
+				}
+				v2, err := strconv.ParseFloat(vals[3], 32)
+				if err != nil {
+					fmt.Println("v2")
+					fmt.Println(err)
+				}
+				v3, err := strconv.ParseFloat(vals[5], 32)
+				if err != nil {
+					fmt.Println("v3")
+					fmt.Println(err)
+				}
+				if (v1 < 0) || (v2 < 0) || (v3 < 0){
+					alerte = "Ce noyau est vide !"
+				}else{
+					alerte = "Votre noyau n'est pas vide !"
+				}
+
 			}
 			fmt.Fprint(w, alerte )
 		}
@@ -402,7 +429,30 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			if size == 0 {
 				alerte = "Ce noyau est vide !"
 			} else {
-				alerte = "Votre noyau n'est pas vide !"
+				data, err2 := ioutil.ReadFile(strings.Replace(fileOut, "input", "www/sources/output", -1))
+				if err2 != nil {
+					fmt.Println(err2)
+				}
+				var vals = strings.Split(string(data), " ")
+				v1, err := strconv.ParseFloat(vals[1], 32)
+				if err != nil {
+					fmt.Println("v1")
+					fmt.Println(err)
+				}
+				v2, err := strconv.ParseFloat(vals[3], 32)
+				if err != nil {
+					fmt.Println("v2")
+					fmt.Println(err)
+				}
+				v3, err := strconv.ParseFloat(vals[5], 32)
+				if err != nil {
+					fmt.Println("v3")
+					fmt.Println(err)
+				}
+				if (v1 < 0) || (v2 < 0) || (v3 < 0){
+					alerte = "Ce noyau est vide !"
+				}else{
+					alerte = "Votre noyau n'est pas vide !"}
 			}
 			fmt.Fprint(w, alerte )
 		}

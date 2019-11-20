@@ -14,14 +14,11 @@ function getImportances(){
 
     for (var i= 0; i < importances.length; i++) {
         var imp =importances[i];
-        console.log(imp);
+       // console.log(imp);
         var e = document.getElementById(imp);
         localStorage.setItem(imp,e.options[e.selectedIndex].text);
     }
-
-
-
-    window.location.href = "?" + newParam;
+   // window.location.href = "?" + newParam;
 }
 
 
