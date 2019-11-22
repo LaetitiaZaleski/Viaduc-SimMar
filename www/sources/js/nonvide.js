@@ -171,11 +171,7 @@ async function getPrefs() {
         }
 
         //  calcule leur pas :
-        // TODO : Augmenter/Diminuer selon si c'est un min ou un max
-        // TODO : si c'est ACT : maths.ceil sinon float
 
-      //
-        //
         //console.log(Prefs);
         for (var i = 0; i < Prefs.length; i++) {
            // console.log(Prefs[i].name + Prefs[i].table);
@@ -184,8 +180,8 @@ async function getPrefs() {
                 case 'très important':
                 case 'très importante':
                 //    console.log(Prefs[i].distVal / 1000.0);
-                    Prefs[i].pas = Math.ceil(Prefs[i].distVal / 1000.0);
-                 //   console.log("pas :" + Prefs[i].pas);
+                    Prefs[i].pas = Prefs[i].distVal / 1000.0;
+                    console.log("pas :" + Prefs[i].pas);
                     Prefs[i].importance = 1000.0;
                     Prefs[i].table.push(0);
                     Prefs[i].table.push(1000);
@@ -197,7 +193,7 @@ async function getPrefs() {
                     break;
                 case 'important':
                 case 'importante':
-                    Prefs[i].pas = Math.ceil(Prefs[i].distVal / 100.0);
+                    Prefs[i].pas = Prefs[i].distVal / 100.0;
                     Prefs[i].importance = 100.0;
                     Prefs[i].table.push(0);
                     Prefs[i].table.push(100);
@@ -207,8 +203,8 @@ async function getPrefs() {
              //       var pas = document.getElementById(pasId);
                //     pas.innerHTML = "Augmenter le " + Prefs[i].name + " de " + Prefs[i].pas.toString();
                 case 'neutre':
-                    Prefs[i].pas = Math.ceil(Prefs[i].distVal / 10.0);
-                    var pasId = Prefs[i].name;
+                    Prefs[i].pas = Prefs[i].distVal / 10.0;
+                   // var pasId = Prefs[i].name;
                     Prefs[i].importance = 10.0;
                     Prefs[i].table.push(0);
                     Prefs[i].table.push(10);
@@ -229,8 +225,10 @@ async function getPrefs() {
        // console.log(Prefs);
       //   debut de l'exploration :
         i=0;
-
-        while (i<10){
+        var lastNonVide = 0;
+        newPrefs = [];
+        prefsInit = Prefs;
+        while (i<100){
             console.log("******** etape numero: "+i+" ********");
 
             var http = new XMLHttpRequest();
@@ -244,7 +242,7 @@ async function getPrefs() {
                 http.open('HEAD', tmpPath, false);
                 http.send();
                 nbFile = nbFile + 1
-            } while (http.status != 404);
+            } while (http.status !== 404);
 
             let AniMin = Prefs[0];
             let AniMax = Prefs[1];
@@ -259,16 +257,16 @@ async function getPrefs() {
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
                 "class_id": localStorage.getItem("classId"),
-                "value_ani_min": AniMin.table[1]*AniMin.signe*AniMin.pas + AbsAMin,
-                "value_ani_max":  AniMax.table[1]*AniMax.signe*AniMax.pas + AbsAMax,
-                "value_tour_min": TourMin.table[1]*TourMin.signe*TourMin.pas + AbsTMin,
-                "value_tour_max": TourMax.table[1]*TourMax.signe*TourMax.pas + AbsTMax,
-                "value_cap_min": CapMin.table[1]*CapMin.signe*CapMin.pas + AbsCMin,
-                "value_cap_max": CapMax.table[1]*CapMax.signe*CapMax.pas + AbsCMax,
-                "value_env_min": EnvMin.table[1]*EnvMin.signe*EnvMin.pas + AbsEnvMin,
-                "value_env_max": EnvMax.table[1]*EnvMax.signe*EnvMax.pas + AbsEnvMax,
-                "value_ouv_min": OuvMin.table[1]*OuvMin.signe*OuvMin.pas + AbsOuvMin,
-                "value_ouv_max":OuvMax.table[1]*OuvMax.signe*OuvMax.pas + AbsOuvMax
+                "value_ani_min": Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + AbsAMin),
+                "value_ani_max":  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + AbsAMax),
+                "value_tour_min": Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + AbsTMin),
+                "value_tour_max": Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + AbsTMax),
+                "value_cap_min": Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + AbsCMin),
+                "value_cap_max": Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + AbsCMax),
+                "value_env_min": Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + AbsEnvMin),
+                "value_env_max": Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + AbsEnvMax),
+                "value_ouv_min": Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + AbsOuvMin),
+                "value_ouv_max":Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + AbsOuvMax)
             };
             data = JSON.stringify(jsonObj);
 
@@ -280,20 +278,26 @@ async function getPrefs() {
                 '&data=' + data, function (ret) {
                 if (ret == "Ce noyau est vide !"){
                     console.log("noyau vide");
-                    for (var j = 0; j < Prefs.length; j++) {
-                        console.log(Prefs[j].name +Prefs[j].table);
-                        Prefs[j].table[2] = Prefs[j].table[1];
-                        Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
-                        console.log(Prefs[j].name +Prefs[j].table);
+                    i// si la première iteration est vide c'est une erreur : on ne fait rien et on recommence
+                        for (var j = 0; j < Prefs.length; j++) {
+                            if(Prefs[j].table[1] ==! Prefs[j].table[0]) {
+                                console.log(Prefs[j].name + Prefs[j].table);
+                            Prefs[j].table[2] = Prefs[j].table[1];
+                            Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
+                            //console.log(Prefs[j].name +Prefs[j].table);
+                        }
                     }
                 }
                 else {
                     console.log("noyau pas vide");
-                    for (var j = 0; j < Prefs.length; j++) {
-                       // console.log(Prefs[j].name +Prefs[j].table);
+                    lastNonVide = nbFile-1;
+                    newPrefs = Prefs;
+                    for (j = 0; j < Prefs.length; j++) {
+
                         Prefs[j].table[0] = Prefs[j].table[1];
-                        if (Prefs[j].table[1] == Prefs[j].table[0]){ // première iteration
+                        if (Prefs[j].table[1] === Prefs[j].table[0]){ // première iteration
                             Prefs[j].table[1] = Math.ceil((Prefs[j].table[0] + Prefs[j].table[2]) / 2.0);
+
                         }else{
                             Prefs[j].table[1] = Math.ceil((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
                         }
@@ -303,8 +307,6 @@ async function getPrefs() {
                 }
 
                 nbFile = nbFile - 1;
-                //alert("LE CALCUL EST FINI : " + ret);
-                //getFile();
             });
             do {
                 let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
@@ -312,33 +314,158 @@ async function getPrefs() {
                 http.send();
                 sleep(1500)
             }
-            while (http.status == 404);
+            while (http.status === 404);
+            // pour toutes les pref si tab[0] == tab[2] on stoppe
+            var stop = 0;
+            for (var j = 0; j < Prefs.length; j++) {
+                console.log(Prefs[j].name + Prefs[j].table);
+                if ((Prefs[j].table[1] === Prefs[j].table[2])||((Prefs[j].table[1]+1) === Prefs[j].table[2])){
+                    stop++
+                }
+            }
+
+            console.log("stop : "+stop);
+            if(stop === Prefs.length){
+                i=100;
+            }
             i++;
-
-
-/*
-            // on attend que le fichier soit créé :
-                 nbFile = nbFile - 1
-
-        do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
-            http.open('HEAD', tmpPath, false);
-            http.send();
-            sleep(1500)
-        }
-        while (http.status == 404);
-
-        */
         }
 
+        /******************************** Rafinement **********************************/
+
+        console.log(prefsInit);
+        console.log(newPrefs);
+        i=0;
+
+        for (j = 0; j < newPrefs.length; j++){
+           // console.log("test : "+lastPrefsNonVide[j].name+" "+lastPrefsNonVide[j].importance);
+            if (newPrefs[j].importance < 5){ // si c'etait des importants on garde comme avant
+                // sinon on les traite comme des neutres
+            //    console.log("pas important");
+                prefsInit[j].importance = 100.0;
+                prefsInit[j].pas = prefsInit[j].distVal / prefsInit[j].importance;
+                // var pasId = Prefs[i].name;
+                prefsInit[j].table =[0,0,100];
+                newPrefs[j]=prefsInit[j]
+            }
+        }
+        console.log("New prefs :");
+        console.log(newPrefs);
+
+        while (i<100){
 
 
-        // document.getElementById(obj.class_name+"ValueAniMin").value = obj.preference.value_ani_min;
+            console.log("******** Rafinement : "+i+" ********");
+            console.log("New prefs 1:");
+            console.log(newPrefs);
 
-        //getFile();
+             http = new XMLHttpRequest();
+            nbFile = 0;
+
+            RoomName = localStorage.getItem("roomName");
+            ClassId = localStorage.getItem("classId");
+
+            do {
+                let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+                http.open('HEAD', tmpPath, false);
+                http.send();
+                nbFile = nbFile + 1
+            } while (http.status !== 404);
+
+
+            let AniMin = newPrefs[0];
+            let AniMax = newPrefs[1];
+            let TourMin = newPrefs[2];
+            let TourMax = newPrefs[3];
+            let CapMin = newPrefs[4];
+            let CapMax = newPrefs[5];
+            let EnvMin = newPrefs[6];
+            let EnvMax = newPrefs[7];
+            let OuvMin = newPrefs[8];
+            let OuvMax = newPrefs[9];
+
+             jsonObj = {
+                "room_name": localStorage.getItem("roomName"),
+                "class_id": localStorage.getItem("classId"),
+                "value_ani_min": Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + AbsAMin),
+                "value_ani_max":  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + AbsAMax),
+                "value_tour_min": Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + AbsTMin),
+                "value_tour_max": Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + AbsTMax),
+                "value_cap_min": Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + AbsCMin),
+                "value_cap_max": Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + AbsCMax),
+                "value_env_min": Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + AbsEnvMin),
+                "value_env_max": Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + AbsEnvMax),
+                "value_ouv_min": Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + AbsOuvMin),
+                "value_ouv_max":Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + AbsOuvMax)
+            };
+            data = JSON.stringify(jsonObj);
+
+            console.log(data);
+            console.log("New prefs 2:");
+            console.log(newPrefs);
+
+            // Dichotomie :
+            res = postXMLHttp('/api?fct=lets_calc' +
+                '&data=' + data, function (ret) {
+                if (ret === "Ce noyau est vide !"){
+                    console.log("noyau vide");
+                    for (var j = 0; j < newPrefs.length; j++) {
+                        console.log(newPrefs[j].name +newPrefs[j].table);
+                        newPrefs[j].table[2] = newPrefs[j].table[1];
+                        newPrefs[j].table[1] = Math.floor((newPrefs[j].table[0] + newPrefs[j].table[1]) / 2.0);
+                        console.log(newPrefs[j].name +newPrefs[j].table);
+                    }
+                }
+                else {
+                    console.log("noyau pas vide");
+                    for ( j = 0; j < newPrefs.length; j++) {
+                        // console.log(Prefs[j].name +Prefs[j].table);
+                        newPrefs[j].table[0] = newPrefs[j].table[1];
+                        if (newPrefs[j].table[1] === newPrefs[j].table[0]){ // première iteration
+                            newPrefs[j].table[1] = Math.ceil((newPrefs[j].table[0] + newPrefs[j].table[2]) / 2.0);
+                        }else{
+                            newPrefs[j].table[1] = Math.ceil((newPrefs[j].table[0] + newPrefs[j].table[1]) / 2.0);
+                        }
+
+                        // console.log(Prefs[j].name +Prefs[j].table);
+                    }
+                }
+                console.log("New prefs 3 :");
+                console.log(newPrefs);
+
+                nbFile = nbFile - 1;
+            });
+
+            do {
+                let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+                http.open('HEAD', tmpPath, false);
+                http.send();
+                console.log(nbFile);
+                sleep(2500)
+            }
+            while (http.status === 404);
+
+            // condition d'arret : pour toutes les pref si tab[0] == tab[2] on stoppe
+            stop = 0;
+            for (j = 0; j < newPrefs.length; j++) {
+                console.log(newPrefs[j].name + newPrefs[j].table);
+                if ((newPrefs[j].table[1] === newPrefs[j].table[2])||((newPrefs[j].table[1]+1) === newPrefs[j].table[2])){
+                    stop++
+                }
+            }
+
+            console.log("stop : "+stop);
+            if(stop === newPrefs.length){
+                i=100;
+            }
+            i++;
+        }
+
     });
 
 }
+
+
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
