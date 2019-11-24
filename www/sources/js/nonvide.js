@@ -27,7 +27,7 @@ async function getPrefs() {
 
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
-        //  console.log(ret);
+        printhello();
 
         // Valeurs de min et max absolu :
 
@@ -65,7 +65,7 @@ async function getPrefs() {
         if (obj !== null && obj.length > 0) {
             for (i = 0; i < obj.length; i++) {
                 if (obj[i].class_name.toString() == className) {
-                    console.log("hello");
+                 //   console.log("hello");
                     // Pour les max : on regarde la distance à la borne min : il s'agit de la veleur normalisée, pour les mins,
                     // on regarde la valeur à la borne max : c'est 1- la valeur normalisée.
 
@@ -181,7 +181,7 @@ async function getPrefs() {
                 case 'très importante':
                 //    console.log(Prefs[i].distVal / 1000.0);
                     Prefs[i].pas = Prefs[i].distVal / 1000.0;
-                    console.log("pas :" + Prefs[i].pas);
+                   // console.log("pas :" + Prefs[i].pas);
                     Prefs[i].importance = 1000.0;
                     Prefs[i].table.push(0);
                     Prefs[i].table.push(1000);
@@ -277,11 +277,11 @@ async function getPrefs() {
             res = postXMLHttp('/api?fct=lets_calc' +
                 '&data=' + data, function (ret) {
                 if (ret == "Ce noyau est vide !"){
-                    console.log("noyau vide");
-                    i// si la première iteration est vide c'est une erreur : on ne fait rien et on recommence
+                    console.log("vide");
+                    // si la première iteration est vide c'est une erreur : on ne fait rien et on recommence
                         for (var j = 0; j < Prefs.length; j++) {
                             if(Prefs[j].table[1] ==! Prefs[j].table[0]) {
-                                console.log(Prefs[j].name + Prefs[j].table);
+                              //  console.log(Prefs[j].name + Prefs[j].table);
                             Prefs[j].table[2] = Prefs[j].table[1];
                             Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
                             //console.log(Prefs[j].name +Prefs[j].table);
@@ -289,9 +289,9 @@ async function getPrefs() {
                     }
                 }
                 else {
-                    console.log("noyau pas vide");
+                    console.log("non vide");
                     lastNonVide = nbFile-1;
-                    newPrefs = Prefs;
+                    newPrefs = [...Prefs];
                     for (j = 0; j < Prefs.length; j++) {
 
                         Prefs[j].table[0] = Prefs[j].table[1];
@@ -318,13 +318,13 @@ async function getPrefs() {
             // pour toutes les pref si tab[0] == tab[2] on stoppe
             var stop = 0;
             for (var j = 0; j < Prefs.length; j++) {
-                console.log(Prefs[j].name + Prefs[j].table);
+             //   console.log(Prefs[j].name + Prefs[j].table);
                 if ((Prefs[j].table[1] === Prefs[j].table[2])||((Prefs[j].table[1]+1) === Prefs[j].table[2])){
                     stop++
                 }
             }
 
-            console.log("stop : "+stop);
+           // console.log("stop : "+stop);
             if(stop === Prefs.length){
                 i=100;
             }
@@ -333,8 +333,8 @@ async function getPrefs() {
 
         /******************************** Rafinement **********************************/
 
-        console.log(prefsInit);
-        console.log(newPrefs);
+      //  console.log(prefsInit);
+      //  console.log(newPrefs);
         i=0;
 
         for (j = 0; j < newPrefs.length; j++){
@@ -349,15 +349,15 @@ async function getPrefs() {
                 newPrefs[j]=prefsInit[j]
             }
         }
-        console.log("New prefs :");
-        console.log(newPrefs);
+     //   console.log("New prefs :");
+     //   console.log(newPrefs);
 
         while (i<100){
 
 
             console.log("******** Rafinement : "+i+" ********");
-            console.log("New prefs 1:");
-            console.log(newPrefs);
+       //     console.log("New prefs 1:");
+      //      console.log(newPrefs);
 
              http = new XMLHttpRequest();
             nbFile = 0;
@@ -400,38 +400,48 @@ async function getPrefs() {
             };
             data = JSON.stringify(jsonObj);
 
-            console.log(data);
-            console.log("New prefs 2:");
-            console.log(newPrefs);
+              console.log(data);
+         //   console.log("New prefs 2:");
+          //  console.log(newPrefs);
 
             // Dichotomie :
             res = postXMLHttp('/api?fct=lets_calc' +
                 '&data=' + data, function (ret) {
                 if (ret === "Ce noyau est vide !"){
-                    console.log("noyau vide");
+                    console.log(" vide");
                     for (var j = 0; j < newPrefs.length; j++) {
-                        console.log(newPrefs[j].name +newPrefs[j].table);
-                        newPrefs[j].table[2] = newPrefs[j].table[1];
-                        newPrefs[j].table[1] = Math.floor((newPrefs[j].table[0] + newPrefs[j].table[1]) / 2.0);
-                        console.log(newPrefs[j].name +newPrefs[j].table);
+                        //console.log("c'est pareil ?")
+                        //console.log(newPrefs[j].table[1]);
+                        //console.log(newPrefs[j].table[0]);
+                        //console.log(newPrefs[j].table[1] ==! newPrefs[j].table[0])
+                        for (var j = 0; j < newPrefs.length; j++) {
+                    //            console.log(newPrefs[j].name + Prefs[j].table);
+                                newPrefs[j].table[2] = newPrefs[j].table[1];
+                                newPrefs[j].table[1] = Math.floor((newPrefs[j].table[0] + newPrefs[j].table[1]) / 2.0);
+                     //           console.log(newPrefs[j].name +newPrefs[j].table);
+                        }
+
+
                     }
                 }
                 else {
-                    console.log("noyau pas vide");
+                    console.log("non vide");
                     for ( j = 0; j < newPrefs.length; j++) {
-                        // console.log(Prefs[j].name +Prefs[j].table);
+                 //       console.log(Prefs[j].name +Prefs[j].table);
                         newPrefs[j].table[0] = newPrefs[j].table[1];
+                 //       console.log(newPrefs[j].table[2]);
+                 //       console.log(newPrefs[j].table[1]);
                         if (newPrefs[j].table[1] === newPrefs[j].table[0]){ // première iteration
                             newPrefs[j].table[1] = Math.ceil((newPrefs[j].table[0] + newPrefs[j].table[2]) / 2.0);
                         }else{
                             newPrefs[j].table[1] = Math.ceil((newPrefs[j].table[0] + newPrefs[j].table[1]) / 2.0);
                         }
-
-                        // console.log(Prefs[j].name +Prefs[j].table);
+                  //      console.log(newPrefs[j].table[1]);
+                  //      console.log(Prefs[j].name +Prefs[j].table);
                     }
                 }
-                console.log("New prefs 3 :");
-                console.log(newPrefs);
+            //    console.log("New prefs 3 :");
+            //    console.log(newPrefs);
 
                 nbFile = nbFile - 1;
             });
@@ -440,7 +450,6 @@ async function getPrefs() {
                 let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
                 http.open('HEAD', tmpPath, false);
                 http.send();
-                console.log(nbFile);
                 sleep(2500)
             }
             while (http.status === 404);
@@ -448,7 +457,7 @@ async function getPrefs() {
             // condition d'arret : pour toutes les pref si tab[0] == tab[2] on stoppe
             stop = 0;
             for (j = 0; j < newPrefs.length; j++) {
-                console.log(newPrefs[j].name + newPrefs[j].table);
+          //      console.log(newPrefs[j].name + newPrefs[j].table);
                 if ((newPrefs[j].table[1] === newPrefs[j].table[2])||((newPrefs[j].table[1]+1) === newPrefs[j].table[2])){
                     stop++
                 }
@@ -465,7 +474,9 @@ async function getPrefs() {
 
 }
 
-
+function printhello() {
+    console.log("Hello")
+}
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
