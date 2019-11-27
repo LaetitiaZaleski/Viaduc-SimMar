@@ -201,13 +201,13 @@ async function getPrefs() {
                     break;
             }
         }
-        for (var j =0; j<Prefs.length; j++){
-        }
+
 
         finalPrefs = [];
         PrefsInit0 = JSON.parse(JSON.stringify(Prefs));
         PrefsInit1 = JSON.parse(JSON.stringify(Prefs)); // copie du tableau
         PrefsInit2 = JSON.parse(JSON.stringify(Prefs));
+
         console.log(Prefs);
         console.log(PrefsInit1);
         console.log(PrefsInit2);
@@ -215,12 +215,9 @@ async function getPrefs() {
         console.log("recherche 1");
         let r1 = rechercheDiagonale(PrefsInit0, minMax); // OK tout seul
 
-
         console.log(Prefs);
         console.log(PrefsInit1);
         console.log(PrefsInit2);
-
-        // jusqu'ici tout va bien
 
         console.log("recherche 2");
         let r2 =rechercheUnParUn(PrefsInit1, minMax); // OK tout seul
@@ -228,29 +225,20 @@ async function getPrefs() {
         console.log(r1.data);
         finalPrefs = [r1.data, r2.data];
 
-        console.log("Final prefs :");
+        console.log("recherche 3");
 
+        let priorite = recherchePriorite(PrefsInit2,minMax);
+
+        for(k = 0; k<priorite.length; k++){
+            finalPrefs.push(priorite[k]);
+        }
+
+        console.log("Final prefs :");
         for(k = 0; k<finalPrefs.length; k++){
             console.log("k :");
             console.log(k);
             console.log(finalPrefs[k]);
         }
-
-
-
-
-
-     /*   console.log("recherche 3");
-
-        let priorite = recherchePriorite(PrefsInit2,minMax);
-
-        for(var k =0; k <priorite.length; i++){
-            finalPrefs.push(priorite[i]);
-        }
-
-        for(k = 0; k<finalPrefs.length; k++){
-            console.log(finalPrefs[k].data)
-        }*/
 
     });
 
@@ -306,6 +294,8 @@ function rechercheUnParUn(Prefs,minMax,importab =[0.0,10.0,100.0,1000.0], nbEtap
     };
 
     console.log(newPrefs.pref);
+    console.log("importab");
+    console.log(importab);
     prefsInit = JSON.parse(JSON.stringify(Prefs));
 
 
@@ -333,15 +323,27 @@ function rechercheUnParUn(Prefs,minMax,importab =[0.0,10.0,100.0,1000.0], nbEtap
 
 function recherchePriorite(Prefs,minMax,importab =[0.0,10.0,100.0,1000.0], nbEtapes=100) { // pour chacun des plus importants on se rapproche au maximum
  // on est pas obligé de faire par dichotomie, on pourrait essayer en diminuant progressivement le critère plus important ça va peut etre plus vite
-    let newImportTab = importab.push(2*importab[importab.length-1]); // on rajoute un degres d'importance
+    console.log("importab");
+    console.log(importab);
+    console.log("Newimportab");
+    let res = 2*importab[importab.length-1];
+    console.log("res");
+    console.log(res);
+    var newImportTab = importab;
+    newImportTab.push(res); // on rajoute un degres d'importance
+    console.log(newImportTab);
     let resTab = [];// tableau des noyaux non vide
 
     for(var i=0; i<Prefs.length; i++){
         if (Prefs[i].importance == importab[importab.length-2]){ // si c'etait un très important
             Prefs[i].importance = importab[importab.length-1]; // on met ce critere plus important que tous les autres
-            resTab.push(rechercheUnParUn(Prefs,minMax,newImportTab, nbEtapes=100));
-            Prefs[i].importance = importab[importab.length-1]// on lui rend son importance précédente
+            var nonVide = rechercheUnParUn(Prefs,minMax,newImportTab, nbEtapes);
+            console.log("non vide :");
+            console.log(nonVide);
+            resTab.push();
+            Prefs[i].importance = importab[importab.length-2]// on lui rend son importance précédente
         }
+
     }
     return resTab
 }
