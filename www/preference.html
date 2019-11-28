@@ -45,7 +45,7 @@
                 <h2>
                     Choix des objectifs :
                 </h2>
-                <h4 id="tortues">
+                <h4 id="tortues" onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueAniMin}},{{.ValueAniMax}}" data-content="<div>{{.ValueAniRole1}}</div><div>{{.ValueAniRole2}}</div>">
                     <div>
                         <span> Nombres d'animaux : </span> <span id="valueAniSliderVal">{{.ValueAniMin}},{{.ValueAniMax}}</span>
                     </div>
@@ -61,7 +61,7 @@
                     </div>
                 </h4>
 
-                <h4 id="capital">
+                <h4 id="capital" onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueCapMin}},{{.ValueCapMax}}" data-content="<div>{{.ValueCapRole1}}</div><div>{{.ValueCapRole2}}</div>">
                     <div>
                         <span> Capital des infrastructures de pêche : </span> <span id="valueCapSliderVal">{{.ValueCapMin}},{{.ValueCapMax}}</span>
                     </div>
@@ -75,7 +75,7 @@
                     </section>*/}}
                 </h4>
 
-                <h4 id="touristes">
+                <h4 id="touristes" onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueTourMin}},{{.ValueTourMax}}" data-content="<div>{{.ValueTourRole1}}</div><div>{{.ValueTourRole2}}</div>">
                     <div>
                         <span> Nombre de touristes : </span> <span id="valueTourSliderVal">{{.ValueTourMin}},{{.ValueTourMax}}</span>
                     </div>
@@ -93,7 +93,7 @@
                 <h2>
                     Choix des moyens d'actions :
                 </h2>
-                <h4>
+                <h4 id="environnement"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueEnvMin}},{{.ValueEnvMax}}" data-content="<div>{{.ValueEnvRole1}}</div><div>{{.ValueEnvRole2}}</div>">
                     <div>
                         <span> Restauration de l'environnement : </span> <span id="valueEnvSliderVal">{{.ValueEnvMin}},{{.ValueEnvMax}}</span>
 
@@ -109,7 +109,7 @@
                     </section>*/}}
                 </h4>
 
-                <h4>
+                <h4 id="ouvert"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueOuvMin}},{{.ValueOuvMax}}" data-content="<div>{{.ValueOuvRole1}}</div><div>{{.ValueOuvRole2}}</div>">
                     <div>
                         <span> Proportion de l'aire protégée ouverte au tourisme : </span> <span id="valueOuvSliderVal">{{.ValueOuvMin}},{{.ValueOuvMax}}</span>
 
@@ -187,9 +187,9 @@
 
 
     <div style="padding: 50px">
-        <button id="draw" onclick="getFile(true)" class="button-style"> Calculer et afficher le noyau </button>
-        <button  onclick="letsFinish()" class="button-style"> Continuer </button>
-        <button  onclick="letsNotEmpty()" class="button-style"> Aide pour trouver un noyau non-vide </button>
+        <button id="draw" onclick="getFile(true)" class="btn btn-primary"> Calculer et afficher le noyau </button>
+        <button  onclick="letsFinish()" class="btn btn-primary"> Continuer </button>
+        <button  onclick="letsNotEmpty()" class="btn btn-primary"> Aide pour trouver un noyau non-vide </button>
         <br/>
     </div>
 
