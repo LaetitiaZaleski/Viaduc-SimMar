@@ -49,7 +49,7 @@
             <ul>
                 <li> <div>
                 <span> Le nombre minimum d'animaux </span> (<span id="valueAniSliderVal">{{.ValueAniMin}}</span>) <span> est <select  id="ImportanceAniMin">
-                        <option>très important</option>
+                        <option value="1">très important</option>
                         <option>important</option>
                         <option>neutre</option>
                         <option selected="yes"> peu important </option>
@@ -124,7 +124,7 @@
             </div>
 
                 <li>  <div>
-                <span> La proportion minimum du parc fermée aux tourites </span> (<span id="valueEnvSliderVal">{{.ValueOuvMin}}</span>) <span> est <select id="ImportanceOuvMin">
+                <span> La proportion minimum du parc fermée aux touristes </span> (<span id="valueEnvSliderVal">{{.ValueOuvMin}}</span>) <span> est <select id="ImportanceOuvMin">
                         <option>très importante</option>
                         <option>importante</option>
                         <option>neutre</option>
@@ -134,7 +134,7 @@
             </div>
 
                 <li>  <div>
-                <span> La proportion maximum du parc fermée aux tourites </span> (<span id="valueEnvSliderVal">{{.ValueOuvMax}}</span>) <span> est <select id="ImportanceOuvMax">
+                <span> La proportion maximum du parc fermée aux touristes </span> (<span id="valueEnvSliderVal">{{.ValueOuvMax}}</span>) <span> est <select id="ImportanceOuvMax">
                         <option>très importante</option>
                         <option>importante</option>
                         <option>neutre</option>
@@ -152,10 +152,8 @@
 
 
 
-<button  onclick="getPrefs()" class="button-style"> Calculer </button>
+<div  onclick="letsNotEmpty2()" class="btn btn-primary"> Continuer </div>
 
-
-<div id="kernelDiv" style="width:100%;height:100%"></div>
 
 <script type="text/javascript" src="sources/js/preference.js"></script>
 <script type="text/javascript" src="sources/js/home.js"></script>

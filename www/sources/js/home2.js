@@ -10,8 +10,8 @@ function draw() {
 
 // 2. Use the margin convention practice
     var margin = {top: 50, right: 50, bottom: 50, left: 50}
-        , width = 400 // Use the window's width
-        , height = 200; // Use the window's height
+        , width = 600 // Use the window's width
+        , height = 400; // Use the window's height
 
 // The number of datapoints
    // var n = 3;
@@ -42,7 +42,7 @@ function draw() {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + parseInt(margin.left + margin.left) + "," + margin.top + ")");
 
 
 // 3. Call the x axis in a group tag
@@ -75,7 +75,7 @@ svg.append("path")
 
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (-margin.left + 10) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+        .attr("transform", "translate("+ (-margin.left ) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
         .text("Valeurs en moyenne sur l'année ");
 
     svg.append("text")

@@ -254,13 +254,103 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "400 - rules error!", 400)
 		return
 	}
-	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	room := g.GetRoom(g.Param["n"][0])
+	class := g.getClassFromRoom(room, classId)
 	if class == nil {
 		g.showHome(w,r)
 		return
 	}
+	/*
+		creation des strings pour voir les preferences des autres roles
+	*/
+	ValueAniRole1 := ""
+	ValueAniRole2 := ""
+	ValueCapRole1 := ""
+	ValueCapRole2 := ""
+	ValueTourRole1 := ""
+	ValueTourRole2 := ""
+	ValueEnvRole1 := ""
+	ValueEnvRole2 := ""
+	ValueOuvRole1 := ""
+	ValueOuvRole2 := ""
 
-	pref := class.Preferences
+	for i := 0; i < len(g.ClassList); i++ {
+		if g.ClassList[i].Id != classId {
+			tmpClass := g.getClassFromRoom(room, g.ClassList[i].Id)
+			if tmpClass == nil {
+				tmpClass = &g.ClassList[i]
+			}
+			if len(ValueAniRole1) == 0 {
+				ValueAniRole1 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueAniMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueAniMax,10)
+				ValueCapRole1 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueCapMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueCapMax,10)
+				ValueTourRole1 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueTourMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueTourMax,10)
+				ValueEnvRole1 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueEnvMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueEnvMax,10)
+				ValueOuvRole1 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueOuvMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueOuvMax,10)
+			} else {
+				ValueAniRole2 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueAniMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueAniMax,10)
+				ValueCapRole2 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueCapMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueCapMax,10)
+				ValueTourRole2 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueTourMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueTourMax,10)
+				ValueEnvRole2 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueEnvMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueEnvMax,10)
+				ValueOuvRole2 = tmpClass.Name +"&#58; " + strconv.FormatInt(tmpClass.Preferences.ValueOuvMin,10) + "," + strconv.FormatInt(tmpClass.Preferences.ValueOuvMax,10)
+			}
+		}
+	}
+
+	type PreferencesPage struct {
+		RoomName string `json:"room_name"`
+		ClassId string `json:"class_id"`
+
+		ValueAniMin int64
+		ValueCapMin int64
+		ValueTourMin int64
+
+		ValueAniMax int64
+		ValueCapMax int64
+		ValueTourMax int64
+
+		ValueEnvMin int64
+		ValueOuvMin int64
+
+		ValueEnvMax int64
+		ValueOuvMax int64
+
+		ValueAniRole1 string
+		ValueAniRole2 string
+		ValueCapRole1 string
+		ValueCapRole2 string
+		ValueTourRole1 string
+		ValueTourRole2 string
+		ValueEnvRole1 string
+		ValueEnvRole2 string
+		ValueOuvRole1 string
+		ValueOuvRole2 string
+	}
+
+
+	pref := PreferencesPage{ g.Param["n"][0],
+		g.Param["c"][0],
+		class.Preferences.ValueAniMin,
+		class.Preferences.ValueCapMin,
+		class.Preferences.ValueTourMin,
+		class.Preferences.ValueAniMax,
+		class.Preferences.ValueCapMax,
+		class.Preferences.ValueTourMax,
+		class.Preferences.ValueEnvMin,
+		class.Preferences.ValueOuvMin,
+		class.Preferences.ValueEnvMax,
+		class.Preferences.ValueOuvMax,
+		ValueAniRole1,
+		ValueAniRole2,
+		ValueCapRole1,
+		ValueCapRole2,
+		ValueTourRole1,
+		ValueTourRole2,
+		ValueEnvRole1,
+		ValueEnvRole2,
+		ValueOuvRole1,
+		ValueOuvRole2,
+	}
+	//pref := class.Preferences
 	pref.RoomName = g.Param["n"][0]
 	pref.ClassId = g.Param["c"][0]
 	fmt.Printf("pref : %+v\n", pref)

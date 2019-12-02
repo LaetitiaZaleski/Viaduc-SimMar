@@ -1,23 +1,40 @@
 $("#valueAni").slider({});
 $("#valueAni").on("slide", function(slideEvt) {
+    $("#tortues").attr('data-original-title',slideEvt.value);
+    $(".popover-header").text(slideEvt.value);
     $("#valueAniSliderVal").text(slideEvt.value);
 });
 $("#valueCap").slider({});
 $("#valueCap").on("slide", function(slideEvt) {
+    $("#capital").attr('data-original-title',slideEvt.value);
+    $(".popover-header").text(slideEvt.value);
     $("#valueCapSliderVal").text(slideEvt.value);
 });
 $("#valueTour").slider({});
 $("#valueTour").on("slide", function(slideEvt) {
+    $("#touristes").attr('data-original-title',slideEvt.value);
+    $(".popover-header").text(slideEvt.value);
     $("#valueTourSliderVal").text(slideEvt.value);
 });
 $("#valueEnv").slider({});
 $("#valueEnv").on("slide", function(slideEvt) {
+    $("#environnement").attr('data-original-title',slideEvt.value);
+    $(".popover-header").text(slideEvt.value);
     $("#valueEnvSliderVal").text(slideEvt.value);
 });
 $("#valueOuv").slider({});
 $("#valueOuv").on("slide", function(slideEvt) {
+    $("#ouvert").attr('data-original-title',slideEvt.value);
+    $(".popover-header").text(slideEvt.value);
     $("#valueOuvSliderVal").text(slideEvt.value);
 });
+
+
+$('[data-toggle="popover"]').popover({
+    trigger: 'focus',
+    html:true
+});
+
 
 
 

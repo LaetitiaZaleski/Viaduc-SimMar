@@ -6,17 +6,22 @@ $("#valueCap").on("slide", function(slideEvt) {
     getImportances()
 };*/
 
+// TODO : changer tres important en 1,2,3,4 ...
+
+function letsNotEmpty2(){
+    getImportances();
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("nonvide", "nonvidep2");
+    window.location.href = "?" + newParam;
+}
 
 function getImportances(){
-    var importances = ["ImportanceAniMin", "ImportanceAniMax", "ImportanceTourMin", "ImportanceTourMax",
-        "ImportanceCapMin", "ImportanceCapMax", "ImportanceEnvMin", "ImportanceEnvMax", "ImportanceOuvMin",
-        "ImportanceOuvMax"];
 
-    for (var i= 0; i < importances.length; i++) {
-        var imp =importances[i];
+    for (let i= 0; i < importances.length; i++) {
+        let imp =importances[i];
        // console.log(imp);
-        var e = document.getElementById(imp);
-        localStorage.setItem(imp,e.options[e.selectedIndex].text);
+        let e = document.getElementById(imp);
+        localStorage.setItem(imp,e.options[e.selectedIndex].text); //$('#' + imp).val()
     }
    // window.location.href = "?" + newParam;
 }

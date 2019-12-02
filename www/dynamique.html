@@ -62,7 +62,7 @@
                     <span> {{.ValuePeche}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valuePeche" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valuePeche" class="custom-range" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);calc();"/>
                     {{/*                    <input type="range" min="1" max="100" value="{{.ValuePeche}}" class="slider" id="valuePeche"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -75,7 +75,7 @@
                     <span> {{.ValueTortue}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valueTortue" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueTortue}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valueTortue" class="custom-range" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueTortue}}" onchange="setMyValue(this);calc();"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValueTortue}}" class="slider" id="valueTortue"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -87,7 +87,7 @@
                     <span> {{.ValuePoisson}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valuePoisson" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePoisson}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valuePoisson" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePoisson}}" onchange="setMyValue(this);calc();"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -99,7 +99,7 @@
                     <span> {{.ValueRepro}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valueRepro" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueRepro}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valueRepro" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueRepro}}" onchange="setMyValue(this);calc();"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValueRepro}}" class="slider" id="valueRepro"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -170,7 +170,7 @@
     </div> -->
 
     <div style="padding: 50px">
-        <button id="start" onclick="setSettings()" class="button-style"> Continuer </button>
+        <button id="start" onclick="setSettings()" class="btn btn-primary"> Continuer </button>
         <br/>
     </div>
 </div>

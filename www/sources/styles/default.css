@@ -17,6 +17,10 @@ body {
 
 
 
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+
 #remoteVideos > video {
     border: green 1px solid;
     max-height: calc(100vh - 150px);
