@@ -1,18 +1,6 @@
 
 window.onload = function(){
     getImportances();
-    $("#ex1").slider({});
-    $("#ex1").on("slide", function(slideEvt) {
-        $("#ouvert").attr('data-original-title',slideEvt.value);
-        $(".popover-header").text(slideEvt.value);
-       // $("#ex1").text(slideEvt.value);
-    });
-
-
-    $('[data-toggle="popover"]').popover({
-        trigger: 'focus',
-        html:true
-    });
 
 };
 
