@@ -1,6 +1,6 @@
 
 window.onload = function(){
-    getImportances();
+    getImportances2();
 
 };
 
@@ -8,7 +8,7 @@ window.onload = function(){
 
 
 
-function getImportances(){
+function getImportances2(){
 
     for (let i= 0; i < importances.length; i++) {
         let imp1 =importances[i];

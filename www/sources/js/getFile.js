@@ -294,7 +294,6 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 }
 
 function getAllFiles() {
-
     for(ClassId=1;ClassId<4; ClassId++){
         console.log("ClassID : "+ClassId);
         getFile(false, ClassId)

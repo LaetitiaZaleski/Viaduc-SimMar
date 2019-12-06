@@ -16,7 +16,6 @@ function letsNotEmpty2(){
 }
 
 function getImportances(){
-
     for (let i= 0; i < importances.length; i++) {
         let imp =importances[i];
        // console.log(imp);
@@ -28,8 +27,6 @@ function getImportances(){
 
 
 async function getPrefs() {
-    getImportances();
-
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
 

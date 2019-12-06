@@ -1,3 +1,5 @@
+
+
 $("#valueAni").slider({});
 $("#valueAni").on("slide", function(slideEvt) {
     $("#tortues").attr('data-original-title',slideEvt.value);
@@ -29,12 +31,10 @@ $("#valueOuv").on("slide", function(slideEvt) {
     $("#valueOuvSliderVal").text(slideEvt.value);
 });
 
-
 $('[data-toggle="popover"]').popover({
     trigger: 'focus',
     html:true
 });
-
 
 
 

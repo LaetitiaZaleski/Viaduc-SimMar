@@ -11,6 +11,15 @@ html, body {
     width: 700px;
 }
 
+
+.c-1-color { background: #ca0000; }
+.c-2-color { background: #ffd923; }
+.c-3-color { background: #00ab00; }
+.c-5-color { background: #ca0000; }
+.c-4-color { background: #ffd923; }
+
+
+
 @media screen and (max-width: 1200px) {
     .img-pref-size {
         width: 400px;
@@ -27,7 +36,7 @@ html, body {
 }
 
 .preference-container > div:first-child {
-    width: 45%;
+    width: 100%;
     margin-right: 0px;
     padding: 10px;
     padding-right: 20px;
