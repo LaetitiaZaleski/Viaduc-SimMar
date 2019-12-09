@@ -43,27 +43,20 @@ async function letsCalc() {
     while (http.status != 404);
     // nb File = le nombre de fichier de cette partie pour ce joueur +1
 
-    var TourMin = parseInt(document.getElementById('valueTourSliderVal').innerText.split(",")[0]);
-    var TourMax = parseInt(document.getElementById('valueTourSliderVal').innerText.split(",")[1]);
-    if (TourMin>TourMax){
-        var aux = TourMin;
-        TourMin = TourMax;
-        TourMax = aux;
-    }
 
     var jsonObj = {
         "room_name": localStorage.getItem("roomName"),
         "class_id": localStorage.getItem("classId"),
-        "value_ani_min": parseInt(document.getElementById('valueAniSliderVal').innerText.split(",")[0]),
-        "value_ani_max": parseInt(document.getElementById('valueAniSliderVal').innerText.split(",")[1]),
-        "value_tour_min": TourMin,
-        "value_tour_max": TourMax,
-        "value_cap_min": parseInt(document.getElementById('valueCapSliderVal').innerText.split(",")[0]),
-        "value_cap_max": parseInt(document.getElementById('valueCapSliderVal').innerText.split(",")[1]),
-        "value_env_min": parseInt(document.getElementById('valueEnvSliderVal').innerText.split(",")[0]),
-        "value_env_max": parseInt(document.getElementById('valueEnvSliderVal').innerText.split(",")[1]),
-        "value_ouv_min": parseInt(document.getElementById('valueOuvSliderVal').innerText.split(",")[0]),
-        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal').innerText.split(",")[1])
+        "value_ani_min": parseInt(document.getElementById('valueAniSliderVal').innerText.split("-")[1]),
+        "value_ani_max": parseInt(document.getElementById('valueAniSliderVal').innerText.split("-")[2]),
+        "value_tour_min": parseInt(document.getElementById('valueTourSliderVal').innerText.split("-")[1]),
+        "value_tour_max": parseInt(document.getElementById('valueTourSliderVal').innerText.split("-")[2]),
+        "value_cap_min": parseInt(document.getElementById(`valueCapSliderVal`).innerText.split("-")[1]),
+        "value_cap_max": parseInt(document.getElementById(`valueCapSliderVal`).innerText.split("-")[2]),
+        "value_env_min": parseInt(document.getElementById('valueEnvSliderVal').innerText.split("-")[1]),
+        "value_env_max": parseInt(document.getElementById('valueEnvSliderVal').innerText.split("-")[2]),
+        "value_ouv_min": parseInt(document.getElementById('valueOuvSliderVal').innerText.split("-")[1]),
+        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal').innerText.split("-")[2])
     };
     data = JSON.stringify(jsonObj);
 
@@ -122,20 +115,19 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
         }
     }
 
-
-
     //var ClassId = localStorage.getItem("classId");
 
-    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split(",")[0]);
-    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split(",")[1]);
-    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split(",")[0]);
-    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split(",")[1]);
-    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split(",")[0]);
-    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split(",")[1]);
-    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split(",")[0]);
-    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split(",")[1]);
-    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split(",")[0]);
-    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split(",")[1]);
+    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split("-")[1]);
+    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split("-")[2]);
+    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split("-")[1]);
+    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split("-")[2]);
+    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split("-")[1]);
+    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split("-")[2]);
+    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split("-")[1]);
+    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split("-")[2]);
+    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split("-")[1]);
+    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split("-")[2]);
+
 
 
 

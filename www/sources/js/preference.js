@@ -39,6 +39,137 @@ $('[data-toggle="popover"]').popover({
 
 
 
+var sliderAni = document.getElementById('slider-ani');
+
+noUiSlider.create(sliderAni, {
+    start: [500, 1000,10000, 15000],
+    connect: [true, true, true, true, true],
+    step: 20,
+    range: {
+        'min': [0],
+        'max': [20000]
+    }
+});
+
+var connect = sliderAni.querySelectorAll('.noUi-connect');
+var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
+
+for (var i = 0; i < connect.length; i++) {
+    connect[i].classList.add(classes[i]);
+}
+
+var sliderAniValues = document.getElementById('valueAniSliderVal');
+
+
+sliderAni.noUiSlider.on('update', function (values) {
+    sliderAniValues.innerHTML = values.join(' - ');
+});
+
+
+var sliderCap = document.getElementById('slider-cap');
+
+noUiSlider.create(sliderCap, {
+    start: [0, 1000,10000, 30000],
+    connect: [true, true, true, true, true],
+    step: 20,
+    range: {
+        'min': [0],
+        'max': [30000]
+    }
+});
+
+connect = sliderCap.querySelectorAll('.noUi-connect');
+
+for (var i = 0; i < connect.length; i++) {
+    connect[i].classList.add(classes[i]);
+}
+
+var sliderCapValues = document.getElementById('valueCapSliderVal');
+
+
+sliderCap.noUiSlider.on('update', function (values) {
+    sliderCapValues.innerHTML = values.join(' - ');
+});
+
+var sliderTour = document.getElementById('slider-tour');
+
+noUiSlider.create(sliderTour, {
+    start: [0, 1000,10000, 20000],
+    connect: [true, true, true, true, true],
+    step: 20,
+    range: {
+        'min': [0],
+        'max': [20000]
+    }
+});
+
+connect = sliderTour.querySelectorAll('.noUi-connect');
+
+for (var i = 0; i < connect.length; i++) {
+    connect[i].classList.add(classes[i]);
+}
+
+var sliderTourValues = document.getElementById('valueTourSliderVal');
+
+
+sliderTour.noUiSlider.on('update', function (values) {
+    sliderTourValues.innerHTML = values.join(' - ');
+});
+
+
+
+var sliderEnv = document.getElementById('slider-env');
+
+noUiSlider.create(sliderEnv, {
+    start: [10, 20,70, 80],
+    connect: [true, true, true, true, true],
+    step: 5,
+    range: {
+        'min': [0],
+        'max': [100]
+    }
+});
+
+connect = sliderEnv.querySelectorAll('.noUi-connect');
+
+for (var i = 0; i < connect.length; i++) {
+    connect[i].classList.add(classes[i]);
+}
+
+var sliderEnvValues = document.getElementById('valueEnvSliderVal');
+
+
+sliderEnv.noUiSlider.on('update', function (values) {
+    sliderEnvValues.innerHTML = values.join(' - ');
+});
+
+
+var sliderOuv = document.getElementById('slider-ouv');
+
+noUiSlider.create(sliderOuv, {
+    start: [10, 20,70, 80],
+    connect: [true, true, true, true, true],
+    step: 5,
+    range: {
+        'min': [0],
+        'max': [100]
+    }
+});
+
+connect = sliderOuv.querySelectorAll('.noUi-connect');
+
+for (var i = 0; i < connect.length; i++) {
+    connect[i].classList.add(classes[i]);
+}
+
+var sliderOuvValues = document.getElementById('valueOuvSliderVal');
+
+
+sliderOuv.noUiSlider.on('update', function (values) {
+    sliderOuvValues.innerHTML = values.join(' - ');
+});
+
+
 function getVals(){
     // Get slider values
     var parent = this.parentNode;

@@ -1,7 +1,4 @@
-$("#valueCap").slider({});
-$("#valueCap").on("slide", function(slideEvt) {
-    $("#valueCapSliderVal").text(slideEvt.value);
-});
+
 /*window.onload = function(){
     getImportances()
 };*/
