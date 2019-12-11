@@ -15,7 +15,10 @@
     <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
     <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
 
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/nouislider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/nouislider.min.css">
 
+    <script type="text/javascript" src="sources/lib/d3/d3.min.js"></script>
     <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
 
     <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
@@ -27,8 +30,7 @@
 
     <script type="text/javascript" src="sources/js/tools.js"></script>
     <script type="text/javascript" src="sources/js/getFile.js"></script>
-    <script type="text/javascript" src="sources/js/preference.js"></script>
-    <script type="text/javascript" src="sources/js/nonvide.js"></script>
+
 
 </head>
 <body>
@@ -39,108 +41,51 @@
 
 <div>  <span>
         Nous allons à présent vous aider à trouver un noyaux non vide qui vous convienne.
-        Pour chacunes des préférences, associer un niveau d'importance.
+        Pour chacunes de vos préférences, cocher la case associée si ce critére est important pour vous :
     </span>
 </div>
 
 <div>
-    <div class="preference-container">
+    <div class="importance-container" >
         <h4>
             <ul>
                 <li> <div>
-                <span> Le nombre minimum d'animaux </span> (<span id="valueAniSliderVal">{{.ValueAniMin}}</span>) <span> est <select  id="ImportanceAniMin">
-                        <option value="1">très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
-
-                    </select> pour moi. </span>
+                        <input type="checkbox" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span> (<span id="valueAniMin"></span>)
                  </div>
     <li>  <div>
-                <span> Le nombre maximum d'animaux </span> (<span id="valueAniSliderVal">{{.ValueAniMax}}</span>) <span> est <select id="ImportanceAniMax">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
-
-                    </select> pour moi. </span>
+                        <input type="checkbox" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span> (<span id="valueAniMax"></span>)
                  </div>
-                <li>  <div>
-                <span> Capital minimum des pêcheurs </span> (<span id="valueCapSliderVal">{{.ValueCapMin}}</span>) <span> est <select id="ImportanceCapMin">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
+                <li>  <div>  <input type="checkbox" id="ImportanceCapMin" value="checkbox">
+                <span> Le Capital minimum des pêcheurs </span> (<span id="valueCapMin"></span>)
 
-                    </select> pour moi. </span>
                  </div>
-    <li> <div>
-                <span> Capital maximum des pêcheurs </span> (<span id="valueCapSliderVal">{{.ValueCapMax}}</span>) <span> est <select id="ImportanceCapMax">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
+    <li> <div>  <input type="checkbox" id="ImportanceCapMax" value="checkbox">
+                <span> Le Capital maximum des pêcheurs </span> (<span id="valueCapMax"></span>)
 
-                    </select> pour moi. </span>
                  </div>
-    <li> <div>
-                <span> Le nombre minimum de touristes </span> (<span id="valueTourSliderVal">{{.ValueTourMin}}</span>) <span> est <select id="ImportanceTourMin">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
-
-                    </select> pour moi. </span>
+    <li> <div>  <input type="checkbox" id="ImportanceTourMin" value="checkbox">
+                <span> Le nombre minimum de touristes </span> (<span id="valueTourMin"></span>)
             </div>
 
-    <li> <div>
-                <span> Le nombre maximum de touristes </span> (<span id="valueTourSliderVal">{{.ValueTourMax}}</span>) <span> est <select id="ImportanceTourMax">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
-
-                    </select> pour moi. </span>
+    <li> <div>  <input type="checkbox" id="ImportanceTourMax" value="checkbox">
+                <span> Le nombre maximum de touristes </span> (<span id="valueTourMax"></span>)
             </div>
 
-    <li>  <div>
-                <span> Effort minimum de restauration de l'environement </span> (<span id="valueEnvSliderVal">{{.ValueEnvMin}}</span>) <span> est <select id="ImportanceEnvMin">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
-
-                    </select> pour moi. </span>
+    <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
+                <span> Effort minimum de restauration de l'environement </span> (<span id="valueEnvMin"></span>)
             </div>
 
-    <li> <div>
-                <span> Effort maximum de restauration de l'environement </span> (<span id="valueEnvSliderVal">{{.ValueEnvMax}}</span>) <span> est <select id="ImportanceEnvMax">
-                        <option>très important</option>
-                        <option>important</option>
-                        <option>neutre</option>
-                        <option selected="yes"> peu important </option>
+    <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
+                <span> Effort maximum de restauration de l'environement </span> (<span id="valueEnvMax"></span>)
 
-                    </select> pour moi. </span>
             </div>
 
-                <li>  <div>
-                <span> La proportion minimum du parc fermée aux touristes </span> (<span id="valueEnvSliderVal">{{.ValueOuvMin}}</span>) <span> est <select id="ImportanceOuvMin">
-                        <option>très importante</option>
-                        <option>importante</option>
-                        <option>neutre</option>
-                        <option selected="yes">peu importante</option>
-
-                    </select> pour moi. </span>
+                <li>  <div>  <input type="checkbox" id="ImportanceOuvMin" value="checkbox">
+                <span> La proportion minimum du parc fermée aux touristes </span> (<span id="valueOuvMin"></span>)
             </div>
 
-                <li>  <div>
-                <span> La proportion maximum du parc fermée aux touristes </span> (<span id="valueEnvSliderVal">{{.ValueOuvMax}}</span>) <span> est <select id="ImportanceOuvMax">
-                        <option>très importante</option>
-                        <option>importante</option>
-                        <option>neutre</option>
-                        <option selected="yes">peu importante</option>
-
-                    </select> pour moi. </span>
+                <li>  <div>  <input type="checkbox" id="ImportanceOuvMax" value="checkbox">
+                <span> La proportion maximum du parc fermée aux touristes </span> (<span id="valueOuvMax"></span>)
             </div>
             </ul>
 
@@ -152,11 +97,63 @@
 
 
 
-<div  onclick="letsNotEmpty2()" class="btn btn-primary"> Continuer </div>
+<div  onclick="getPrefs()" class="btn btn-primary"> Lancer la recherche </div>
+
+<div class="preference-container" hidden="true">
+    <div class="">
+        <h4 id="tortues" ><div>
+                <span> Nombre d'animaux : </span></div>
+                    <div id="slider-ani" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+
+        </h4>
+
+        <h4 id="capital" ><div>
+                <span> Capital des pêcheurs : </span></div>
+            <div id="slider-cap" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+
+        </h4>
+
+        <h4 id="touristes" ><div>
+                <span> Nombres de touristes : </span></div>
+            <div id="slider-tour" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+
+        </h4>
+
+        <h4 id="environement" ><div>
+                <span> Restauration de l'environement : </span></div>
+            <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+
+        </h4>
+
+        <h4 id="ouvert" ><div>
+                <span> Proportion du parc fermée au tourisme : </span></div>
+            <div id="slider-ouv" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+
+        </h4>
+    </div>
+</div>
 
 
-<script type="text/javascript" src="sources/js/preference.js"></script>
+
+<script>
+    document.getElementById('valueAniMin').innerHTML = localStorage.getItem("AniMin");
+    document.getElementById('valueAniMax').innerHTML = localStorage.getItem("AniMax");
+
+    document.getElementById('valueCapMin').innerHTML = localStorage.getItem("CapMin");
+    document.getElementById('valueCapMax').innerHTML = localStorage.getItem("CapMax");
+
+    document.getElementById('valueTourMin').innerHTML = localStorage.getItem("TourMin");
+    document.getElementById('valueTourMax').innerHTML = localStorage.getItem("TourMax");
+
+    document.getElementById('valueEnvMin').innerHTML = localStorage.getItem("EnvMin");
+    document.getElementById('valueEnvMax').innerHTML = localStorage.getItem("EnvMax");
+
+    document.getElementById('valueOuvMin').innerHTML = localStorage.getItem("OuvMin");
+    document.getElementById('valueOuvMax').innerHTML = localStorage.getItem("OuvMax");
+</script>
+
 <script type="text/javascript" src="sources/js/home.js"></script>
+<script type="text/javascript" src="sources/js/nonvide.js"></script>
 
 
 

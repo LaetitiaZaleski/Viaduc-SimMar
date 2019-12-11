@@ -12,12 +12,6 @@ html, body {
 }
 
 
-.c-1-color { background: #ca0000; }
-.c-2-color { background: #ffd923; }
-.c-3-color { background: #00ab00; }
-.c-5-color { background: #ca0000; }
-.c-4-color { background: #ffd923; }
-
 
 
 @media screen and (max-width: 1200px) {
@@ -128,6 +122,9 @@ section.range-slider input[type=range]::-moz-focus-outer {
 #hideSlides {
     display: none;
 }
+
+
+
 
 /* Next & previous buttons */
 .prev, .next {

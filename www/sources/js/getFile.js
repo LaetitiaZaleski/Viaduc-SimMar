@@ -47,16 +47,16 @@ async function letsCalc() {
     var jsonObj = {
         "room_name": localStorage.getItem("roomName"),
         "class_id": localStorage.getItem("classId"),
-        "value_ani_min": parseInt(document.getElementById('valueAniSliderVal').innerText.split("-")[1]),
-        "value_ani_max": parseInt(document.getElementById('valueAniSliderVal').innerText.split("-")[2]),
-        "value_tour_min": parseInt(document.getElementById('valueTourSliderVal').innerText.split("-")[1]),
-        "value_tour_max": parseInt(document.getElementById('valueTourSliderVal').innerText.split("-")[2]),
-        "value_cap_min": parseInt(document.getElementById(`valueCapSliderVal`).innerText.split("-")[1]),
-        "value_cap_max": parseInt(document.getElementById(`valueCapSliderVal`).innerText.split("-")[2]),
-        "value_env_min": parseInt(document.getElementById('valueEnvSliderVal').innerText.split("-")[1]),
-        "value_env_max": parseInt(document.getElementById('valueEnvSliderVal').innerText.split("-")[2]),
-        "value_ouv_min": parseInt(document.getElementById('valueOuvSliderVal').innerText.split("-")[1]),
-        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal').innerText.split("-")[2])
+        "value_ani_min": parseInt(document.getElementById('valueAniSliderVal2').innerText),
+        "value_ani_max": parseInt(document.getElementById('valueAniSliderVal3').innerText),
+        "value_tour_min": parseInt(document.getElementById('valueTourSliderVal2').innerText),
+        "value_tour_max": parseInt(document.getElementById('valueTourSliderVal3').innerText),
+        "value_cap_min": parseInt(document.getElementById(`valueCapSliderVal2`).innerText),
+        "value_cap_max": parseInt(document.getElementById(`valueCapSliderVal3`).innerText),
+        "value_env_min": parseInt(document.getElementById('valueEnvSliderVal2').innerText),
+        "value_env_max": parseInt(document.getElementById('valueEnvSliderVal3').innerText),
+        "value_ouv_min": parseInt(document.getElementById('valueOuvSliderVal2').innerText),
+        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal3').innerText)
     };
     data = JSON.stringify(jsonObj);
 
@@ -72,7 +72,7 @@ async function letsCalc() {
     nbFile = nbFile -1;
 
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         sleep(1500)
@@ -117,16 +117,16 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 
     //var ClassId = localStorage.getItem("classId");
 
-    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split("-")[1]);
-    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal`).innerText.split("-")[2]);
-    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split("-")[1]);
-    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal`).innerText.split("-")[2]);
-    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split("-")[1]);
-    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal`).innerText.split("-")[2]);
-    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split("-")[1]);
-    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal`).innerText.split("-")[2]);
-    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split("-")[1]);
-    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal`).innerText.split("-")[2]);
+    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal2`).innerText);
+    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal3`).innerText);
+    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal2`).innerText);
+    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal3`).innerText);
+    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal2`).innerText);
+    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal3`).innerText);
+    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal2`).innerText);
+    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal3`).innerText);
+    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal2`).innerText);
+    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal3`).innerText);
 
 
 
@@ -137,7 +137,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 
     do {
         i++;
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
 
         http.open('HEAD', tmpPath, false);
         http.send();
@@ -146,7 +146,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
     if (i > 0) {
         let numFile = i - 1;
 
-        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
+        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
         console.log("Path : " + path);
 
         var allData = {
@@ -164,9 +164,9 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 
 
             for (i = 0; i < lineTab.length; i++) {
-                let valueTab = lineTab[i].split('  ');
+                let valueTab = lineTab[i].split(' ');
                 if (valueTab.length >= 3) {
-                    if (i % 10 == 0) { // on prend 1 point sur 10
+                    if (i % 1000 == 0) { // on prend 1 point sur 1000
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));

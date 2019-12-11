@@ -159,8 +159,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			Lancement du calcul / creation du fichier
 		*/
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
-		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
-		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
+		fileOut := strings.Replace(file, ".json", "-viab-0.dat", -1)
+		var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		/*
 				Lancement du Viablab.exe :)
 

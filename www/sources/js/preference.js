@@ -58,11 +58,17 @@ for (var i = 0; i < connect.length; i++) {
     connect[i].classList.add(classes[i]);
 }
 
-var sliderAniValues = document.getElementById('valueAniSliderVal');
+var sliderAniValues1 = document.getElementById('valueAniSliderVal1');
+var sliderAniValues2 = document.getElementById('valueAniSliderVal2');
+var sliderAniValues3 = document.getElementById('valueAniSliderVal3');
+var sliderAniValues4 = document.getElementById('valueAniSliderVal4');
 
 
 sliderAni.noUiSlider.on('update', function (values) {
-    sliderAniValues.innerHTML = values.join(' - ');
+    sliderAniValues1.innerHTML = values[0];
+    sliderAniValues2.innerHTML = values[1];
+    sliderAniValues3.innerHTML = values[2];
+    sliderAniValues4.innerHTML = values[3];
 });
 
 
@@ -84,11 +90,17 @@ for (var i = 0; i < connect.length; i++) {
     connect[i].classList.add(classes[i]);
 }
 
-var sliderCapValues = document.getElementById('valueCapSliderVal');
+var sliderCapValues1 = document.getElementById('valueCapSliderVal1');
+var sliderCapValues2 = document.getElementById('valueCapSliderVal2');
+var sliderCapValues3 = document.getElementById('valueCapSliderVal3');
+var sliderCapValues4 = document.getElementById('valueCapSliderVal4');
 
 
 sliderCap.noUiSlider.on('update', function (values) {
-    sliderCapValues.innerHTML = values.join(' - ');
+    sliderCapValues1.innerHTML = values[0];
+    sliderCapValues2.innerHTML = values[1];
+    sliderCapValues3.innerHTML = values[2];
+    sliderCapValues4.innerHTML = values[3];
 });
 
 var sliderTour = document.getElementById('slider-tour');
@@ -109,11 +121,17 @@ for (var i = 0; i < connect.length; i++) {
     connect[i].classList.add(classes[i]);
 }
 
-var sliderTourValues = document.getElementById('valueTourSliderVal');
+var sliderTourValues1 = document.getElementById('valueTourSliderVal1');
+var sliderTourValues2 = document.getElementById('valueTourSliderVal2');
+var sliderTourValues3 = document.getElementById('valueTourSliderVal3');
+var sliderTourValues4 = document.getElementById('valueTourSliderVal4');
 
 
 sliderTour.noUiSlider.on('update', function (values) {
-    sliderTourValues.innerHTML = values.join(' - ');
+    sliderTourValues1.innerHTML = values[0];
+    sliderTourValues2.innerHTML = values[1];
+    sliderTourValues3.innerHTML = values[2];
+    sliderTourValues4.innerHTML = values[3];
 });
 
 
@@ -136,11 +154,17 @@ for (var i = 0; i < connect.length; i++) {
     connect[i].classList.add(classes[i]);
 }
 
-var sliderEnvValues = document.getElementById('valueEnvSliderVal');
+var sliderEnvValues1 = document.getElementById('valueEnvSliderVal1');
+var sliderEnvValues2 = document.getElementById('valueEnvSliderVal2');
+var sliderEnvValues3 = document.getElementById('valueEnvSliderVal3');
+var sliderEnvValues4 = document.getElementById('valueEnvSliderVal4');
 
 
 sliderEnv.noUiSlider.on('update', function (values) {
-    sliderEnvValues.innerHTML = values.join(' - ');
+    sliderEnvValues1.innerHTML = values[0];
+    sliderEnvValues2.innerHTML = values[1];
+    sliderEnvValues3.innerHTML = values[2];
+    sliderEnvValues4.innerHTML = values[3];
 });
 
 
@@ -162,11 +186,17 @@ for (var i = 0; i < connect.length; i++) {
     connect[i].classList.add(classes[i]);
 }
 
-var sliderOuvValues = document.getElementById('valueOuvSliderVal');
+var sliderOuvValues1 = document.getElementById('valueOuvSliderVal1');
+var sliderOuvValues2 = document.getElementById('valueOuvSliderVal2');
+var sliderOuvValues3 = document.getElementById('valueOuvSliderVal3');
+var sliderOuvValues4 = document.getElementById('valueOuvSliderVal4');
 
 
 sliderOuv.noUiSlider.on('update', function (values) {
-    sliderOuvValues.innerHTML = values.join(' - ');
+    sliderOuvValues1.innerHTML = values[0];
+    sliderOuvValues2.innerHTML = values[1];
+    sliderOuvValues3.innerHTML = values[2];
+    sliderOuvValues4.innerHTML = values[3];
 });
 
 
@@ -195,6 +225,32 @@ function letsFinish() {
 function letsNotEmpty() {
     let url = window.location.href;
     let newParam = url.split("?")[1].replace("preference", "nonvide");
+
+    localStorage.setItem("AniFauxMin",document.getElementById('valueAniSliderVal1').innerText);
+    localStorage.setItem("AniMin",document.getElementById('valueAniSliderVal2').innerText);
+    localStorage.setItem("AniMax",document.getElementById('valueAniSliderVal3').innerText);
+    localStorage.setItem("AniFauxMax",document.getElementById('valueAniSliderVal4').innerText);
+
+    localStorage.setItem("CapFauxMin",document.getElementById('valueCapSliderVal1').innerText);
+    localStorage.setItem("CapMin",document.getElementById('valueCapSliderVal2').innerText);
+    localStorage.setItem("CapMax",document.getElementById('valueCapSliderVal3').innerText);
+    localStorage.setItem("CapFauxMax",document.getElementById('valueCapSliderVal4').innerText);
+
+    localStorage.setItem("TourFauxMin",document.getElementById('valueTourSliderVal1').innerText);
+    localStorage.setItem("TourMin",document.getElementById('valueTourSliderVal2').innerText);
+    localStorage.setItem("TourMax",document.getElementById('valueTourSliderVal3').innerText);
+    localStorage.setItem("TourFauxMax",document.getElementById('valueTourSliderVal4').innerText);
+
+    localStorage.setItem("EnvFauxMin",document.getElementById('valueEnvSliderVal1').innerText);
+    localStorage.setItem("EnvMin",document.getElementById('valueEnvSliderVal2').innerText);
+    localStorage.setItem("EnvMax",document.getElementById('valueEnvSliderVal3').innerText);
+    localStorage.setItem("EnvFauxMax",document.getElementById('valueEnvSliderVal4').innerText);
+
+    localStorage.setItem("OuvFauxMin",document.getElementById('valueOuvSliderVal1').innerText);
+    localStorage.setItem("OuvMin",document.getElementById('valueOuvSliderVal2').innerText);
+    localStorage.setItem("OuvMax",document.getElementById('valueOuvSliderVal3').innerText);
+    localStorage.setItem("OuvFauxMax",document.getElementById('valueOuvSliderVal4').innerText);
+
 
     window.location.href = "?" + newParam;
 }

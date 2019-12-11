@@ -15,6 +15,20 @@ body {
     display: none !important;
 }
 
+.orange {
+    color: #fd7e14;
+}
+
+.vert {
+    color: #00ab00;
+}
+
+.c-1-color { background: #ca0000; }
+.c-2-color { background: #fd7e14; }
+.c-3-color { background: #00ab00; }
+.c-5-color { background: #ca0000; }
+.c-4-color { background: #fd7e14; }
+
 
 
 #ex1Slider .slider-selection {
