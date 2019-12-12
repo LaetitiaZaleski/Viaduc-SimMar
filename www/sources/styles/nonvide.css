@@ -1,0 +1,24 @@
+
+.max .noUi-handle[data-handle="5"] {
+    color: #6f42c1;
+    background-color: #6f42c1;
+}
+
+.min .noUi-handle[data-handle="0"] {
+    color: #6f42c1;
+    background-color: #6f42c1;
+}
+
+.pmin .noUi-handle[data-handle="1"] {
+    color: #6f42c1;
+    background-color: #6f42c1;
+}
+
+.pmax .noUi-handle[data-handle="4"] {
+    color: #6f42c1;
+    background-color: #6f42c1;
+}
+
+.purple {
+    color: #6f42c1;
+}

@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="sources/styles/preference.css">
     <link rel="stylesheet" href="sources/styles/home2.css">
     <link rel="stylesheet" href="sources/styles/result.css">
+    <link rel="stylesheet" href="sources/styles/nonvide.css">
 
     <script type="text/javascript" src="sources/js/tools.js"></script>
     <script type="text/javascript" src="sources/js/getFile.js"></script>
@@ -99,34 +100,34 @@
 
 <div  onclick="getPrefs()" class="btn btn-primary"> Lancer la recherche </div>
 
-<div class="preference-container" hidden="true">
+<div class="preference-container">
     <div class="">
         <h4 id="tortues" ><div>
-                <span> Nombre d'animaux : </span></div>
-                    <div id="slider-ani" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+                <span> Nombre d'animaux : </span></div> <span id="prefAniMin" class="purple"></span> - <span id="prefAniMax" class="purple"></span>
+            <div   id="slider-ani" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>
 
         <h4 id="capital" ><div>
-                <span> Capital des pêcheurs : </span></div>
+                <span> Capital des pêcheurs : </span></div>  <span id="prefCapMin" class="purple"></span> - <span id="prefCapMax" class="purple"></span>
             <div id="slider-cap" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>
 
         <h4 id="touristes" ><div>
-                <span> Nombres de touristes : </span></div>
+                <span> Nombres de touristes : </span></div> <span id="prefTourMin" class="purple"></span> - <span id="prefTourMax" class="purple"></span>
             <div id="slider-tour" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>
 
         <h4 id="environement" ><div>
-                <span> Restauration de l'environement : </span></div>
+                <span> Restauration de l'environement : </span></div> <span id="prefEnvMin" class="purple"></span> - <span id="prefEnvMax" class="purple"></span>
             <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>
 
         <h4 id="ouvert" ><div>
-                <span> Proportion du parc fermée au tourisme : </span></div>
+                <span> Proportion du parc fermée au tourisme : </span></div> <span id="prefOuvMin" class="purple"></span> - <span id="prefOuvMax" class="purple"></span>
             <div id="slider-ouv" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>

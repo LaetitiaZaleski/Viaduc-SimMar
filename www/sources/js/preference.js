@@ -171,12 +171,12 @@ sliderEnv.noUiSlider.on('update', function (values) {
 var sliderOuv = document.getElementById('slider-ouv');
 
 noUiSlider.create(sliderOuv, {
-    start: [10, 20,70, 80],
+    start: [10, 20,30, 40],
     connect: [true, true, true, true, true],
     step: 5,
     range: {
         'min': [0],
-        'max': [100]
+        'max': [50]
     }
 });
 
