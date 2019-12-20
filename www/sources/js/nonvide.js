@@ -3,8 +3,8 @@ window.onload = function(){
 
 };
 */
-
-let precision = 5;
+var gFinalPref = null;
+var precision = 2;
 
 // TODO : changer tres important en 1,2,3,4 ...
 
@@ -277,8 +277,6 @@ async function getPrefs() {
         }*/
 
 
-
-
         finalPrefs = [];
         PrefsInit0 = JSON.parse(JSON.stringify(Prefs));
         PrefsInit1 = JSON.parse(JSON.stringify(Prefs)); // copie du tableau
@@ -314,17 +312,34 @@ async function getPrefs() {
             finalPrefs.push(priorite[k]);
         }
         */
+
+        gFinalPref = finalPrefs;
         console.log("Final prefs :");
+        $("#finalPrefButtonContainer").html('');
+
+
         for(k = 0; k<finalPrefs.length; k++){
+            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide("' + k + '")>'+k+'</div>');
             console.log("k :");
             console.log(k);
             console.log(finalPrefs[k]);
         }
 
-        showPreferences(JSON.parse(finalPrefs[0]))
+
+
+       // showPreferences(JSON.parse(finalPrefs[0]))
 
 
     });
+}
+
+function showHide(k) {
+    if($("#slider-ani-"+k).length === 0) {
+        $("#sliderAniContainer").append('<div   id="slider-ani-'+k+'" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+        showPreferences(JSON.parse(gfinalPrefs[parseInt(k)]),k);
+    } else {
+        $("#slider-ani-"+k).remove();
+    }
 }
 
 function removeDomine(data){ // enlève les éléments dominés d'un tableau de datas
@@ -757,7 +772,7 @@ function sortPref(sliderValues1,sliderValues2,sliderValues3,sliderValues4, prefM
 
 }
 
-function showPreferences(finalprefs){
+function showPreferences(finalprefs,k){
 
     prefAmin = finalprefs.value_ani_min;
     prefAmax = finalprefs.value_ani_max;
@@ -769,7 +784,7 @@ function showPreferences(finalprefs){
     prefEnvmax = finalprefs.value_env_max;
     prefOuvmin = finalprefs.value_ouv_min;
     prefOuvmax = finalprefs.value_ouv_max;
-    var sliderAni = document.getElementById('slider-ani');
+    var sliderAni = document.getElementById('slider-ani-'+k);
 
     var sliderAniValues1 = localStorage.getItem("AniFauxMin");
     var sliderAniValues2 = localStorage.getItem("AniMin");
@@ -785,7 +800,7 @@ function showPreferences(finalprefs){
         range: {
             'min': [0],
             'max': [20000]
-        }
+        },
     });
 
     var connect = sliderAni.querySelectorAll('.noUi-connect');
@@ -797,6 +812,15 @@ function showPreferences(finalprefs){
 
     sliderAni.classList.add(sprefsA[2][0]); // on met les handle des nouvelles prefs en violet
     sliderAni.classList.add(sprefsA[2][1]);
+
+    $("#slider-ani-"+k+" > .noUi-base > .noUi-origin").each(function () {
+        console.log($(this).children(".noUi-handle").css("color"));
+        if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
+            $(this).remove();
+        }
+    });
+
+
 
     document.getElementById('prefAniMin').innerHTML=prefAmin;
     document.getElementById('prefAniMax').innerHTML=prefAmax;

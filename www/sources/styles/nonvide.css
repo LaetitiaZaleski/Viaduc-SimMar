@@ -22,3 +22,11 @@
 .purple {
     color: #6f42c1;
 }
+
+
+
+[disabled] .c-1-color { background: #ca0000 !important; }
+[disabled] .c-2-color { background: #fd7e14 !important; }
+[disabled] .c-3-color { background: #00ab00 !important; }
+[disabled] .c-5-color { background: #ca0000 !important; }
+[disabled] .c-4-color { background: #fd7e14 !important; }
