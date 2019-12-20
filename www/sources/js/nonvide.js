@@ -27,7 +27,7 @@ function getImportances(){
             localStorage.setItem(imp,1);
         }
     }
-   // window.location.href = "?" + newParam;
+    // window.location.href = "?" + newParam;
 }
 
 function calcPas(faux,pref){
@@ -36,7 +36,7 @@ function calcPas(faux,pref){
     console.log("pref");
     console.log(pref);
     pas = Math.max(Math.ceil(Math.max((pref-faux),(faux-pref))/precision),1);
-  //  console.log(pas);
+    //  console.log(pas);
     return pas
 }
 
@@ -111,13 +111,13 @@ async function getPrefs() {
                 className = "Ecologiste";
 
         }
-       // console.log(className);
+        // console.log(className);
         obj = JSON.parse(ret);
-       // console.log(obj);
+        // console.log(obj);
         if (obj !== null && obj.length > 0) {
             for (i = 0; i < obj.length; i++) {
                 if (obj[i].class_name.toString() == className) {
-                 // console.log("hello");
+                    // console.log("hello");
                     // Pour les max : on regarde la distance à la borne min : il s'agit de la veleur normalisée, pour les mins,
                     // on regarde la valeur à la borne max : c'est 1- la valeur normalisée.
 
@@ -125,7 +125,7 @@ async function getPrefs() {
                         val: localStorage.getItem("AniMin"),
                         fauxMaxTable : calcTable(fauxMinMax.AMin,localStorage.getItem("AniMin"),fauxMinMax.AMin),
                         name: "Minimum sur le nombre d'animaux",
-                    //    distVal: obj[i].preference.value_ani_min - minMax.AMin,
+                        //    distVal: obj[i].preference.value_ani_min - minMax.AMin,
                         importance: localStorage.getItem("ImportanceAniMin"),
                         signe: 1,
                         pas: calcPas(fauxMinMax.AMin,localStorage.getItem("AniMin")),
@@ -137,7 +137,7 @@ async function getPrefs() {
                         val: localStorage.getItem("AniMax"),
                         fauxMaxTable : calcTable(fauxMinMax.AMax,localStorage.getItem("AniMax"),fauxMinMax.AMax),
                         name: "Maximum sur le nombre d'animaux",
-                    //    distVal: minMax.AMax - obj[i].preference.value_ani_max,
+                        //    distVal: minMax.AMax - obj[i].preference.value_ani_max,
                         importance: localStorage.getItem("ImportanceAniMax"),
                         signe: -1,
                         pas:  calcPas(fauxMinMax.AMax,localStorage.getItem("AniMax")),
@@ -148,7 +148,7 @@ async function getPrefs() {
                         val: localStorage.getItem("CapMin"),
                         fauxMaxTable : calcTable(fauxMinMax.CMin,localStorage.getItem("CapMin"),fauxMinMax.CMin),
                         name: "Minimum sur le capital des pêcheurs",
-                    //    distVal: obj[i].preference.value_cap_min - minMax.CMin,
+                        //    distVal: obj[i].preference.value_cap_min - minMax.CMin,
                         importance: localStorage.getItem("ImportanceCapMin"),
                         signe: 1,
                         pas: calcPas(fauxMinMax.CMin,localStorage.getItem("CapMin")),
@@ -159,7 +159,7 @@ async function getPrefs() {
                         val: localStorage.getItem("CapMax"),
                         fauxMaxTable : calcTable(fauxMinMax.CMax,localStorage.getItem("CapMax"),fauxMinMax.CMax),
                         name: "Maximum sur le capital des pêcheurs",
-                     //   distVal: minMax.CMax - obj[i].preference.value_cap_max,
+                        //   distVal: minMax.CMax - obj[i].preference.value_cap_max,
                         importance: localStorage.getItem("ImportanceCapMax"),
                         signe: -1,
                         pas: calcPas(fauxMinMax.CMax,localStorage.getItem("CapMax")),
@@ -172,7 +172,7 @@ async function getPrefs() {
                         val: localStorage.getItem("TourMin"),
                         fauxMaxTable : calcTable(fauxMinMax.TMin,localStorage.getItem("TourMin"),fauxMinMax.TMin),
                         name: "Minimum sur le nombre de touristes",
-                    //    distVal: obj[i].preference.value_tour_min - minMax.TMin,
+                        //    distVal: obj[i].preference.value_tour_min - minMax.TMin,
                         importance: localStorage.getItem("ImportanceTourMin"),
                         signe: 1,
                         pas: calcPas(fauxMinMax.TMin,localStorage.getItem("TourMin")),
@@ -184,7 +184,7 @@ async function getPrefs() {
                         val: localStorage.getItem("TourMax"),
                         fauxMaxTable :calcTable(fauxMinMax.TMax,localStorage.getItem("TourMax"),fauxMinMax.TMax) ,
                         name: "Maximum sur le nombre de touristes",
-                    //    distVal: (minMax.TMax - obj[i].preference.value_tour_max),
+                        //    distVal: (minMax.TMax - obj[i].preference.value_tour_max),
                         importance: localStorage.getItem("ImportanceTourMax"),
                         signe: -1,
                         pas: calcPas(fauxMinMax.TMax,localStorage.getItem("TourMax")),
@@ -197,7 +197,7 @@ async function getPrefs() {
                         val: localStorage.getItem("EnvMin"),
                         fauxMaxTable : calcTable(fauxMinMax.EnvMin,localStorage.getItem("EnvMin"),fauxMinMax.EnvMin),
                         name: "Minimum sur la restauration de l'environement",
-                    //    distVal: obj[i].preference.value_env_min - minMax.EnvMin,
+                        //    distVal: obj[i].preference.value_env_min - minMax.EnvMin,
                         importance: localStorage.getItem("ImportanceEnvMin"),
                         signe: 1,
                         pas: calcPas(fauxMinMax.EnvMin,localStorage.getItem("EnvMin")),
@@ -209,7 +209,7 @@ async function getPrefs() {
                         val: localStorage.getItem("EnvMax"),
                         fauxMaxTable :calcTable(fauxMinMax.EnvMax,localStorage.getItem("EnvMax"),fauxMinMax.EnvMax) ,
                         name: "Maximum sur la restauration de l'environement",
-                    //    distVal: (minMax.EnvMax - obj[i].preference.value_env_max),
+                        //    distVal: (minMax.EnvMax - obj[i].preference.value_env_max),
                         importance: localStorage.getItem("ImportanceEnvMax"),
                         signe: -1,
                         pas: calcPas(fauxMinMax.EnvMax,localStorage.getItem("EnvMax")),
@@ -222,7 +222,7 @@ async function getPrefs() {
                         val: localStorage.getItem("OuvMin"),
                         fauxMaxTable :calcTable(fauxMinMax.OuvMin,localStorage.getItem("OuvMin"),fauxMinMax.OuvMin) ,
                         name: "Minimum sur l'ouverture du parc",
-                     //   distVal: obj[i].preference.value_ouv_min - minMax.OuvMin,
+                        //   distVal: obj[i].preference.value_ouv_min - minMax.OuvMin,
                         importance: localStorage.getItem("ImportanceOuvMin"),
                         signe: 1,
                         pas: calcPas(fauxMinMax.OuvMin,localStorage.getItem("OuvMin")),
@@ -234,7 +234,7 @@ async function getPrefs() {
                         val: localStorage.getItem("OuvMax"),
                         fauxMaxTable : calcTable(fauxMinMax.OuvMax,localStorage.getItem("OuvMax"),fauxMinMax.OuvMax),
                         name: "Maximum sur l'ouverture du parc",
-                      //  distVal: (minMax.OuvMax - obj[i].preference.value_ouv_max),
+                        //  distVal: (minMax.OuvMax - obj[i].preference.value_ouv_max),
                         importance: localStorage.getItem("ImportanceOuvMax"),
                         signe: -1,
                         pas: calcPas(fauxMinMax.OuvMax,localStorage.getItem("OuvMax")),
@@ -319,7 +319,10 @@ async function getPrefs() {
 
 
         for(k = 0; k<finalPrefs.length; k++){
-            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide("' + k + '")>'+k+'</div>');
+            /*
+            *  CREATION DES BOUTONS : 1er click = ca affiche / 2eme click = ca efface
+            * */
+            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+k+'</div>');
             console.log("k :");
             console.log(k);
             console.log(finalPrefs[k]);
@@ -327,18 +330,21 @@ async function getPrefs() {
 
 
 
-       // showPreferences(JSON.parse(finalPrefs[0]))
+        // showPreferences(JSON.parse(finalPrefs[0]))
 
 
     });
 }
 
 function showHide(k) {
+
     if($("#slider-ani-"+k).length === 0) {
-        $("#sliderAniContainer").append('<div   id="slider-ani-'+k+'" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+        // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
+        $("#sliderAniContainer").append('<div id="value-min-max-ani-' + k + '"><span id="prefAniMin-"' + k + ' class="purple"></span> - <span id="prefAniMax-"' + k + ' class="purple"></span></div>');
+        $("#sliderAniContainer").append('<div id="slider-ani-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
         showPreferences(JSON.parse(gfinalPrefs[parseInt(k)]),k);
     } else {
-        $("#slider-ani-"+k).remove();
+        $("#slider-ani-"+k + ", #value-min-max-ani-" + k).remove();
     }
 }
 
@@ -407,7 +413,7 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             newPrefs.pref[i].importance = 0;
         }
     }
-        newPrefs = dichotomie(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
+    newPrefs = dichotomie(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
 
     for (i=0; i<newPrefs.pref.length; i++) {
         // newImportab = new Array(importab.length).fill(0.0);
@@ -425,7 +431,7 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
 }
 
 function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100) { // pour chacun des plus importants on se rapproche au maximum
- // on est pas obligé de faire par dichotomie, on pourrait essayer en diminuant progressivement le critère plus important ça va peut etre plus vite
+    // on est pas obligé de faire par dichotomie, on pourrait essayer en diminuant progressivement le critère plus important ça va peut etre plus vite
     console.log("importab");
     console.log(importab);
     console.log("Newimportab");
@@ -462,7 +468,7 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
             newPrefs[j].importance = 100;
             // var pasId = Prefs[i].name;
             newPrefs[j].table =[0,0,newPrefs[j].maxTable];
-         //   newPrefs[j]=prefsInit[j];
+            //   newPrefs[j]=prefsInit[j];
             console.log("new pref :");
             console.log(newPrefs[j].table)
         }
@@ -542,16 +548,16 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         //si oui on remplace les minMax par les fauxMins max
         postXMLHttp('/api?fct=lets_calc' +
             '&data=' + data, function (ret) {
-                if(ret !== "Ce noyau est vide !"){
-                    console.log("non vide");
-                    minMax = JSON.parse(JSON.stringify(fauxMinMax));
-                    faux = true;
-                    for(var f=0; f<Prefs.length; f++){
-                        Prefs[f].maxTable = Prefs[f].fauxMaxTable;
-                        Prefs[f].table[2] = Prefs[f].fauxMaxTable;
-                    }
+            if(ret !== "Ce noyau est vide !"){
+                console.log("non vide");
+                minMax = JSON.parse(JSON.stringify(fauxMinMax));
+                faux = true;
+                for(var f=0; f<Prefs.length; f++){
+                    Prefs[f].maxTable = Prefs[f].fauxMaxTable;
+                    Prefs[f].table[2] = Prefs[f].fauxMaxTable;
                 }
-            });
+            }
+        });
 
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
@@ -562,7 +568,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         while (http.status === 404);
     }
 
-        console.log(Prefs);
+    console.log(Prefs);
 
     //   debut de l'exploration :
     i=0;
@@ -584,13 +590,13 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
             http.send();
             nbFile = nbFile + 1
         } while (http.status !== 404);
-       /* test = TourMin.table[1]*TourMin.signe*TourMin.pas + minMax.TMin;
-        console.log("test");
-        console.log(test);
-        console.log(TourMin.table[1]);
-        console.log(TourMin.signe);
-        console.log(TourMin.pas);
-        console.log(minMax.TMin);*/
+        /* test = TourMin.table[1]*TourMin.signe*TourMin.pas + minMax.TMin;
+         console.log("test");
+         console.log(test);
+         console.log(TourMin.table[1]);
+         console.log(TourMin.signe);
+         console.log(TourMin.pas);
+         console.log(minMax.TMin);*/
 
         let AniMin = Prefs[0];
         let AniMax = Prefs[1];
@@ -643,7 +649,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         console.log(data);
 
         // Dichotomie :
-         postXMLHttp('/api?fct=lets_calc' +
+        postXMLHttp('/api?fct=lets_calc' +
             '&data=' + data, function (ret) {
             if (ret == "Ce noyau est vide !"){
                 dontstop = false;
@@ -652,10 +658,10 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 console.log(Prefs);
                 for (var j = 0; j < Prefs.length; j++) {
 
-                     //   console.log(Prefs[j].name + Prefs[j].table);
-                        Prefs[j].table[2] = Prefs[j].table[1];
-                        Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
-                     //   console.log(Prefs[j].name +Prefs[j].table);
+                    //   console.log(Prefs[j].name + Prefs[j].table);
+                    Prefs[j].table[2] = Prefs[j].table[1];
+                    Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
+                    //   console.log(Prefs[j].name +Prefs[j].table);
 
                 }
             }
@@ -715,8 +721,8 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
     }
 
     const result = {
-      pref : newPrefs,
-      data : newData,
+        pref : newPrefs,
+        data : newData,
         mM : minMax
     };
 
@@ -791,7 +797,14 @@ function showPreferences(finalprefs,k){
     var sliderAniValues3 = localStorage.getItem("AniMax");
     var sliderAniValues4 = localStorage.getItem("AniFauxMax");
     sprefsA = sortPref(sliderAniValues1,sliderAniValues2,sliderAniValues3,sliderAniValues4, prefAmin, prefAmax);
-
+/*
+*  TODO : A NE PAS OUBLIER DE FAIRE POUR LAETITIA :
+*  Sur nonvide.html : faire des container pour chaque preference
+*  les Vmin et Vmax sont creer avec le bouton, donc mettre les valeurs (voir dessous)
+*  dans le showHide > faire pour toutes les prefs
+*  Creer tous les noUiSlider + supprimer les boutons pour chaques
+*  Courage
+* */
 
     noUiSlider.create(sliderAni, {
         start: sprefsA[0],
@@ -819,11 +832,13 @@ function showPreferences(finalprefs,k){
             $(this).remove();
         }
     });
-
-
-
-    document.getElementById('prefAniMin').innerHTML=prefAmin;
-    document.getElementById('prefAniMax').innerHTML=prefAmax;
+    /*
+    *  VOIR ICI : SET Des nouvelles valeurs Vmin et Vmax
+    * */
+    document.getElementById('prefAniMin-' + k).innerHTML=prefAmin;
+    document.getElementById('prefAniMax-' + k).innerHTML=prefAmax;
+   /* document.getElementById('prefAniMin').innerHTML=prefAmin;
+    document.getElementById('prefAniMax').innerHTML=prefAmax;*/
 
 
     var sliderCap = document.getElementById('slider-cap');
@@ -1089,5 +1104,4 @@ for (var i = 0; i < connect.length; i++) {
     connect[i].classList.add(classes[i]);
 }
 */
-
 
