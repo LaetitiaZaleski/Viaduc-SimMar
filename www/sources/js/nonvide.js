@@ -178,8 +178,8 @@ async function getPrefs() {
                         pas: calcPas(fauxMinMax.TMin,localStorage.getItem("TourMin")),
                         maxTable : calcTable(minMax.TMin,localStorage.getItem("TourMin"),fauxMinMax.TMin),
                         table : [0,0,calcTable(minMax.TMin,localStorage.getItem("TourMin"),fauxMinMax.TMin)]
-
                     };
+
                     const TourMax = {
                         val: localStorage.getItem("TourMax"),
                         fauxMaxTable :calcTable(fauxMinMax.TMax,localStorage.getItem("TourMax"),fauxMinMax.TMax) ,
@@ -342,7 +342,7 @@ function showHide(k) {
         // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
         $("#sliderAniContainer").append('<div id="value-min-max-ani-' + k + '"><span id="prefAniMin-"' + k + ' class="purple"></span> - <span id="prefAniMax-"' + k + ' class="purple"></span></div>');
         $("#sliderAniContainer").append('<div id="slider-ani-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
-        showPreferences(JSON.parse(gfinalPrefs[parseInt(k)]),k);
+        showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {
         $("#slider-ani-"+k + ", #value-min-max-ani-" + k).remove();
     }
