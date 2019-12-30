@@ -6,8 +6,6 @@ window.onload = function(){
 var gFinalPref = null;
 var precision = 1;
 
-// TODO : changer tres important en 1,2,3,4 ...
-
 function letsNotEmpty2(){
     getImportances();
     let url = window.location.href;
@@ -247,34 +245,6 @@ async function getPrefs() {
                 }
             }
         }
-        /*for (var i = 0; i < Prefs.length; i++) {
-            switch (Prefs[i].importance) {
-                case 'très important':
-                case 'très importante':
-                   // Prefs[i].pas = (Prefs[i].distVal / parseFloat(importancesVal.tImp));
-                 //   Prefs[i].importance = parseInt(importancesVal.tImp);
-                  //  Prefs[i].table = [0, 0, parseInt(importancesVal.tImp)];
-                 //   console.log(Prefs[i].table);
-                    break;
-               case 'important':
-                case 'importante':
-                 //   Prefs[i].pas = Prefs[i].distVal / parseFloat(importancesVal.imp);
-                  //  Prefs[i].importance = parseInt(importancesVal.imp);
-                 //   Prefs[i].table = [0, 0, parseInt(importancesVal.imp)];
-                    break;
-
-                case 'neutre':
-                //    Prefs[i].pas = Prefs[i].distVal / parseFloat(importancesVal.neutre);
-                 //   Prefs[i].importance = parseInt(importancesVal.neutre);
-                 //   Prefs[i].table = [0, 0, parseInt(importancesVal.neutre)];
-                    break;
-                default :
-                 //   Prefs[i].importance = parseFloat(importancesVal.pImp);
-                 //   Prefs[i].table = [0, 0, parseInt(importancesVal.pImp)];
-                   // Prefs[i].pas = 0;
-                    break;
-            }
-        }*/
 
 
         finalPrefs = [];
@@ -292,7 +262,7 @@ async function getPrefs() {
 
         finalPrefs = [r1.data];
 
-        /*
+
         console.log(Prefs);
         console.log(PrefsInit1);
         console.log(PrefsInit2);
@@ -305,18 +275,20 @@ async function getPrefs() {
         console.log(r1.data);
         finalPrefs = [r1.data, r2.data];
 
-        console.log("recherche 3");
+        console.log("/******* recherche 3 ************/");
 
         let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax);
 
+        console.log("priorité : ");
+        console.log(priorite);
+
         for(k = 0; k<priorite.length; k++){
-            finalPrefs.push(priorite[k]);
+            finalPrefs.push(priorite[k].data);
         }
-        */
 
         gFinalPref = finalPrefs;
         console.log("Final prefs :");
-        console.log(finalPrefs.length)
+        console.log(finalPrefs.length);
         $("#finalPrefButtonContainer").html('');
 
 
@@ -450,30 +422,29 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     return newPrefs
 }
 
-function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100) { // pour chacun des plus importants on se rapproche au maximum
-    // on est pas obligé de faire par dichotomie, on pourrait essayer en diminuant progressivement le critère plus important ça va peut etre plus vite
-    console.log("importab");
-    console.log(importab);
-    console.log("Newimportab");
-    let res = 2*importab[importab.length-1];
-    console.log("res");
-    console.log(res);
-    var newImportTab = importab;
-    newImportTab.push(res); // on rajoute un degres d'importance
-    console.log(newImportTab);
+function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100) { // pour chacun des importants on se rapproche au maximum
+
     let resTab = [];// tableau des noyaux non vide
-    // TODO : pourquoi la c'est pas des newImporttab a la place des importab ?
+    let modifImp = [];
     for(var i=0; i<Prefs.length; i++){
-        if (Prefs[i].importance == importab[importab.length-2]){ // si c'etait un très important
-            Prefs[i].importance = importab[importab.length-1]; // on met ce critere plus important que tous les autres
-            var nonVide = rechercheUnParUn(Prefs,minMax,fauxMinMax,newImportTab, nbEtapes);
+        console.log(Prefs[i]);
+        if (parseInt(Prefs[i].importance) === 100){ // si c'etait un très important
+            console.log(Prefs[i].name);
+            for(var j=0; j<Prefs.length; j++) { // on met tout les autres critèes à pas important
+                if ((j !== i)&&(parseInt(Prefs[j].importance) !== 1)) {
+                    Prefs[j].importance = "1";
+                    modifImp.push(j) // on retient lesquels on a modifiés
+                }
+            }
+            var nonVide = rechercheUnParUn(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
             console.log("non vide :");
             console.log(nonVide);
-            resTab.push();
-            Prefs[i].importance = importab[importab.length-2]// on lui rend son importance précédente
+            resTab.push(nonVide);
+            for(var k=0; k<modifImp.length; k++) { // on rend les importances précédentes
+                    Prefs[modifImp[k]].importance = "100";
+                }
+            }
         }
-
-    }
     return resTab
 }
 
@@ -817,14 +788,7 @@ function showPreferences(finalprefs,k){
     var sliderAniValues3 = localStorage.getItem("AniMax");
     var sliderAniValues4 = localStorage.getItem("AniFauxMax");
     sprefsA = sortPref(sliderAniValues1,sliderAniValues2,sliderAniValues3,sliderAniValues4, prefAmin, prefAmax);
-/*
-*  TODO : A NE PAS OUBLIER DE FAIRE POUR LAETITIA :
-*  Sur nonvide.html : faire des container pour chaque preference
-*  les Vmin et Vmax sont creer avec le bouton, donc mettre les valeurs (voir dessous)
-*  dans le showHide > faire pour toutes les prefs
-*  Creer tous les noUiSlider + supprimer les boutons pour chaques
-*  Courage
-* */
+
 
     noUiSlider.create(sliderAni, {
         start: sprefsA[0],
@@ -847,18 +811,13 @@ function showPreferences(finalprefs,k){
     sliderAni.classList.add(sprefsA[2][1]);
 
     $("#slider-ani-"+k+" > .noUi-base > .noUi-origin").each(function () {
-        console.log($(this).children(".noUi-handle").css("color"));
         if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
             $(this).remove();
         }
     });
-    /*
-    *  VOIR ICI : SET Des nouvelles valeurs Vmin et Vmax
-    * */
+
     document.getElementById('prefAniMin-'+k).innerHTML=prefAmin;
     document.getElementById('prefAniMax-'+k).innerHTML=prefAmax;
-   /* document.getElementById('prefAniMin').innerHTML=prefAmin;
-    document.getElementById('prefAniMax').innerHTML=prefAmax;*/
 
 
     var sliderCap = document.getElementById('slider-cap-'+k);
@@ -891,7 +850,6 @@ function showPreferences(finalprefs,k){
     sliderCap.classList.add(sprefsC[2][1]);
 
     $("#slider-cap-"+k+" > .noUi-base > .noUi-origin").each(function () {
-        console.log($(this).children(".noUi-handle").css("color"));
         if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
             $(this).remove();
         }
@@ -931,7 +889,7 @@ function showPreferences(finalprefs,k){
     sliderTour.classList.add(sprefsT[2][1]);
 
     $("#slider-tour-"+k+" > .noUi-base > .noUi-origin").each(function () {
-        console.log($(this).children(".noUi-handle").css("color"));
+
         if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
             $(this).remove();
         }
@@ -971,7 +929,7 @@ function showPreferences(finalprefs,k){
     sliderEnv.classList.add(sprefsEnv[2][1]);
 
     $("#slider-env-"+k+" > .noUi-base > .noUi-origin").each(function () {
-        console.log($(this).children(".noUi-handle").css("color"));
+
         if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
             $(this).remove();
         }
@@ -1011,7 +969,6 @@ function showPreferences(finalprefs,k){
     sliderOuv.classList.add(sprefsOuv[2][1]);
 
     $("#slider-ouv-"+k+" > .noUi-base > .noUi-origin").each(function () {
-        console.log($(this).children(".noUi-handle").css("color"));
         if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
             $(this).remove();
         }
@@ -1026,132 +983,4 @@ function showPreferences(finalprefs,k){
 
 }
 
-/*
-var sliderAni = document.getElementById('slider-ani');
-
-var sliderAniValues1 = localStorage.getItem("AniFauxMin");
-var sliderAniValues2 = localStorage.getItem("AniMin");
-var sliderAniValues3 = localStorage.getItem("AniMax");
-var sliderAniValues4 = localStorage.getItem("AniFauxMax");
-
-
-noUiSlider.create(sliderAni, {
-    start: [sliderAniValues1, sliderAniValues2,sliderAniValues3, sliderAniValues4],
-    connect: [true, true, true, true, true],
-    step: 20,
-    range: {
-        'min': [0],
-        'max': [20000]
-    }
-});
-
-var connect = sliderAni.querySelectorAll('.noUi-connect');
-var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
-
-for (var i = 0; i < connect.length; i++) {
-    connect[i].classList.add(classes[i]);
-}
-
-
-
-var sliderCap = document.getElementById('slider-cap');
-var sliderCapValues1 = localStorage.getItem("CapFauxMin");
-var sliderCapValues2 = localStorage.getItem("CapMin");
-var sliderCapValues3 = localStorage.getItem("CapMax");
-var sliderCapValues4 = localStorage.getItem("CapFauxMax");
-
-noUiSlider.create(sliderCap, {
-    start: [sliderCapValues1, sliderCapValues2,sliderCapValues3, sliderCapValues4],
-    connect: [true, true, true, true, true],
-    step: 20,
-    range: {
-        'min': [0],
-        'max': [30000]
-    }
-});
-
-connect = sliderCap.querySelectorAll('.noUi-connect');
-
-for (var i = 0; i < connect.length; i++) {
-    connect[i].classList.add(classes[i]);
-}
-
-
-
-
-
-var sliderTour = document.getElementById('slider-tour');
-
-
-var sliderTourValues1 = localStorage.getItem("TourFauxMin");
-var sliderTourValues2 = localStorage.getItem("TourMin");
-var sliderTourValues3 = localStorage.getItem("TourMax");
-var sliderTourValues4 = localStorage.getItem("TourFauxMax");
-
-noUiSlider.create(sliderTour, {
-    start: [sliderTourValues1, sliderTourValues2,sliderTourValues3, sliderTourValues4],
-    connect: [true, true, true, true, true],
-    step: 0,
-    range: {
-        'min': [0],
-        'max': [20000]
-    }
-});
-
-connect = sliderTour.querySelectorAll('.noUi-connect');
-
-for (var i = 0; i < connect.length; i++) {
-    connect[i].classList.add(classes[i]);
-}
-
-
-
-var sliderEnv = document.getElementById('slider-env');
-
-var sliderEnvValues1 = localStorage.getItem("EnvFauxMin");
-var sliderEnvValues2 = localStorage.getItem("EnvMin");
-var sliderEnvValues3 = localStorage.getItem("EnvMax");
-var sliderEnvValues4 = localStorage.getItem("EnvFauxMax");
-
-noUiSlider.create(sliderEnv, {
-    start: [sliderEnvValues1, sliderEnvValues2,sliderEnvValues3, sliderEnvValues4],
-    connect: [true, true, true, true, true],
-    step: 5,
-    range: {
-        'min': [0],
-        'max': [100]
-    }
-});
-
-connect = sliderEnv.querySelectorAll('.noUi-connect');
-
-for (var i = 0; i < connect.length; i++) {
-    connect[i].classList.add(classes[i]);
-}
-
-
-
-
-var sliderOuv = document.getElementById('slider-ouv');
-var sliderOuvValues1 = localStorage.getItem("OuvFauxMin");
-var sliderOuvValues2 = localStorage.getItem("OuvMin");
-var sliderOuvValues3 = localStorage.getItem("OuvMax");
-var sliderOuvValues4 = localStorage.getItem("OuvFauxMax");
-
-noUiSlider.create(sliderOuv, {
-    start: [sliderOuvValues1, sliderOuvValues2,sliderOuvValues3, sliderOuvValues4],
-    connect: [true, true, true, true, true],
-    step: 5,
-    range: {
-        'min': [0],
-        'max': [100]
-    }
-});
-
-connect = sliderOuv.querySelectorAll('.noUi-connect');
-
-for (var i = 0; i < connect.length; i++) {
-    connect[i].classList.add(classes[i]);
-}
-*/
 
