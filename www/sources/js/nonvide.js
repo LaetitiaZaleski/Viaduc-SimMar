@@ -4,7 +4,7 @@ window.onload = function(){
 };
 */
 var gFinalPref = null;
-var precision = 2;
+var precision = 1;
 
 // TODO : changer tres important en 1,2,3,4 ...
 
@@ -291,6 +291,7 @@ async function getPrefs() {
         let r1 = rechercheDiagonale(PrefsInit0, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100); // OK tout seul
 
         finalPrefs = [r1.data];
+
         /*
         console.log(Prefs);
         console.log(PrefsInit1);
@@ -315,6 +316,7 @@ async function getPrefs() {
 
         gFinalPref = finalPrefs;
         console.log("Final prefs :");
+        console.log(finalPrefs.length)
         $("#finalPrefButtonContainer").html('');
 
 
@@ -322,10 +324,11 @@ async function getPrefs() {
             /*
             *  CREATION DES BOUTONS : 1er click = ca affiche / 2eme click = ca efface
             * */
-            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+k+'</div>');
             console.log("k :");
             console.log(k);
             console.log(finalPrefs[k]);
+            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+k+'</div>');
+
         }
 
 
@@ -340,11 +343,28 @@ function showHide(k) {
 
     if($("#slider-ani-"+k).length === 0) {
         // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
-        $("#sliderAniContainer").append('<div id="value-min-max-ani-' + k + '"><span id="prefAniMin-"' + k + ' class="purple"></span> - <span id="prefAniMax-"' + k + ' class="purple"></span></div>');
+        $("#sliderAniContainer").append('<div id="value-min-max-ani-' + k + '"><span id="prefAniMin-'+k+'" class="purple"></span> - <span id="prefAniMax-'+k+'" class="purple"></span></div>');
         $("#sliderAniContainer").append('<div id="slider-ani-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+
+        $("#sliderCapContainer").append('<div id="value-min-max-cap-' + k + '"><span id="prefCapMin-'+k+'" class="purple"></span> - <span id="prefCapMax-'+k+'" class="purple"></span></div>');
+        $("#sliderCapContainer").append('<div id="slider-cap-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+
+        $("#sliderTourContainer").append('<div id="value-min-max-tour-' + k + '"><span id="prefTourMin-'+k+'" class="purple"></span> - <span id="prefTourMax-'+k+'" class="purple"></span></div>');
+        $("#sliderTourContainer").append('<div id="slider-tour-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+
+        $("#sliderOuvContainer").append('<div id="value-min-max-ouv-' + k + '"><span id="prefOuvMin-'+k+'" class="purple"></span> - <span id="prefOuvMax-'+k+'" class="purple"></span></div>');
+        $("#sliderOuvContainer").append('<div id="slider-ouv-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+
+        $("#sliderEnvContainer").append('<div id="value-min-max-env-' + k + '"><span id="prefEnvMin-'+k+'" class="purple"></span> - <span id="prefEnvMax-'+k+'" class="purple"></span></div>');
+        $("#sliderEnvContainer").append('<div id="slider-env-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+
         showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {
         $("#slider-ani-"+k + ", #value-min-max-ani-" + k).remove();
+        $("#slider-cap-"+k + ", #value-min-max-cap-" + k).remove();
+        $("#slider-tour-"+k + ", #value-min-max-tour-" + k).remove();
+        $("#slider-env-"+k + ", #value-min-max-env-" + k).remove();
+        $("#slider-ouv-"+k + ", #value-min-max-ouv-" + k).remove();
     }
 }
 
@@ -835,13 +855,13 @@ function showPreferences(finalprefs,k){
     /*
     *  VOIR ICI : SET Des nouvelles valeurs Vmin et Vmax
     * */
-    document.getElementById('prefAniMin-' + k).innerHTML=prefAmin;
-    document.getElementById('prefAniMax-' + k).innerHTML=prefAmax;
+    document.getElementById('prefAniMin-'+k).innerHTML=prefAmin;
+    document.getElementById('prefAniMax-'+k).innerHTML=prefAmax;
    /* document.getElementById('prefAniMin').innerHTML=prefAmin;
     document.getElementById('prefAniMax').innerHTML=prefAmax;*/
 
 
-    var sliderCap = document.getElementById('slider-cap');
+    var sliderCap = document.getElementById('slider-cap-'+k);
     var sliderCapValues1 = localStorage.getItem("CapFauxMin");
     var sliderCapValues2 = localStorage.getItem("CapMin");
     var sliderCapValues3 = localStorage.getItem("CapMax");
@@ -870,11 +890,18 @@ function showPreferences(finalprefs,k){
     sliderCap.classList.add(sprefsC[2][0]);
     sliderCap.classList.add(sprefsC[2][1]);
 
-    document.getElementById('prefCapMin').innerHTML=prefCmin;
-    document.getElementById('prefCapMax').innerHTML=prefCmax;
+    $("#slider-cap-"+k+" > .noUi-base > .noUi-origin").each(function () {
+        console.log($(this).children(".noUi-handle").css("color"));
+        if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
+            $(this).remove();
+        }
+    });
+
+    document.getElementById('prefCapMin-' + k).innerHTML=prefCmin;
+    document.getElementById('prefCapMax-' + k).innerHTML=prefCmax;
 
 
-    var sliderTour = document.getElementById('slider-tour');
+    var sliderTour = document.getElementById('slider-tour-'+k);
 
     var sliderTourValues1 = localStorage.getItem("TourFauxMin");
     var sliderTourValues2 = localStorage.getItem("TourMin");
@@ -903,12 +930,18 @@ function showPreferences(finalprefs,k){
     sliderTour.classList.add(sprefsT[2][0]); // on met les handle des nouvelles prefs en violet
     sliderTour.classList.add(sprefsT[2][1]);
 
-    document.getElementById('prefTourMin').innerHTML=prefTmin;
-    document.getElementById('prefTourMax').innerHTML=prefTmax;
+    $("#slider-tour-"+k+" > .noUi-base > .noUi-origin").each(function () {
+        console.log($(this).children(".noUi-handle").css("color"));
+        if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
+            $(this).remove();
+        }
+    });
+
+    document.getElementById('prefTourMin-' + k).innerHTML=prefTmin;
+    document.getElementById('prefTourMax-' + k).innerHTML=prefTmax;
 
 
-
-    var sliderEnv = document.getElementById('slider-env');
+    var sliderEnv = document.getElementById('slider-env-'+k);
 
     var sliderEnvValues1 = localStorage.getItem("EnvFauxMin");
     var sliderEnvValues2 = localStorage.getItem("EnvMin");
@@ -937,10 +970,19 @@ function showPreferences(finalprefs,k){
     sliderEnv.classList.add(sprefsEnv[2][0]); // on met les handle des nouvelles prefs en violet
     sliderEnv.classList.add(sprefsEnv[2][1]);
 
-    document.getElementById('prefEnvMin').innerHTML=prefEnvmin;
-    document.getElementById('prefEnvMax').innerHTML=prefEnvmax;
+    $("#slider-env-"+k+" > .noUi-base > .noUi-origin").each(function () {
+        console.log($(this).children(".noUi-handle").css("color"));
+        if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
+            $(this).remove();
+        }
+    });
 
-    var sliderOuv = document.getElementById('slider-ouv');
+    document.getElementById('prefEnvMin-' + k).innerHTML=prefEnvmin;
+    document.getElementById('prefEnvMax-' + k).innerHTML=prefEnvmax;
+
+
+
+    var sliderOuv = document.getElementById('slider-ouv-'+k);
     var sliderOuvValues1 = localStorage.getItem("OuvFauxMin");
     var sliderOuvValues2 = localStorage.getItem("OuvMin");
     var sliderOuvValues3 = localStorage.getItem("OuvMax");
@@ -968,8 +1010,16 @@ function showPreferences(finalprefs,k){
     sliderOuv.classList.add(sprefsOuv[2][0]); // on met les handle des nouvelles prefs en violet
     sliderOuv.classList.add(sprefsOuv[2][1]);
 
-    document.getElementById('prefOuvMin').innerHTML=prefOuvmin;
-    document.getElementById('prefOuvMax').innerHTML=prefOuvmax;
+    $("#slider-ouv-"+k+" > .noUi-base > .noUi-origin").each(function () {
+        console.log($(this).children(".noUi-handle").css("color"));
+        if ($(this).children(".noUi-handle").css("color")!=="rgb(111, 66, 193)"){
+            $(this).remove();
+        }
+    });
+
+    document.getElementById('prefOuvMin-' + k).innerHTML=prefOuvmin;
+    document.getElementById('prefOuvMax-' + k).innerHTML=prefOuvmax;
+
 
 
 
