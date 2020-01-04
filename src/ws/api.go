@@ -159,8 +159,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			Lancement du calcul / creation du fichier
 		*/
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
-		fileOut := strings.Replace(file, ".json", "-viab-0.dat", -1)
-		var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
 		/*
 				Lancement du Viablab.exe :)
 
@@ -274,7 +274,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 					fmt.Println(err)
 				}
 				if (v1 < 0) || (v2 < 0) || (v3 < 0){
-					alerte = "Ce noyau est vide !"
+					alerte = "Votre noyau n'est pas vide !"
 				}else{
 					alerte = "Votre noyau n'est pas vide !"
 				}
@@ -450,9 +450,10 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 					fmt.Println(err)
 				}
 				if (v1 < 0) || (v2 < 0) || (v3 < 0){
-					alerte = "Ce noyau est vide !"
+					alerte = "Votre noyau n'est pas vide !"
 				}else{
-					alerte = "Votre noyau n'est pas vide !"}
+					alerte = "Votre noyau n'est pas vide !"
+				}
 			}
 			fmt.Fprint(w, alerte )
 		}

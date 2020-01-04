@@ -261,11 +261,11 @@ function letsCalcAll() {
                 "value_ouv_min": parseInt(OuvMin),
                 "value_ouv_max": parseInt(OuvMax)
             };
-            console.log("ok 1")
+            console.log("ok 1");
             data = JSON.stringify(jsonObj);
-            console.log("ok 2")
+            console.log("ok 2");
             console.log(data);
-            console.log("ok 3")
+            console.log("ok 3");
 
             postXMLHttp('/api?fct=lets_calc' +
                 '&data=' + data, function (ret) {

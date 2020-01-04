@@ -216,44 +216,121 @@ function getVals(){
 
 
 function letsFinish() {
+    setValues();
     let url = window.location.href;
     let newParam = url.split("?")[1].replace("preference", "result");
-
     window.location.href = "?" + newParam;
+
+
 }
 
 function letsNotEmpty() {
+    setValuesLS();
     let url = window.location.href;
     let newParam = url.split("?")[1].replace("preference", "nonvide");
 
-    localStorage.setItem("AniFauxMin",document.getElementById('valueAniSliderVal1').innerText);
-    localStorage.setItem("AniMin",document.getElementById('valueAniSliderVal2').innerText);
-    localStorage.setItem("AniMax",document.getElementById('valueAniSliderVal3').innerText);
-    localStorage.setItem("AniFauxMax",document.getElementById('valueAniSliderVal4').innerText);
-
-    localStorage.setItem("CapFauxMin",document.getElementById('valueCapSliderVal1').innerText);
-    localStorage.setItem("CapMin",document.getElementById('valueCapSliderVal2').innerText);
-    localStorage.setItem("CapMax",document.getElementById('valueCapSliderVal3').innerText);
-    localStorage.setItem("CapFauxMax",document.getElementById('valueCapSliderVal4').innerText);
-
-    localStorage.setItem("TourFauxMin",document.getElementById('valueTourSliderVal1').innerText);
-    localStorage.setItem("TourMin",document.getElementById('valueTourSliderVal2').innerText);
-    localStorage.setItem("TourMax",document.getElementById('valueTourSliderVal3').innerText);
-    localStorage.setItem("TourFauxMax",document.getElementById('valueTourSliderVal4').innerText);
-
-    localStorage.setItem("EnvFauxMin",document.getElementById('valueEnvSliderVal1').innerText);
-    localStorage.setItem("EnvMin",document.getElementById('valueEnvSliderVal2').innerText);
-    localStorage.setItem("EnvMax",document.getElementById('valueEnvSliderVal3').innerText);
-    localStorage.setItem("EnvFauxMax",document.getElementById('valueEnvSliderVal4').innerText);
-
-    localStorage.setItem("OuvFauxMin",document.getElementById('valueOuvSliderVal1').innerText);
-    localStorage.setItem("OuvMin",document.getElementById('valueOuvSliderVal2').innerText);
-    localStorage.setItem("OuvMax",document.getElementById('valueOuvSliderVal3').innerText);
-    localStorage.setItem("OuvFauxMax",document.getElementById('valueOuvSliderVal4').innerText);
 
 
     window.location.href = "?" + newParam;
 }
 
+function setNumFile() {
+
+    let RoomName = localStorage.getItem("roomName");
+    let ClassId = localStorage.getItem("classId");
+    let i = 0;
+    var http = new XMLHttpRequest();
+
+    do {
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        http.open('HEAD', tmpPath, false);
+        http.send();
+        i++;
+    }
+    while (http.status !== 404);
+    let numFile = i - 1;
+    localStorage.setItem("numFile",numFile);
+
+}
 
 
+function setValuesLS() {
+
+    localStorage.setItem("AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
+    localStorage.setItem("AniMin", document.getElementById('valueAniSliderVal2').innerText);
+    localStorage.setItem("AniMax", document.getElementById('valueAniSliderVal3').innerText);
+    localStorage.setItem("AniFauxMax", document.getElementById('valueAniSliderVal4').innerText);
+
+    localStorage.setItem("CapFauxMin", document.getElementById('valueCapSliderVal1').innerText);
+    localStorage.setItem("CapMin", document.getElementById('valueCapSliderVal2').innerText);
+    localStorage.setItem("CapMax", document.getElementById('valueCapSliderVal3').innerText);
+    localStorage.setItem("CapFauxMax", document.getElementById('valueCapSliderVal4').innerText);
+
+    localStorage.setItem("TourFauxMin", document.getElementById('valueTourSliderVal1').innerText);
+    localStorage.setItem("TourMin", document.getElementById('valueTourSliderVal2').innerText);
+    localStorage.setItem("TourMax", document.getElementById('valueTourSliderVal3').innerText);
+    localStorage.setItem("TourFauxMax", document.getElementById('valueTourSliderVal4').innerText);
+
+    localStorage.setItem("EnvFauxMin", document.getElementById('valueEnvSliderVal1').innerText);
+    localStorage.setItem("EnvMin", document.getElementById('valueEnvSliderVal2').innerText);
+    localStorage.setItem("EnvMax", document.getElementById('valueEnvSliderVal3').innerText);
+    localStorage.setItem("EnvFauxMax", document.getElementById('valueEnvSliderVal4').innerText);
+
+    localStorage.setItem("OuvFauxMin", document.getElementById('valueOuvSliderVal1').innerText);
+    localStorage.setItem("OuvMin", document.getElementById('valueOuvSliderVal2').innerText);
+    localStorage.setItem("OuvMax", document.getElementById('valueOuvSliderVal3').innerText);
+    localStorage.setItem("OuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
+
+
+}
+
+function setValues() {
+
+    let ClassId = localStorage.getItem("classId");
+    let RoomName = localStorage.getItem("roomName");
+
+    let i = 0;
+    var http = new XMLHttpRequest();
+
+
+
+    do {
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        console.log(tmpPath);
+        http.open('HEAD', tmpPath, false);
+        http.send();
+        i++;
+    }
+    while (http.status !== 404);
+    let numFile = i - 2;
+    console.log(numFile);
+
+    roles=["Maire", "Ecologiste","Industriel"];
+    localStorage.setItem(roles[ClassId-1]+"AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"AniMin", document.getElementById('valueAniSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"AniMax", document.getElementById('valueAniSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"AniFauxMax", document.getElementById('valueAniSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"CapFauxMin", document.getElementById('valueCapSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"CapMin", document.getElementById('valueCapSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"CapMax", document.getElementById('valueCapSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"CapFauxMax", document.getElementById('valueCapSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"TourFauxMin", document.getElementById('valueTourSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"TourMin", document.getElementById('valueTourSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"TourMax", document.getElementById('valueTourSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"TourFauxMax", document.getElementById('valueTourSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"EnvFauxMin", document.getElementById('valueEnvSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"EnvMin", document.getElementById('valueEnvSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"EnvMax", document.getElementById('valueEnvSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"EnvFauxMax", document.getElementById('valueEnvSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"OuvFauxMin", document.getElementById('valueOuvSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"OuvMin", document.getElementById('valueOuvSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"OuvMax", document.getElementById('valueOuvSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"OuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"NumFile", numFile);
+
+}

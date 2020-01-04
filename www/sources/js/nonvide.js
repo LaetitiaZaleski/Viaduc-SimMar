@@ -4,19 +4,26 @@ window.onload = function(){
 };
 */
 var gFinalPref = null;
+var gFinalFiles = []; // numero de la solution qu'on garde
+var gNumFiles = []; // numero de fichier correspondant
 var precision = 1;
 
-function letsNotEmpty2(){
-    getImportances();
-    let url = window.location.href;
-    let newParam = url.split("?")[1].replace("nonvide", "nonvidep2");
-    window.location.href = "?" + newParam;
+function letsFinish() {
+    if (gFinalFiles.length !== 1){
+        alert("Merci de choisir UNE solution");
+    }else{
+
+       // setPref(gNumFiles[gFinalFiles[0]]);
+        let url = window.location.href;
+        let newParam = url.split("?")[1].replace("nonvide", "result");
+        window.location.href = "?" + newParam;
+    }
 }
 
 function getImportances(){
     for (let i= 0; i < importances.length; i++) {
         let imp =importances[i];
-        console.log(document.getElementById(imp).checked);
+
         let checked = document.getElementById(imp).checked;
 
         if(checked){
@@ -29,12 +36,8 @@ function getImportances(){
 }
 
 function calcPas(faux,pref){
-    console.log("faux");
-    console.log(faux);
-    console.log("pref");
-    console.log(pref);
+
     pas = Math.max(Math.ceil(Math.max((pref-faux),(faux-pref))/precision),1);
-    //  console.log(pas);
     return pas
 }
 
@@ -44,10 +47,7 @@ function calcTable(abs, pref, faux){
     }
     dist = Math.max((pref-abs),(abs-pref));
     pas = calcPas(faux,pref);
-    console.log("dist");
-    console.log(dist);
-    console.log("pref");
-    console.log(pref);
+
     //return Math.max(Math.floor(Math.max((abs-pref),(pref-abs))/ calcPas(faux,pref),1))
     return Math.max( Math.floor( dist/pas),  1)
 
@@ -97,7 +97,7 @@ async function getPrefs() {
 
 
         let className = "";
-        // console.log(localStorage.getItem("classId"));
+
         switch (localStorage.getItem("classId")) {
             case "1" :
                 className = "Maire";
@@ -109,13 +109,13 @@ async function getPrefs() {
                 className = "Ecologiste";
 
         }
-        // console.log(className);
+
         obj = JSON.parse(ret);
-        // console.log(obj);
+
         if (obj !== null && obj.length > 0) {
             for (i = 0; i < obj.length; i++) {
                 if (obj[i].class_name.toString() == className) {
-                    // console.log("hello");
+
                     // Pour les max : on regarde la distance à la borne min : il s'agit de la veleur normalisée, pour les mins,
                     // on regarde la valeur à la borne max : c'est 1- la valeur normalisée.
 
@@ -274,9 +274,11 @@ async function getPrefs() {
         console.log(r2.data);
         console.log(r1.data);
         finalPrefs = [r1.data, r2.data];
+        finalFiles = [r1.numFile,r2.numFile];
 
         console.log("/******* recherche 3 ************/");
 
+/*
         let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax);
 
         console.log("priorité : ");
@@ -285,11 +287,14 @@ async function getPrefs() {
         for(k = 0; k<priorite.length; k++){
             finalPrefs.push(priorite[k].data);
         }
+*/
+        gNumFiles = finalFiles;
 
         gFinalPref = finalPrefs;
         console.log("Final prefs :");
         console.log(finalPrefs.length);
         $("#finalPrefButtonContainer").html('');
+
 
 
         for(k = 0; k<finalPrefs.length; k++){
@@ -303,7 +308,7 @@ async function getPrefs() {
 
         }
 
-
+        $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
 
         // showPreferences(JSON.parse(finalPrefs[0]))
 
@@ -312,6 +317,7 @@ async function getPrefs() {
 }
 
 function showHide(k) {
+
 
     if($("#slider-ani-"+k).length === 0) {
         // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
@@ -325,10 +331,14 @@ function showHide(k) {
         $("#sliderTourContainer").append('<div id="slider-tour-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
 
         $("#sliderOuvContainer").append('<div id="value-min-max-ouv-' + k + '"><span id="prefOuvMin-'+k+'" class="purple"></span> - <span id="prefOuvMax-'+k+'" class="purple"></span></div>');
-        $("#sliderOuvContainer").append('<div id="slider-ouv-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+        $("#sliderOuvContainer").append('<div id="slider-ouv-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true" ></div>');
 
         $("#sliderEnvContainer").append('<div id="value-min-max-env-' + k + '"><span id="prefEnvMin-'+k+'" class="purple"></span> - <span id="prefEnvMax-'+k+'" class="purple"></span></div>');
         $("#sliderEnvContainer").append('<div id="slider-env-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
+
+        gFinalFiles.push(parseInt(k));
+        console.log("gFinalFiles");
+        console.log(gFinalFiles);
 
         showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {
@@ -337,6 +347,9 @@ function showHide(k) {
         $("#slider-tour-"+k + ", #value-min-max-tour-" + k).remove();
         $("#slider-env-"+k + ", #value-min-max-env-" + k).remove();
         $("#slider-ouv-"+k + ", #value-min-max-ouv-" + k).remove();
+        gFinalFiles.pop(parseInt(k));
+        console.log("gFinalFiles");
+        console.log(gFinalFiles);
     }
 }
 
@@ -394,8 +407,6 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     };
 
     console.log(newPrefs.pref);
-    console.log("importab");
-    console.log(importab);
     prefsInit = JSON.parse(JSON.stringify(Prefs));
 
 
@@ -504,7 +515,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
     if (!rafinement) {
         for (var i = 0; i < Prefs.length; i++) {
-            if (Prefs[i].importance === 1) { // si pas important osef
+            if (Prefs[i].importance === "1") { // si pas important osef
                 Prefs[i].table = [0,0,0];
             }
             //  console.log(Prefs[i].name + Prefs[i].table);
@@ -530,7 +541,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         var data = JSON.stringify(jsonObj);
         console.log(data);
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             nbFile = nbFile + 1
@@ -551,7 +562,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         });
 
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             sleep(1500)
@@ -576,11 +587,14 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         nbFile = 0;
 
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+        //    console.log(tmpPath);
             http.open('HEAD', tmpPath, false);
             http.send();
             nbFile = nbFile + 1
         } while (http.status !== 404);
+        nbFile = nbFile-1;
+
         /* test = TourMin.table[1]*TourMin.signe*TourMin.pas + minMax.TMin;
          console.log("test");
          console.log(test);
@@ -635,14 +649,12 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
         var data = JSON.stringify(jsonObj);
 
-
-
         console.log(data);
 
         // Dichotomie :
         postXMLHttp('/api?fct=lets_calc' +
             '&data=' + data, function (ret) {
-            if (ret == "Ce noyau est vide !"){
+            if (ret === "Ce noyau est vide !"){
                 dontstop = false;
                 console.log("vide");
                 console.log("file num : "+nbFile);
@@ -657,8 +669,9 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 }
             }
             else {
-                if (ret == "Ce noyau est negatif !") {
+                if (ret === "Ce noyau est negatif !") {
                     // si une iteration est vide c'est une erreur : on ne fait rien et on recommence
+                    newPrefs = JSON.parse(JSON.stringify(Prefs));
                     console.log("negatif");
                     dontstop = true;
 
@@ -689,13 +702,18 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
             nbFile = nbFile - 1;
         });
 
+
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+          //  console.log(tmpPath);
+          //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             sleep(1500)
         }
         while (http.status === 404);
+
         // pour toutes les pref si tab[1] == tab[2] on stoppe
         var stop = 0;
         for (var j = 0; j < Prefs.length; j++) {
@@ -714,6 +732,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
     const result = {
         pref : newPrefs,
         data : newData,
+        numFile : lastNonVide,
         mM : minMax
     };
 
@@ -978,9 +997,53 @@ function showPreferences(finalprefs,k){
     document.getElementById('prefOuvMax-' + k).innerHTML=prefOuvmax;
 
 
+}
+/*
+function setPref(numFile,finalPref) {
 
+    prefAmin = finalprefs.value_ani_min;
+    prefAmax = finalprefs.value_ani_max;
+    prefCmin = finalprefs.value_tour_min;
+    prefCmax = finalprefs.value_tour_max;
+    prefTmin = finalprefs.value_cap_min;
+    prefTmax = finalprefs.value_cap_max;
+    prefEnvmin = finalprefs.value_env_min;
+    prefEnvmax = finalprefs.value_env_max;
+    prefOuvmin = finalprefs.value_ouv_min;
+    prefOuvmax = finalprefs.value_ouv_max;
 
+    let ClassId = localStorage.getItem("classId");
+
+    roles=["Maire", "Ecologiste","Industriel"];
+
+    localStorage.setItem(roles[ClassId-1]+"AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"AniMin", document.getElementById('valueAniSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"AniMax", document.getElementById('valueAniSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"AniFauxMax", document.getElementById('valueAniSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"CapFauxMin", document.getElementById('valueCapSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"CapMin", document.getElementById('valueCapSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"CapMax", document.getElementById('valueCapSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"CapFauxMax", document.getElementById('valueCapSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"TourFauxMin", document.getElementById('valueTourSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"TourMin", document.getElementById('valueTourSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"TourMax", document.getElementById('valueTourSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"TourFauxMax", document.getElementById('valueTourSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"EnvFauxMin", document.getElementById('valueEnvSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"EnvMin", document.getElementById('valueEnvSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"EnvMax", document.getElementById('valueEnvSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"EnvFauxMax", document.getElementById('valueEnvSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"OuvFauxMin", document.getElementById('valueOuvSliderVal1').innerText);
+    localStorage.setItem(roles[ClassId-1]+"OuvMin", document.getElementById('valueOuvSliderVal2').innerText);
+    localStorage.setItem(roles[ClassId-1]+"OuvMax", document.getElementById('valueOuvSliderVal3').innerText);
+    localStorage.setItem(roles[ClassId-1]+"OuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
+
+    localStorage.setItem(roles[ClassId-1]+"NumFile", numFile);
 
 }
 
 
+*/

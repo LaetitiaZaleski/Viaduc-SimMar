@@ -17,7 +17,8 @@ function joinRoom() {
 
 function joinSettings() {
     let url = window.location.href;
-    let newParam = url.split("?")[1].replace("rules", "settings")
+    let newParam = url.split("?")[1].replace("rules", "settings");
+    setMinMaxRoles();
 
     window.location.href = "?" + newParam;
 }

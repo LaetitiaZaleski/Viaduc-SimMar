@@ -14,6 +14,42 @@ var importancesVals = ["{{.ValueAniMin}}", "{{.ValueAniMax}}", "{{.ValueTourMin}
     "{{.ValueCapMin}}", "{{.ValueCapMax}}", "{{.ValueEnvMin}}", "{{.ValueEnvMax}}", "{{.ValueOuvMin}}",
     "{{.ValueOuvMax}}"];
 
+
+function setMinMaxRoles() {
+
+    roles = ["Maire", "Ecologiste", "Industriel"];
+    for(var i = 0; i<roles.length; i++){
+        localStorage.setItem(roles[i]+"AniFauxMin", 0);
+        localStorage.setItem(roles[i]+"AniMin", 0);
+        localStorage.setItem(roles[i]+"AniMax", 0);
+        localStorage.setItem(roles[i]+"AniFauxMax", 0);
+
+        localStorage.setItem(roles[i]+"CapFauxMin", 0);
+        localStorage.setItem(roles[i]+"CapMin", 0);
+        localStorage.setItem(roles[i]+"CapMax", 0);
+        localStorage.setItem(roles[i]+"CapFauxMax", 0);
+
+        localStorage.setItem(roles[i]+"TourFauxMin", 0);
+        localStorage.setItem(roles[i]+"TourMin", 0);
+        localStorage.setItem(roles[i]+"TourMax", 0);
+        localStorage.setItem(roles[i]+"TourFauxMax", 0);
+
+        localStorage.setItem(roles[i]+"EnvFauxMin", 0);
+        localStorage.setItem(roles[i]+"EnvMin", 0);
+        localStorage.setItem(roles[i]+"EnvMax", 0);
+        localStorage.setItem(roles[i]+"EnvFauxMax", 0);
+
+        localStorage.setItem(roles[i]+"OuvFauxMin", 0);
+        localStorage.setItem(roles[i]+"OuvMin", 0);
+        localStorage.setItem(roles[i]+"OuvMax", 0);
+        localStorage.setItem(roles[i]+"OuvFauxMax", 0);
+
+        localStorage.setItem(roles[i]+"NumFile", -1);
+    }
+
+}
+
+
 window.onload = function () {
     $('[data-toggle="tooltip"]').tooltip();
 };

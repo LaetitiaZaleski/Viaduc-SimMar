@@ -15,6 +15,10 @@
     <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
     <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
 
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/nouislider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/nouislider.min.css">
+
+
 
     <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
 
@@ -71,8 +75,9 @@
 
                     <section class="disabled-range-slider ">
 
-                        <input id="MaireValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
-                        <input id="MaireValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
+                        <div>
+                            <div id="slider-Ani-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
 
                     </section>
 
@@ -82,18 +87,18 @@
 
                         <section class="disabled-range-slider ">
 
-                            <input id="EcologisteValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
-                            <input id="EcologisteValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
-
+                            <div>
+                                <div id="slider-Ani-Ecologiste" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                         </section>
 
                         <div> <span > Industriel : </span></div>
 
                         <section class="disabled-range-slider ">
 
-                            <input id="IndustrielValueAniMin" min="500" max="20000" step="5" type="range"  disabled>
-                            <input id="IndustrielValueAniMax" min="500" max="20000" step="5" type="range"  disabled>
-
+                            <div>
+                                <div id="slider-Ani-Industriel" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                         </section>
                     </div>
                 </div>
@@ -106,19 +111,22 @@
                     <section class="disabled-range-slider ">
                         <span class="rangeValues"></span>
 
-                        <input  id="MaireValueCapMin" min="500" max="20000" step="5" type="range" disabled>
-                        <input  id="MaireValueCapMax" min="500" max="20000" step="5" type="range" disabled>
+                        <div>
+                            <div id="slider-Cap-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
                     </section>
                     <div> <span > Ecologiste : </span></div>
                     <section class="disabled-range-slider ">
-                        <input id="EcologisteValueCapMin" min="500" max="20000" step="5" type="range"  disabled>
-                        <input id="EcologisteValueCapMax" min="500" max="20000" step="5" type="range"  disabled>
+                        <div>
+                                <div id="slider-Cap-Ecologiste" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                     </section>
                         <div> <span > Industriel : </span></div>
                     <section class="disabled-range-slider ">
 
-                        <input id="IndustrielValueCapMin" min="500" max="20000" step="5" type="range"  disabled>
-                        <input id="IndustrielValueCapMax" min="500" max="20000" step="5" type="range"  disabled>
+                        <div>
+                                <div id="slider-Cap-Industriel" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
 
 
                     </section>
@@ -131,20 +139,23 @@
                     <section class="disabled-range-slider ">
                         <span class="rangeValues"></span>
 
-                        <input  id="MaireValueTourMin" min="500" max="20000" step="5" type="range" disabled>
-                        <input  id="MaireValueTourMax" min="500" max="20000" step="5" type="range"disabled>
-
+                        <div>
+                            <div id="slider-Tour-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
                     </section>
                     <div> <span > Ecologiste : </span></div>
                     <section class="disabled-range-slider ">
 
-                        <input id="EcologisteValueTourMin" min="500" max="20000" step="5" type="range"  disabled>
-                        <input id="EcologisteValueTourMax" min="500" max="20000" step="5" type="range"  disabled>
+                       <div>
+                                <div id="slider-Tour-Ecologiste" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                     </section>
                     <div> <span > Industriel : </span></div>
                     <section class="disabled-range-slider ">
-                        <input id="IndustrielValueTourMin" min="500" max="20000" step="5" type="range"  disabled >
-                        <input id="IndustrielValueTourMax" min="500" max="20000" step="5" type="range"  disabled>
+
+                        <div>
+                                <div id="slider-Tour-Industriel" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                     </section>
                 </div>
             </div>
@@ -163,19 +174,22 @@
                         <div> <span > Maire : </span></div>
                     <section class="disabled-range-slider ">
 
-                        <input  id="MaireValueEnvMin" min="0" max="100" step="10" type="range" disabled >
-                        <input  id="MaireValueEnvMax" min="0" max="100" step="10" type="range" disabled>
+                        <div>
+                            <div id="slider-Env-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
 
                     </section>
                         <div> <span > Ecologiste : </span></div>
                     <section class="disabled-range-slider ">
-                        <input id="EcologisteValueEnvMin" min="0" max="100" step="10" type="range"  disabled>
-                        <input id="EcologisteValueEnvMax" min="0" max="100" step="10" type="range"  disabled>
+                        <div>
+                                <div id="slider-Env-Ecologiste" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                     </section>
                         <div> <span > Industriel : </span></div>
                     <section class="disabled-range-slider ">
-                        <input id="IndustrielValueEnvMin" min="0" max="100" step="10" type="range"  disabled>
-                        <input id="IndustrielValueEnvMax" min="0" max="100" step="10" type="range"  disabled>
+                        <div>
+                                <div id="slider-Env-Industriel" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
 
                     </section>
                 </div>
@@ -190,20 +204,23 @@
                         <div> <span > Maire : </span></div>
                         <section class="disabled-range-slider ">
 
-                        <input id="MaireValueOuvMin" min="0" max="50" step="5" type="range" disabled>
-                        <input id="MaireValueOuvMax" min="0" max="50" step="5" type="range" disabled>
+                        <div>
+                            <div id="slider-Ouv-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
                         </section>
 
                         <div> <span > Ecologiste : </span></div>
                         <section class="disabled-range-slider ">
-                        <input id="EcologisteValueOuvMin" min="0" max="50" step="5" type="range"  disabled>
-                        <input id="EcologisteValueOuvMax" min="0" max="50" step="5" type="range"  disabled>
+                       <div>
+                                <div id="slider-Ouv-Ecologiste" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
                         </section>
 
                         <div> <span > Industriel : </span></div>
                     <section class="disabled-range-slider ">
-                        <input id="IndustrielValueOuvMin" min="0" max="50" step="5" type="range"  disabled>
-                        <input id="IndustrielValueOuvMax" min="0" max="50" step="5" type="range"  disabled>
+                        <div>
+                                <div id="slider-Ouv-Industriel" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            </div>
 
                     </section>
                 </div>
@@ -237,6 +254,7 @@
 </div>
 
 <script src="sources/js/result.js"></script>
+<script src="sources/js/setSliders.js"></script>
 
 
 </body>

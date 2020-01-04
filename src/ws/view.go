@@ -63,6 +63,8 @@ type Preferences struct {
 	ValueOuvMax int64 `json:"value_ouv_max"`
 }
 
+
+
 /*
 	PARTIE DE DECLARATION DES FONCTIONS
 */
@@ -237,8 +239,6 @@ func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 	view := "www/dynamique.html"
 	t, _ := template.ParseFiles(view)
 	t.Execute(w, setting)
-
-
 
 }
 

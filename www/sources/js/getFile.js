@@ -72,7 +72,7 @@ async function letsCalc() {
     nbFile = nbFile -1;
 
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         sleep(1500)
@@ -137,7 +137,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 
     do {
         i++;
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
 
         http.open('HEAD', tmpPath, false);
         http.send();
@@ -146,7 +146,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
     if (i > 0) {
         let numFile = i - 1;
 
-        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
+        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
         console.log("Path : " + path);
 
         var allData = {
@@ -164,9 +164,9 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
 
 
             for (i = 0; i < lineTab.length; i++) {
-                let valueTab = lineTab[i].split(' ');
+                let valueTab = lineTab[i].split('  ');
                 if (valueTab.length >= 3) {
-                    if (i % 1000 == 0) { // on prend 1 point sur 1000
+                    if (i % 10 == 0) { // on prend 1 point sur 10
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
@@ -219,7 +219,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
                 r = 28 + coulr;
                 g = 108 + coulg;
                 b = 6 + coulb;
-                console.log("b" + b)
+                console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Ecologiste"
             }
