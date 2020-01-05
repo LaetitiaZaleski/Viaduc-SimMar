@@ -56,8 +56,20 @@ async function letsCalc() {
         "value_env_min": parseInt(document.getElementById('valueEnvSliderVal2').innerText),
         "value_env_max": parseInt(document.getElementById('valueEnvSliderVal3').innerText),
         "value_ouv_min": parseInt(document.getElementById('valueOuvSliderVal2').innerText),
-        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal3').innerText)
+        "value_ouv_max": parseInt(document.getElementById('valueOuvSliderVal3').innerText),
+
+        "value_ani_faux_min": parseInt(document.getElementById('valueAniSliderVal1').innerText),
+        "value_ani_faux_max": parseInt(document.getElementById('valueAniSliderVal4').innerText),
+        "value_tour_faux_min": parseInt(document.getElementById('valueTourSliderVal1').innerText),
+        "value_tour_faux_max": parseInt(document.getElementById('valueTourSliderVal4').innerText),
+        "value_cap_faux_min": parseInt(document.getElementById(`valueCapSliderVal1`).innerText),
+        "value_cap_faux_max": parseInt(document.getElementById(`valueCapSliderVal4`).innerText),
+        "value_env_faux_min": parseInt(document.getElementById('valueEnvSliderVal1').innerText),
+        "value_env_faux_max": parseInt(document.getElementById('valueEnvSliderVal4').innerText),
+        "value_ouv_faux_min": parseInt(document.getElementById('valueOuvSliderVal1').innerText),
+        "value_ouv_faux_max": parseInt(document.getElementById('valueOuvSliderVal4').innerText)
     };
+
     data = JSON.stringify(jsonObj);
 
     console.log(data);

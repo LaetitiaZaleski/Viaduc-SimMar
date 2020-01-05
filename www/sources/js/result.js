@@ -87,18 +87,61 @@ function getPreference() {
 
 function setAllPreference(obj){
 
-    document.getElementById(obj.class_name+"ValueAniMin").value = obj.preference.value_ani_min;
-    document.getElementById(obj.class_name+"ValueAniMax").value = obj.preference.value_ani_max;
-    document.getElementById(obj.class_name+"ValueCapMin").value = obj.preference.value_cap_min;
-    document.getElementById(obj.class_name+"ValueCapMax").value = obj.preference.value_cap_max;
-    document.getElementById(obj.class_name+"ValueEnvMin").value = obj.preference.value_env_min;
-    document.getElementById(obj.class_name+"ValueEnvMax").value = obj.preference.value_env_max;
-    document.getElementById(obj.class_name+"ValueOuvMin").value = obj.preference.value_ouv_min;
-    document.getElementById(obj.class_name+"ValueOuvMax").value = obj.preference.value_ouv_max;
-    document.getElementById(obj.class_name+"ValueTourMin").value = obj.preference.value_tour_min;
-    document.getElementById(obj.class_name+"ValueTourMax").value = obj.preference.value_tour_max;
+    let Val1 =[obj.preference.value_ani_faux_min,obj.preference.value_ani_min,obj.preference.value_ani_max, obj.preference.value_ani_faux_max];
+    let Id1 =  id = "slider-Ani" + "-" + obj.class_name;
+    console.log(Id1);
+    setSlider(Id1,Val1);
+
+    let Val2 =[obj.preference.value_cap_faux_min,obj.preference.value_cap_min,obj.preference.value_cap_max, obj.preference.value_cap_faux_max];
+    let Id2 =  id = "slider-Cap" + "-" + obj.class_name;
+
+    setSlider(Id2,Val2);
+
+    let Val3 =[obj.preference.value_tour_faux_min,obj.preference.value_tour_min,obj.preference.value_tour_max, obj.preference.value_tour_faux_max];
+    let Id3 =  id = "slider-Tour" + "-" + obj.class_name;
+
+    setSlider(Id3,Val3);
+
+    let Val4 =[obj.preference.value_env_faux_min,obj.preference.value_env_min,obj.preference.value_env_max, obj.preference.value_env_faux_max];
+    let Id4 =  id = "slider-Env" + "-" + obj.class_name;
+
+    setSlider(Id4,Val4,50);
+
+    let Val5 =[obj.preference.value_ouv_faux_min,obj.preference.value_ouv_min,obj.preference.value_ouv_max, obj.preference.value_ouv_faux_max];
+    let Id5 =  id = "slider-Ouv" + "-" + obj.class_name;
+
+    setSlider(Id5,Val5,100);
 
 }
+
+
+
+function setSlider(sliderId, sliderVals,max=20000){
+    // console.log(sliderVals);
+    var sliderAni = document.getElementById(sliderId);
+    if (sliderVals[sliderVals.length-1]< 110){
+    }
+
+    noUiSlider.create(sliderAni, {
+        start: sliderVals,
+        connect: [true, true, true, true, true],
+        step: 10,
+        range: {
+            'min': [0],
+            'max': [max]
+        }
+    });
+
+    var connect = sliderAni.querySelectorAll('.noUi-connect');
+    var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
+
+    for (var i = 0; i < connect.length; i++) {
+        connect[i].classList.add(classes[i]);
+    }
+
+}
+
+
 
 function letsCalc() {
     var jsonObj = {

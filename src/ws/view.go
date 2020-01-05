@@ -61,6 +61,21 @@ type Preferences struct {
 
 	ValueEnvMax int64 `json:"value_env_max"`
 	ValueOuvMax int64 `json:"value_ouv_max"`
+
+	ValueAniFauxMin int64 `json:"value_ani_faux_min"`
+	ValueCapFauxMin int64 `json:"value_cap_faux_min"`
+	ValueTourFauxMin int64 `json:"value_tour_faux_min"`
+
+	ValueAniFauxMax int64 `json:"value_ani_faux_max"`
+	ValueCapFauxMax int64 `json:"value_cap_faux_max"`
+	ValueTourFauxMax int64 `json:"value_tour_faux_max"`
+
+	ValueEnvFauxMin int64 `json:"value_env_faux_min"`
+	ValueOuvFauxMin int64 `json:"value_ouv_faux_min"`
+
+	ValueEnvFauxMax int64 `json:"value_env_faux_max"`
+	ValueOuvFauxMax int64 `json:"value_ouv_faux_max"`
+
 }
 
 
@@ -73,11 +88,21 @@ func Initialisation() Games {
 	var g Games
 	g.ClassList = append(g.ClassList, Class{1, "Maire", "", Settings{},
 		Preferences{"","",500, 1500, 1000, 5000,
-			20000, 10000, 0, 0, 50, 30 }})
-	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{}, Preferences{"", "",500, 1500, 1000, 2500,
-		20000, 10000, 0, 0, 100, 20 }})
-	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{}, Preferences{"", "", 2000, 1500, 500, 20000,
-		20000, 20000, 20, 10, 100, 50 }})
+			15000, 10000, 0, 0, 50, 30,400,
+			1000, 800,10000,20000, 12000,
+			0,0,50,40}})
+
+	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{},
+		Preferences{"", "",500, 1500, 1000, 2500,
+		20000, 10000, 0, 0, 100, 20,400,
+		1000, 800,10000,20000, 12000,
+		0,0,50,40} })
+
+	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{},
+		Preferences{"", "", 2000, 1500, 500, 20000,
+		20000, 20000, 20, 10, 100, 50,1000,
+		1000, 300,20000,20000, 20000, 0,
+		0,100,50} })
 
 	return g
 }
@@ -314,6 +339,20 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 		ValueEnvMax int64
 		ValueOuvMax int64
 
+		ValueAniFauxMin int64
+		ValueCapFauxMin int64
+		ValueTourFauxMin int64
+
+		ValueAniFauxMax int64
+		ValueCapFauxMax int64
+		ValueTourFauxMax int64
+
+		ValueEnvFauxMin int64
+		ValueOuvFauxMin int64
+
+		ValueEnvFauxMax int64
+		ValueOuvFauxMax int64
+
 		ValueAniRole1 string
 		ValueAniRole2 string
 		ValueCapRole1 string
@@ -339,6 +378,16 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 		class.Preferences.ValueOuvMin,
 		class.Preferences.ValueEnvMax,
 		class.Preferences.ValueOuvMax,
+		class.Preferences.ValueAniFauxMin,
+		class.Preferences.ValueCapFauxMin,
+		class.Preferences.ValueTourFauxMin,
+		class.Preferences.ValueAniFauxMax,
+		class.Preferences.ValueCapFauxMax,
+		class.Preferences.ValueTourFauxMax,
+		class.Preferences.ValueEnvFauxMin,
+		class.Preferences.ValueOuvFauxMin,
+		class.Preferences.ValueEnvFauxMax,
+		class.Preferences.ValueOuvFauxMax,
 		ValueAniRole1,
 		ValueAniRole2,
 		ValueCapRole1,
