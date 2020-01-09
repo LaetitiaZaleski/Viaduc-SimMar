@@ -14,6 +14,9 @@ window.onload = function(){
         getNewMessage(lastId);
 
     }, 1000);
+
+
+
 };
 
 function getNewMessage(id) {
@@ -72,11 +75,14 @@ function getPreference() {
         //console.log(ret);
 
         obj = JSON.parse(ret);
-        if (obj !== null && obj.length > 0){
-            for (i=0 ; i< obj.length; i++ ){
-                //newMessage(obj[i].class_name,obj[i].ClassName ,obj[i].Message, obj[i].Date)
-                setAllPreference(obj[i])
+        console.log(obj);
+        console.log(obj.length);
+        if ( obj.length > 0){
 
+            for (indice=0 ;indice<obj.length; indice++ ){
+                console.log(indice);
+                console.log(obj[indice]);
+                setAllPreference(obj[indice])
             }
         }
 
@@ -88,30 +94,49 @@ function getPreference() {
 function setAllPreference(obj){
 
     let Val1 =[obj.preference.value_ani_faux_min,obj.preference.value_ani_min,obj.preference.value_ani_max, obj.preference.value_ani_faux_max];
-    let Id1 =  id = "slider-Ani" + "-" + obj.class_name;
+    let Id1 = "slider-Ani" + "-" + obj.class_name;
+    let spanId1 = "valueAni"+obj.class_name+"SliderVal";
+
     console.log(Id1);
+    setValues(spanId1, Val1);
     setSlider(Id1,Val1);
+    setImp("impAniMin"+obj.class_name, obj.preference.imp_ani_min);
+    setImp("impAniMax"+obj.class_name, obj.preference.imp_ani_max);
 
     let Val2 =[obj.preference.value_cap_faux_min,obj.preference.value_cap_min,obj.preference.value_cap_max, obj.preference.value_cap_faux_max];
-    let Id2 =  id = "slider-Cap" + "-" + obj.class_name;
+    let Id2 = "slider-Cap" + "-" + obj.class_name;
+    let spanId2 = "valueCap"+obj.class_name+"SliderVal";
+    setValues(spanId2, Val2);
+    setSlider(Id2,Val2,30000);
+    setImp("impCapMin"+obj.class_name, obj.preference.imp_cap_min);
+    setImp("impCapMax"+obj.class_name, obj.preference.imp_cap_max);
 
-    setSlider(Id2,Val2);
 
     let Val3 =[obj.preference.value_tour_faux_min,obj.preference.value_tour_min,obj.preference.value_tour_max, obj.preference.value_tour_faux_max];
-    let Id3 =  id = "slider-Tour" + "-" + obj.class_name;
-
+    let Id3 = "slider-Tour" + "-" + obj.class_name;
+    let spanId3 = "valueTour"+obj.class_name+"SliderVal";
+    setValues(spanId3, Val3);
     setSlider(Id3,Val3);
+    setImp("impTourMin"+obj.class_name, obj.preference.imp_tour_min);
+    setImp("impTourMax"+obj.class_name, obj.preference.imp_tour_max);
+
 
     let Val4 =[obj.preference.value_env_faux_min,obj.preference.value_env_min,obj.preference.value_env_max, obj.preference.value_env_faux_max];
     let Id4 =  id = "slider-Env" + "-" + obj.class_name;
-
+    let spanId4 = "valueEnv"+obj.class_name+"SliderVal";
+    setValues(spanId4, Val4);
     setSlider(Id4,Val4,50);
+    setImp("impEnvMin"+obj.class_name, obj.preference.imp_env_min);
+    setImp("impEnvMax"+obj.class_name, obj.preference.imp_env_max);
+
 
     let Val5 =[obj.preference.value_ouv_faux_min,obj.preference.value_ouv_min,obj.preference.value_ouv_max, obj.preference.value_ouv_faux_max];
-    let Id5 =  id = "slider-Ouv" + "-" + obj.class_name;
-
+    let Id5 = "slider-Ouv" + "-" + obj.class_name;
+    let spanId5 = "valueOuv"+obj.class_name+"SliderVal";
+    setValues(spanId5, Val5);
     setSlider(Id5,Val5,100);
-
+    setImp("impOuvMin"+obj.class_name, obj.preference.imp_ouv_min);
+    setImp("impOuvMax"+obj.class_name, obj.preference.imp_ouv_max);
 }
 
 
@@ -140,8 +165,24 @@ function setSlider(sliderId, sliderVals,max=20000){
     }
 
 }
+function setValues(spanId, sliderVals) {
+    for(i=1; i<=sliderVals.length;i++){
 
+        id_i = spanId+i.toString();
+        console.log(id_i);
+        document.getElementById(id_i).innerHTML = sliderVals[(i-1)].toString()
+    }
 
+}
+
+function setImp(idImp, imp){
+    if(imp ===1){
+        document.getElementById(idImp).innerHTML = " peu important ";
+    }
+    else{
+        document.getElementById(idImp).innerHTML = " important ";
+    }
+}
 
 function letsCalc() {
     var jsonObj = {
@@ -193,7 +234,6 @@ function letsCalcAll() {
             var path = "sources/output/"+RoomName+"_"+id+"_"+numFile+"-viab-0-bound.dat";
             classIds.push(id)
         }
-
     }
 
     // trouver les nouveaux min et max :

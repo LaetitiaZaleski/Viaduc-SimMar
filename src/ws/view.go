@@ -76,6 +76,20 @@ type Preferences struct {
 	ValueEnvFauxMax int64 `json:"value_env_faux_max"`
 	ValueOuvFauxMax int64 `json:"value_ouv_faux_max"`
 
+	ImpAniMin int64 `json:"imp_ani_min"`
+	ImpCapMin int64 `json:"imp_cap_min"`
+	ImpTourMin int64 `json:"imp_tour_min"`
+
+	ImpAniMax int64 `json:"imp_ani_max"`
+	ImpCapMax int64 `json:"imp_cap_max"`
+	ImpTourMax int64 `json:"imp_tour_max"`
+
+	ImpEnvMin int64 `json:"imp_env_min"`
+	ImpOuvMin int64 `json:"imp_ouv_min"`
+
+	ImpEnvMax int64 `json:"imp_env_max"`
+	ImpOuvMax int64 `json:"imp_ouv_max"`
+
 }
 
 
@@ -83,6 +97,7 @@ type Preferences struct {
 /*
 	PARTIE DE DECLARATION DES FONCTIONS
 */
+
 func Initialisation() Games {
 
 	var g Games
@@ -90,19 +105,22 @@ func Initialisation() Games {
 		Preferences{"","",500, 1500, 1000, 5000,
 			15000, 10000, 0, 0, 50, 30,400,
 			1000, 800,10000,20000, 12000,
-			0,0,50,40}})
+			0,0,50,40,1,1,1,
+			1,1,1,1,1,1,1}})
 
 	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{},
 		Preferences{"", "",500, 1500, 1000, 2500,
 		20000, 10000, 0, 0, 100, 20,400,
 		1000, 800,10000,20000, 12000,
-		0,0,50,40} })
+		0,0,50,40,1,1,1,
+			1,1,1,1,1,1,1} })
 
 	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{},
 		Preferences{"", "", 2000, 1500, 500, 20000,
 		20000, 20000, 20, 10, 100, 50,1000,
 		1000, 300,20000,20000, 20000, 0,
-		0,100,50} })
+		0,100,50,1,1,1,
+			1,1,1,1,1,1,1} })
 
 	return g
 }
@@ -353,6 +371,20 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 		ValueEnvFauxMax int64
 		ValueOuvFauxMax int64
 
+		ImpAniMin int64
+		ImpCapMin int64
+		ImpTourMin int64
+
+		ImpAniMax int64
+		ImpCapMax int64
+		ImpTourMax int64
+
+		ImpEnvMin int64
+		ImpOuvMin int64
+
+		ImpEnvMax int64
+		ImpOuvMax int64
+
 		ValueAniRole1 string
 		ValueAniRole2 string
 		ValueCapRole1 string
@@ -388,6 +420,16 @@ func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 		class.Preferences.ValueOuvFauxMin,
 		class.Preferences.ValueEnvFauxMax,
 		class.Preferences.ValueOuvFauxMax,
+		class.Preferences.ImpAniMin,
+		class.Preferences.ImpCapMin,
+		class.Preferences.ImpTourMin,
+		class.Preferences.ImpAniMax,
+		class.Preferences.ImpCapMax,
+		class.Preferences.ImpTourMax,
+		class.Preferences.ImpEnvMin,
+		class.Preferences.ImpOuvMin,
+		class.Preferences.ImpEnvMax,
+		class.Preferences.ImpOuvMax,
 		ValueAniRole1,
 		ValueAniRole2,
 		ValueCapRole1,
@@ -438,6 +480,25 @@ func (g *Games) showNonVide(w http.ResponseWriter, r *http.Request) {
 	}
 	pref := class.Preferences
 	view := "www/nonvide.html"
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, pref)
+}
+
+
+func (g *Games) showImportances(w http.ResponseWriter, r *http.Request) {
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
+		g.showHome(w,r)
+		return
+	}
+	pref := class.Preferences
+	view := "www/importances.html"
 	t, _ := template.ParseFiles(view)
 	t.Execute(w, pref)
 }
@@ -518,8 +579,12 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		break
 	case "nonvide":
 		g.showNonVide(w,r)
+		break
 	case "nonvidep2":
 		g.showNonVidep2(w,r)
+		break
+	case "importances":
+		g.showImportances(w,r)
 	default:
 		g.showHome(w, r)
 		break

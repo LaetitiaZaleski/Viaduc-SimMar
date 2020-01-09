@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Noyau Non Vide</title>
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/nouislider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/nouislider.min.css">
+
+    <script type="text/javascript" src="sources/lib/d3/d3.min.js"></script>
+    <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/preference.css">
+    <link rel="stylesheet" href="sources/styles/home2.css">
+    <link rel="stylesheet" href="sources/styles/result.css">
+    <link rel="stylesheet" href="sources/styles/nonvide.css">
+
+    <script type="text/javascript" src="sources/js/tools.js"></script>
+    <script type="text/javascript" src="sources/js/importances.js"></script>
+
+
+
+</head>
+<body>
+
+<h1>
+    Déclaration des importances
+</h1>
+
+<div>  <span> Merci de
+        cocher la case associée si ce critére est important pour vous :
+    </span>
+</div>
+
+<div>
+    <div class="importance-container" >
+        <h4>
+            <ul>
+                <li> <div>
+                        <input type="checkbox" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span> (<span id="valueAniMin"></span>)
+                    </div>
+                <li>  <div>
+                        <input type="checkbox" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span> (<span id="valueAniMax"></span>)
+                    </div>
+                <li>  <div>  <input type="checkbox" id="ImportanceCapMin" value="checkbox">
+                        <span> Le Capital minimum des pêcheurs </span> (<span id="valueCapMin"></span>)
+
+                    </div>
+                <li> <div>  <input type="checkbox" id="ImportanceCapMax" value="checkbox">
+                        <span> Le Capital maximum des pêcheurs </span> (<span id="valueCapMax"></span>)
+
+                    </div>
+                <li> <div>  <input type="checkbox" id="ImportanceTourMin" value="checkbox">
+                        <span> Le nombre minimum de touristes </span> (<span id="valueTourMin"></span>)
+                    </div>
+
+                <li> <div>  <input type="checkbox" id="ImportanceTourMax" value="checkbox">
+                        <span> Le nombre maximum de touristes </span> (<span id="valueTourMax"></span>)
+                    </div>
+
+                <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
+                        <span> Effort minimum de restauration de l'environement </span> (<span id="valueEnvMin"></span>)
+                    </div>
+
+                <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
+                        <span> Effort maximum de restauration de l'environement </span> (<span id="valueEnvMax"></span>)
+
+                    </div>
+
+                <li>  <div>  <input type="checkbox" id="ImportanceOuvMin" value="checkbox">
+                        <span> La proportion minimum du parc fermée aux touristes </span> (<span id="valueOuvMin"></span>)
+                    </div>
+
+                <li>  <div>  <input type="checkbox" id="ImportanceOuvMax" value="checkbox">
+                        <span> La proportion maximum du parc fermée aux touristes </span> (<span id="valueOuvMax"></span>)
+                    </div>
+            </ul>
+
+
+        </h4>
+
+    </div>
+</div>
+
+
+<div id="finishButtonContainer"onclick="letsFinish()" class="btn btn-primary"> Passer à la négociation </div>
+
+
+
+
+<script>
+    document.getElementById('valueAniMin').innerHTML = localStorage.getItem("AniMin");
+    document.getElementById('valueAniMax').innerHTML = localStorage.getItem("AniMax");
+
+    document.getElementById('valueCapMin').innerHTML = localStorage.getItem("CapMin");
+    document.getElementById('valueCapMax').innerHTML = localStorage.getItem("CapMax");
+
+    document.getElementById('valueTourMin').innerHTML = localStorage.getItem("TourMin");
+    document.getElementById('valueTourMax').innerHTML = localStorage.getItem("TourMax");
+
+    document.getElementById('valueEnvMin').innerHTML = localStorage.getItem("EnvMin");
+    document.getElementById('valueEnvMax').innerHTML = localStorage.getItem("EnvMax");
+
+    document.getElementById('valueOuvMin').innerHTML = localStorage.getItem("OuvMin");
+    document.getElementById('valueOuvMax').innerHTML = localStorage.getItem("OuvMax");
+</script>
+
+
+</body>
+</html>

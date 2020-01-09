@@ -12,11 +12,48 @@ function letsFinish() {
     if (gFinalFiles.length !== 1){
         alert("Merci de choisir UNE solution");
     }else{
+        let FileId = parseInt(gNumFiles[gFinalFiles[0]],10);
+        let LastId = FileId;
+        let RoomName =localStorage.getItem("roomName");
+        let ClassId = localStorage.getItem("classId");
+        localStorage.setItem("fileId", FileId);
+        var http = new XMLHttpRequest();
 
-       // setPref(gNumFiles[gFinalFiles[0]]);
+
+
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + LastId + "-viab-0-bound.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            LastId = LastId + 1
+        } while (http.status !== 404);
+        LastId = LastId - 2;
+        localStorage.setItem("lastId", LastId);
+
+        console.log(LastId);
+        console.log(FileId);
+
+        if(FileId === LastId){
+            console.log("cest le dernier");
+            console.log(LastId);
+        }else { // on supprime ceux en trop
+
+            getXMLHttp('/api?fct=rename_file' +
+                '&room_name=' + RoomName + '&class_id=' + ClassId +
+                '&file_id=' + localStorage.getItem("fileId")+
+                '&last_id=' + localStorage.getItem("lastId"),
+                function (ret) {
+
+            });
+        }
+        //setPref(gNumFiles[gFinalFiles[0]]);
+
+
         let url = window.location.href;
         let newParam = url.split("?")[1].replace("nonvide", "result");
         window.location.href = "?" + newParam;
+
+
     }
 }
 
@@ -54,11 +91,14 @@ function calcTable(abs, pref, faux){
 }
 
 
-async function getPrefs() {
+async function getPrefs(mono=true) {
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
 
-        getImportances();
+        if(mono){
+            getImportances();
+        }
+
 
         // Valeurs de min et max absolu :
         const minMax = {
@@ -114,9 +154,9 @@ async function getPrefs() {
 
         if (obj !== null && obj.length > 0) {
             for (i = 0; i < obj.length; i++) {
-                if (obj[i].class_name.toString() == className) {
+                if (obj[i].class_name.toString() === className) {
 
-                    // Pour les max : on regarde la distance à la borne min : il s'agit de la veleur normalisée, pour les mins,
+                    // Pour les max : on regarde la distance à la borne min : il s'agit de la valeur normalisée, pour les mins,
                     // on regarde la valeur à la borne max : c'est 1- la valeur normalisée.
 
                     const AniMin = {
@@ -213,7 +253,6 @@ async function getPrefs() {
                         pas: calcPas(fauxMinMax.EnvMax,localStorage.getItem("EnvMax")),
                         maxTable : calcTable(minMax.EnvMax,localStorage.getItem("EnvMax"),fauxMinMax.EnvMax),
                         table : [0,0,calcTable(minMax.EnvMax,localStorage.getItem("EnvMax"),fauxMinMax.EnvMax)]
-
                     };
 
                     const OuvMin = {
@@ -228,6 +267,7 @@ async function getPrefs() {
                         table : [0,0,calcTable(minMax.OuvMin,localStorage.getItem("OuvMin"),fauxMinMax.OuvMin)]
 
                     };
+
                     const OuvMax = {
                         val: localStorage.getItem("OuvMax"),
                         fauxMaxTable : calcTable(fauxMinMax.OuvMax,localStorage.getItem("OuvMax"),fauxMinMax.OuvMax),
@@ -296,6 +336,8 @@ async function getPrefs() {
         $("#finalPrefButtonContainer").html('');
 
 
+        localStorage.setItem("nonvides", JSON.stringify(gNumFiles));
+
 
         for(k = 0; k<finalPrefs.length; k++){
             /*
@@ -304,7 +346,8 @@ async function getPrefs() {
             console.log("k :");
             console.log(k);
             console.log(finalPrefs[k]);
-            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+k+'</div>');
+            var name = "solution "+ (k+1);
+            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
 
         }
 
@@ -503,6 +546,17 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
     let OuvMin = Prefs[8];
     let OuvMax = Prefs[9];
 
+    let imp_ani_min= parseInt(localStorage.getItem("ImportanceAniMin"));
+    let imp_ani_max= parseInt(localStorage.getItem("ImportanceAniMax"));
+    let imp_tour_min= parseInt(localStorage.getItem("ImportanceTourMin"));
+    let imp_tour_max= parseInt(localStorage.getItem("ImportanceTourMax"));
+    let imp_cap_min= parseInt(localStorage.getItem("ImportanceCapMin"));
+    let imp_cap_max= parseInt(localStorage.getItem("ImportanceCapMax"));
+    let imp_env_min= parseInt(localStorage.getItem("ImportanceEnvMin"));
+    let imp_env_max= parseInt(localStorage.getItem("ImportanceEnvMax"));
+    let imp_ouv_min= parseInt(localStorage.getItem("ImportanceOuvMin"));
+    let imp_ouv_max= parseInt(localStorage.getItem("ImportanceOuvMax"));
+
 
 
     console.log(Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas));
@@ -515,26 +569,57 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
     if (!rafinement) {
         for (var i = 0; i < Prefs.length; i++) {
-            if (Prefs[i].importance === "1") { // si pas important osef
+            if (Prefs[i].importance === "1") { // si pas important on prend pas en compte
                 Prefs[i].table = [0,0,0];
             }
             //  console.log(Prefs[i].name + Prefs[i].table);
         }
+        value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin) ;
+        value_ani_max =  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + fauxMinMax.AMax) ;
+        value_tour_min = Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + fauxMinMax.TMin) ;
+        value_tour_max = Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + fauxMinMax.TMax) ;
+        value_cap_min = Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + fauxMinMax.CMin) ;
+        value_cap_max = Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + fauxMinMax.CMax) ;
+        value_env_min = Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + fauxMinMax.EnvMin) ;
+        value_env_max = Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + fauxMinMax.EnvMax) ;
+        value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin) ;
+        value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax);
+
 
         // on test si avec les fauxMinMax ça marche :
         var jsonObj = {
             "room_name": localStorage.getItem("roomName"),
             "class_id": localStorage.getItem("classId"),
-            "value_ani_min": Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin),
-            "value_ani_max":  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + fauxMinMax.AMax),
-            "value_tour_min": Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + fauxMinMax.TMin),
-            "value_tour_max": Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + fauxMinMax.TMax),
-            "value_cap_min": Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + fauxMinMax.CMin),
-            "value_cap_max": Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + fauxMinMax.CMax),
-            "value_env_min": Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + fauxMinMax.EnvMin),
-            "value_env_max": Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + fauxMinMax.EnvMax),
-            "value_ouv_min": Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin),
-            "value_ouv_max":Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax)
+            "value_ani_min":value_ani_min,
+            "value_ani_max": value_ani_max,
+            "value_tour_min":value_tour_min,
+            "value_tour_max":value_tour_max,
+            "value_cap_min":value_cap_min,
+            "value_cap_max":value_cap_max,
+            "value_env_min":value_env_min,
+            "value_env_max":value_env_max,
+            "value_ouv_min":value_ouv_min,
+            "value_ouv_max":value_ouv_max,
+            "value_ani_faux_min":Math.min(value_ani_min,fauxMinMax.AMin),
+            "value_ani_faux_max":Math.max(value_ani_max,fauxMinMax.AMax),
+            "value_tour_faux_min":Math.min(value_tour_min,fauxMinMax.TMin),
+            "value_tour_faux_max":Math.max(value_tour_max,fauxMinMax.TMax),
+            "value_cap_faux_min":Math.min(value_cap_min,fauxMinMax.CMin),
+            "value_cap_faux_max":Math.max(value_cap_max,fauxMinMax.CMax),
+            "value_env_faux_min":Math.min(value_env_min,fauxMinMax.EnvMin),
+            "value_env_faux_max":Math.max(value_env_max,fauxMinMax.EnvMax),
+            "value_ouv_faux_min":Math.min(value_ouv_min,fauxMinMax.OuvMin),
+            "value_ouv_faux_max":Math.max(value_ouv_max,fauxMinMax.OuvMax),
+            "imp_ani_min":imp_ani_min,
+            "imp_ani_max":imp_ani_max ,
+            "imp_tour_min":imp_tour_min,
+            "imp_tour_max":imp_tour_max,
+            "imp_cap_min":imp_cap_min,
+            "imp_cap_max":imp_cap_max,
+            "imp_env_min":imp_env_min,
+            "imp_env_max":imp_env_max,
+            "imp_ouv_min":imp_ouv_min,
+            "imp_ouv_max":imp_ouv_max
         };
         console.log("calcul faux mins et max");
 
@@ -562,6 +647,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         });
 
         do {
+            console.log(nbFile);
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
@@ -614,36 +700,103 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         let OuvMin = Prefs[8];
         let OuvMax = Prefs[9];
 
+
         if (faux){
+            value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin) ;
+            value_ani_max =  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + fauxMinMax.AMax) ;
+            value_tour_min = Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + fauxMinMax.TMin) ;
+            value_tour_max = Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + fauxMinMax.TMax) ;
+            value_cap_min = Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + fauxMinMax.CMin) ;
+            value_cap_max = Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + fauxMinMax.CMax) ;
+            value_env_min = Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + fauxMinMax.EnvMin) ;
+            value_env_max = Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + fauxMinMax.EnvMax) ;
+            value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin) ;
+            value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax);
+
+
+            // on test si avec les fauxMinMax ça marche :
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
                 "class_id": localStorage.getItem("classId"),
-                "value_ani_min": Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin),
-                "value_ani_max":  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + fauxMinMax.AMax),
-                "value_tour_min": Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + fauxMinMax.TMin),
-                "value_tour_max": Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + fauxMinMax.TMax),
-                "value_cap_min": Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + fauxMinMax.CMin),
-                "value_cap_max": Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + fauxMinMax.CMax),
-                "value_env_min": Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + fauxMinMax.EnvMin),
-                "value_env_max": Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + fauxMinMax.EnvMax),
-                "value_ouv_min": Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin),
-                "value_ouv_max":Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax)
+                "value_ani_min":value_ani_min,
+                "value_ani_max": value_ani_max,
+                "value_tour_min":value_tour_min,
+                "value_tour_max":value_tour_max,
+                "value_cap_min":value_cap_min,
+                "value_cap_max":value_cap_max,
+                "value_env_min":value_env_min,
+                "value_env_max":value_env_max,
+                "value_ouv_min":value_ouv_min,
+                "value_ouv_max":value_ouv_max,
+                "value_ani_faux_min":Math.min(value_ani_min,fauxMinMax.AMin),
+                "value_ani_faux_max":Math.max(value_ani_max,fauxMinMax.AMax),
+                "value_tour_faux_min":Math.min(value_tour_min,fauxMinMax.TMin),
+                "value_tour_faux_max":Math.max(value_tour_max,fauxMinMax.TMax),
+                "value_cap_faux_min":Math.min(value_cap_min,fauxMinMax.CMin),
+                "value_cap_faux_max":Math.max(value_cap_max,fauxMinMax.CMax),
+                "value_env_faux_min":Math.min(value_env_min,fauxMinMax.EnvMin),
+                "value_env_faux_max":Math.max(value_env_max,fauxMinMax.EnvMax),
+                "value_ouv_faux_min":Math.min(value_ouv_min,fauxMinMax.OuvMin),
+                "value_ouv_faux_max":Math.max(value_ouv_max,fauxMinMax.OuvMax),
+                "imp_ani_min":imp_ani_min,
+                "imp_ani_max":imp_ani_max ,
+                "imp_tour_min":imp_tour_min,
+                "imp_tour_max":imp_tour_max,
+                "imp_cap_min":imp_cap_min,
+                "imp_cap_max":imp_cap_max,
+                "imp_env_min":imp_env_min,
+                "imp_env_max":imp_env_max,
+                "imp_ouv_min":imp_ouv_min,
+                "imp_ouv_max":imp_ouv_max
+
             };
         }
         else {
+            value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + minMax.AMin) ;
+            value_ani_max =  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + minMax.AMax) ;
+            value_tour_min = Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + minMax.TMin) ;
+            value_tour_max = Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + minMax.TMax) ;
+            value_cap_min = Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + minMax.CMin) ;
+            value_cap_max = Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + minMax.CMax) ;
+            value_env_min = Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + minMax.EnvMin) ;
+            value_env_max = Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + minMax.EnvMax) ;
+            value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + minMax.OuvMin) ;
+            value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + minMax.OuvMax);
+
+            // on test si avec les fauxMinMax ça marche :
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
                 "class_id": localStorage.getItem("classId"),
-                "value_ani_min": Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + minMax.AMin),
-                "value_ani_max":  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + minMax.AMax),
-                "value_tour_min": Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + minMax.TMin),
-                "value_tour_max": Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + minMax.TMax),
-                "value_cap_min": Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + minMax.CMin),
-                "value_cap_max": Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + minMax.CMax),
-                "value_env_min": Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + minMax.EnvMin),
-                "value_env_max": Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + minMax.EnvMax),
-                "value_ouv_min": Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + minMax.OuvMin),
-                "value_ouv_max":Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + minMax.OuvMax)
+                "value_ani_min":value_ani_min,
+                "value_ani_max": value_ani_max,
+                "value_tour_min":value_tour_min,
+                "value_tour_max":value_tour_max,
+                "value_cap_min":value_cap_min,
+                "value_cap_max":value_cap_max,
+                "value_env_min":value_env_min,
+                "value_env_max":value_env_max,
+                "value_ouv_min":value_ouv_min,
+                "value_ouv_max":value_ouv_max,
+                "value_ani_faux_min":Math.min(value_ani_min,fauxMinMax.AMin),
+                "value_ani_faux_max":Math.max(value_ani_max,fauxMinMax.AMax),
+                "value_tour_faux_min":Math.min(value_tour_min,fauxMinMax.TMin),
+                "value_tour_faux_max":Math.max(value_tour_max,fauxMinMax.TMax),
+                "value_cap_faux_min":Math.min(value_cap_min,fauxMinMax.CMin),
+                "value_cap_faux_max":Math.max(value_cap_max,fauxMinMax.CMax),
+                "value_env_faux_min":Math.min(value_env_min,fauxMinMax.EnvMin),
+                "value_env_faux_max":Math.max(value_env_max,fauxMinMax.EnvMax),
+                "value_ouv_faux_min":Math.min(value_ouv_min,fauxMinMax.OuvMin),
+                "value_ouv_faux_max":Math.max(value_ouv_max,fauxMinMax.OuvMax),
+                "imp_ani_min":imp_ani_min,
+                "imp_ani_max":imp_ani_max ,
+                "imp_tour_min":imp_tour_min,
+                "imp_tour_max":imp_tour_max,
+                "imp_cap_min":imp_cap_min,
+                "imp_cap_max":imp_cap_max,
+                "imp_env_min":imp_env_min,
+                "imp_env_max":imp_env_max,
+                "imp_ouv_min":imp_ouv_min,
+                "imp_ouv_max":imp_ouv_max
             };
         }
 
@@ -792,14 +945,19 @@ function showPreferences(finalprefs,k){
 
     prefAmin = finalprefs.value_ani_min;
     prefAmax = finalprefs.value_ani_max;
-    prefCmin = finalprefs.value_tour_min;
-    prefCmax = finalprefs.value_tour_max;
-    prefTmin = finalprefs.value_cap_min;
-    prefTmax = finalprefs.value_cap_max;
+
+    prefCmin = finalprefs.value_cap_min;
+    prefCmax = finalprefs.value_cap_max;
+
+    prefTmin = finalprefs.value_tour_min;
+    prefTmax = finalprefs.value_tour_max;
+
     prefEnvmin = finalprefs.value_env_min;
     prefEnvmax = finalprefs.value_env_max;
+
     prefOuvmin = finalprefs.value_ouv_min;
     prefOuvmax = finalprefs.value_ouv_max;
+
     var sliderAni = document.getElementById('slider-ani-'+k);
 
     var sliderAniValues1 = localStorage.getItem("AniFauxMin");

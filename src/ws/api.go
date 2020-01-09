@@ -100,6 +100,44 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, string(json))
+	} else if strings.Compare(fnct, "rename_file") == 0 {
+		log.Println(fmt.Sprintf("nom ok"))
+		if IsInMap(param, "room_name"){log.Println(fmt.Sprintf("room_name"))}
+		if IsInMap(param, "class_id") {log.Println(fmt.Sprintf("class_id"))}
+		if IsInMap(param, "last_id") {log.Println(fmt.Sprintf("last_id"))}
+		if IsInMap(param, "file_id") {log.Println(fmt.Sprintf("file_id"))}
+
+			// supression du fichier inutile
+
+			roomName := param["room_name"][0]
+			classId := param["class_id"][0]
+			fileId := param["file_id"][0]
+			log.Println(fmt.Sprintf("%v",fileId))
+			lastId, _ := strconv.Atoi(param["last_id"][0])
+			lastId = lastId +1
+			var newId = strconv.Itoa(lastId)
+			log.Println(fmt.Sprintf("%v",lastId))
+			var fileViabToRename= "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0-bound.dat"
+			var fileViabNewName= strings.Replace(fileViabToRename, fileId, newId, -1)
+			var fileJsonToRename= "input/" + roomName + "_" + classId + "_" + fileId + ".json"
+			var fileJsonNewName= strings.Replace(fileJsonToRename, fileId, newId, -1)
+			var paramCp []string
+			var pathViabToRename= "./" + fileViabToRename
+			log.Println(fmt.Sprintf(fileViabToRename))
+			var pathJsonToRename= "./" + fileJsonToRename
+			paramViabCp := append(paramCp, pathViabToRename,fileViabNewName)
+			paramJsonCp := append(paramCp, pathJsonToRename,fileJsonNewName)
+			cmdCp := exec.Command("cp", paramViabCp...)
+			errCp := cmdCp.Run()
+			if (errCp != nil ){
+				fmt.Println(errCp)}
+			cmdCp = exec.Command("cp", paramJsonCp...)
+			cmdCp.Run()
+
+
+		return
+
+		/******* ohoho *********/
 	} else {
 		MyExit(w, errors.New("wrong format GET"))
 		return
