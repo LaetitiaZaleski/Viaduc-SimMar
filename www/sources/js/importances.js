@@ -3,9 +3,19 @@ function letsFinish() {
         //setPref(gNumFiles[gFinalFiles[0]]);
         getImportances();
         setImportances();
+
+        getXMLHttp('/api?fct=rename_file' +
+        '&room_name=' + RoomName + '&class_id=' + ClassId +
+        '&file_id=' + nbFile + '&last_id=' + nbFile, function (ret) {
+
+        });
+        sleep(1000);
+
         let url = window.location.href;
         let newParam = url.split("?")[1].replace("importances", "result");
         window.location.href = "?" + newParam;
+
+
 
 }
 
@@ -60,10 +70,10 @@ async function setImportances() {
 
         "value_ani_faux_min": parseInt(localStorage.getItem("AniFauxMin")),
         "value_ani_faux_max": parseInt(localStorage.getItem("AniFauxMax")),
-        "value_tour_faux_min": parseInt(localStorage.getItem("CapFauxMin")),
-        "value_tour_faux_max": parseInt(localStorage.getItem("CapFauxMax")),
-        "value_cap_faux_min": parseInt(localStorage.getItem("TourFauxMin")),
-        "value_cap_faux_max": parseInt(localStorage.getItem("TourFauxMax")),
+        "value_tour_faux_min": parseInt(localStorage.getItem("TourFauxMin")),
+        "value_tour_faux_max": parseInt(localStorage.getItem("TourFauxMax")),
+        "value_cap_faux_min": parseInt(localStorage.getItem("CapFauxMin")),
+        "value_cap_faux_max": parseInt(localStorage.getItem("CapFauxMax")),
         "value_env_faux_min": parseInt(localStorage.getItem("EnvFauxMin")),
         "value_env_faux_max": parseInt(localStorage.getItem("EnvFauxMax")),
         "value_ouv_faux_min": parseInt(localStorage.getItem("OuvFauxMin")),
@@ -71,10 +81,10 @@ async function setImportances() {
 
         "imp_ani_min": parseInt(localStorage.getItem("ImportanceAniMax")),
         "imp_ani_max": parseInt(localStorage.getItem("ImportanceAniMin")),
-        "imp_tour_min": parseInt(localStorage.getItem("ImportanceCapMax")),
-        "imp_tour_max": parseInt(localStorage.getItem("ImportanceCapMin")),
-        "imp_cap_min": parseInt(localStorage.getItem("ImportanceTourMax")),
-        "imp_cap_max": parseInt(localStorage.getItem("ImportanceTourMin")),
+        "imp_tour_min": parseInt(localStorage.getItem("ImportanceTourMax")),
+        "imp_tour_max": parseInt(localStorage.getItem("ImportanceTourMin")),
+        "imp_cap_min": parseInt(localStorage.getItem("ImportanceCapMax")),
+        "imp_cap_max": parseInt(localStorage.getItem("ImportanceCapMin")),
         "imp_env_min": parseInt(localStorage.getItem("ImportanceEnvMax")),
         "imp_env_max": parseInt(localStorage.getItem("ImportanceEnvMin")),
         "imp_ouv_min": parseInt(localStorage.getItem("ImportanceOuvMax")),
@@ -98,8 +108,18 @@ async function setImportances() {
         let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
-        sleep(1500)
+        sleep(1000)
     }
     while (http.status == 404);
+
     return 0;
+}
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
 }

@@ -4,22 +4,19 @@ function findNonVideMulti() {
 
     // regarder quels noyaux ont ete calculés :
     var classIds = [];
-    for (id=1; id<4; id++){
-        var i = -1;
-        var http = new XMLHttpRequest();
-        do {
-            i++;
-            var tmpPath = "sources/output/"+RoomName+"_"+id+"_"+i+"-viab-0-bound.dat";
-            http.open('HEAD', tmpPath, false);
-            http.send();
-        }
-        while (http.status != 404);
-        if (i > 0) {
-            var numFile = i - 1;
-            var path = "sources/output/"+RoomName+"_"+id+"_"+numFile+"-viab-0-bound.dat";
-            classIds.push(id)
+    for (id=1; id<4; id++) {
+        var httpf = new XMLHttpRequest();
+        var finalPath =  "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" +"finalfile.dat";
+        console.log(finalPath);
+        httpf.open('HEAD', finalPath, false);
+        httpf.send();
+        if (httpf.status !== 404) { // on regarde si le fichier a été créer
+                classIds.push(id);
+            console.log(id)
         }
     }
+
+    console.log(classIds);
 
     // trouver les nouveaux min et max :
     var valueAniMin = [];
@@ -65,7 +62,7 @@ function findNonVideMulti() {
             cn = "Maire"
         }
         if (ids ===2){
-            cn = "Industriel"
+            cn = "Pecheur"
         }
         if (ids ===3){
             cn = "Ecologiste"
@@ -265,7 +262,7 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
             } else {
                 for (var l = 0; l < Mins.length; l++) {
                     if (parseInt(impMaxs[l]) === 100) {
-                        newMaxs.push(Mins[l]);
+                        newMaxs.push(Maxs[l]);
                         newPasMaxs.push(pasMaxs[l]);
                         newImpMaxs.push("100");
                     }
@@ -279,9 +276,9 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
 }
 
 function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite individuelle
-    let min = Maths.max(Mins);
-    let max = Maths.min(Mins);
-    while(min>max){
+    let min = Math.max(Mins);
+    let max = Math.min(Mins);
+    while(min>=max){
         for(var i = 0; i<Mins.length; i++){
             Mins[i]= Mins[i] - pasMins[i]
         }

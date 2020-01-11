@@ -108,7 +108,7 @@ func Initialisation() Games {
 			0,0,50,40,1,1,1,
 			1,1,1,1,1,1,1}})
 
-	g.ClassList = append(g.ClassList, Class{2, "Industriel", "", Settings{},
+	g.ClassList = append(g.ClassList, Class{2, "Pecheur", "", Settings{},
 		Preferences{"", "",500, 1500, 1000, 2500,
 		20000, 10000, 0, 0, 100, 20,400,
 		1000, 800,10000,20000, 12000,
@@ -127,7 +127,7 @@ func Initialisation() Games {
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",10,50,10,5}, []Message{}}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -282,7 +282,6 @@ func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 	view := "www/dynamique.html"
 	t, _ := template.ParseFiles(view)
 	t.Execute(w, setting)
-
 }
 
 func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {

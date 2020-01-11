@@ -1,7 +1,7 @@
 
 
 var graphC=[], graphA=[], graphT=[];
-var len = 200;
+var len = 100;
 
 
 function draw() {
@@ -122,7 +122,7 @@ console.log("1")
 
     let integrationStep = 0.001; // 0.01
     sim.evaluate(" dt = 0.001");
-    let tfinal = 0.2 ;//0.05
+    let tfinal = 0.1 ;//0.05
     sim.evaluate(" tfinal = "+tfinal);
     let l = 0.01;
     sim.evaluate("l = 0.01");

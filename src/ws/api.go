@@ -102,46 +102,69 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, string(json))
 	} else if strings.Compare(fnct, "rename_file") == 0 {
 		log.Println(fmt.Sprintf("nom ok"))
-		if IsInMap(param, "room_name"){log.Println(fmt.Sprintf("room_name"))}
-		if IsInMap(param, "class_id") {log.Println(fmt.Sprintf("class_id"))}
-		if IsInMap(param, "last_id") {log.Println(fmt.Sprintf("last_id"))}
-		if IsInMap(param, "file_id") {log.Println(fmt.Sprintf("file_id"))}
+		if IsInMap(param, "room_name") {
+			log.Println(fmt.Sprintf("room_name"))
+		}
+		if IsInMap(param, "class_id") {
+			log.Println(fmt.Sprintf("class_id"))
+		}
+		if IsInMap(param, "last_id") {
+			log.Println(fmt.Sprintf("last_id"))
+		}
+		if IsInMap(param, "file_id") {
+			log.Println(fmt.Sprintf("file_id"))
+		}
 
-			// supression du fichier inutile
+		// supression du fichier inutile
 
-			roomName := param["room_name"][0]
-			classId := param["class_id"][0]
-			fileId := param["file_id"][0]
-			log.Println(fmt.Sprintf("%v",fileId))
-			lastId, _ := strconv.Atoi(param["last_id"][0])
-			lastId = lastId +1
-			var newId = strconv.Itoa(lastId)
-			log.Println(fmt.Sprintf("%v",lastId))
-			var fileViabToRename= "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0-bound.dat"
-			var fileViabNewName= strings.Replace(fileViabToRename, fileId, newId, -1)
-			var fileJsonToRename= "input/" + roomName + "_" + classId + "_" + fileId + ".json"
-			var fileJsonNewName= strings.Replace(fileJsonToRename, fileId, newId, -1)
-			var paramCp []string
-			var pathViabToRename= "./" + fileViabToRename
-			log.Println(fmt.Sprintf(fileViabToRename))
-			var pathJsonToRename= "./" + fileJsonToRename
-			paramViabCp := append(paramCp, pathViabToRename,fileViabNewName)
-			paramJsonCp := append(paramCp, pathJsonToRename,fileJsonNewName)
-			cmdCp := exec.Command("cp", paramViabCp...)
-			errCp := cmdCp.Run()
-			if (errCp != nil ){
-				fmt.Println(errCp)}
-			cmdCp = exec.Command("cp", paramJsonCp...)
-			cmdCp.Run()
+		roomName := param["room_name"][0]
+		classId := param["class_id"][0]
+		fileId := param["file_id"][0]
+		log.Println(fmt.Sprintf("%v", fileId))
+		lastId, _ := strconv.Atoi(param["last_id"][0])
+		lastId = lastId + 1
+		var newId= strconv.Itoa(lastId)
+		log.Println(fmt.Sprintf("%v", lastId))
+		var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0-bound.dat"
+		var fileViabNewName = strings.Replace(fileViabToRename, fileId, newId, -1)
+		var fileJsonToRename = "input/" + roomName + "_" + classId + "_" + fileId + ".json"
+		var fileJsonNewName = strings.Replace(fileJsonToRename, fileId, newId, -1)
+		var paramCp []string
+		var pathViabToRename = "./" + fileViabToRename
+		log.Println(fmt.Sprintf(fileViabToRename))
+		var pathJsonToRename = "./" + fileJsonToRename
+		paramViabCp := append(paramCp, pathViabToRename, fileViabNewName)
+		paramJsonCp := append(paramCp, pathJsonToRename, fileJsonNewName)
 
+		if fileId != param["last_id"][0]{
 
-		return
+		cmdCp := exec.Command("cp", paramViabCp...)
+		errCp := cmdCp.Run()
+		if (errCp != nil) {
+			fmt.Println(errCp)
+		}
+		cmdCp = exec.Command("cp", paramJsonCp...)
+		cmdCp.Run()
+		}
+		// fichier pour montrer qu'on a fini :
+
+		var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0-bound", "finalfile", -1)
+		log.Println(fmt.Sprintf(fileFinish))
+		paramFinish := append(paramCp, pathViabToRename,fileFinish)
+		cmdCpF := exec.Command("cp", paramFinish...)
+		cmdCpF.Run()
 
 		/******* ohoho *********/
+	}else if strings.Compare(fnct, "test") == 0 {
+
+		ret := SendPostRequest("http://localhost:8883/job","pi.tgz","file")
+		log.Println(fmt.Sprintf(string(ret)))
+
 	} else {
 		MyExit(w, errors.New("wrong format GET"))
-		return
 	}
+
+
 }
 
 func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
@@ -199,48 +222,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
 		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
-		/*
-				Lancement du Viablab.exe :)
-
-			del = atof(argv[1]);
-		      a = atof(argv[2]);
-		      mp = atof(argv[3]);
-		      g = atof(argv[4]);
-
-		      localAMin = atof(argv[5]);
-		      localAMax = atof(argv[6]);
-		      localCMin = atof(argv[7]);
-		      localCMax = atof(argv[8]);
-		      localTMin = atof(argv[9]);
-		      localTMax = atof(argv[10]);
-
-		      localEpsMin = atof(argv[11]);
-		      localEpsMax = atof(argv[12]);
-		      localZetaMin = atof(argv[13]);
-		      localZetaMax = atof(argv[14]);
-		*/
-		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
-		//RCtx := r.Context()
-		//go GetFile(param["room_name"][0], ch)
-
-
-		/*var paramExec []string
-		paramExec = append(paramExec,
-			strconv.FormatInt(room.ClassList[0].Settings.ValuePeche,10),
-			strconv.FormatInt(room.ClassList[0].Settings.ValueTortue,10),
-			strconv.FormatInt(room.ClassList[0].Settings.ValuePoisson,10),
-			strconv.FormatInt(room.ClassList[0].Settings.ValueRepro,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
-		cmd := exec.Command("./bin/viabLabExe", file )
+		cmd := exec.Command("./bin/viabLabExe2_bis", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
@@ -311,8 +293,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 					fmt.Println("v3")
 					fmt.Println(err)
 				}
-				if (v1 < 0) || (v2 < 0) || (v3 < 0){
-					alerte = "Votre noyau n'est pas vide !"
+				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 > 50000) || (v3 > 50000){
+					alerte = "Ce noyau est negatif !"
 				}else{
 					alerte = "Votre noyau n'est pas vide !"
 				}
@@ -487,8 +469,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 					fmt.Println("v3")
 					fmt.Println(err)
 				}
-				if (v1 < 0) || (v2 < 0) || (v3 < 0){
-					alerte = "Votre noyau n'est pas vide !"
+				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 < 50000) || (v3 < 50000){
+					alerte = "Ce noyau est negatif !"
 				}else{
 					alerte = "Votre noyau n'est pas vide !"
 				}

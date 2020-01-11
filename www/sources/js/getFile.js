@@ -73,23 +73,60 @@ async function letsCalc() {
     data = JSON.stringify(jsonObj);
 
     console.log(data);
-
+    neg = true;
+    //nbFile = nbFile-1;
     postXMLHttp('/api?fct=lets_calc' +
-        '&data=' + data,  function (ret) {
-        alert("LE CALCUL EST FINI : " + ret);
-        //getFile();
-    });
+        '&data=' + data, function (ret) {
+        console.log(ret);
+        if (ret !== "Ce noyau est negatif !"){
+            alert("LE CALCUL EST FINI : " + ret);
+            //getFile();
+            neg = false;
+        }
 
-    // on attend que le fichier soit créé :
+    });
     nbFile = nbFile -1;
 
+    let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+        //  console.log(tmpPath);
+        //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
-        sleep(1500)
+        sleep(1000)
     }
-    while (http.status == 404);
+    while (http.status === 404);
+
+
+    while (neg) {
+            neg = false;
+            postXMLHttp('/api?fct=lets_calc' +
+                '&data=' + data, function (ret) {
+                if (ret === "Ce noyau est negatif !"){
+                   // alert("LE CALCUL EST FINI : " + ret);
+                    //getFile();
+                    neg = true;
+                }
+
+            });
+            nbFile = nbFile+1;
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+            //  console.log(tmpPath);
+            //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            console.log("wait");
+            console.log(nbFile);
+            sleep(1500)
+        }
+        while (http.status === 404);
+
+        }
+
+
+    // on attend que le fichier soit créé :
+
 
     return 0;
 
@@ -114,31 +151,45 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
     if (calcul){ // on doit faire le calcul de noyau, on est dans preferences
         var f = await letsCalc();
 
+        var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal2`).innerText);
+        var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal3`).innerText);
+        var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal2`).innerText);
+        var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal3`).innerText);
+        var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal2`).innerText);
+        var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal3`).innerText);
+        var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal2`).innerText);
+        var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal3`).innerText);
+        var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal2`).innerText);
+        var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal3`).innerText);
+
+
     }
     else {
         if (ClassId == 1) {
-            prefix = "MaireV";
+            prefix = "Maire";
         }
         if (ClassId == 2) {
-            prefix = "IndustrielV";
+            prefix = "Pecheur";
         }
         if (ClassId == 3) {
-            prefix = "EcologisteV";
+            prefix = "Ecologiste";
         }
+
+        var ValueAniMin = parseInt(document.getElementById(`valueAni${prefix}SliderVal2`).innerText);
+        var ValueAniMax = parseInt(document.getElementById(`valueAni${prefix}SliderVal3`).innerText);
+        var ValueTourMin = parseInt(document.getElementById(`valueTour${prefix}SliderVal2`).innerText);
+        var ValueTourMax = parseInt(document.getElementById(`valueTour${prefix}SliderVal3`).innerText);
+        var ValueCapMin = parseInt(document.getElementById(`valueCap${prefix}SliderVal2`).innerText);
+        var ValueCapMax = parseInt(document.getElementById(`valueCap${prefix}SliderVal3`).innerText);
+        var ValueEnvMin = parseInt(document.getElementById(`valueEnv${prefix}SliderVal2`).innerText);
+        var ValueEnvMax = parseInt(document.getElementById(`valueEnv${prefix}SliderVal3`).innerText);
+        var ValueOuvMin = parseInt(document.getElementById(`valueOuv${prefix}SliderVal2`).innerText);
+        var ValueOuvMax = parseInt(document.getElementById(`valueOuv${prefix}SliderVal3`).innerText);
+
     }
 
     //var ClassId = localStorage.getItem("classId");
 
-    var ValueAniMin = parseInt(document.getElementById(`${prefix}alueAniSliderVal2`).innerText);
-    var ValueAniMax = parseInt(document.getElementById(`${prefix}alueAniSliderVal3`).innerText);
-    var ValueTourMin = parseInt(document.getElementById(`${prefix}alueTourSliderVal2`).innerText);
-    var ValueTourMax = parseInt(document.getElementById(`${prefix}alueTourSliderVal3`).innerText);
-    var ValueCapMin = parseInt(document.getElementById(`${prefix}alueCapSliderVal2`).innerText);
-    var ValueCapMax = parseInt(document.getElementById(`${prefix}alueCapSliderVal3`).innerText);
-    var ValueEnvMin = parseInt(document.getElementById(`${prefix}alueEnvSliderVal2`).innerText);
-    var ValueEnvMax = parseInt(document.getElementById(`${prefix}alueEnvSliderVal3`).innerText);
-    var ValueOuvMin = parseInt(document.getElementById(`${prefix}alueOuvSliderVal2`).innerText);
-    var ValueOuvMax = parseInt(document.getElementById(`${prefix}alueOuvSliderVal3`).innerText);
 
 
 
@@ -225,7 +276,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
                 b = 184 + coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
-                role = "Industriel"
+                role = "Pecheur"
             }
             if (ClassId == 3) {
                 r = 28 + coulr;

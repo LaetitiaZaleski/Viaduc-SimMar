@@ -1,6 +1,6 @@
 function joinPreference() {
     let url = window.location.href;
-    let newParam = url.split("?")[1].replace("settings", "preference")
+    let newParam = url.split("?")[1].replace("settings", "preference");
 
     window.location.href = "?" + newParam;
 }

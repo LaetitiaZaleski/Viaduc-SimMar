@@ -47,7 +47,7 @@ noUiSlider.create(sliderAni, {
     step: 20,
     range: {
         'min': [0],
-        'max': [20000]
+        'max': [40000]
     }
 });
 
@@ -106,12 +106,12 @@ sliderCap.noUiSlider.on('update', function (values) {
 var sliderTour = document.getElementById('slider-tour');
 
 noUiSlider.create(sliderTour, {
-    start: [0, 1000,10000, 20000],
+    start: [0, 1000,10000, 40000],
     connect: [true, true, true, true, true],
     step: 20,
     range: {
         'min': [0],
-        'max': [20000]
+        'max': [40000]
     }
 });
 

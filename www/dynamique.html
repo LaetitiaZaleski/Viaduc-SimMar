@@ -53,12 +53,17 @@
         Informations sur la dynamique et choix des paramètres :
     </h1>
 
+    <h4>
+       Pour plus d'informations sur un paramètre, passer la souris sur le texte correspondant.
+    </h4>
+
+
     <div class="dynamique-container">
         <h4 class="">
             <div>
                 <div>
 
-                    <span data-toggle="tooltip" data-placement="top" title="En économie, une dépréciation est une perte de valeur d'un bien. Ici il s'agit de la perte de la valeurs des infrastructures de pêches (bateaux, filets, local,...). Chaque année la valeur de ces bien est dimunée d'un certain pourcentga à definir ici.">Dépreciation des infrastructures de pêche (en % par an) : </span>
+                    <span data-toggle="tooltip" data-placement="top" title="En économie, une dépréciation est une perte de valeur d'un bien. Ici il s'agit de la perte de la valeur des infrastructures de pêche (bateaux, filets, locaux,...). Chaque année la valeur de ces biens est dimunée d'un certain pourcentage, à definir ici.">Dépreciation des infrastructures de pêche (en % sur 10 ans) : </span>
                     <span> {{.ValuePeche}} </span>
                 </div>
                 <div class="slidecontainer">
@@ -71,7 +76,7 @@
             <div id="tortues">
                 <div>
 
-                    <span data-toggle="tooltip" data-placement="top" title="Avec ce paramètre vous pouvez moduler l'attraction des touristes pour les tortues, c'est à dire si la présence de tortues jouen un rôle important ou non dans la venue des touristes."> Attraction des touristes pour les tortues : </span>
+                    <span data-toggle="tooltip" data-placement="top" title="Avec ce paramètre vous pouvez moduler l'attraction des touristes pour les tortues, c'est à dire si la présence de tortues jouent un rôle important ou non dans la venue des touristes."> Attraction des touristes pour les tortues (de 0 à 100): </span>
                     <span> {{.ValueTortue}} </span>
                 </div>
                 <div class="slidecontainer">
@@ -83,7 +88,7 @@
 
             <div id="poisson">
                 <div>
-                    <span data-toggle="tooltip" data-placement="top" title="En moyenne pour les poissons pêchés dans cette région."> Prix du kilo de poisson (en dollard $): </span>
+                    <span data-toggle="tooltip" data-placement="top" title="En moyenne pour les poissons pêchés dans cette région."> Prix pour 10 kilos de poisson (en dollard $) : </span>
                     <span> {{.ValuePoisson}} </span>
                 </div>
                 <div class="slidecontainer">
@@ -95,7 +100,7 @@
 
             <div id="repro">
                 <div >
-                    <span data-toggle="tooltip" data-placement="top" title="Il s'agit de la différence entre le nombre de tortues un à un moment donné et le nombre de tortues un an avant, sans compter l'influence des pêcheurs et touristes."> Taux de reproduction des tortues : </span>
+                    <span data-toggle="tooltip" data-placement="top" title="Il s'agit de la différence entre le nombre de tortues à un moment donné et le nombre de tortues un an avant, lorsque l'on imagine que l'influence des pêcheurs et des touristes est nulle."> Taux de reproduction des tortues : </span>
                     <span> {{.ValueRepro}} </span>
                 </div>
                 <div class="slidecontainer">

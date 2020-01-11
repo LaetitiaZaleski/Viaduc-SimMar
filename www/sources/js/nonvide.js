@@ -19,24 +19,18 @@ function letsFinish() {
         localStorage.setItem("fileId", FileId);
         var http = new XMLHttpRequest();
 
-
-
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + LastId + "-viab-0-bound.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             LastId = LastId + 1
         } while (http.status !== 404);
-        LastId = LastId - 2;
+        LastId = LastId - 1;
         localStorage.setItem("lastId", LastId);
 
         console.log(LastId);
         console.log(FileId);
-
-        if(FileId === LastId){
-            console.log("cest le dernier");
-            console.log(LastId);
-        }else { // on supprime ceux en trop
+        // on supprime ceux en trop
 
             getXMLHttp('/api?fct=rename_file' +
                 '&room_name=' + RoomName + '&class_id=' + ClassId +
@@ -45,9 +39,10 @@ function letsFinish() {
                 function (ret) {
 
             });
-        }
-        //setPref(gNumFiles[gFinalFiles[0]]);
 
+        //setPref(gNumFiles[gFinalFiles[0]]);
+        document.getElementById('patientezContainer').innerHTML="Enregistrement des préférences...";
+        sleep(1000);
 
         let url = window.location.href;
         let newParam = url.split("?")[1].replace("nonvide", "result");
@@ -92,6 +87,10 @@ function calcTable(abs, pref, faux){
 
 
 async function getPrefs(mono=true) {
+
+
+    document.getElementById('patientezContainer').innerHTML="Calcul en cours, merci de patienter quelques minutes";
+
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
 
@@ -102,11 +101,11 @@ async function getPrefs(mono=true) {
 
         // Valeurs de min et max absolu :
         const minMax = {
-            AMax : 20000,
+            AMax : 40000,
             AMin : 0,
-            CMax : 20000,
+            CMax : 30000,
             CMin : 0,
-            TMax : 20000,
+            TMax : 40000,
             TMin : 0,
             EnvMax : 100,
             EnvMin : 0,
@@ -143,7 +142,7 @@ async function getPrefs(mono=true) {
                 className = "Maire";
                 break;
             case "2" :
-                className = "Industriel";
+                className = "Pecheur";
                 break;
             default :
                 className = "Ecologiste";
@@ -234,7 +233,7 @@ async function getPrefs(mono=true) {
                     const EnvMin = {
                         val: localStorage.getItem("EnvMin"),
                         fauxMaxTable : calcTable(fauxMinMax.EnvMin,localStorage.getItem("EnvMin"),fauxMinMax.EnvMin),
-                        name: "Minimum sur la restauration de l'environement",
+                        name: "Minimum sur la restauration de l'environnement",
                         //    distVal: obj[i].preference.value_env_min - minMax.EnvMin,
                         importance: localStorage.getItem("ImportanceEnvMin"),
                         signe: 1,
@@ -246,7 +245,7 @@ async function getPrefs(mono=true) {
                     const EnvMax = {
                         val: localStorage.getItem("EnvMax"),
                         fauxMaxTable :calcTable(fauxMinMax.EnvMax,localStorage.getItem("EnvMax"),fauxMinMax.EnvMax) ,
-                        name: "Maximum sur la restauration de l'environement",
+                        name: "Maximum sur la restauration de l'environnement",
                         //    distVal: (minMax.EnvMax - obj[i].preference.value_env_max),
                         importance: localStorage.getItem("ImportanceEnvMax"),
                         signe: -1,
@@ -301,6 +300,7 @@ async function getPrefs(mono=true) {
         let r1 = rechercheDiagonale(PrefsInit0, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100); // OK tout seul
 
         finalPrefs = [r1.data];
+        finalFiles = [r1.numFile];
 
 
         console.log(Prefs);
@@ -317,8 +317,8 @@ async function getPrefs(mono=true) {
         finalFiles = [r1.numFile,r2.numFile];
 
         console.log("/******* recherche 3 ************/");
-
 /*
+
         let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax);
 
         console.log("priorité : ");
@@ -337,6 +337,7 @@ async function getPrefs(mono=true) {
 
 
         localStorage.setItem("nonvides", JSON.stringify(gNumFiles));
+        document.getElementById('patientezContainer').innerHTML="";
 
 
         for(k = 0; k<finalPrefs.length; k++){
@@ -350,8 +351,10 @@ async function getPrefs(mono=true) {
             $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
 
         }
+        if(mono){
+            $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
+        }
 
-        $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
 
         // showPreferences(JSON.parse(finalPrefs[0]))
 
@@ -600,16 +603,16 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
             "value_env_max":value_env_max,
             "value_ouv_min":value_ouv_min,
             "value_ouv_max":value_ouv_max,
-            "value_ani_faux_min":Math.min(value_ani_min,fauxMinMax.AMin),
-            "value_ani_faux_max":Math.max(value_ani_max,fauxMinMax.AMax),
-            "value_tour_faux_min":Math.min(value_tour_min,fauxMinMax.TMin),
-            "value_tour_faux_max":Math.max(value_tour_max,fauxMinMax.TMax),
-            "value_cap_faux_min":Math.min(value_cap_min,fauxMinMax.CMin),
-            "value_cap_faux_max":Math.max(value_cap_max,fauxMinMax.CMax),
-            "value_env_faux_min":Math.min(value_env_min,fauxMinMax.EnvMin),
-            "value_env_faux_max":Math.max(value_env_max,fauxMinMax.EnvMax),
-            "value_ouv_faux_min":Math.min(value_ouv_min,fauxMinMax.OuvMin),
-            "value_ouv_faux_max":Math.max(value_ouv_max,fauxMinMax.OuvMax),
+            "value_ani_faux_min":Math.max(0,value_ani_min - (localStorage.getItem("AniMin") - fauxMinMax.AMin)),
+            "value_ani_faux_max":value_ani_max + (fauxMinMax.AMax - localStorage.getItem("AniMax")),
+            "value_tour_faux_min":Math.max(0,value_tour_min - (localStorage.getItem("TourMin") - fauxMinMax.TMin)),
+            "value_tour_faux_max":value_tour_max + (fauxMinMax.TMax - localStorage.getItem("TourMax")),
+            "value_cap_faux_min":Math.max(0,value_cap_min - (localStorage.getItem("CapMin") - fauxMinMax.CMin)),
+            "value_cap_faux_max":value_cap_max + (fauxMinMax.CMax - localStorage.getItem("CapMax")),
+            "value_env_faux_min":Math.max(0,value_env_min - (localStorage.getItem("EnvMin") - fauxMinMax.EnvMin)),
+            "value_env_faux_max":value_env_max + (fauxMinMax.EnvMax - localStorage.getItem("EnvMax")),
+            "value_ouv_faux_min":Math.max(0,value_ouv_min - (localStorage.getItem("OuvMin") - fauxMinMax.OuvMin)),
+            "value_ouv_faux_max":value_ouv_max + (fauxMinMax.OuvMax - localStorage.getItem("OuvMax")),
             "imp_ani_min":imp_ani_min,
             "imp_ani_max":imp_ani_max ,
             "imp_tour_min":imp_tour_min,
@@ -674,10 +677,10 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
-        //    console.log(tmpPath);
+            //    console.log(tmpPath);
             http.open('HEAD', tmpPath, false);
             http.send();
-            nbFile = nbFile + 1
+            nbFile = nbFile + 1;
         } while (http.status !== 404);
         nbFile = nbFile-1;
 
@@ -728,16 +731,16 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 "value_env_max":value_env_max,
                 "value_ouv_min":value_ouv_min,
                 "value_ouv_max":value_ouv_max,
-                "value_ani_faux_min":Math.min(value_ani_min,fauxMinMax.AMin),
-                "value_ani_faux_max":Math.max(value_ani_max,fauxMinMax.AMax),
-                "value_tour_faux_min":Math.min(value_tour_min,fauxMinMax.TMin),
-                "value_tour_faux_max":Math.max(value_tour_max,fauxMinMax.TMax),
-                "value_cap_faux_min":Math.min(value_cap_min,fauxMinMax.CMin),
-                "value_cap_faux_max":Math.max(value_cap_max,fauxMinMax.CMax),
-                "value_env_faux_min":Math.min(value_env_min,fauxMinMax.EnvMin),
-                "value_env_faux_max":Math.max(value_env_max,fauxMinMax.EnvMax),
-                "value_ouv_faux_min":Math.min(value_ouv_min,fauxMinMax.OuvMin),
-                "value_ouv_faux_max":Math.max(value_ouv_max,fauxMinMax.OuvMax),
+                "value_ani_faux_min":Math.max(0,value_ani_min - (localStorage.getItem("AniMin") - fauxMinMax.AMin)),
+                "value_ani_faux_max":value_ani_max + (fauxMinMax.AMax - localStorage.getItem("AniMax")),
+                "value_tour_faux_min":Math.max(0,value_tour_min - (localStorage.getItem("TourMin") - fauxMinMax.TMin)),
+                "value_tour_faux_max":value_tour_max + (fauxMinMax.TMax - localStorage.getItem("TourMax")),
+                "value_cap_faux_min":Math.max(0,value_cap_min - (localStorage.getItem("CapMin") - fauxMinMax.CMin)),
+                "value_cap_faux_max":value_cap_max + (fauxMinMax.CMax - localStorage.getItem("CapMax")),
+                "value_env_faux_min":Math.max(0,value_env_min - (localStorage.getItem("EnvMin") - fauxMinMax.EnvMin)),
+                "value_env_faux_max":value_env_max + (fauxMinMax.EnvMax - localStorage.getItem("EnvMax")),
+                "value_ouv_faux_min":Math.max(0,value_ouv_min - (localStorage.getItem("OuvMin") - fauxMinMax.OuvMin)),
+                "value_ouv_faux_max":value_ouv_max + (fauxMinMax.OuvMax - localStorage.getItem("OuvMax")),
                 "imp_ani_min":imp_ani_min,
                 "imp_ani_max":imp_ani_max ,
                 "imp_tour_min":imp_tour_min,
@@ -777,16 +780,16 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 "value_env_max":value_env_max,
                 "value_ouv_min":value_ouv_min,
                 "value_ouv_max":value_ouv_max,
-                "value_ani_faux_min":Math.min(value_ani_min,fauxMinMax.AMin),
-                "value_ani_faux_max":Math.max(value_ani_max,fauxMinMax.AMax),
-                "value_tour_faux_min":Math.min(value_tour_min,fauxMinMax.TMin),
-                "value_tour_faux_max":Math.max(value_tour_max,fauxMinMax.TMax),
-                "value_cap_faux_min":Math.min(value_cap_min,fauxMinMax.CMin),
-                "value_cap_faux_max":Math.max(value_cap_max,fauxMinMax.CMax),
-                "value_env_faux_min":Math.min(value_env_min,fauxMinMax.EnvMin),
-                "value_env_faux_max":Math.max(value_env_max,fauxMinMax.EnvMax),
-                "value_ouv_faux_min":Math.min(value_ouv_min,fauxMinMax.OuvMin),
-                "value_ouv_faux_max":Math.max(value_ouv_max,fauxMinMax.OuvMax),
+                "value_ani_faux_min":Math.max(0,value_ani_min - (localStorage.getItem("AniMin") - fauxMinMax.AMin)),
+                "value_ani_faux_max":value_ani_max + (fauxMinMax.AMax - localStorage.getItem("AniMax")),
+                "value_tour_faux_min":Math.max(0,value_tour_min - (localStorage.getItem("TourMin") - fauxMinMax.TMin)),
+                "value_tour_faux_max":value_tour_max + (fauxMinMax.TMax - localStorage.getItem("TourMax")),
+                "value_cap_faux_min":Math.max(0,value_cap_min - (localStorage.getItem("CapMin") - fauxMinMax.CMin)),
+                "value_cap_faux_max":value_cap_max + (fauxMinMax.CMax - localStorage.getItem("CapMax")),
+                "value_env_faux_min":Math.max(0,value_env_min - (localStorage.getItem("EnvMin") - fauxMinMax.EnvMin)),
+                "value_env_faux_max":value_env_max + (fauxMinMax.EnvMax - localStorage.getItem("EnvMax")),
+                "value_ouv_faux_min":Math.max(0,value_ouv_min - (localStorage.getItem("OuvMin") - fauxMinMax.OuvMin)),
+                "value_ouv_faux_max":value_ouv_max + (fauxMinMax.OuvMax - localStorage.getItem("OuvMax")),
                 "imp_ani_min":imp_ani_min,
                 "imp_ani_max":imp_ani_max ,
                 "imp_tour_min":imp_tour_min,
@@ -823,7 +826,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
             }
             else {
                 if (ret === "Ce noyau est negatif !") {
-                    // si une iteration est vide c'est une erreur : on ne fait rien et on recommence
+                    // si une iteration est negative c'est une erreur : on ne fait rien et on recommence
                     newPrefs = JSON.parse(JSON.stringify(Prefs));
                     console.log("negatif");
                     dontstop = true;
@@ -973,7 +976,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [20000]
+            'max': [40000]
         },
     });
 
@@ -1051,7 +1054,7 @@ function showPreferences(finalprefs,k){
         step: 0,
         range: {
             'min': [0],
-            'max': [20000]
+            'max': [40000]
         }
     });
 
@@ -1172,7 +1175,7 @@ function setPref(numFile,finalPref) {
 
     let ClassId = localStorage.getItem("classId");
 
-    roles=["Maire", "Ecologiste","Industriel"];
+    roles=["Maire", "Ecologiste","Pecheur"];
 
     localStorage.setItem(roles[ClassId-1]+"AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
     localStorage.setItem(roles[ClassId-1]+"AniMin", document.getElementById('valueAniSliderVal2').innerText);

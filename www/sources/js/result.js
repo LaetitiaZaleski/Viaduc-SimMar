@@ -15,8 +15,6 @@ window.onload = function(){
 
     }, 1000);
 
-
-
 };
 
 function getNewMessage(id) {
@@ -80,9 +78,16 @@ function getPreference() {
         if ( obj.length > 0){
 
             for (indice=0 ;indice<obj.length; indice++ ){
-                console.log(indice);
-                console.log(obj[indice]);
-                setAllPreference(obj[indice])
+
+                var httpf = new XMLHttpRequest();
+                var finalPath =  "sources/output/" + localStorage.getItem("roomName") + "_" + obj[indice].preference.class_id + "_" +"finalfile.dat";
+                console.log(finalPath);
+                httpf.open('HEAD', finalPath, false);
+                httpf.send();
+                if (httpf.status !== 404) {
+                    console.log(obj[indice]);
+                    setAllPreference(obj[indice])
+                }
             }
         }
 
@@ -122,7 +127,7 @@ function setAllPreference(obj){
 
 
     let Val4 =[obj.preference.value_env_faux_min,obj.preference.value_env_min,obj.preference.value_env_max, obj.preference.value_env_faux_max];
-    let Id4 =  id = "slider-Env" + "-" + obj.class_name;
+    let Id4 = "slider-Env" + "-" + obj.class_name;
     let spanId4 = "valueEnv"+obj.class_name+"SliderVal";
     setValues(spanId4, Val4);
     setSlider(Id4,Val4,50);
@@ -141,7 +146,7 @@ function setAllPreference(obj){
 
 
 
-function setSlider(sliderId, sliderVals,max=20000){
+function setSlider(sliderId, sliderVals,max=40000){
     // console.log(sliderVals);
     var sliderAni = document.getElementById(sliderId);
     if (sliderVals[sliderVals.length-1]< 110){
@@ -169,7 +174,7 @@ function setValues(spanId, sliderVals) {
     for(i=1; i<=sliderVals.length;i++){
 
         id_i = spanId+i.toString();
-        console.log(id_i);
+     //   console.log(id_i);
         document.getElementById(id_i).innerHTML = sliderVals[(i-1)].toString()
     }
 
@@ -256,7 +261,7 @@ function letsCalcAll() {
             cn = "Maire"
         }
         if (ids ==2){
-            cn = "Industriel"
+            cn = "Pecheur"
         }
         if (ids ==3){
             cn = "Ecologiste"
