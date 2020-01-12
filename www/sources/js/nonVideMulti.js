@@ -72,9 +72,13 @@ function findNonVideMulti() {
 
         newValueAniMin = parseInt(document.getElementById("valueAni"+cn+"SliderVal2").innerHTML);
         valueAniMin.push(newValueAniMin);
+        console.log("newValueAniMin");
+        console.log(newValueAniMin);
 
         newValueAniMax = parseInt(document.getElementById("valueAni"+cn+"SliderVal3").innerHTML);
         valueAniMax.push(newValueAniMax);
+        console.log("newValueAniMax");
+        console.log(newValueAniMax);
 
         newValueCapMin = parseInt(document.getElementById("valueCap"+cn+"SliderVal2").innerHTML);
         valueCapMin.push(newValueCapMin);
@@ -104,6 +108,8 @@ function findNonVideMulti() {
 
         newPasAniMin = newValueAniMin - parseInt(document.getElementById("valueAni"+cn+"SliderVal1").innerHTML);
         pasAniMin.push(newPasAniMin);
+        console.log("newPasAniMin");
+        console.log(newPasAniMin);
 
         newPasAniMax = parseInt(document.getElementById("valueAni"+cn+"SliderVal4").innerHTML) - newValueAniMax;
         pasAniMax.push(newPasAniMax);
@@ -166,7 +172,8 @@ function findNonVideMulti() {
 
     });
 
-    let Values = [[valueAniMin,valueAniMax],[valueCapMin,valueCapMax],[valueTourMin,valueTourMax],[valueEnvMin,valueEnvMax],[valueOuvMin,valueOuvMax]];
+    let Values = [[valueAniMin,valueAniMax.slice(0, valueAniMin.length)],[valueCapMin,valueCapMax.slice(0,valueCapMin.length)],[valueTourMin,valueTourMax.slice(0,valueTourMin.length)],
+        [valueEnvMin,valueEnvMax.slice(0,valueEnvMin.length)],[valueOuvMin,valueOuvMax.slice(0,valueEnvMin.length)]];
     let Pas = [[pasAniMin,pasAniMax],[pasCapMin,pasCapMax],[pasTourMin,pasTourMax],[pasEnvMin,pasEnvMax],[pasOuvMin,pasOuvMax]];
     let Importances = [[impAniMin,impAniMax],[impCapMin,impCapMax],[impTourMin,impTourMax],[impEnvMin,impEnvMax],[impOuvMin,impOuvMax]];
     let LSid = ["Ani","Cap","Tour","Env","Ouv"];
@@ -174,13 +181,16 @@ function findNonVideMulti() {
 
 
     for(var crit = 0; crit < Values.length; crit++){
+        console.log(LSid[crit]);
         console.log(Values[crit]);
+        console.log(Values[crit][0]);
+        console.log(Values[crit][1]);
         console.log(Pas[crit]);
         console.log(Importances[crit]);
 
         findInter(Values[crit][0],Pas[crit][0], Importances[crit][0], Values[crit][1],Pas[crit][1], Importances[crit][1],LSid[crit])
     }
-
+    console.log("lets go get pref !");
     getPrefs(false);
 
 }
@@ -202,10 +212,21 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
     let newImpMaxs = [];
 
     if (Min < Max) { // cas 1
+        console.log("cas1");
         if (isSameImp(impMins)) { // cas 1.1
             localStorage.setItem(LSid + "Min", Min);
-            localStorage.setItem(LSid + "FauxMin", Min-Math.min(...pasMins))
+            console.log(LSid + "Min"+ Min);
+            tmp= Min-Math.min(...pasMins);
+            console.log(tmp);
+            localStorage.setItem(LSid + "FauxMin", tmp);
+            console.log(LSid + "FauxMin");
+            console.log(Min-Math.min(...pasMins));
+            console.log("cas1.1");
+
+
+
         } else { // cas 1.2
+            console.log("cas1.2");
             // parcours de imp et mins, nouveau tab avec les importants, min = le max des importants
             for (var i = 0; i < Mins.length; i++) {
                 if (parseInt(impMins[i]) === 100) {
@@ -215,6 +236,8 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
 
             }
             let newMin= Math.max(...newMins);
+            console.log("newMin");
+            console.log(newMin);
             localStorage.setItem(LSid + "Min", newMin);
             localStorage.setItem(LSid + "FauxMin", newMin-Math.min(...pasMins));
         }
@@ -235,16 +258,20 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
             localStorage.setItem(LSid + "Max", newMax +Math.min(...pasMaxs))
         }
         localStorage.setItem("Importance"+LSid + "Min",Math.max(...impMins));
-        localStorage.setItem("Importance"+LSid + "Max",Math.max(...impMaxs));
+        localStorage.setItem("Importance"+LSid + "Max",Math.min(...impMaxs));
 
 
 
     } else { //cas 2
+        console.log("cas2");
+        let newMins =[];
+        let newPasMins = [];
+        let newImpMins = [];
 
             if (isSameImp(impMins)){ // rien est important  ou tout est important
-                let newMins = Mins;
-                let newPasMins = pasMins;
-                let newImpMins = impMins;
+                 newMins = Mins;
+                 newPasMins = pasMins;
+                 newImpMins = impMins;
             } else {
                 for (var k = 0; k < Mins.length; k++) {
                     if (parseInt(impMins[k]) === 100) {
@@ -255,10 +282,14 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
                 }
             }
 
+
+        let newMaxs = [];
+        let newPasMaxs = [];
+        let newImpMaxs = [];
             if (isSameImp(impMaxs)){ // rien est important  ou tout est important
-                let newMaxs = Maxs;
-                let newPasMaxs = pasMaxs;
-                let newImpMaxs = impMaxs;
+                 newMaxs = Maxs;
+                 newPasMaxs = pasMaxs;
+                 newImpMaxs = impMaxs;
             } else {
                 for (var l = 0; l < Mins.length; l++) {
                     if (parseInt(impMaxs[l]) === 100) {
@@ -268,6 +299,11 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
                     }
                 }
             }
+            console.log("param equite : ");
+            console.log(newMins);
+            console.log(newPasMins);
+            console.log(newMaxs);
+            console.log(newPasMaxs);
             equite(newMins, newPasMins, newImpMins, newMaxs, newPasMaxs, newImpMaxs,LSid);
     }
 
@@ -276,9 +312,22 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
 }
 
 function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite individuelle
-    let min = Math.max(Mins);
-    let max = Math.min(Mins);
+    console.log("equite");
+    console.log(LSid);
+    console.log("Mins");
+    console.log(Mins);
+    console.log("Maxs");
+    Maxs=Maxs.slice(0, Mins.length);
+    console.log(Maxs);
+    console.log(pasMins);
+    console.log(pasMaxs);
+    console.log(impMins);
+    console.log(impMaxs);
+    min = Math.max(...Mins);
+    max = Math.min(...Maxs);
     while(min>=max){
+        console.log(Mins);
+        console.log(Maxs);
         for(var i = 0; i<Mins.length; i++){
             Mins[i]= Mins[i] - pasMins[i]
         }
@@ -286,15 +335,19 @@ function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite indiv
             Maxs[i]= Maxs[i] + pasMaxs[i]
         }
         min = Math.max(...Mins);
-        max = Math.min(...Mins);
+        max = Math.min(...Maxs);
+        sleep(1000)
     }
 
+    console.log(min);
+    console.log(max);
+
     localStorage.setItem(LSid + "Min", min);
-    localStorage.setItem(LSid + "FauxMin", max);
+    localStorage.setItem(LSid + "FauxMin", min - Math.min(...pasMins));
     localStorage.setItem("Importance"+LSid + "Min",Math.max(...impMins));
 
-    localStorage.setItem(LSid + "Max", min);
-    localStorage.setItem(LSid + "FauxMax", max);
+    localStorage.setItem(LSid + "Max", max);
+    localStorage.setItem(LSid + "FauxMax", max + Math.max(...pasMaxs));
     localStorage.setItem("Importance"+LSid + "Max",Math.max(...impMaxs));
 
 

@@ -80,7 +80,7 @@ noUiSlider.create(sliderCap, {
     step: 20,
     range: {
         'min': [0],
-        'max': [30000]
+        'max': [40000]
     }
 });
 
@@ -224,12 +224,12 @@ function letsFinish() {
 
 function letsNotEmpty() {
     setValuesLS();
+
+    sleep(1000);
     let url = window.location.href;
     let newParam = url.split("?")[1].replace("preference", "nonvide");
-
-
-
     window.location.href = "?" + newParam;
+
 }
 
 function setNumFile() {
@@ -253,6 +253,35 @@ function setNumFile() {
 
 
 function setValuesLS() {
+
+    localStorage.setItem("oldAniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
+    localStorage.setItem("oldAniMin", document.getElementById('valueAniSliderVal2').innerText);
+    localStorage.setItem("oldAniMax", document.getElementById('valueAniSliderVal3').innerText);
+    localStorage.setItem("oldAniFauxMax", document.getElementById('valueAniSliderVal4').innerText);
+
+    localStorage.setItem("oldCapFauxMin", document.getElementById('valueCapSliderVal1').innerText);
+    localStorage.setItem("oldCapMin", document.getElementById('valueCapSliderVal2').innerText);
+    localStorage.setItem("oldCapMax", document.getElementById('valueCapSliderVal3').innerText);
+    localStorage.setItem("oldCapFauxMax", document.getElementById('valueCapSliderVal4').innerText);
+
+    localStorage.setItem("oldTourFauxMin", document.getElementById('valueTourSliderVal1').innerText);
+    localStorage.setItem("oldTourMin", document.getElementById('valueTourSliderVal2').innerText);
+    localStorage.setItem("oldTourMax", document.getElementById('valueTourSliderVal3').innerText);
+    localStorage.setItem("oldTourFauxMax", document.getElementById('valueTourSliderVal4').innerText);
+
+    localStorage.setItem("oldEnvFauxMin", document.getElementById('valueEnvSliderVal1').innerText);
+    localStorage.setItem("oldEnvMin", document.getElementById('valueEnvSliderVal2').innerText);
+    localStorage.setItem("oldEnvMax", document.getElementById('valueEnvSliderVal3').innerText);
+    localStorage.setItem("oldEnvFauxMax", document.getElementById('valueEnvSliderVal4').innerText);
+
+    localStorage.setItem("oldOuvFauxMin", document.getElementById('valueOuvSliderVal1').innerText);
+    localStorage.setItem("oldOuvMin", document.getElementById('valueOuvSliderVal2').innerText);
+    localStorage.setItem("oldOuvMax", document.getElementById('valueOuvSliderVal3').innerText);
+    localStorage.setItem("oldOuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
+
+    console.log("lkkok");
+
+
 
     localStorage.setItem("AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
     localStorage.setItem("AniMin", document.getElementById('valueAniSliderVal2').innerText);
@@ -278,6 +307,7 @@ function setValuesLS() {
     localStorage.setItem("OuvMin", document.getElementById('valueOuvSliderVal2').innerText);
     localStorage.setItem("OuvMax", document.getElementById('valueOuvSliderVal3').innerText);
     localStorage.setItem("OuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
+
 
 
 }

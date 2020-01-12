@@ -76,18 +76,33 @@ function getPreference() {
         console.log(obj);
         console.log(obj.length);
         if ( obj.length > 0){
-
             for (indice=0 ;indice<obj.length; indice++ ){
 
+                switch (obj[indice].class_name) {
+                    case "Maire" :
+                        cid = "1";
+                        break;
+                    case "Pecheur" :
+                        cid = "2";
+                        break;
+                    default :
+                        cid = "3";
+                }
+                let idList = [];
                 var httpf = new XMLHttpRequest();
-                var finalPath =  "sources/output/" + localStorage.getItem("roomName") + "_" + obj[indice].preference.class_id + "_" +"finalfile.dat";
+                var finalPath =  "sources/output/" + localStorage.getItem("roomName") + "_" + cid + "_" +"finalfile.dat";
                 console.log(finalPath);
                 httpf.open('HEAD', finalPath, false);
                 httpf.send();
                 if (httpf.status !== 404) {
                     console.log(obj[indice]);
-                    setAllPreference(obj[indice])
+                  //  if(obj[indice].class_name+"oldAniMax"==="-1"){
+                    setAllPreference(obj[indice]);
+
+                   // }
+
                 }
+
             }
         }
 
@@ -112,7 +127,7 @@ function setAllPreference(obj){
     let Id2 = "slider-Cap" + "-" + obj.class_name;
     let spanId2 = "valueCap"+obj.class_name+"SliderVal";
     setValues(spanId2, Val2);
-    setSlider(Id2,Val2,30000);
+    setSlider(Id2,Val2);
     setImp("impCapMin"+obj.class_name, obj.preference.imp_cap_min);
     setImp("impCapMax"+obj.class_name, obj.preference.imp_cap_max);
 
@@ -170,6 +185,8 @@ function setSlider(sliderId, sliderVals,max=40000){
     }
 
 }
+
+
 function setValues(spanId, sliderVals) {
     for(i=1; i<=sliderVals.length;i++){
 
@@ -269,38 +286,39 @@ function letsCalcAll() {
 
         console.log("cn = "+cn);
 
-        newValueAniMin = parseInt(document.getElementById(cn+"ValueAniMin").value);
+        newValueAniMin = parseInt(document.getElementById("valueAni"+cn+"SliderVal2").innerHTML);
         valueAniMin.push(newValueAniMin);
 
-        newValueAniMax = parseInt(document.getElementById(cn+"ValueAniMax").value);
+        newValueAniMax = parseInt(document.getElementById("valueAni"+cn+"SliderVal3").innerHTML);
         valueAniMax.push(newValueAniMax);
 
-        newValueCapMin = parseInt(document.getElementById(cn+"ValueCapMin").value);
+        newValueCapMin = parseInt(document.getElementById("valueCap"+cn+"SliderVal2").innerHTML);
         valueCapMin.push(newValueCapMin);
 
-        newValueCapMax = parseInt(document.getElementById(cn+"ValueCapMax").value);
+        newValueCapMax = parseInt(document.getElementById("valueCap"+cn+"SliderVal3").innerHTML);
         valueCapMax.push(newValueCapMax);
 
-        newValueTourMin = parseInt(document.getElementById(cn+"ValueTourMin").value);
+        newValueTourMin = parseInt(document.getElementById("valueTour"+cn+"SliderVal2").innerHTML);
         valueTourMin.push(newValueTourMin);
 
-        newValueTourMax = parseInt(document.getElementById(cn+"ValueTourMax").value);
+        newValueTourMax = parseInt(document.getElementById("valueTour"+cn+"SliderVal3").innerHTML);
         valueTourMax.push(newValueTourMax);
 
-        newValueEnvMin = parseInt(document.getElementById(cn+"ValueEnvMin").value);
+        newValueEnvMin = parseInt(document.getElementById("valueEnv"+cn+"SliderVal2").innerHTML);
         valueEnvMin.push(newValueEnvMin);
 
-        newValueEnvMax = parseInt(document.getElementById(cn+"ValueEnvMax").value);
+        newValueEnvMax = parseInt(document.getElementById("valueEnv"+cn+"SliderVal3").innerHTML);
         valueEnvMax.push(newValueEnvMax);
 
-        newValueOuvMin = parseInt(document.getElementById(cn+"ValueOuvMin").value);
+        newValueOuvMin = parseInt(document.getElementById("valueOuv"+cn+"SliderVal2").innerHTML);
         valueOuvMin.push(newValueOuvMin);
 
-        newValueOuvMax = parseInt(document.getElementById(cn+"ValueOuvMax").value);
+        newValueOuvMax = parseInt(document.getElementById("valueOuv"+cn+"SliderVal3").innerHTML);
         valueOuvMax.push(newValueOuvMax);
+        ;
 
     });
-
+    let boolAlert = true;
     // On prend le max des min et le min des max :
     AniMax = valueAniMax.sort(function(a, b){return a-b})[0];
     console.log("Ani max" +AniMax);
@@ -332,36 +350,94 @@ function letsCalcAll() {
 
         //Intersection non vide :
 
-        alert("Votre intersection n'est pas vide !");
-        classIds.forEach(function (ids) {
+        alert("Votre intersection n'est pas vide ! Calcul de noyau en cours...");
 
-            var jsonObj = {
-                "room_name": localStorage.getItem("roomName"),
-                "class_id": ids.toString(),
-                "value_ani_min": parseInt(AniMin),
-                "value_ani_max": parseInt(AniMax),
-                "value_tour_min": parseInt(TourMin),
-                "value_tour_max": parseInt(TourMax),
-                "value_cap_min": parseInt(CapMin),
-                "value_cap_max": parseInt(CapMax),
-                "value_env_min": parseInt(EnvMin),
-                "value_env_max": parseInt(EnvMax),
-                "value_ouv_min": parseInt(OuvMin),
-                "value_ouv_max": parseInt(OuvMax)
-            };
-            console.log("ok 1");
-            data = JSON.stringify(jsonObj);
-            console.log("ok 2");
-            console.log(data);
-            console.log("ok 3");
 
-            postXMLHttp('/api?fct=lets_calc' +
-                '&data=' + data, function (ret) {
-                alert("LE CALCUL EST FINI : " + ret);
-                //getFile();
+            classIds.forEach(function (ids) {
+                nbFile =0;
+                do {
+                    let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                    http.open('HEAD', tmpPath, false);
+                    http.send();
+                    nbFile = nbFile + 1
+                } while (http.status !== 404);
+                nbFile--;
+
+
+                console.log(ids);
+                var cn = "";
+                if (ids ==1){
+                    cn = "Maire"
+                }
+                if (ids ==2){
+                    cn = "Pecheur"
+                }
+                if (ids ==3){
+                    cn = "Ecologiste"
+                }
+
+                var jsonObj = {
+                    "room_name": localStorage.getItem("roomName"),
+                    "class_id": ids.toString(),
+                    "value_ani_min": parseInt(AniMin),
+                    "value_ani_max": parseInt(AniMax),
+                    "value_tour_min": parseInt(TourMin),
+                    "value_tour_max": parseInt(TourMax),
+                    "value_cap_min": parseInt(CapMin),
+                    "value_cap_max": parseInt(CapMax),
+                    "value_env_min": parseInt(EnvMin),
+                    "value_env_max": parseInt(EnvMax),
+                    "value_ouv_min": parseInt(OuvMin),
+                    "value_ouv_max": parseInt(OuvMax)
+                };
+                data = JSON.stringify(jsonObj);
+              /*  console.log("ok 1");
+
+                console.log("ok 2");
+                console.log(data);
+                console.log("ok 3"); */
+                let dontstop = true;
+                while(dontstop){
+                    postXMLHttp('/api?fct=lets_calc' +
+                        '&data=' + data, function (ret) {
+                        console.log(dontstop);
+                        console.log(ret);
+
+                        if(ret === "Ce noyau est vide !"){
+                            alert("Le noyau : \""+ cn + "\" est  vide");
+                          dontstop = false
+
+                        }
+
+                        else if(ret === "Votre noyau n'est pas vide !"){
+                            alert("Le noyau : \""+ cn + "\" n'est pas vide");
+                            dontstop = false
+                        }
+
+                        else {
+                            alert("noyaux vide");
+                            dontstop = true
+                        }
+
+                        console.log(dontstop);
+                    });
+
+                    do {
+                        console.log(nbFile);
+                        let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                        http.open('HEAD', tmpPath, false);
+                        http.send();
+                        sleep(1500)
+                    }
+                    while (http.status === 404);
+                }
+
+
             });
-        });
-    }
+            getAllFiles();
+
+        }
+
 
     else{
 

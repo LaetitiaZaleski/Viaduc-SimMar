@@ -14,37 +14,48 @@ var importancesVals = ["{{.ValueAniMin}}", "{{.ValueAniMax}}", "{{.ValueTourMin}
     "{{.ValueCapMin}}", "{{.ValueCapMax}}", "{{.ValueEnvMin}}", "{{.ValueEnvMax}}", "{{.ValueOuvMin}}",
     "{{.ValueOuvMax}}"];
 
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
+}
 
 function setMinMaxRoles() {
-
+    localStorage.setItem("nonvides", "-1");
     roles = ["Maire", "Ecologiste", "Pecheur"];
     for(var i = 0; i<roles.length; i++){
-        localStorage.setItem(roles[i]+"AniFauxMin", 0);
-        localStorage.setItem(roles[i]+"AniMin", 0);
-        localStorage.setItem(roles[i]+"AniMax", 0);
-        localStorage.setItem(roles[i]+"AniFauxMax", 0);
+        localStorage.setItem(roles[i]+"oldAniFauxMin", -1);
+        localStorage.setItem(roles[i]+"oldAniMin", -1);
+        localStorage.setItem(roles[i]+"oldAniMax", -1);
+        localStorage.setItem(roles[i]+"oldAniFauxMax", -1);
+        localStorage.setItem(roles[i]+"oldImpAniMax", -1);
 
-        localStorage.setItem(roles[i]+"CapFauxMin", 0);
-        localStorage.setItem(roles[i]+"CapMin", 0);
-        localStorage.setItem(roles[i]+"CapMax", 0);
-        localStorage.setItem(roles[i]+"CapFauxMax", 0);
+        localStorage.setItem(roles[i]+"oldCapFauxMin", -1);
+        localStorage.setItem(roles[i]+"oldCapMin", -1);
+        localStorage.setItem(roles[i]+"oldCapMax", -1);
+        localStorage.setItem(roles[i]+"oldCapFauxMax", -1);
+        localStorage.setItem(roles[i]+"oldImpCapMax", -1);
 
-        localStorage.setItem(roles[i]+"TourFauxMin", 0);
-        localStorage.setItem(roles[i]+"TourMin", 0);
-        localStorage.setItem(roles[i]+"TourMax", 0);
-        localStorage.setItem(roles[i]+"TourFauxMax", 0);
+        localStorage.setItem(roles[i]+"oldTourFauxMin", -1);
+        localStorage.setItem(roles[i]+"oldTourMin", -1);
+        localStorage.setItem(roles[i]+"oldTourMax", -1);
+        localStorage.setItem(roles[i]+"oldTourFauxMax", -1);
+        localStorage.setItem(roles[i]+"oldImpTourMax", -1);
 
-        localStorage.setItem(roles[i]+"EnvFauxMin", 0);
-        localStorage.setItem(roles[i]+"EnvMin", 0);
-        localStorage.setItem(roles[i]+"EnvMax", 0);
-        localStorage.setItem(roles[i]+"EnvFauxMax", 0);
+        localStorage.setItem(roles[i]+"oldEnvFauxMin", -1);
+        localStorage.setItem(roles[i]+"oldEnvMin", -1);
+        localStorage.setItem(roles[i]+"oldEnvMax", -1);
+        localStorage.setItem(roles[i]+"oldEnvFauxMax", -1);
+        localStorage.setItem(roles[i]+"oldImpEnvMax", -1);
 
-        localStorage.setItem(roles[i]+"OuvFauxMin", 0);
-        localStorage.setItem(roles[i]+"OuvMin", 0);
-        localStorage.setItem(roles[i]+"OuvMax", 0);
-        localStorage.setItem(roles[i]+"OuvFauxMax", 0);
-
-        localStorage.setItem(roles[i]+"NumFile", -1);
+        localStorage.setItem(roles[i]+"oldOuvFauxMin", -1);
+        localStorage.setItem(roles[i]+"oldOuvMin", -1);
+        localStorage.setItem(roles[i]+"oldOuvMax", -1);
+        localStorage.setItem(roles[i]+"oldOuvFauxMax", -1);
+        localStorage.setItem(roles[i]+"oldImpOuvMax", -1);
     }
 
 }

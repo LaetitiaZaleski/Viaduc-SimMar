@@ -142,7 +142,7 @@ function sleep(milliseconds) {
 }
 
 
-async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
+async function getFile(calcul, commun = false, ClassId = localStorage.getItem("classId")) {
 
     // recuperation des valeurs
     var RoomName = localStorage.getItem("roomName");
@@ -229,7 +229,7 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split('  ');
                 if (valueTab.length >= 3) {
-                    if (i % 10 == 0) { // on prend 1 point sur 10
+                    if (i % 10 === 0) { // on prend 1 point sur 10
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
@@ -264,6 +264,10 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
             var contraintesCap = [p1[1], p2[1], p4[1], p3[1], p1[1], p5[1], p6[1], p2[1], p4[1], p8[1], p6[1], p8[1], p6[1], p8[1], p7[1], p5[1], p7[1], p3[1]];
             var contraintesTour = [p1[2], p2[2], p4[2], p3[2], p1[2], p5[2], p6[2], p2[2], p4[2], p8[2], p6[2], p8[2], p6[2], p8[2], p7[2], p5[2],p7[2], p3[2]];
 
+            let name_commun ='';
+            if(commun){
+                name_commun ='_commun';
+            }
 
             if (ClassId == 1) {
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
@@ -287,8 +291,8 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
                 role = "Ecologiste"
             }
 
-            var kerName = role + "_" + "A" + ValueAniMin + "-" + ValueAniMax + "C" + ValueCapMin + "-" + ValueCapMax + "T" + ValueTourMin + "-" + ValueTourMax + "Env" + ValueEnvMin + "-" + ValueEnvMax + "Fer" + ValueOuvMin + "-" + ValueOuvMax;
-            var contraintesName = role + "_" + "contraintes" + "A" + ValueAniMin + "-" + ValueAniMax + "C" + ValueCapMin + "-" + ValueCapMax + "T" + ValueTourMin + "-" + ValueTourMax + "Env" + ValueEnvMin + "-" + ValueEnvMax + "Fer" + ValueOuvMin + "-" + ValueOuvMax;
+            var kerName = role +name_commun+ "_" + "A" + ValueAniMin + "-" + ValueAniMax + "C" + ValueCapMin + "-" + ValueCapMax + "T" + ValueTourMin + "-" + ValueTourMax + "Env" + ValueEnvMin + "-" + ValueEnvMax + "Fer" + ValueOuvMin + "-" + ValueOuvMax;
+            var contraintesName = role +name_commun+ "_" + "contraintes" + "A" + ValueAniMin + "-" + ValueAniMax + "C" + ValueCapMin + "-" + ValueCapMax + "T" + ValueTourMin + "-" + ValueTourMax + "Env" + ValueEnvMin + "-" + ValueEnvMax + "Fer" + ValueOuvMin + "-" + ValueOuvMax;
 
 
             var contraintes = {
@@ -348,10 +352,124 @@ async function getFile(calcul, ClassId = localStorage.getItem("classId")) {
     }
 }
 
-function getAllFiles() {
+function getAllFiles(commun = true) {
     for(ClassId=1;ClassId<4; ClassId++){
         console.log("ClassID : "+ClassId);
-        getFile(false, ClassId)
+        getFile(false,commun, ClassId)
     }
 
+}
+
+
+
+
+
+async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) {
+
+    // recuperation des valeurs
+    var RoomName = localStorage.getItem("roomName");
+
+    // recuperer le dernier fichier créé :
+    var http = new XMLHttpRequest();
+
+        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
+        console.log("Path : " + path);
+
+        var allData = {
+            data1: [],
+            data2: [],
+            data3: [] // pas du virgule après le dernier
+        };
+
+        getXMLHttp(path, function (data) {
+            // getXMLHttp("sources/output/SimMar_A0.000000_10.000000_C0.000000_10.000000_T0.000000_10.000000_eps0.000000_100.000000_zeta0.000000_20.000000_del0.100000_a100.000000_mp10.000000_g2.000000-viab-0-bound.dat", function (data) {
+            let lineTab = data.split('\n');
+            let aniTab = [];
+            let capTab = [];
+            let tourTab = [];
+
+
+            for (i = 0; i < lineTab.length; i++) {
+                let valueTab = lineTab[i].split('  ');
+                if (valueTab.length >= 3) {
+                    if (i % 10 === 0) { // on prend 1 point sur 10
+                        aniTab.push(parseFloat(valueTab[0]));
+                        capTab.push(parseFloat(valueTab[1]));
+                        tourTab.push(parseFloat(valueTab[2]));
+
+                    }
+                }
+            }
+
+            console.log("longeur : " + aniTab.length);
+            var role = "";
+            var coulb = Math.floor(Math.random() * Math.floor(100)); //pour la variation de couleur
+            var coulr = Math.floor(Math.random() * Math.floor(100));
+            var coulg = Math.floor(Math.random() * Math.floor(100));
+            var r = 6 + coulr;
+            var g = 0 + coulg;
+            var b = 165 + coulb;
+
+            // points de contraintes :
+
+            if (ClassId == 1) {
+                col = 'rgb(' + r + ',' + g + ',' + b + ')';
+                role = "Maire";
+                console.log("b" + b)
+            }
+            if (ClassId == 2) {
+                r = 204 + coulr;
+                g = 121 + coulg;
+                b = 184 + coulb;
+                console.log("b" + b);
+                col = 'rgb(' + r + ',' + g + ',' + b + ')';
+                role = "Pecheur"
+            }
+            if (ClassId == 3) {
+                r = 28 + coulr;
+                g = 108 + coulg;
+                b = 6 + coulb;
+                console.log("b" + b);
+                col = 'rgb(' + r + ',' + g + ',' + b + ')';
+                role = "Ecologiste"
+            }
+
+            var kerName = name;
+
+
+            var noyau = {
+                x: aniTab,
+                y: capTab,
+                z: tourTab,
+                name: kerName,
+                mode: 'markers',
+                marker: {
+                    color: col,
+                    size: 1,
+                    symbol: 'circle',
+                    line: {
+                        color: col,
+                        width: 0.01
+                    },
+                    opacity: 0.8
+                },
+                type: 'scatter3d'
+            };
+
+
+            var printData = [noyau];
+
+            var layout = {
+                title: {
+                    text: 'Noyau de viabilité'
+                },
+                scene: {
+                    xaxis: {title: 'Animaux'},
+                    yaxis: {title: 'Capital des infrastructures'},
+                    zaxis: {title: 'Touristes'},
+                },
+            };
+            Plotly.plot('kernelDiv', printData, layout);
+
+        });
 }

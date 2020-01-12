@@ -1,12 +1,42 @@
-/*
-window.onload = function(){
 
+window.onload = function(){
+    if (localStorage.getItem("nonvides")!=="-1"){
+        gFinalFiles = [1,2];
+
+        gFinalPref = JSON.parse(localStorage.getItem("finalPref"));
+        finalPrefs = JSON.parse(localStorage.getItem("finalPref"));
+        console.log("Final prefs :");
+        console.log(finalPrefs.length);
+        $("#finalPrefButtonContainer").html('');
+        gNumFiles =JSON.parse(localStorage.getItem("nonvides"));
+        console.log(gNumFiles);
+        console.log(finalPrefs);
+        console.log("finalPrefs");
+        console.log(finalPrefs[0].value_ani_min);
+
+        for(k = 0; k<finalPrefs.length; k++){
+            /*
+            *  CREATION DES BOUTONS : 1er click = ca affiche / 2eme click = ca efface
+            * */
+            console.log("k :");
+            console.log(finalPrefs[k]);
+            var name = "solution "+ (k+1);
+            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
+
+            getFileBynum(gNumFiles[k],name)
+        }
+
+
+
+
+    }
 };
-*/
+
+
 var gFinalPref = null;
 var gFinalFiles = []; // numero de la solution qu'on garde
 var gNumFiles = []; // numero de fichier correspondant
-var precision = 1;
+var precision = 8;
 
 function letsFinish() {
     if (gFinalFiles.length !== 1){
@@ -60,8 +90,10 @@ function getImportances(){
 
         if(checked){
             localStorage.setItem(imp,100); //$('#' + imp).val()
+            localStorage.setItem("old"+imp,100); //$('#' + imp).val()
         }else {
             localStorage.setItem(imp,1);
+            localStorage.setItem("old"+imp,1);
         }
     }
     // window.location.href = "?" + newParam;
@@ -88,8 +120,12 @@ function calcTable(abs, pref, faux){
 
 async function getPrefs(mono=true) {
 
+     gFinalFiles = []; // numero de la solution qu'on garde
+     gNumFiles = []; // numero de fichier correspondant
 
-    document.getElementById('patientezContainer').innerHTML="Calcul en cours, merci de patienter quelques minutes";
+
+    document.getElementById('patientezContainer').innerHTML="Calcul en cours, merci de patienter quelques minutes...";
+    document.getElementById('finalPrefButtonContainer').innerHTML="";
 
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
@@ -337,6 +373,7 @@ async function getPrefs(mono=true) {
 
 
         localStorage.setItem("nonvides", JSON.stringify(gNumFiles));
+        localStorage.setItem("finalPref", JSON.stringify(gFinalPref));
         document.getElementById('patientezContainer').innerHTML="";
 
 
@@ -349,6 +386,7 @@ async function getPrefs(mono=true) {
             console.log(finalPrefs[k]);
             var name = "solution "+ (k+1);
             $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
+            getFileBynum(gNumFiles[k],name)
 
         }
         if(mono){
@@ -834,7 +872,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 } else {
                     dontstop = false;
                     console.log("non vide");
-                    lastNonVide = nbFile - 1;
+                    lastNonVide = nbFile;
                     newPrefs = JSON.parse(JSON.stringify(Prefs));
                     newData = data;
                     console.log(newPrefs);
@@ -963,10 +1001,10 @@ function showPreferences(finalprefs,k){
 
     var sliderAni = document.getElementById('slider-ani-'+k);
 
-    var sliderAniValues1 = localStorage.getItem("AniFauxMin");
-    var sliderAniValues2 = localStorage.getItem("AniMin");
-    var sliderAniValues3 = localStorage.getItem("AniMax");
-    var sliderAniValues4 = localStorage.getItem("AniFauxMax");
+    var sliderAniValues1 = localStorage.getItem("oldAniFauxMin");
+    var sliderAniValues2 = localStorage.getItem("oldAniMin");
+    var sliderAniValues3 = localStorage.getItem("oldAniMax");
+    var sliderAniValues4 = localStorage.getItem("oldAniFauxMax");
     sprefsA = sortPref(sliderAniValues1,sliderAniValues2,sliderAniValues3,sliderAniValues4, prefAmin, prefAmax);
 
 
@@ -1001,10 +1039,10 @@ function showPreferences(finalprefs,k){
 
 
     var sliderCap = document.getElementById('slider-cap-'+k);
-    var sliderCapValues1 = localStorage.getItem("CapFauxMin");
-    var sliderCapValues2 = localStorage.getItem("CapMin");
-    var sliderCapValues3 = localStorage.getItem("CapMax");
-    var sliderCapValues4 = localStorage.getItem("CapFauxMax");
+    var sliderCapValues1 = localStorage.getItem("oldCapFauxMin");
+    var sliderCapValues2 = localStorage.getItem("oldCapMin");
+    var sliderCapValues3 = localStorage.getItem("oldCapMax");
+    var sliderCapValues4 = localStorage.getItem("oldCapFauxMax");
     sprefsC = sortPref(sliderCapValues1,sliderCapValues2,sliderCapValues3,sliderCapValues4, prefCmin, prefCmax);
 
 
@@ -1041,10 +1079,10 @@ function showPreferences(finalprefs,k){
 
     var sliderTour = document.getElementById('slider-tour-'+k);
 
-    var sliderTourValues1 = localStorage.getItem("TourFauxMin");
-    var sliderTourValues2 = localStorage.getItem("TourMin");
-    var sliderTourValues3 = localStorage.getItem("TourMax");
-    var sliderTourValues4 = localStorage.getItem("TourFauxMax");
+    var sliderTourValues1 = localStorage.getItem("oldTourFauxMin");
+    var sliderTourValues2 = localStorage.getItem("oldTourMin");
+    var sliderTourValues3 = localStorage.getItem("oldTourMax");
+    var sliderTourValues4 = localStorage.getItem("oldTourFauxMax");
     sprefsT = sortPref(sliderTourValues1,sliderTourValues2,sliderTourValues3,sliderTourValues4, prefTmin, prefTmax);
 
 
@@ -1081,10 +1119,10 @@ function showPreferences(finalprefs,k){
 
     var sliderEnv = document.getElementById('slider-env-'+k);
 
-    var sliderEnvValues1 = localStorage.getItem("EnvFauxMin");
-    var sliderEnvValues2 = localStorage.getItem("EnvMin");
-    var sliderEnvValues3 = localStorage.getItem("EnvMax");
-    var sliderEnvValues4 = localStorage.getItem("EnvFauxMax");
+    var sliderEnvValues1 = localStorage.getItem("oldEnvFauxMin");
+    var sliderEnvValues2 = localStorage.getItem("oldEnvMin");
+    var sliderEnvValues3 = localStorage.getItem("oldEnvMax");
+    var sliderEnvValues4 = localStorage.getItem("oldEnvFauxMax");
     sprefsEnv = sortPref(sliderEnvValues1,sliderEnvValues2,sliderEnvValues3,sliderEnvValues4, prefEnvmin, prefEnvmax);
 
 
@@ -1121,10 +1159,10 @@ function showPreferences(finalprefs,k){
 
 
     var sliderOuv = document.getElementById('slider-ouv-'+k);
-    var sliderOuvValues1 = localStorage.getItem("OuvFauxMin");
-    var sliderOuvValues2 = localStorage.getItem("OuvMin");
-    var sliderOuvValues3 = localStorage.getItem("OuvMax");
-    var sliderOuvValues4 = localStorage.getItem("OuvFauxMax");
+    var sliderOuvValues1 = localStorage.getItem("oldOuvFauxMin");
+    var sliderOuvValues2 = localStorage.getItem("oldOuvMin");
+    var sliderOuvValues3 = localStorage.getItem("oldOuvMax");
+    var sliderOuvValues4 = localStorage.getItem("oldOuvFauxMax");
     sprefsOuv = sortPref(sliderOuvValues1,sliderOuvValues2,sliderOuvValues3,sliderOuvValues4, prefOuvmin, prefOuvmax);
 
 
@@ -1157,8 +1195,9 @@ function showPreferences(finalprefs,k){
     document.getElementById('prefOuvMin-' + k).innerHTML=prefOuvmin;
     document.getElementById('prefOuvMax-' + k).innerHTML=prefOuvmax;
 
-
 }
+
+
 /*
 function setPref(numFile,finalPref) {
 
