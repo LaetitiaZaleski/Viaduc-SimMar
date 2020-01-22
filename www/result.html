@@ -51,7 +51,7 @@
         si les préférences des utilisateurs ont une intersection non vide.</span>
     <span>
         En bas de page vous pouvez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
-        En bleu celui du maire, en rose celui de l'Pecheur et en vert celui de l'Ecologiste.
+        En bleu celui du maire, en rose celui du Pecheur et en vert celui de l'Ecologiste.
     </span>
     <span>
         Ensuite, vous pouvez appuyer sur "Calculer un noyau commun" ce qui calculera, pour votre modèle,
@@ -264,14 +264,13 @@
 
 
     <div style="padding: 50px">
-        <button  onclick="getAllFiles()" class="btn btn-primary"> Afficher les noyaux </button>
-       <!-- --> <button  onclick="letsCalcAll(false)" class="btn btn-primary"> Calculer un noyau commun </button>
-        <button  onclick="findNonVideMulti()" class="btn btn-primary"> Rechercher un noyau commun </button>
+        <button  onclick="getAllFiles(false)" class="btn btn-primary" id="affiche" hidden="true"> Afficher les noyaux </button>
+       <!-- --> <button  onclick="letsCalcAll(false)" class="btn btn-primary" id="calcul" hidden="true"> Calcul de noyaux dans l'intersection </button>
+        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche" hidden="true"> Recherche de noyau dans l'intersectio </button>
         <br/>
     </div>
 
-    <div id="kernelDiv" style="width:100%;height:100%"></div>
-
+    <div id="kernelDiv" style="width:100%;height:800px"></div>
     <div id="finalPrefButtonContainer"> </div>
     <div id="patientezContainer"> </div>
 

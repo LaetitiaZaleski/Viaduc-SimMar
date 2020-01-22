@@ -155,7 +155,27 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		cmdCpF.Run()
 
 		/******* ohoho *********/
-	}else if strings.Compare(fnct, "test") == 0 {
+	} else if strings.Compare(fnct, "create_wait") == 0 {
+		roomName := param["room_name"][0]
+		filename := "www/sources/output/" + roomName + "_wait.txt"
+		cmdCreateWait := exec.Command("touch", filename)
+		cmdCreateWait.Run()
+	} else if strings.Compare(fnct, "delete_wait") == 0 {
+		roomName := param["room_name"][0]
+		filename := "www/sources/output/" + roomName + "_wait.txt"
+		cmdDeleteWait := exec.Command("rm", filename)
+		cmdDeleteWait.Run()
+	} else if strings.Compare(fnct, "create_end") == 0 {
+		roomName := param["room_name"][0]
+		filename := "www/sources/output/" + roomName + "_end.txt"
+		cmdCreateEnd := exec.Command("touch",filename)
+		cmdCreateEnd.Run()
+	}else if strings.Compare(fnct, "delete_end") == 0 {
+		roomName := param["room_name"][0]
+		filename := "www/sources/output/" + roomName + "_end.txt"
+		cmdDeleteWait := exec.Command("rm", filename)
+		cmdDeleteWait.Run()
+	}  else if strings.Compare(fnct, "test") == 0 {
 
 		ret := SendPostRequest("http://localhost:8883/job","pi.tgz","file")
 		log.Println(fmt.Sprintf(string(ret)))
@@ -222,7 +242,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
 		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
-		cmd := exec.Command("./bin/viabLabExe1", file )
+		//cmd := exec.Command("./bin/viabLabExe1", file )
+		cmd := exec.Command("./bin/viabLabExe3", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
@@ -399,7 +420,8 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
 			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
-		cmd := exec.Command("./bin/viabLabExe1", file )
+		//cmd := exec.Command("./bin/viabLabExe1", file )
+		cmd := exec.Command("./bin/viabLabExe3", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer

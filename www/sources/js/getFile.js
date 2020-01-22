@@ -83,6 +83,12 @@ async function letsCalc() {
             //getFile();
             neg = false;
         }
+        if (ret === "Votre noyau n'est pas vide !"){
+            document.getElementById('continue').hidden = false;
+        }
+        if (ret === "Ce noyau est vide !"){
+            document.getElementById('continue').hidden = true;
+        }
 
     });
     nbFile = nbFile -1;
@@ -107,6 +113,13 @@ async function letsCalc() {
                     //getFile();
                     neg = true;
                 }
+                if (ret === "Votre noyau n'est pas vide !"){
+                    document.getElementById('continue').hidden = false;
+                }
+                if (ret === "Ce noyau est vide !"){
+                    document.getElementById('continue').hidden = true;
+                }
+
 
             });
             nbFile = nbFile+1;
@@ -123,6 +136,9 @@ async function letsCalc() {
         while (http.status === 404);
 
         }
+
+    document.getElementById('help').hidden = false;
+
 
 
     // on attend que le fichier soit créé :
@@ -229,7 +245,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split('  ');
                 if (valueTab.length >= 3) {
-                    if (i % 10 === 0) { // on prend 1 point sur 10
+                    if (i % 3 === 0) { // on prend 1 point sur 10
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
@@ -357,14 +373,16 @@ function getAllFiles(commun = true) {
         console.log("ClassID : "+ClassId);
         getFile(false,commun, ClassId)
     }
-
+    if(!commun){
+        document.getElementById("calcul").hidden = false
+    }
 }
 
 
 
 
 
-async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) {
+async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) { //affiche une noyau
 
     // recuperation des valeurs
     var RoomName = localStorage.getItem("roomName");
@@ -392,7 +410,7 @@ async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classI
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split('  ');
                 if (valueTab.length >= 3) {
-                    if (i % 10 === 0) { // on prend 1 point sur 10
+                    if (i % 3 === 0) { // on prend 1 point sur 10
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
@@ -403,12 +421,11 @@ async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classI
 
             console.log("longeur : " + aniTab.length);
             var role = "";
-            var coulb = Math.floor(Math.random() * Math.floor(100)); //pour la variation de couleur
-            var coulr = Math.floor(Math.random() * Math.floor(100));
-            var coulg = Math.floor(Math.random() * Math.floor(100));
-            var r = 6 + coulr;
-            var g = 0 + coulg;
-            var b = 165 + coulb;
+             //pour la variation de couleur
+            var coulr = Math.floor(Math.random() * Math.floor(255));
+            var r = coulr ;
+            var g = 0;
+            var b = 0;
 
             // points de contraintes :
 
@@ -418,17 +435,17 @@ async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classI
                 console.log("b" + b)
             }
             if (ClassId == 2) {
-                r = 204 + coulr;
-                g = 121 + coulg;
-                b = 184 + coulb;
+                r =  coulr;
+                g =  coulg;
+                b =  coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Pecheur"
             }
             if (ClassId == 3) {
-                r = 28 + coulr;
-                g = 108 + coulg;
-                b = 6 + coulb;
+                r =  coulr;
+                g =  coulg;
+                b =  coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Ecologiste"

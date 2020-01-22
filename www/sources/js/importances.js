@@ -1,6 +1,7 @@
 
 function letsFinish() {
         //setPref(gNumFiles[gFinalFiles[0]]);
+    document.getElementById('patientezContainer').innerHTML="Enregistrement des préférences...";
         getImportances();
         setImportances();
 
@@ -14,6 +15,7 @@ function letsFinish() {
         let url = window.location.href;
         let newParam = url.split("?")[1].replace("importances", "result");
         window.location.href = "?" + newParam;
+
 
 
 
@@ -59,10 +61,10 @@ async function setImportances() {
 
         "value_ani_min": parseInt(localStorage.getItem("AniMin")),
         "value_ani_max": parseInt(localStorage.getItem("AniMax")),
-        "value_tour_min": parseInt(localStorage.getItem("CapMin")),
-        "value_tour_max": parseInt(localStorage.getItem("CapMax")),
-        "value_cap_min": parseInt(localStorage.getItem("TourMin")),
-        "value_cap_max": parseInt(localStorage.getItem("TourMax")),
+        "value_tour_min": parseInt(localStorage.getItem("TourMin")),
+        "value_tour_max": parseInt(localStorage.getItem("TourMax")),
+        "value_cap_min": parseInt(localStorage.getItem("CapMin")),
+        "value_cap_max": parseInt(localStorage.getItem("CapMax")),
         "value_env_min": parseInt(localStorage.getItem("EnvMin")),
         "value_env_max": parseInt(localStorage.getItem("EnvMax")),
         "value_ouv_min": parseInt(localStorage.getItem("OuvMin")),
@@ -94,12 +96,20 @@ async function setImportances() {
     data = JSON.stringify(jsonObj);
 
     console.log(data);
+    neg = true;
 
-    postXMLHttp('/api?fct=lets_calc' +
-        '&data=' + data,  function (ret) {
-       // alert("LE CALCUL EST FINI : " + ret);
-        //getFile();
-    });
+    while (neg) {
+        neg = false;
+        postXMLHttp('/api?fct=lets_calc' +
+            '&data=' + data, function (ret) {
+            if (ret === "Ce noyau est negatif !") {
+                // alert("LE CALCUL EST FINI : " + ret);
+                //getFile();
+                neg = true;
+            }
+
+        });
+    }
 
     // on attend que le fichier soit créé :
     nbFile = nbFile -1;

@@ -1,197 +1,243 @@
 function findNonVideMulti() {
 
-    RoomName = localStorage.getItem("roomName");
+    document.getElementById('patientezContainer').innerHTML="Calcul en cours, merci de patienter quelques minutes...";
 
-    // regarder quels noyaux ont ete calculés :
-    var classIds = [];
-    for (id=1; id<4; id++) {
-        var httpf = new XMLHttpRequest();
-        var finalPath =  "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" +"finalfile.dat";
-        console.log(finalPath);
-        httpf.open('HEAD', finalPath, false);
-        httpf.send();
-        if (httpf.status !== 404) { // on regarde si le fichier a été créer
+
+    var httpw = new XMLHttpRequest();
+
+     do { // si le fichier a été créé on attend qu'il disparaisse
+        sleep((Math.random()+1)*3000);
+        var pathwait = "sources/output/" + localStorage.getItem("roomName") + "_" + "wait.txt";
+        httpw.open('HEAD', pathwait, false);
+        httpw.send();
+        console.log("j'attends")
+    } while (httpw.status !== 404);
+
+    /* var httpe = new XMLHttpRequest();
+     var pathend = "sources/output/" + localStorage.getItem("roomName") + "_" + "end.txt";
+     httpe.open('HEAD', pathend, false);
+     httpe.send();
+     if (httpe.status !== 404) { //si le fichier end existe on affiche
+         gFinalPref = JSON.parse(localStorage.getItem("finalPref"));
+         finalPrefs = JSON.parse(localStorage.getItem("finalPref"));
+         console.log("Final prefs :");
+         console.log(finalPrefs.length);
+         $("#finalPrefButtonContainer").html('');
+         gNumFiles = JSON.parse(localStorage.getItem("nonvides"));
+         console.log(gNumFiles);
+         console.log(finalPrefs);
+         console.log("finalPrefs");
+         console.log(finalPrefs[0].value_ani_min);
+
+         for (k = 0; k < finalPrefs.length; k++) {
+
+             console.log("k :");
+             console.log(finalPrefs[k]);
+             var name = "solution " + (k + 1);
+             $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">' + name + '</div>');
+
+             getFileBynum(gNumFiles[k], name)
+         }
+     } else { */
+
+
+        RoomName = localStorage.getItem("roomName");
+
+        // creation du fichier wait.txt
+
+        getXMLHttp('/api?fct=create_wait' +
+            '&room_name=' + RoomName,
+            function (ret) {
+            });
+
+        // regarder quels noyaux ont ete calculés :
+        var classIds = [];
+        for (id = 1; id < 4; id++) {
+            var httpf = new XMLHttpRequest();
+            var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
+            console.log(finalPath);
+            httpf.open('HEAD', finalPath, false);
+            httpf.send();
+            if (httpf.status !== 404) { // on regarde si le fichier a été créer
                 classIds.push(id);
-            console.log(id)
-        }
-    }
-
-    console.log(classIds);
-
-    // trouver les nouveaux min et max :
-    var valueAniMin = [];
-    var valueAniMax = [];
-    var valueTourMin = [];
-    var valueTourMax = [];
-    var valueCapMin = [];
-    var valueCapMax = [];
-    var valueEnvMin = [];
-    var valueEnvMax = [];
-    var valueOuvMin = [];
-    var valueOuvMax = [];
-
-    // trouver les nouveaux pasMin et pasMax :
-    var pasAniMin = [];
-    var pasAniMax = [];
-    var pasTourMin = [];
-    var pasTourMax = [];
-    var pasCapMin = [];
-    var pasCapMax = [];
-    var pasEnvMin = [];
-    var pasEnvMax = [];
-    var pasOuvMin = [];
-    var pasOuvMax = [];
-
-    // trouver les nouvelles importances :
-    var impAniMin = [];
-    var impAniMax = [];
-    var impTourMin = [];
-    var impTourMax = [];
-    var impCapMin = [];
-    var impCapMax = [];
-    var impEnvMin = [];
-    var impEnvMax = [];
-    var impOuvMin = [];
-    var impOuvMax = [];
-
-
-    classIds.forEach(function(ids) {
-        console.log("ids : "+ ids);
-        var cn = "";
-        if (ids ===1){
-            cn = "Maire"
-        }
-        if (ids ===2){
-            cn = "Pecheur"
-        }
-        if (ids ===3){
-            cn = "Ecologiste"
+                console.log(id)
+            }
         }
 
-        console.log("cn = "+cn);
+        console.log(classIds);
 
-        newValueAniMin = parseInt(document.getElementById("valueAni"+cn+"SliderVal2").innerHTML);
-        valueAniMin.push(newValueAniMin);
-        console.log("newValueAniMin");
-        console.log(newValueAniMin);
+        // trouver les nouveaux min et max :
+        var valueAniMin = [];
+        var valueAniMax = [];
+        var valueTourMin = [];
+        var valueTourMax = [];
+        var valueCapMin = [];
+        var valueCapMax = [];
+        var valueEnvMin = [];
+        var valueEnvMax = [];
+        var valueOuvMin = [];
+        var valueOuvMax = [];
 
-        newValueAniMax = parseInt(document.getElementById("valueAni"+cn+"SliderVal3").innerHTML);
-        valueAniMax.push(newValueAniMax);
-        console.log("newValueAniMax");
-        console.log(newValueAniMax);
+        // trouver les nouveaux pasMin et pasMax :
+        var pasAniMin = [];
+        var pasAniMax = [];
+        var pasTourMin = [];
+        var pasTourMax = [];
+        var pasCapMin = [];
+        var pasCapMax = [];
+        var pasEnvMin = [];
+        var pasEnvMax = [];
+        var pasOuvMin = [];
+        var pasOuvMax = [];
 
-        newValueCapMin = parseInt(document.getElementById("valueCap"+cn+"SliderVal2").innerHTML);
-        valueCapMin.push(newValueCapMin);
-
-        newValueCapMax = parseInt(document.getElementById("valueCap"+cn+"SliderVal3").innerHTML);
-        valueCapMax.push(newValueCapMax);
-
-        newValueTourMin = parseInt(document.getElementById("valueTour"+cn+"SliderVal2").innerHTML);
-        valueTourMin.push(newValueTourMin);
-
-        newValueTourMax = parseInt(document.getElementById("valueTour"+cn+"SliderVal3").innerHTML);
-        valueTourMax.push(newValueTourMax);
-
-        newValueEnvMin = parseInt(document.getElementById("valueEnv"+cn+"SliderVal2").innerHTML);
-        valueEnvMin.push(newValueEnvMin);
-
-        newValueEnvMax = parseInt(document.getElementById("valueEnv"+cn+"SliderVal3").innerHTML);
-        valueEnvMax.push(newValueEnvMax);
-
-        newValueOuvMin = parseInt(document.getElementById("valueOuv"+cn+"SliderVal2").innerHTML);
-        valueOuvMin.push(newValueOuvMin);
-
-        newValueOuvMax = parseInt(document.getElementById("valueOuv"+cn+"SliderVal3").innerHTML);
-        valueOuvMax.push(newValueOuvMax);
-
-
-
-        newPasAniMin = newValueAniMin - parseInt(document.getElementById("valueAni"+cn+"SliderVal1").innerHTML);
-        pasAniMin.push(newPasAniMin);
-        console.log("newPasAniMin");
-        console.log(newPasAniMin);
-
-        newPasAniMax = parseInt(document.getElementById("valueAni"+cn+"SliderVal4").innerHTML) - newValueAniMax;
-        pasAniMax.push(newPasAniMax);
-
-        newPasCapMin = newValueCapMin - parseInt(document.getElementById("valueCap"+cn+"SliderVal1").innerHTML);
-        pasCapMin.push(newPasCapMin);
-
-        newPasCapMax = parseInt(document.getElementById("valueCap"+cn+"SliderVal4").innerHTML) - newValueCapMax;
-        pasCapMax.push(newPasCapMax);
-
-        newPasTourMin = newValueTourMin - parseInt(document.getElementById("valueTour"+cn+"SliderVal1").innerHTML);
-        pasTourMin.push(newPasTourMin);
-
-        newPasTourMax = parseInt(document.getElementById("valueTour"+cn+"SliderVal4").innerHTML) - newValueTourMax;
-        pasTourMax.push(newPasTourMax);
-
-        newPasEnvMin = newValueEnvMin - parseInt(document.getElementById("valueEnv"+cn+"SliderVal1").innerHTML);
-        pasEnvMin.push(newPasEnvMin);
-
-        newPasEnvMax = parseInt(document.getElementById("valueEnv"+cn+"SliderVal4").innerHTML) - newValueEnvMax;
-        pasEnvMax.push(newPasEnvMax);
-
-        newPasOuvMin = newValueOuvMin - parseInt(document.getElementById("valueOuv"+cn+"SliderVal1").innerHTML);
-        pasOuvMin.push(newPasOuvMin);
-
-        newPasOuvMax = parseInt(document.getElementById("valueOuv"+cn+"SliderVal4").innerHTML) - newValueOuvMax;
-        pasOuvMax.push(newPasOuvMax);
+        // trouver les nouvelles importances :
+        var impAniMin = [];
+        var impAniMax = [];
+        var impTourMin = [];
+        var impTourMax = [];
+        var impCapMin = [];
+        var impCapMax = [];
+        var impEnvMin = [];
+        var impEnvMax = [];
+        var impOuvMin = [];
+        var impOuvMax = [];
 
 
+        classIds.forEach(function (ids) {
+            console.log("ids : " + ids);
+            var cn = "";
+            if (ids === 1) {
+                cn = "Maire"
+            }
+            if (ids === 2) {
+                cn = "Pecheur"
+            }
+            if (ids === 3) {
+                cn = "Ecologiste"
+            }
 
-        newImpAniMin = isImp(document.getElementById("impAniMin"+cn).innerHTML);
-        impAniMin.push(newImpAniMin);
+            console.log("cn = " + cn);
 
-        newImpAniMax = isImp(document.getElementById("impAniMax"+cn).innerHTML);
-        impAniMax.push(newImpAniMax);
+            newValueAniMin = parseInt(document.getElementById("valueAni" + cn + "SliderVal2").innerHTML);
+            valueAniMin.push(newValueAniMin);
+            console.log("newValueAniMin");
+            console.log(newValueAniMin);
 
-        newImpCapMin = isImp(document.getElementById("impCapMin"+cn).innerHTML);
-        impCapMin.push(newImpCapMin);
+            newValueAniMax = parseInt(document.getElementById("valueAni" + cn + "SliderVal3").innerHTML);
+            valueAniMax.push(newValueAniMax);
+            console.log("newValueAniMax");
+            console.log(newValueAniMax);
 
-        newImpCapMax = isImp(document.getElementById("impCapMax"+cn).innerHTML);
-        impCapMax.push(newImpCapMax);
+            newValueCapMin = parseInt(document.getElementById("valueCap" + cn + "SliderVal2").innerHTML);
+            valueCapMin.push(newValueCapMin);
 
-        newImpTourMin = isImp(document.getElementById("impTourMin"+cn).innerHTML);
-        impTourMin.push(newImpTourMin);
+            newValueCapMax = parseInt(document.getElementById("valueCap" + cn + "SliderVal3").innerHTML);
+            valueCapMax.push(newValueCapMax);
 
-        newImpTourMax = isImp(document.getElementById("impTourMax"+cn).innerHTML);
-        impTourMax.push(newImpTourMax);
+            newValueTourMin = parseInt(document.getElementById("valueTour" + cn + "SliderVal2").innerHTML);
+            valueTourMin.push(newValueTourMin);
 
-        newImpEnvMin = isImp(document.getElementById("impEnvMin"+cn).innerHTML);
-        impEnvMin.push(newImpEnvMin);
+            newValueTourMax = parseInt(document.getElementById("valueTour" + cn + "SliderVal3").innerHTML);
+            valueTourMax.push(newValueTourMax);
 
-        newImpEnvMax = isImp(document.getElementById("impEnvMax"+cn).innerHTML);
-        impEnvMax.push(newImpEnvMax);
+            newValueEnvMin = parseInt(document.getElementById("valueEnv" + cn + "SliderVal2").innerHTML);
+            valueEnvMin.push(newValueEnvMin);
 
-        newImpOuvMin = isImp(document.getElementById("impOuvMin"+cn).innerHTML);
-        impOuvMin.push(newImpOuvMin);
+            newValueEnvMax = parseInt(document.getElementById("valueEnv" + cn + "SliderVal3").innerHTML);
+            valueEnvMax.push(newValueEnvMax);
 
-        newImpOuvMax = isImp(document.getElementById("impOuvMax"+cn).innerHTML);
-        impOuvMax.push(newImpOuvMax);
+            newValueOuvMin = parseInt(document.getElementById("valueOuv" + cn + "SliderVal2").innerHTML);
+            valueOuvMin.push(newValueOuvMin);
 
-    });
-
-    let Values = [[valueAniMin,valueAniMax.slice(0, valueAniMin.length)],[valueCapMin,valueCapMax.slice(0,valueCapMin.length)],[valueTourMin,valueTourMax.slice(0,valueTourMin.length)],
-        [valueEnvMin,valueEnvMax.slice(0,valueEnvMin.length)],[valueOuvMin,valueOuvMax.slice(0,valueEnvMin.length)]];
-    let Pas = [[pasAniMin,pasAniMax],[pasCapMin,pasCapMax],[pasTourMin,pasTourMax],[pasEnvMin,pasEnvMax],[pasOuvMin,pasOuvMax]];
-    let Importances = [[impAniMin,impAniMax],[impCapMin,impCapMax],[impTourMin,impTourMax],[impEnvMin,impEnvMax],[impOuvMin,impOuvMax]];
-    let LSid = ["Ani","Cap","Tour","Env","Ouv"];
+            newValueOuvMax = parseInt(document.getElementById("valueOuv" + cn + "SliderVal3").innerHTML);
+            valueOuvMax.push(newValueOuvMax);
 
 
+            newPasAniMin = newValueAniMin - parseInt(document.getElementById("valueAni" + cn + "SliderVal1").innerHTML);
+            pasAniMin.push(newPasAniMin);
+            console.log("newPasAniMin");
+            console.log(newPasAniMin);
 
-    for(var crit = 0; crit < Values.length; crit++){
-        console.log(LSid[crit]);
-        console.log(Values[crit]);
-        console.log(Values[crit][0]);
-        console.log(Values[crit][1]);
-        console.log(Pas[crit]);
-        console.log(Importances[crit]);
+            newPasAniMax = parseInt(document.getElementById("valueAni" + cn + "SliderVal4").innerHTML) - newValueAniMax;
+            pasAniMax.push(newPasAniMax);
 
-        findInter(Values[crit][0],Pas[crit][0], Importances[crit][0], Values[crit][1],Pas[crit][1], Importances[crit][1],LSid[crit])
-    }
-    console.log("lets go get pref !");
-    getPrefs(false);
+            newPasCapMin = newValueCapMin - parseInt(document.getElementById("valueCap" + cn + "SliderVal1").innerHTML);
+            pasCapMin.push(newPasCapMin);
+
+            newPasCapMax = parseInt(document.getElementById("valueCap" + cn + "SliderVal4").innerHTML) - newValueCapMax;
+            pasCapMax.push(newPasCapMax);
+
+            newPasTourMin = newValueTourMin - parseInt(document.getElementById("valueTour" + cn + "SliderVal1").innerHTML);
+            pasTourMin.push(newPasTourMin);
+
+            newPasTourMax = parseInt(document.getElementById("valueTour" + cn + "SliderVal4").innerHTML) - newValueTourMax;
+            pasTourMax.push(newPasTourMax);
+
+            newPasEnvMin = newValueEnvMin - parseInt(document.getElementById("valueEnv" + cn + "SliderVal1").innerHTML);
+            pasEnvMin.push(newPasEnvMin);
+
+            newPasEnvMax = parseInt(document.getElementById("valueEnv" + cn + "SliderVal4").innerHTML) - newValueEnvMax;
+            pasEnvMax.push(newPasEnvMax);
+
+            newPasOuvMin = newValueOuvMin - parseInt(document.getElementById("valueOuv" + cn + "SliderVal1").innerHTML);
+            pasOuvMin.push(newPasOuvMin);
+
+            newPasOuvMax = parseInt(document.getElementById("valueOuv" + cn + "SliderVal4").innerHTML) - newValueOuvMax;
+            pasOuvMax.push(newPasOuvMax);
+
+
+            newImpAniMin = isImp(document.getElementById("impAniMin" + cn).innerHTML);
+            impAniMin.push(newImpAniMin);
+
+            newImpAniMax = isImp(document.getElementById("impAniMax" + cn).innerHTML);
+            impAniMax.push(newImpAniMax);
+
+            newImpCapMin = isImp(document.getElementById("impCapMin" + cn).innerHTML);
+            impCapMin.push(newImpCapMin);
+
+            newImpCapMax = isImp(document.getElementById("impCapMax" + cn).innerHTML);
+            impCapMax.push(newImpCapMax);
+
+            newImpTourMin = isImp(document.getElementById("impTourMin" + cn).innerHTML);
+            impTourMin.push(newImpTourMin);
+
+            newImpTourMax = isImp(document.getElementById("impTourMax" + cn).innerHTML);
+            impTourMax.push(newImpTourMax);
+
+            newImpEnvMin = isImp(document.getElementById("impEnvMin" + cn).innerHTML);
+            impEnvMin.push(newImpEnvMin);
+
+            newImpEnvMax = isImp(document.getElementById("impEnvMax" + cn).innerHTML);
+            impEnvMax.push(newImpEnvMax);
+
+            newImpOuvMin = isImp(document.getElementById("impOuvMin" + cn).innerHTML);
+            impOuvMin.push(newImpOuvMin);
+
+            newImpOuvMax = isImp(document.getElementById("impOuvMax" + cn).innerHTML);
+            impOuvMax.push(newImpOuvMax);
+
+        });
+
+        let Values = [[valueAniMin, valueAniMax.slice(0, valueAniMin.length)], [valueCapMin, valueCapMax.slice(0, valueCapMin.length)], [valueTourMin, valueTourMax.slice(0, valueTourMin.length)],
+            [valueEnvMin, valueEnvMax.slice(0, valueEnvMin.length)], [valueOuvMin, valueOuvMax.slice(0, valueEnvMin.length)]];
+        let Pas = [[pasAniMin, pasAniMax], [pasCapMin, pasCapMax], [pasTourMin, pasTourMax], [pasEnvMin, pasEnvMax], [pasOuvMin, pasOuvMax]];
+        let Importances = [[impAniMin, impAniMax], [impCapMin, impCapMax], [impTourMin, impTourMax], [impEnvMin, impEnvMax], [impOuvMin, impOuvMax]];
+        let LSid = ["Ani", "Cap", "Tour", "Env", "Ouv"];
+
+
+        for (var crit = 0; crit < Values.length; crit++) {
+            console.log(LSid[crit]);
+            console.log(Values[crit]);
+            console.log(Values[crit][0]);
+            console.log(Values[crit][1]);
+            console.log(Pas[crit]);
+            console.log(Importances[crit]);
+
+            findInter(Values[crit][0], Pas[crit][0], Importances[crit][0], Values[crit][1], Pas[crit][1], Importances[crit][1], LSid[crit])
+        }
+        console.log("lets go get pref !");
+        getPrefs(false);
+
 
 }
 

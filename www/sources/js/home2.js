@@ -30,12 +30,12 @@ function draw() {
     var line = d3.line()
         .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
         .y(function(d) { return yScale(d.y); }) // set the y values for the line generator
-        .curve(d3.curveMonotoneX) // apply smoothing to the line
+        .curve(d3.curveMonotoneX); // apply smoothing to the line
 
 // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-    var datasetA = d3.range(len).map(function(d) { return {"y": graphA[d] } })
-    var datasetC = d3.range(len).map(function(d) { return {"y": graphC[d] } })
-    var datasetT = d3.range(len).map(function(d) { return {"y": graphT[d] } })
+    var datasetA = d3.range(len).map(function(d) { return {"y": graphA[d] } });
+    var datasetC = d3.range(len).map(function(d) { return {"y": graphC[d] } });
+    var datasetT = d3.range(len).map(function(d) { return {"y": graphT[d] } });
 
 // 1. Add the SVG to the page and employ #2
     var svg = d3.select("div#graph").append("svg")
@@ -44,6 +44,14 @@ function draw() {
         .append("g")
         .attr("transform", "translate(" + parseInt(margin.left + margin.left) + "," + margin.top + ")");
 
+    // legende :
+
+    svg.append("circle").attr("cx",20).attr("cy",30).attr("r", 6).style("fill", "#a58d39");
+    svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#417da5");
+    svg.append("circle").attr("cx",20).attr("cy",70).attr("r", 6).style("fill", "#1c6c06");
+    svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche").style("font-size", "12px").attr("alignment-baseline","middle");
+    svg.append("text").attr("x", 30).attr("y", 55).text("Nombre de touristes").style("font-size", "12px").attr("alignment-baseline","middle");
+    svg.append("text").attr("x", 30).attr("y", 75).text("Nombre de tortues").style("font-size", "12px").attr("alignment-baseline","middle");
 
 // 3. Call the x axis in a group tag
     svg.append("g")
@@ -77,6 +85,8 @@ svg.append("path")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate("+ (-margin.left ) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
         .text("Valeurs en moyenne sur l'année ");
+
+
 
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
@@ -113,9 +123,6 @@ function ndsolve(f, x0, dt, tmax) {
 math.import({ndsolve:ndsolve});
 
 function calc() {
-console.log("1")
-
-
 
     // Create a math.js context for our simulation. Everything else occurs in the context of the expression parser!
     const sim = math.parser();

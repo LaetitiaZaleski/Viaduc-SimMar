@@ -42,7 +42,7 @@ $('[data-toggle="popover"]').popover({
 var sliderAni = document.getElementById('slider-ani');
 
 noUiSlider.create(sliderAni, {
-    start: [500, 1000,10000, 15000],
+    start: [5500, 10500, 25840, 33500],
     connect: [true, true, true, true, true],
     step: 20,
     range: {
@@ -75,7 +75,7 @@ sliderAni.noUiSlider.on('update', function (values) {
 var sliderCap = document.getElementById('slider-cap');
 
 noUiSlider.create(sliderCap, {
-    start: [0, 1000,10000, 30000],
+    start: [4060, 10400, 30380, 35440],
     connect: [true, true, true, true, true],
     step: 20,
     range: {
@@ -106,7 +106,7 @@ sliderCap.noUiSlider.on('update', function (values) {
 var sliderTour = document.getElementById('slider-tour');
 
 noUiSlider.create(sliderTour, {
-    start: [0, 1000,10000, 40000],
+    start: [5740, 14260, 28980, 34440],
     connect: [true, true, true, true, true],
     step: 20,
     range: {
@@ -139,7 +139,7 @@ sliderTour.noUiSlider.on('update', function (values) {
 var sliderEnv = document.getElementById('slider-env');
 
 noUiSlider.create(sliderEnv, {
-    start: [10, 20,70, 80],
+    start: [10, 20, 75, 90],
     connect: [true, true, true, true, true],
     step: 5,
     range: {
@@ -171,7 +171,7 @@ sliderEnv.noUiSlider.on('update', function (values) {
 var sliderOuv = document.getElementById('slider-ouv');
 
 noUiSlider.create(sliderOuv, {
-    start: [10, 20,30, 40],
+    start: [5, 10, 30, 40],
     connect: [true, true, true, true, true],
     step: 5,
     range: {

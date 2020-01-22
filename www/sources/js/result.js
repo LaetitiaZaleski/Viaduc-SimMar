@@ -67,6 +67,7 @@ function newMessage(id, name, message, date) {
 
 
 function getPreference() {
+    let onAttendQlq = false;
 
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
@@ -77,7 +78,6 @@ function getPreference() {
         console.log(obj.length);
         if ( obj.length > 0){
             for (indice=0 ;indice<obj.length; indice++ ){
-
                 switch (obj[indice].class_name) {
                     case "Maire" :
                         cid = "1";
@@ -101,12 +101,13 @@ function getPreference() {
 
                    // }
 
+                } else {
+                    onAttendQlq = true
                 }
 
             }
         }
-
-
+        document.getElementById("affiche").hidden = onAttendQlq
         //getFile();
     });
 }
@@ -145,7 +146,7 @@ function setAllPreference(obj){
     let Id4 = "slider-Env" + "-" + obj.class_name;
     let spanId4 = "valueEnv"+obj.class_name+"SliderVal";
     setValues(spanId4, Val4);
-    setSlider(Id4,Val4,50);
+    setSlider(Id4,Val4,100);
     setImp("impEnvMin"+obj.class_name, obj.preference.imp_env_min);
     setImp("impEnvMax"+obj.class_name, obj.preference.imp_env_max);
 
@@ -154,7 +155,7 @@ function setAllPreference(obj){
     let Id5 = "slider-Ouv" + "-" + obj.class_name;
     let spanId5 = "valueOuv"+obj.class_name+"SliderVal";
     setValues(spanId5, Val5);
-    setSlider(Id5,Val5,100);
+    setSlider(Id5,Val5,50);
     setImp("impOuvMin"+obj.class_name, obj.preference.imp_ouv_min);
     setImp("impOuvMax"+obj.class_name, obj.preference.imp_ouv_max);
 }
@@ -366,13 +367,13 @@ function letsCalcAll() {
 
                 console.log(ids);
                 var cn = "";
-                if (ids ==1){
+                if (ids ===1){
                     cn = "Maire"
                 }
-                if (ids ==2){
+                if (ids ===2){
                     cn = "Pecheur"
                 }
-                if (ids ==3){
+                if (ids ===3){
                     cn = "Ecologiste"
                 }
 
@@ -405,7 +406,8 @@ function letsCalcAll() {
 
                         if(ret === "Ce noyau est vide !"){
                             alert("Le noyau : \""+ cn + "\" est  vide");
-                          dontstop = false
+                            dontstop = false;
+                            document.getElementById("recherche").hidden = false;
 
                         }
 
@@ -442,6 +444,7 @@ function letsCalcAll() {
     else{
 
         alert("Votre intersection est vide");
+        document.getElementById("recherche").hidden = false
     }
 
 }

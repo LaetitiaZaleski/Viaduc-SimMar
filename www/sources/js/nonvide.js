@@ -26,9 +26,6 @@ window.onload = function(){
             getFileBynum(gNumFiles[k],name)
         }
 
-
-
-
     }
 };
 
@@ -118,7 +115,7 @@ function calcTable(abs, pref, faux){
 }
 
 
-async function getPrefs(mono=true) {
+ function getPrefs(mono=true) {
 
      gFinalFiles = []; // numero de la solution qu'on garde
      gNumFiles = []; // numero de fichier correspondant
@@ -139,7 +136,7 @@ async function getPrefs(mono=true) {
         const minMax = {
             AMax : 40000,
             AMin : 0,
-            CMax : 30000,
+            CMax : 40000,
             CMin : 0,
             TMax : 40000,
             TMin : 0,
@@ -349,11 +346,16 @@ async function getPrefs(mono=true) {
         let r2 =rechercheUnParUn(PrefsInit1, minMax,fauxMinMax); // OK tout seul
         console.log(r2.data);
         console.log(r1.data);
-        finalPrefs = [r1.data, r2.data];
-        finalFiles = [r1.numFile,r2.numFile];
+        if (r1.data === r2.data){
+            finalPrefs = [r1.data];
+            finalFiles = [r1.numFile];
+        } else {
+            finalPrefs = [r1.data, r2.data];
+            finalFiles = [r1.numFile,r2.numFile];
+        }
 
         console.log("/******* recherche 3 ************/");
-/*
+
 
         let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax);
 
@@ -361,11 +363,13 @@ async function getPrefs(mono=true) {
         console.log(priorite);
 
         for(k = 0; k<priorite.length; k++){
-            finalPrefs.push(priorite[k].data);
+            if(!finalPrefs.includes(priorite[k].data)){
+                finalPrefs.push(priorite[k].data);
+                finalFiles.push(priorite[k].numFile);
+            }
         }
-*/
-        gNumFiles = finalFiles;
 
+        gNumFiles = finalFiles;
         gFinalPref = finalPrefs;
         console.log("Final prefs :");
         console.log(finalPrefs.length);
@@ -391,7 +395,20 @@ async function getPrefs(mono=true) {
         }
         if(mono){
             $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
+        }else{
+            getXMLHttp('/api?fct=create_end' +
+                '&room_name=' + RoomName,
+                function (ret) {
+                });
+
+            getXMLHttp('/api?fct=delete_wait' +
+                '&room_name=' + RoomName,
+                function (ret) {
+                });
         }
+
+
+
 
 
         // showPreferences(JSON.parse(finalPrefs[0]))
@@ -405,18 +422,24 @@ function showHide(k) {
 
     if($("#slider-ani-"+k).length === 0) {
         // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
+        let num = parseInt(k)+1
+        $("#sliderAniContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
         $("#sliderAniContainer").append('<div id="value-min-max-ani-' + k + '"><span id="prefAniMin-'+k+'" class="purple"></span> - <span id="prefAniMax-'+k+'" class="purple"></span></div>');
         $("#sliderAniContainer").append('<div id="slider-ani-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
 
+        $("#sliderCapContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
         $("#sliderCapContainer").append('<div id="value-min-max-cap-' + k + '"><span id="prefCapMin-'+k+'" class="purple"></span> - <span id="prefCapMax-'+k+'" class="purple"></span></div>');
         $("#sliderCapContainer").append('<div id="slider-cap-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
 
+        $("#sliderTourContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
         $("#sliderTourContainer").append('<div id="value-min-max-tour-' + k + '"><span id="prefTourMin-'+k+'" class="purple"></span> - <span id="prefTourMax-'+k+'" class="purple"></span></div>');
         $("#sliderTourContainer").append('<div id="slider-tour-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
 
+        $("#sliderOuvContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
         $("#sliderOuvContainer").append('<div id="value-min-max-ouv-' + k + '"><span id="prefOuvMin-'+k+'" class="purple"></span> - <span id="prefOuvMax-'+k+'" class="purple"></span></div>');
         $("#sliderOuvContainer").append('<div id="slider-ouv-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true" ></div>');
 
+        $("#sliderEnvContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
         $("#sliderEnvContainer").append('<div id="value-min-max-env-' + k + '"><span id="prefEnvMin-'+k+'" class="purple"></span> - <span id="prefEnvMax-'+k+'" class="purple"></span></div>');
         $("#sliderEnvContainer").append('<div id="slider-env-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
 
@@ -426,11 +449,11 @@ function showHide(k) {
 
         showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {
-        $("#slider-ani-"+k + ", #value-min-max-ani-" + k).remove();
-        $("#slider-cap-"+k + ", #value-min-max-cap-" + k).remove();
-        $("#slider-tour-"+k + ", #value-min-max-tour-" + k).remove();
-        $("#slider-env-"+k + ", #value-min-max-env-" + k).remove();
-        $("#slider-ouv-"+k + ", #value-min-max-ouv-" + k).remove();
+        $("#slider-ani-"+k + ", #value-min-max-ani-" + k+", #text-"+ k).remove();
+        $("#slider-cap-"+k + ", #value-min-max-cap-" + k+", #text-"+ k).remove();
+        $("#slider-tour-"+k + ", #value-min-max-tour-" + k+", #text-"+ k).remove();
+        $("#slider-env-"+k + ", #value-min-max-env-" + k+", #text-"+ k).remove();
+        $("#slider-ouv-"+k + ", #value-min-max-ouv-" + k+", #text-"+ k).remove();
         gFinalFiles.pop(parseInt(k));
         console.log("gFinalFiles");
         console.log(gFinalFiles);
@@ -525,16 +548,46 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
         console.log(Prefs[i]);
         if (parseInt(Prefs[i].importance) === 100){ // si c'etait un très important
             console.log(Prefs[i].name);
-            for(var j=0; j<Prefs.length; j++) { // on met tout les autres critèes à pas important
+            for(var j=0; j<Prefs.length; j++) { // on met tout les autres critères à pas important
                 if ((j !== i)&&(parseInt(Prefs[j].importance) !== 1)) {
                     Prefs[j].importance = "1";
                     modifImp.push(j) // on retient lesquels on a modifiés
                 }
             }
-            var nonVide = rechercheUnParUn(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
+            oldPref = Prefs.slice(0);
+            var nonVide = dichotomie(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
             console.log("non vide :");
             console.log(nonVide);
-            resTab.push(nonVide);
+
+
+                for (j = 0; j < nonVide.pref.length; j++){
+                    // console.log("test : "+lastPrefsNonVide[j].name+" "+lastPrefsNonVide[j].importance);
+                    if (i !== j){
+                        // si c'etait pas des importants on les traite comme des importants :
+                        nonVide.pref[j].importance = 100;
+                        // var pasId = Prefs[i].name;
+                        nonVide.pref[j].table =[0,0,nonVide.pref[j].maxTable];
+                        //   newPrefs[j]=prefsInit[j];
+                        console.log("new pref :");
+                       console.log(nonVide.pref[j].table)
+                    }
+                 // si c'etait des importants on garde comme avant
+                }
+            console.log("newPrefs");
+            console.log(nonVide.pref);
+            newNonVide = dichotomie(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+            console.log("new non vide :");
+            console.log(newNonVide);
+            resTab.push(newNonVide);
+
+
+
+
+
+
+
+
+
             for(var k=0; k<modifImp.length; k++) { // on rend les importances précédentes
                     Prefs[modifImp[k]].importance = "100";
                 }
@@ -549,7 +602,7 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
     console.log("Debut rafinement :");
     for (j = 0; j < newPrefs.length; j++){
         // console.log("test : "+lastPrefsNonVide[j].name+" "+lastPrefsNonVide[j].importance);
-        if (prefsInit[j].importance=== 1){
+        if (prefsInit[j].importance === 1){
             // si c'etait pas des importants on les traite comme des importants :
             newPrefs[j].importance = 100;
             // var pasId = Prefs[i].name;
@@ -573,7 +626,7 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
 
 // prend en entree le tableau des pref et le tableau des minMax et le nombres d'étapes max
 // renvoie le tableau correspondant au dernier noyau non vide
-function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, rafinement = false,) {
+function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, rafinement = false) {
 
 
     let AniMin = Prefs[0];
@@ -610,7 +663,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
     if (!rafinement) {
         for (var i = 0; i < Prefs.length; i++) {
-            if (Prefs[i].importance === "1") { // si pas important on prend pas en compte
+            if (Prefs[i].importance === "1" || Prefs[i].importance === 1) { // si pas important on prend pas en compte
                 Prefs[i].table = [0,0,0];
             }
             //  console.log(Prefs[i].name + Prefs[i].table);
@@ -1052,7 +1105,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [30000]
+            'max': [40000]
         }
     });
 
