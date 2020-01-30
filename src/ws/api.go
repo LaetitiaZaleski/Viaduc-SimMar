@@ -154,7 +154,7 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		cmdCpF := exec.Command("cp", paramFinish...)
 		cmdCpF.Run()
 
-		/******* ohoho *********/
+		/****************/
 	} else if strings.Compare(fnct, "create_wait") == 0 {
 		roomName := param["room_name"][0]
 		filename := "www/sources/output/" + roomName + "_wait.txt"
@@ -175,15 +175,13 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		filename := "www/sources/output/" + roomName + "_end.txt"
 		cmdDeleteWait := exec.Command("rm", filename)
 		cmdDeleteWait.Run()
-	}  else if strings.Compare(fnct, "test") == 0 {
-
+	}else if strings.Compare(fnct, "test") == 0 {
 		ret := SendPostRequest("http://localhost:8883/job","pi.tgz","file")
 		log.Println(fmt.Sprintf(string(ret)))
 
 	} else {
 		MyExit(w, errors.New("wrong format GET"))
 	}
-
 
 }
 
@@ -253,7 +251,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
+		//Boucle qui permet d'attendre la creation du fichier pour renvoyer les datas.
 		done := make(chan error, 1)
 		go func() {
 			done <-cmd.Wait()
@@ -323,29 +321,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			}
 			fmt.Fprint(w, alerte )
 		}
-		/*ticker :=time.NewTicker(time.Second*1)
-		for range ticker.C {
-			select {
-			case err := <-done :
 
-				if err != nil {
-
-					MyExit(w, errors.New("err : "+err.Error()))
-					return
-
-				}
-				var paramMv []string
-				paramMv = append(paramMv,
-					"./output/*", "./www/output")
-				cmdMv := exec.Command("mv",paramMv... )
-				cmdMv.Run()
-				fmt.Printf("success \n")
-				w.WriteHeader(http.StatusOK)
-				fmt.Fprint(w, fileOut)
-			case <-RCtx.Done():
-				fmt.Println("Client has disconnected.")
-			}
-		}*/
 
 	} else if IsInMap(param, "fct") && param["fct"][0] == "lets_calc" &&
 		IsInMap(param, "data") &&
@@ -379,47 +355,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
 		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
-		/*
-					Lancement du Viablab.exe :)
 
-				del = atof(argv[1]);
-			      a = atof(argv[2]);
-			      mp = atof(argv[3]);
-			      g = atof(argv[4]);
-
-			      localAMin = atof(argv[5]);
-			      localAMax = atof(argv[6]);
-			      localCMin = atof(argv[7]);
-			      localCMax = atof(argv[8]);
-			      localTMin = atof(argv[9]);
-			      localTMax = atof(argv[10]);
-
-			      localEpsMin = atof(argv[11]);
-			      localEpsMax = atof(argv[12]);
-			      localZetaMin = atof(argv[13]);
-			      localZetaMax = atof(argv[14]);
-		*/
-		//Boucle qui permet d'attendre la creation du fichier pour renver les datas.
-		//RCtx := r.Context()
-		//go GetFile(param["room_name"][0], ch)
-
-
-		/*var paramExec []string
-		paramExec = append(paramExec,
-			strconv.FormatInt(room.ClassList[0].Settings.ValuePeche,10),
-			strconv.FormatInt(room.ClassList[0].Settings.ValueTortue,10),
-			strconv.FormatInt(room.ClassList[0].Settings.ValuePoisson,10),
-			strconv.FormatInt(room.ClassList[0].Settings.ValueRepro,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueAniMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueCapMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueTourMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueEnvMax,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMin,10),
-			strconv.FormatInt(room.ClassList[0].Preferences.ValueOuvMax,10))*/
 		//cmd := exec.Command("./bin/viabLabExe1", file )
 		cmd := exec.Command("./bin/viabLabExe3", file )
 		//cmd := exec.Command("./bin/tmpexe")
@@ -499,29 +435,6 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			}
 			fmt.Fprint(w, alerte )
 		}
-		/*ticker :=time.NewTicker(time.Second*1)
-		for range ticker.C {
-			select {
-			case err := <-done :
-
-				if err != nil {
-
-					MyExit(w, errors.New("err : "+err.Error()))
-					return
-
-				}
-				var paramMv []string
-				paramMv = append(paramMv,
-					"./output/*", "./www/output")
-				cmdMv := exec.Command("mv",paramMv... )
-				cmdMv.Run()
-				fmt.Printf("success \n")
-				w.WriteHeader(http.StatusOK)
-				fmt.Fprint(w, fileOut)
-			case <-RCtx.Done():
-				fmt.Println("Client has disconnected.")
-			}
-		}*/
 
 	} else if IsInMap(param, "fct") && param["fct"][0] == "send_message" &&
 		IsInMap(param, "data") &&

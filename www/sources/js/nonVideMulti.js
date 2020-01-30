@@ -2,44 +2,27 @@ function findNonVideMulti() {
 
     document.getElementById('patientezContainer').innerHTML="Calcul en cours, merci de patienter quelques minutes...";
 
+    // regarder quels noyaux ont ete calculés :
+    var classIds = [];
+    for (id = 1; id < 4; id++) {
+        var httpf = new XMLHttpRequest();
+        var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
+        console.log(finalPath);
+        httpf.open('HEAD', finalPath, false);
+        httpf.send();
+        if (httpf.status !== 404) { // on regarde si le fichier a été créer
+            classIds.push(id);
+            console.log(id)
+        }
+    }
 
     var httpw = new XMLHttpRequest();
+    var pathwait = "sources/output/" + localStorage.getItem("roomName") + "_" + "wait.txt";
+    httpw.open('HEAD', pathwait, false);
+    httpw.send();
 
-     do { // si le fichier a été créé on attend qu'il disparaisse
-        sleep((Math.random()+1)*3000);
-        var pathwait = "sources/output/" + localStorage.getItem("roomName") + "_" + "wait.txt";
-        httpw.open('HEAD', pathwait, false);
-        httpw.send();
-        console.log("j'attends")
-    } while (httpw.status !== 404);
 
-    /* var httpe = new XMLHttpRequest();
-     var pathend = "sources/output/" + localStorage.getItem("roomName") + "_" + "end.txt";
-     httpe.open('HEAD', pathend, false);
-     httpe.send();
-     if (httpe.status !== 404) { //si le fichier end existe on affiche
-         gFinalPref = JSON.parse(localStorage.getItem("finalPref"));
-         finalPrefs = JSON.parse(localStorage.getItem("finalPref"));
-         console.log("Final prefs :");
-         console.log(finalPrefs.length);
-         $("#finalPrefButtonContainer").html('');
-         gNumFiles = JSON.parse(localStorage.getItem("nonvides"));
-         console.log(gNumFiles);
-         console.log(finalPrefs);
-         console.log("finalPrefs");
-         console.log(finalPrefs[0].value_ani_min);
-
-         for (k = 0; k < finalPrefs.length; k++) {
-
-             console.log("k :");
-             console.log(finalPrefs[k]);
-             var name = "solution " + (k + 1);
-             $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">' + name + '</div>');
-
-             getFileBynum(gNumFiles[k], name)
-         }
-     } else { */
-
+    if(httpw.status == 404){
 
         RoomName = localStorage.getItem("roomName");
 
@@ -50,19 +33,7 @@ function findNonVideMulti() {
             function (ret) {
             });
 
-        // regarder quels noyaux ont ete calculés :
-        var classIds = [];
-        for (id = 1; id < 4; id++) {
-            var httpf = new XMLHttpRequest();
-            var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
-            console.log(finalPath);
-            httpf.open('HEAD', finalPath, false);
-            httpf.send();
-            if (httpf.status !== 404) { // on regarde si le fichier a été créer
-                classIds.push(id);
-                console.log(id)
-            }
-        }
+
 
         console.log(classIds);
 
@@ -237,7 +208,35 @@ function findNonVideMulti() {
         }
         console.log("lets go get pref !");
         getPrefs(false);
+    }
+    else{
+        do { // si le fichier a été créé on attend qu'il disparaisse
+            sleep((Math.random()+1)*3000);
+            var pathwait = "sources/output/" + localStorage.getItem("roomName") + "_" + "wait.txt";
+            httpw.open('HEAD', pathwait, false);
+            httpw.send();
+            console.log("j'attends");
+        } while (httpw.status !== 404);
 
+        var gNumFiles = getNumFile();
+        /* TODO :
+            copier et renommers les fichiers solutions des qu'on les fabrique
+            for numfile while =! 404 on affiche :
+            pour afficher getfilebyName(name)
+
+            get file */
+        classIds.forEach(function (ids) {
+            var name = "solution"+k;
+            getFileBynum(gNumFiles[k],name,ids)
+        });
+
+
+    }
+
+
+}
+
+function getNumFile() {
 
 }
 

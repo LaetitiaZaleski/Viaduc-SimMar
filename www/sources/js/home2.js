@@ -23,7 +23,7 @@ function draw() {
 
 // 6. Y scale will use the randomly generate number
     var yScale = d3.scaleLinear()
-        .domain([0, 20000]) // input
+        .domain([0, 40000]) // input
         .range([height, 0]); // output
 
 // 7. d3's line generator
@@ -171,10 +171,16 @@ function calc() {
     let g = parseInt(roomId = document.getElementById('valueRepro').value);
     sim.evaluate(`g = ${g}`);
 
-    sim.evaluate(" C0 =  10000");
-    sim.evaluate(" A0 =  2000");
-    let T0 = sim.evaluate(" T0 =  3000");
-    //console.log(T0);
+    let valueCap = parseInt(roomId = document.getElementById('valueCap').value);
+    sim.evaluate(`C0 = ${valueCap}`);
+
+    let valueAni = parseInt(roomId = document.getElementById('valueAni').value);
+    sim.evaluate(`A0 = ${valueAni}`);
+
+    let valueTour = parseInt(roomId = document.getElementById('valueTour').value);
+    sim.evaluate(`T0 = ${valueTour}`);
+
+    console.log("T0"+valueTour);
 
     sim.evaluate("dCdt(C, A, T) =  -del * C + p * A * mp + mt * T");
     sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p *  A;");
