@@ -76,6 +76,8 @@ type Preferences struct {
 	ValueEnvFauxMax int64 `json:"value_env_faux_max"`
 	ValueOuvFauxMax int64 `json:"value_ouv_faux_max"`
 
+
+	
 	ImpAniMin int64 `json:"imp_ani_min"`
 	ImpCapMin int64 `json:"imp_cap_min"`
 	ImpTourMin int64 `json:"imp_tour_min"`
