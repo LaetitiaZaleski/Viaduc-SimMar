@@ -35,7 +35,7 @@ var gFinalFiles = []; // numero de la solution qu'on garde
 var gNumFiles = []; // numero de fichier correspondant
 var precision = 8;
 
-function letsFinish() {
+function letsFinish(multi = false) {
     if (gFinalFiles.length !== 1){
         alert("Merci de choisir UNE solution");
     }else{
@@ -72,11 +72,16 @@ function letsFinish() {
         sleep(1000);
 
         let url = window.location.href;
-        let newParam = url.split("?")[1].replace("nonvide", "result");
-        window.location.href = "?" + newParam;
-
+        if(!multi){
+            let newParam = url.split("?")[1].replace("nonvide", "result");
+            window.location.href = "?" + newParam;
+        }else{
+            let newParam = url.split("?")[1].replace("result", "preference");
+            window.location.href = "?" + newParam;
+        }
 
     }
+
 }
 
 function getImportances(){
@@ -396,16 +401,20 @@ function calcTable(abs, pref, faux){
         if(mono){
             $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
         }else{
+            $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish(true)">Enregister cette solution et revenir aux préférences</div>');
+
+            /*
             getXMLHttp('/api?fct=create_end' +
                 '&room_name=' + RoomName,
                 function (ret) {
                 });
-
+            */
             getXMLHttp('/api?fct=delete_wait' +
                 '&room_name=' + RoomName,
                 function (ret) {
                 });
-        }
+
+             }
 
 
 

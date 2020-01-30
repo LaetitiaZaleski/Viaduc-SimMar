@@ -113,8 +113,51 @@
                 <button id="start" onclick="document.location.reload(true)" class="btn btn-primary"> Réinitialiser les paramètres </button>
                 <br/>
             </div>
+
+
+
+
             <div id="graph">
 
+            </div>
+
+            <div>
+                <div>
+                    <span> Point de départ : </span>
+                </div>
+                <div>
+                   <div>
+                       <span> Nombre d'animaux : </span>
+                       <span> 10000</span>
+                   </div>
+                    <div class="slidecontainer">
+                        <input id="valueAni" class="custom-range" type="range" type="text" min="0" max="40000" step="100" value="10000" onchange="setMyValue(this);calc();"/>
+                        {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
+                           onchange="setMyValue(this);calc();">*/}}
+                    </div>
+
+                </div>
+                <div>
+                    <div>
+                        <span> Capital des Pêcheurs : </span>
+                        <span> 10000</span>
+                    </div>
+                <div class="slidecontainer">
+                    <input id="valueCap" class="custom-range" type="range" type="text" min="0" max="40000" step="100" value="10000" onchange="setMyValue(this);calc();"/>
+                    {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
+                           onchange="setMyValue(this);calc();">*/}}
+                </div>
+                </div>
+                <div>
+                    <div>
+                        <span> Nombre de touristes : </span>
+                        <span>10000 </span>
+                    </div>
+                <div class="slidecontainer">
+                    <input id="valueTour" class="custom-range" type="range" type="text" min="0" max="40000" step="100" value="10000" onchange="setMyValue(this);calc();"/>
+                    {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
+                           onchange="setMyValue(this);calc();">*/}}
+                </div>
             </div>
 
         </h4>

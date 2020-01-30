@@ -3,6 +3,5 @@
 
 
 function setMyValue(elem){
-
     elem.parentElement.previousElementSibling.lastElementChild.innerHTML = elem.value;
 }

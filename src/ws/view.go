@@ -24,6 +24,7 @@ type Room struct {
 	ClassList []Class
 	Settings Settings
 	MessageList []Message
+	NumFiles []int
 }
 
 type Class struct {
@@ -32,7 +33,6 @@ type Class struct {
 	Description string
 	Settings Settings
 	Preferences Preferences
-
 }
 
 type Settings struct {
@@ -93,7 +93,6 @@ type Preferences struct {
 }
 
 
-
 /*
 	PARTIE DE DECLARATION DES FONCTIONS
 */
@@ -127,7 +126,7 @@ func Initialisation() Games {
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{}}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{},[]int{}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -173,6 +172,8 @@ func (g *Games) getClass(id int64) *Class {
 	}
 	return nil
 }
+
+
 
 func (g *Games) showRules(w http.ResponseWriter, r *http.Request) {
 

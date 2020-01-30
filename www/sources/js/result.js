@@ -316,7 +316,7 @@ function letsCalcAll() {
 
         newValueOuvMax = parseInt(document.getElementById("valueOuv"+cn+"SliderVal3").innerHTML);
         valueOuvMax.push(newValueOuvMax);
-        ;
+
 
     });
     let boolAlert = true;
@@ -448,3 +448,5 @@ function letsCalcAll() {
     }
 
 }
+
+

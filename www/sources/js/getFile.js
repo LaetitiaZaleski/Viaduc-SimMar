@@ -253,7 +253,6 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
                     }
                 }
             }
-            ;
 
             console.log("longeur : " + aniTab.length);
             var role = "";
@@ -261,7 +260,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
             var coulr = Math.floor(Math.random() * Math.floor(100));
             var coulg = Math.floor(Math.random() * Math.floor(100));
             var r = 6 + coulr;
-            var g = 0 + coulg;
+            var g = coulg;
             var b = 165 + coulb;
 
             // points de contraintes :

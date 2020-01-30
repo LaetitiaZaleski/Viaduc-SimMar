@@ -265,14 +265,18 @@
 
     <div style="padding: 50px">
         <button  onclick="getAllFiles(false)" class="btn btn-primary" id="affiche" hidden="true"> Afficher les noyaux </button>
-       <!-- --> <button  onclick="letsCalcAll(false)" class="btn btn-primary" id="calcul" hidden="true"> Calcul de noyaux dans l'intersection </button>
-        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche" hidden="true"> Recherche de noyau dans l'intersectio </button>
+       <button  onclick="letsCalcAll(false)" class="btn btn-primary" id="calcul" hidden="true"> Calcul de noyaux dans l'intersection </button>
+        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche"> Recherche de noyaux non vides </button>
+
+
         <br/>
     </div>
 
     <div id="kernelDiv" style="width:100%;height:800px"></div>
-    <div id="finalPrefButtonContainer"> </div>
+
     <div id="patientezContainer"> </div>
+    <div id="finalPrefButtonContainer"> </div>
+    <div id="finishButtonContainer"> </div>
 
     <div class="preference-container">
         <div class="">
@@ -304,7 +308,6 @@
             </h4>
         </div>
     </div>
-
 
 
 </div>
