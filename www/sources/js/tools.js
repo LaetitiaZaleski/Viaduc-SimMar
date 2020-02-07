@@ -97,6 +97,7 @@ function postXMLHttp(options, callback)
         else {
             alert("ERROR (Voir console)");
             console.log(xhr.responseText)
+            console.log("option :" + options)
         }
     };
 

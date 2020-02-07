@@ -409,10 +409,16 @@ function calcTable(abs, pref, faux){
                 function (ret) {
                 });
             */
-            getXMLHttp('/api?fct=delete_wait' +
-                '&room_name=' + RoomName,
-                function (ret) {
-                });
+
+            var jsonObj = {
+                "room_name": localStorage.getItem("roomName"),
+                "final_pref": finalPrefs
+            };
+            data = JSON.stringify(jsonObj);
+
+            postXMLHttp('api?fct=set_final_pref' +
+                '&data=' + data,  function (json) {
+            });
 
              }
 

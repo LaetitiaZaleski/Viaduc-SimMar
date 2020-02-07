@@ -1,0 +1,5 @@
+Vous êtes pêcheur dans l'aire protégée marine.  Depuis 25 ans que vous exercer ce métier voilà quelle sont vos observations :
+ - si vous revendiez votre bateau aujourd'hui, il vaudrait la moitié du prix qui vous l'avez payé quand vous avez commencé.
+ - pour 10 kilos de poissons on vous donne entre ...  et ... reais
+ - 1 reias = x dollards
+ - si votre capital descends en dessous de 20000 vous n'aurez plus assez pour continuer et

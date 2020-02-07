@@ -435,16 +435,12 @@ async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classI
             }
             if (ClassId == 2) {
                 r =  coulr;
-                g =  coulg;
-                b =  coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Pecheur"
             }
             if (ClassId == 3) {
                 r =  coulr;
-                g =  coulg;
-                b =  coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Ecologiste"

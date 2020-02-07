@@ -25,6 +25,8 @@ type Room struct {
 	Settings Settings
 	MessageList []Message
 	NumFiles []int
+	Wait bool
+	FinalPrefs []string
 }
 
 type Class struct {
@@ -128,7 +130,7 @@ func Initialisation() Games {
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{},[]int{}}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{},[]int{}, false, []string{}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)

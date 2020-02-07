@@ -159,8 +159,8 @@ function calc() {
 
     let eps = 100;
     sim.evaluate("eps = 100");
-    let zeta= 0.02;
-    sim.evaluate("zeta= 0.02");
+    let zeta= 0.03;
+    sim.evaluate("zeta= 0.03");
 
     let del = parseInt(roomId = document.getElementById('valuePeche').value);
     sim.evaluate(`del = ${del}`);
@@ -183,7 +183,7 @@ function calc() {
     console.log("T0"+valueTour);
 
     sim.evaluate("dCdt(C, A, T) =  -del * C + p * A * mp + mt * T");
-    sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p *  A;");
+    sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p * A;");
     sim.evaluate("dTdt(C, A, T) = T * (-c * T / (T + phi))  + a * zeta * A");
     sim.evaluate("result = ndsolve([dCdt, dAdt, dTdt], [C0, A0, T0], dt, tfinal)");
 

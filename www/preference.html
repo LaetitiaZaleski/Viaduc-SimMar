@@ -50,8 +50,8 @@
                 </h2>
                 <h4 id="tortues" onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueAniMin}},{{.ValueAniMax}}" data-content="<div>{{.ValueAniRole1}}</div><div>{{.ValueAniRole2}}</div>">
                     <div>
-                        <span> Nombres d'animaux : </span> <span id="valueAniSliderVal1" class="orange"></span> - <span id="valueAniSliderVal2" class="vert" ></span> - <span id="valueAniSliderVal3" class="vert"></span> - <span id="valueAniSliderVal4" class="orange"></span>
-                    </div>
+                        <span> Nombres d'animaux : </span> <br /> <font size="4px"><span id="valueAniSliderVal1" class="orange"></span> - <span id="valueAniSliderVal2" class="vert" ></span> - <span id="valueAniSliderVal3" class="vert"></span> - <span id="valueAniSliderVal4" class="orange"></span>
+                        </font></div>
                     <div id="slider-ani" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
                     <div>
                         {{/*          <input id="valueAni" type="text" data-slider-min="500" data-slider-max="40000" data-slider-step="1" data-slider-value="[{{.ValueAniMin}},{{.ValueAniMax}}]"/>
@@ -67,22 +67,18 @@
 
                 <h4 id="capital" onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueCapMin}},{{.ValueCapMax}}" data-content="<div>{{.ValueCapRole1}}</div><div>{{.ValueCapRole2}}</div>">
                     <div>
-                        <span> Capital des infrastructures de pêche : </span> <span id="valueCapSliderVal1" class="orange"> </span> - <span id="valueCapSliderVal2" class="vert" ></span> - <span id="valueCapSliderVal3" class="vert"></span> - <span id="valueCapSliderVal4" class="orange"></span>
-                    </div>
-                    <div>
+                        <span> Capital des infrastructures de pêche : </span> <br /> <font size="4px"><span id="valueCapSliderVal1" class="orange"> </span> - <span id="valueCapSliderVal2" class="vert" ></span> - <span id="valueCapSliderVal3" class="vert"></span> - <span id="valueCapSliderVal4" class="orange"></span> </div>
+
+                    </font><div>
                         <div id="slider-cap" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
                     </div>
-                    {{/*<section class="range-slider ">
-                        <span class="rangeValues"></span>
-                        <input value="{{.ValueCapMin}}" id="valueCapMin" min="500" max="40000" step="5" type="range" >
-                        <input value="{{.ValueCapMax}}" id="valueCapMax" min="500" max="40000" step="5" type="range" >
-                    </section>*/}}
+
                 </h4>
 
                 <h4 id="touristes" onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueTourMin}},{{.ValueTourMax}}" data-content="<div>{{.ValueTourRole1}}</div><div>{{.ValueTourRole2}}</div>">
                     <div>
-                        <span> Nombre de touristes : </span> <span id="valueTourSliderVal1" class="orange"></span> - <span id="valueTourSliderVal2" class="vert" ></span> - <span id="valueTourSliderVal3" class="vert"></span> - <span id="valueTourSliderVal4" class="orange"></span>
-                    </div>
+                        <span> Nombre de touristes : </span> <br /> <font size="4px"><span id="valueTourSliderVal1" class="orange"></span> - <span id="valueTourSliderVal2" class="vert" ></span> - <span id="valueTourSliderVal3" class="vert"></span> - <span id="valueTourSliderVal4" class="orange"></span>
+                        </font></div>
                     <div>
                         <div id="slider-tour" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
                     </div>
@@ -105,8 +101,8 @@
                 </h2>
                 <h4 id="environnement"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueEnvMin}},{{.ValueEnvMax}}" data-content="<div>{{.ValueEnvRole1}}</div><div>{{.ValueEnvRole2}}</div>">
                     <div>
-                        <span> Restauration de l'environnement : </span> <span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
-                    </div>
+                        <span> Restauration de l'environnement : </span> <br /> <font size="4px"><span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
+                        </font></div>
                     <div>
                         <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
                     </div>
@@ -120,17 +116,12 @@
 
                 <h4 id="ouvert"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueOuvMin}},{{.ValueOuvMax}}" data-content="<div>{{.ValueOuvRole1}}</div><div>{{.ValueOuvRole2}}</div>">
                     <div>
-                        <span> Proportion de l'aire protégée fermée au tourisme :</span> <span id="valueOuvSliderVal1" class="orange"></span> - <span id="valueOuvSliderVal2" class="vert" ></span> - <span id="valueOuvSliderVal3" class="vert"></span> - <span id="valueOuvSliderVal4" class="orange"></span>
-                    </div>
+                        <span> Proportion de l'aire protégée fermée au tourisme :</span> <br /> <font size="4px"><span id="valueOuvSliderVal1" class="orange"></span> - <span id="valueOuvSliderVal2" class="vert" ></span> - <span id="valueOuvSliderVal3" class="vert"></span> - <span id="valueOuvSliderVal4" class="orange"></span>
+                        </font></div>
                     <div>
                         <div id="slider-ouv" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
                     </div>
 
-                    {{/*<section class="range-slider ">
-                        <span class="rangeValues"></span>
-                        <input value="{{.ValueOuvMin}}" id="valueOuvMin" min="0" max="50" step="5" type="range" >
-                        <input value="{{.ValueOuvMax}}" id="valueOuvMax" min="0" max="50" step="5" type="range" >
-                    </section>*/}}
                 </h4>
             </div>
 

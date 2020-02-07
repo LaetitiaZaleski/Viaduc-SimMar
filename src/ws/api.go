@@ -155,16 +155,33 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		cmdCpF.Run()
 
 		/****************/
-	} else if strings.Compare(fnct, "create_wait") == 0 {
-		roomName := param["room_name"][0]
-		filename := "www/sources/output/" + roomName + "_wait.txt"
-		cmdCreateWait := exec.Command("touch", filename)
-		cmdCreateWait.Run()
-	} else if strings.Compare(fnct, "delete_wait") == 0 {
-		roomName := param["room_name"][0]
-		filename := "www/sources/output/" + roomName + "_wait.txt"
-		cmdDeleteWait := exec.Command("rm", filename)
-		cmdDeleteWait.Run()
+	} else if strings.Compare(fnct, "create_wait") == 0  && IsInMap(param, "room_name") {
+		g.GetRoom(param["room_name"][0]).Wait = true
+	} else if strings.Compare(fnct, "get_final_pref") == 0 && IsInMap(param, "room_name") {
+
+		room := g.GetRoom(param["room_name"][0])
+		if room.Wait {
+			ticker := time.NewTicker(500 * time.Millisecond)
+				for range ticker.C {
+					room = g.GetRoom(param["room_name"][0])
+					if room.Wait == false {
+						break
+					}
+				}
+		}
+		type tmp struct {
+			FinalPrefs []string `json:"final_pref"`
+		}
+		res := tmp{}
+		res.FinalPrefs = room.FinalPrefs
+		MyJson,err := json.Marshal(res)
+		if err != nil {
+			MyExit(w, err)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, string(MyJson))
+
 	} else if strings.Compare(fnct, "create_end") == 0 {
 		roomName := param["room_name"][0]
 		filename := "www/sources/output/" + roomName + "_end.txt"
@@ -180,6 +197,7 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		log.Println(fmt.Sprintf(string(ret)))
 
 	} else {
+		fmt.Printf("%+v\n", param)
 		MyExit(w, errors.New("wrong format GET"))
 	}
 
@@ -458,6 +476,26 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		class := g.getClassFromRoom(room, classId)
 		room.MessageList = append(room.MessageList, Message{room.LastId() + 1, class.Name, time.Now().Format("15:04:05"),data.Message})
 		fmt.Printf("room : %+v\n", room)
+	}  else if IsInMap(param, "fct") && param["fct"][0] =="set_final_pref" && IsInMap(param, "data") {
+		fmt.Printf("DATA FINAL PREF = %+v\n",param["data"][0])
+		type Data struct {
+			RoomName string `json:"room_name"`
+			FinalPref  []string `json:"final_pref"`
+		}
+		var data Data
+		err := json.Unmarshal([]byte(param["data"][0]), &data)
+		if err != nil {
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		fmt.Printf("FINAL PREF = %+v\n",data.FinalPref)
+		room := g.GetRoom(data.RoomName)
+		room.FinalPrefs = data.FinalPref
+		room.Wait = false
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, "ok")
+
 	} else {
 		MyExit(w, errors.New("wrong format POST"))
 		return
