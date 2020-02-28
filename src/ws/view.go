@@ -289,6 +289,45 @@ func (g *Games) showSettings(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, setting)
 }
 
+func (g *Games) showExplication(w http.ResponseWriter, r *http.Request) {
+	if !IsInMap(g.Param, "n") || !IsInMap(g.Param, "c") ||
+		len(g.Param["n"][0]) == 0 || len(g.Param["n"][0]) == 0 {
+		http.Error(w, "400 - Settings error!", 400)
+		return
+	}
+
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	var setting Settings
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
+		g.showHome(w,r)
+		return
+	}
+
+	if class.Settings.ValueTortue == 0 { // NOT SET
+		room := g.GetRoom(g.Param["n"][0])
+		if room == nil {
+			g.showHome(w,r)
+			return
+		}
+		setting = room.Settings
+
+	} else {
+		setting = class.Settings
+
+	}
+	setting.RoomName = g.Param["n"][0]
+	setting.ClassId = g.Param["c"][0]
+	view := "www/explicationDyna.html"
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, setting)
+}
+
 func (g *Games) showPreference(w http.ResponseWriter, r *http.Request) {
 	if !IsInMap(g.Param, "n") || !IsInMap(g.Param, "c") ||
 		len(g.Param["n"][0]) == 0 || len(g.Param["n"][0]) == 0 {
@@ -525,6 +564,24 @@ func (g *Games) showNonVidep2(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pref)
 }
 
+func (g *Games) showExplViabi(w http.ResponseWriter, r *http.Request) {
+	classId, err := strconv.ParseInt(g.Param["c"][0], 10, 64)
+	if err != nil {
+		fmt.Println("ERROR CLASS ID")
+		http.Error(w, "400 - rules error!", 400)
+		return
+	}
+	class := g.getClassFromRoom(g.GetRoom(g.Param["n"][0]), classId)
+	if class == nil {
+		g.showHome(w,r)
+		return
+	}
+	pref := class.Preferences
+	view := "www/explicationViabilite.html"
+	t, _ := template.ParseFiles(view)
+	t.Execute(w, pref)
+}
+
 func (g *Games) showHome(w http.ResponseWriter, r *http.Request) {
 	type Data struct {
 		Status    string
@@ -577,6 +634,10 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		g.showPreference(w, r)
 		//TODO : page des prefences du joueurs  puis check si resultat dispo
 		break
+	case "explviabi":
+		g.showExplViabi(w, r)
+		//TODO : page des prefences du joueurs  puis check si resultat dispo
+		break
 	case "result":
 		g.showResult(w,r)
 		//TODO : page des resulats
@@ -589,6 +650,9 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		break
 	case "importances":
 		g.showImportances(w,r)
+		break
+	case "explications":
+		g.showExplication(w,r)
 	default:
 		g.showHome(w, r)
 		break

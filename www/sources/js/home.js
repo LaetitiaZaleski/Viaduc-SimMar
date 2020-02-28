@@ -17,10 +17,16 @@ function joinRoom() {
 
 function joinSettings() {
     let url = window.location.href;
-    let newParam = url.split("?")[1].replace("rules", "settings");
+    let newParam = url.split("?")[1].replace("explications", "settings");
     setMinMaxRoles();
 
     window.location.href = "?" + newParam;
 }
 
 
+function joinExplications() {
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("rules", "explications");
+
+    window.location.href = "?" + newParam;
+}

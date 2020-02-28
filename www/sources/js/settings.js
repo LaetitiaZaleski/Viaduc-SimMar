@@ -1,6 +1,6 @@
-function joinPreference() {
+function joinExplViab() {
     let url = window.location.href;
-    let newParam = url.split("?")[1].replace("settings", "preference");
+    let newParam = url.split("?")[1].replace("settings", "explviabi");
 
     window.location.href = "?" + newParam;
 }
@@ -18,6 +18,6 @@ function setSettings() {
 
     postXMLHttp('api?fct=set_settings' +
         '&data=' + data,  function (json) {
-        joinPreference();
+        joinExplViab();
     });
 }

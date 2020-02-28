@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preference</title>
+
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/nouislider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/nouislider.min.css">
+
+    <script  type="text/javascript" src="sources/lib/math/math.min.js"></script>
+    <script type="text/javascript" src="sources/lib/d3/d3.min.js"></script>
+    <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/preference.css">
+    <link rel="stylesheet" href="sources/styles/home2.css">
+
+    <script type="text/javascript" src="sources/js/tools.js"></script>
+    <script type="text/javascript" src="sources/js/getFile.js"></script>
+    <script type="text/javascript" src="sources/js/slideshow.js"></script>
+</head>
+<body>
+<h1>Choix des préférences et moyen d'actions</h1>
+
+<h4>
+    Dans la page suivante vous allez pouvoir choisir vos objectifs en ce qui concerne le nombre d'animaux dans la réserve,
+    le nombre de touristes, ainsi que le capital des infrastructures de pêche. Pour chaque variable, vous allez pouvoir
+    choisir un nombre minimum et maximum qui correspond à votre idéal, ainsi qu'une marge correspondant aux effort que vous
+    être prêt à faire qu cas où ce que vous souhaiter n'est pas possible par exemple.
+    De le même manière vous choisirez les moyens d'action que vous vous donnez pour arrivez à vos objectifs.
+
+</h4>
+
+<div><img src="sources/img/explicationcurseurs.png" width="1200px" ></div>
+
+<center>
+
+
+<div class="slideshow-container">
+
+            <span> Nous allons à présent pouvoir calculer le noyau de viabilité : c’est à dire que nous allons regarder si vos objectifs
+                par rapport au nombre de tortues,
+                de touristes et des l’infrastructures de pêche sont cohérents avec les moyens que vous vous donner pour y arriver.
+                Appuyer sur les flèches droite et gauche pour faire défiler les explications.
+            </span>
+
+    <div class="mySlides">
+
+        <img src="sources/img/noyau1.png" width="700px">
+    </div>
+
+
+
+    <div class="mySlides" id="hideSlides">
+
+        <img src="sources/img/noyau2.png" width="700px">
+
+    </div>
+
+
+
+    <div class="mySlides" id="hideSlides">
+
+        <img src="sources/img/noyau3.png" width="700px">
+
+    </div>
+
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+    <div style="padding: 50px">
+        <button id="start" onclick="joinPreference()" class="btn btn-primary"> Continuer </button>
+        <br/>
+    </div>
+</center>
+
+
+
+
+</body>
+</html>

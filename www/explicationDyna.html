@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Viaduc </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/rules.css">
+    <script type="text/javascript" src="sources/js/tools.js"></script>
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+    <script  type="text/javascript" src="sources/lib/math/math.min.js"></script>
+    <script type="text/javascript" src="sources/lib/d3/d3.min.js"></script>
+
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/dynamique.css">
+    <link rel="stylesheet" href="sources/styles/home2.css">
+
+
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div class="txt-center">
+    <h1>
+        Informations sur la dynamique et choix des paramètres :
+    </h1>
+
+    <h4>
+        Dans la page suivante, nous allons vous montrez les estimations prévues par les experts pour l'avenir de l'aire protégée si aucune
+        politique d'action n'est prévue (par exemple, on ne nettoie pas la plage, on laisse toujours l'aire marine ouverte au tourisme ect...).
+        Ces prévisions sont faites grâce au modèle ci dessous où l'on voit l'action des différentes variables les unes sur les autres. Par exemple,
+        le nombre de touristes influe négativement le nombre de tortues à cause de la dégradation de leur environnement.
+
+        <div><img src="sources/img/dynamique.png" class="img-dyna-size" ></div>
+
+    </h4>
+    <h4>
+        Il se peut que vous ne soyez pas d'accord avec les prédictions proposées, vous pensez peut-être qu'elles sont trop optimistes ou pessimites,
+        que les valeurs choisies pour certains paramètres sont trop petites ou trop grandes. Dans ce cas il vous est possible de modifier certaines valeurs
+        de paramètres grace à des sliders. Vous verrez alors l'influence de vos modifications sur le graphe des prédictions.
+    </h4>
+    <div><img src="sources/img/modifParam.png" class="img-dyna-size" ></div>
+    <div><img src="sources/img/GraphePrediction.png" class="img-dyna-size" ></div>
+    <h4>
+        Il est aussi possible de modifier le point de départ du graphe afin d'explorer différents scénarios :
+        que ce passerait-il avec les paramètres choisis si le nombre de tortues était deux fois suppérieur au nombre de touristes ?
+    </h4>
+    <div><img src="sources/img/pointDeDepart.png" class="img-dyna-size" ></div>
+
+    <h4>
+        En passsant la souris sur un paramètre, vous aurez plus d'explication sur celui-ci.
+    </h4>
+
+    <div style="padding-top: 50px"><button id="start" onclick="joinSettings()" class="btn btn-primary"> Continuer </button> <br /></div>
+
+</div>
+
+
+
+
+<script src="sources/js/home.js"></script>
+</body>
+</html>

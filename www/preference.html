@@ -39,10 +39,20 @@
     <h1>
         Préférences :
     </h1>
+    <span>
+        Ici vous pouvez choisir vos limites minimum et maximum sur les trois variables (nombre d'animaux,
+        nombre de touristes et capital des infrastructures de pêche), ainsi que les moyens d'action que vous êtes près à mettre en place.
+
+            Deux moyens d'actions sont proposés : la fermeture/ouverture de l'aire protégée au tourime est en pourcentage.
+            L'effort de restauration de l'environnement varie de 0 à 100, sachant que à 0 on ne fait aucun effort pour nettoyer
+            la plage et la mer après le passage des touristes, et à 100 on fait le maximum possible.
+
+    </span>
 
 
     <div class="preference-container">
         <div class="">
+
 
             <div>
                 <h2>
@@ -90,80 +100,43 @@
                 </h4>
             </div>
 
+
+        </div>
+
+        <div>
             <h2>
-                -
+                Choix des moyens d'actions :
             </h2>
 
 
-            <div>
-                <h2>
-                    Choix des moyens d'actions :
-                </h2>
-                <h4 id="environnement"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueEnvMin}},{{.ValueEnvMax}}" data-content="<div>{{.ValueEnvRole1}}</div><div>{{.ValueEnvRole2}}</div>">
-                    <div>
-                        <span> Restauration de l'environnement : </span> <br /> <font size="4px"><span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
-                        </font></div>
-                    <div>
-                        <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
-                    </div>
+            <h4 id="environnement"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueEnvMin}},{{.ValueEnvMax}}" data-content="<div>{{.ValueEnvRole1}}</div><div>{{.ValueEnvRole2}}</div>">
+                <div>
+                    <span> Restauration de l'environnement : </span> <br /> <font size="4px"><span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
+                    </font></div>
+                <div>
+                    <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+                </div>
 
-                    {{/*<section class="range-slider ">
+                {{/*<section class="range-slider ">
                         <span class="rangeValues"></span>
                         <input value="{{.ValueEnvMin}}" id="valueEnvMin" min="0" max="100" step="10" type="range"  >
                         <input value="{{.ValueEnvMax}}" id="valueEnvMax" min="0" max="100" step="10" type="range" >
                     </section>*/}}
-                </h4>
+            </h4>
 
-                <h4 id="ouvert"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueOuvMin}},{{.ValueOuvMax}}" data-content="<div>{{.ValueOuvRole1}}</div><div>{{.ValueOuvRole2}}</div>">
-                    <div>
-                        <span> Proportion de l'aire protégée fermée au tourisme :</span> <br /> <font size="4px"><span id="valueOuvSliderVal1" class="orange"></span> - <span id="valueOuvSliderVal2" class="vert" ></span> - <span id="valueOuvSliderVal3" class="vert"></span> - <span id="valueOuvSliderVal4" class="orange"></span>
-                        </font></div>
-                    <div>
-                        <div id="slider-ouv" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
-                    </div>
+            <h4 id="ouvert"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueOuvMin}},{{.ValueOuvMax}}" data-content="<div>{{.ValueOuvRole1}}</div><div>{{.ValueOuvRole2}}</div>">
+                <div>
+                    <span> Proportion de l'aire protégée fermée au tourisme :</span> <br /> <font size="4px"><span id="valueOuvSliderVal1" class="orange"></span> - <span id="valueOuvSliderVal2" class="vert" ></span> - <span id="valueOuvSliderVal3" class="vert"></span> - <span id="valueOuvSliderVal4" class="orange"></span>
+                    </font></div>
+                <div>
+                    <div id="slider-ouv" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+                </div>
 
-                </h4>
-            </div>
-
-
-
+            </h4>
         </div>
 
 
-        <div class="slideshow-container">
 
-            <span> Nous allons à présent calculer le noyau de viabilité : c’est à dire que nous allons regarder si vos objectifs
-                par rapport au nombre de tortues,
-                de touristes et des l’infrastructures de pêche sont cohérents avec les moyens que vous vous donner pour y arriver.
-                Appuyer sur les flèches droite et gauche pour faire défiler les explications.
-            </span>
-
-             <div class="mySlides">
-
-                 <img src="sources/img/noyau1.png" width="700px">
-             </div>
-
-
-
-             <div class="mySlides" id="hideSlides">
-
-                 <img src="sources/img/noyau2.png" width="700px">
-
-             </div>
-
-
-
-             <div class="mySlides" id="hideSlides">
-
-                 <img src="sources/img/noyau3.png" width="700px">
-
-             </div>
-
-
-             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-             <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-         </div>
 
         <br>
 
@@ -177,9 +150,18 @@
                 <span> Les noyaux et les préférences seront affichés en bas de page.
         Dans la légende à droite vous pourrez voir les noms des différents noyaux que vous calculer.
         Les noms se lisent ainsi : Le premier mot est votre rôle, puis "A" et deux nombres correspondant aux limites inférieures
-    et suppérieures sur le nombre d'animaux, puis "C" et les limites sur le capital des infrastructures, puis T et les limites sur les touristes
+    et suppérieures sur le nombre d'animaux, puis "C" et les limites sur le capital des infrastructures, puis "T" et les limites sur les touristes
     ,puis "Env" et les limites sur la restauration de l'environnement, et enfin "Ouv" et les limites sur l'ouverture du parc.   </span>
     <span> Pour faire disparaitre un noyaux, cliquez sur son nom. Pour isoler un noyau double cliquer sur son nom. </span>
+
+    <span>
+        Si vous etes satisfait du dernier noyau calculé, appuyez sur le bouton "Continuer" qui apparaitra après le calcul d'un noyau non vide.
+    </span>
+
+    <span>
+        Si votre noyau est vide, vous pouvez appuyer sur le bouton "Aide pour trouver un noyau non vide" qui vous proposera
+        plusieurs solutions en fonction des objectifs et moyens d'actions que vous avez proposés.
+    </span>
 </div>
 
 

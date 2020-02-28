@@ -23,6 +23,13 @@ function sleep(milliseconds) {
     }
 }
 
+function joinPreference() {
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("explviabi", "preference");
+
+    window.location.href = "?" + newParam;
+}
+
 function setMinMaxRoles() {
     localStorage.setItem("nonvides", "-1");
     roles = ["Maire", "Ecologiste", "Pecheur"];

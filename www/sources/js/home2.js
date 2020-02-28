@@ -136,10 +136,12 @@ function calc() {
     //let g = 1.0;
     let M = 5000;
     sim.evaluate("M = 5000");
-    let c = 0.01;
-    sim.evaluate("c = 0.01");
+    let c = 3;
+    sim.evaluate("c = 3");
     let p = 0.3;
     sim.evaluate("p = 0.3");
+    let p2 = 0.0003;
+    sim.evaluate("p2 = 0.0003");
     //let a = 100.0;
     let e = 0.001;
     sim.evaluate("e = 0.001");
@@ -159,13 +161,13 @@ function calc() {
 
     let eps = 100;
     sim.evaluate("eps = 100");
-    let zeta= 0.03;
-    sim.evaluate("zeta= 0.03");
+    let zeta= 0.05;
+    sim.evaluate("zeta= 0.05");
 
     let del = parseInt(roomId = document.getElementById('valuePeche').value);
     sim.evaluate(`del = ${del}`);
     let a = parseInt(roomId = document.getElementById('valueTortue').value);
-    sim.evaluate(`a = ${a}*2`);
+    sim.evaluate(`a = ${a}*4`);
     let mp = parseInt(roomId = document.getElementById('valuePoisson').value);
     sim.evaluate(`mp = ${mp}*10`);
     let g = parseInt(roomId = document.getElementById('valueRepro').value);
@@ -183,8 +185,8 @@ function calc() {
     console.log("T0"+valueTour);
 
     sim.evaluate("dCdt(C, A, T) =  -del * C + p * A * mp + mt * T");
-    sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p * A;");
-    sim.evaluate("dTdt(C, A, T) = T * (-c * T / (T + phi))  + a * zeta * A");
+    sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p2 * A*C;");
+    sim.evaluate("dTdt(C, A, T) = T * (-c * T / (T + phi))  + a * zeta * A ");
     sim.evaluate("result = ndsolve([dCdt, dAdt, dTdt], [C0, A0, T0], dt, tfinal)");
 
 
