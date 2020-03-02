@@ -401,8 +401,11 @@ function calcTable(abs, pref, faux){
         if(mono){
             $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
         }else{
-            $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish(true)">Enregister cette solution et revenir aux préférences</div>');
-
+            console.log("******************************************");
+            console.log("******************************************");
+            console.log("******************************************");
+            console.log("********************aa**********************");
+            console.log("*********************bb*********************");
             /*
             getXMLHttp('/api?fct=create_end' +
                 '&room_name=' + RoomName,
@@ -410,15 +413,40 @@ function calcTable(abs, pref, faux){
                 });
             */
 
+            var jsonObj2 = {
+                "room_name": localStorage.getItem("roomName"),
+                "num_file": gNumFiles
+            };
+            data2 = JSON.stringify(jsonObj2);
+            console.log("******************************************");
+            console.log("data2 : numfiles :");
+            console.log(data2);
+            console.log("******************************************");
+
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
                 "final_pref": finalPrefs
             };
             data = JSON.stringify(jsonObj);
 
+            data = JSON.stringify(jsonObj);
+            console.log("******************************************");
+            console.log("data : final_pref :");
+            console.log(data);
+            console.log("******************************************");
+
+
+
+            postXMLHttp('api?fct=set_num_file' +
+                '&data2=' + data2,  function (json) {
+            });
+
+
             postXMLHttp('api?fct=set_final_pref' +
                 '&data=' + data,  function (json) {
             });
+
+
 
              }
 
@@ -461,6 +489,9 @@ function showHide(k) {
         gFinalFiles.push(parseInt(k));
         console.log("gFinalFiles");
         console.log(gFinalFiles);
+        if (gFinalPref == null) {
+            gFinalPref = JSON.parse(localStorage.getItem("finalPref"))
+        }
 
         showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {

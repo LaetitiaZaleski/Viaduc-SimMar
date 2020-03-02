@@ -171,14 +171,20 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		}
 		type tmp struct {
 			FinalPrefs []string `json:"final_pref"`
+			NumFile []int `json:"num_file"`
 		}
+
 		res := tmp{}
+
 		res.FinalPrefs = room.FinalPrefs
+		res.NumFile = room.NumFile
+
 		MyJson,err := json.Marshal(res)
 		if err != nil {
 			MyExit(w, err)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, string(MyJson))
 
@@ -493,6 +499,25 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		room := g.GetRoom(data.RoomName)
 		room.FinalPrefs = data.FinalPref
 		room.Wait = false
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, "ok")
+
+	}else if IsInMap(param, "fct") && param["fct"][0] =="set_num_file" && IsInMap(param, "data2") {
+		log.Println(fmt.Sprintf("DATA NUM FILE  = %+v\n",param["data2"][0]))
+		type Data struct {
+			RoomName string `json:"room_name"`
+			NumFile  []int `json:"num_file"`
+		}
+		var data Data
+		err := json.Unmarshal([]byte(param["data2"][0]), &data)
+		if err != nil {
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		room := g.GetRoom(data.RoomName)
+		room.NumFile = data.NumFile
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, "ok")
 

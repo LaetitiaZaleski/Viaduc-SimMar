@@ -381,10 +381,12 @@ function getAllFiles(commun = true) {
 
 
 
-async function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) { //affiche une noyau
+ function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) { //affiche une noyau
 
     // recuperation des valeurs
     var RoomName = localStorage.getItem("roomName");
+    console.log(numFile);
+    console.log(name);
 
     // recuperer le dernier fichier créé :
     var http = new XMLHttpRequest();

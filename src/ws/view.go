@@ -27,6 +27,7 @@ type Room struct {
 	NumFiles []int
 	Wait bool
 	FinalPrefs []string
+	NumFile []int
 }
 
 type Class struct {
@@ -130,7 +131,7 @@ func Initialisation() Games {
 
 func (g *Games) AddRoom(name string, idFirstClass int64) {
 	firstClass := g.getClass(idFirstClass)
-	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{},[]int{}, false, []string{}}
+	room := Room{name, nil, Settings{"", "",50,50,50,50}, []Message{},[]int{}, false, []string{}, []int{}}
 	room.ClassList = append(room.ClassList, *firstClass)
 	g.RoomList = append(g.RoomList, room)
 	fmt.Printf("ROOM LIST : %v \n", g.RoomList)
@@ -632,15 +633,14 @@ func (g *Games) ViewHandler(w http.ResponseWriter, r *http.Request) {
 		break
 	case "preference":
 		g.showPreference(w, r)
-		//TODO : page des prefences du joueurs  puis check si resultat dispo
+		//TODO : page des prefences du joueur  puis check si resultat dispo
 		break
 	case "explviabi":
 		g.showExplViabi(w, r)
-		//TODO : page des prefences du joueurs  puis check si resultat dispo
 		break
 	case "result":
 		g.showResult(w,r)
-		//TODO : page des resulats
+
 		break
 	case "nonvide":
 		g.showNonVide(w,r)

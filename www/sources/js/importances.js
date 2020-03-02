@@ -4,6 +4,10 @@ function letsFinish() {
     document.getElementById('patientezContainer').innerHTML="Enregistrement des préférences...";
         getImportances();
         setImportances();
+        console.log(RoomName);
+        console.log(ClassId);
+        console.log(nbFile);
+        console.log(nbFile);
 
         getXMLHttp('/api?fct=rename_file' +
         '&room_name=' + RoomName + '&class_id=' + ClassId +

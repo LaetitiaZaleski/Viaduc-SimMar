@@ -4,6 +4,7 @@ function findNonVideMulti() {
 
     // regarder quels noyaux ont ete calculés :
     var classIds = [];
+
     for (id = 1; id < 4; id++) {
         var httpf = new XMLHttpRequest();
         var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
@@ -18,12 +19,12 @@ function findNonVideMulti() {
 
     getXMLHttp("api?fct=get_final_pref&room_name="+localStorage.getItem("roomName"), function (json) {
         json = JSON.parse(json);
-        console.log(json)
+        console.log(json);
         if (json &&  json.final_pref && json.final_pref.length === 0) {
             RoomName = localStorage.getItem("roomName");
 
 
-            // creation du fichier wait.txt // mettre la room.wait = true
+             // mettre la room.wait = true
 
             getXMLHttp('/api?fct=create_wait' +
                 '&room_name=' + RoomName,
@@ -208,8 +209,28 @@ function findNonVideMulti() {
 
 
         } else if (json &&  json.final_pref && json.final_pref.length > 0) {
+            $("#finalPrefButtonContainer").html('');
+            localStorage.setItem("nonvides", JSON.stringify(json.num_file));
+            localStorage.setItem("finalPref", JSON.stringify( json.final_pref));
+            document.getElementById('patientezContainer').innerHTML="";
+            $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish(true)">Enregistrer cette solution et revenir aux préférences</div>');
+
             for (let k = 0; k < json.final_pref.length; k++) {
-                console.log(json.final_pref[k])
+                // TODO recuperer les numfiles
+
+                    /*
+                    *  CREATION DES BOUTONS : 1er click = ca affiche / 2eme click = ca efface
+                    * */
+                    console.log("k :");
+                    console.log(k);
+                    console.log(json.final_pref[k]);
+                    var name = "solution "+ (k+1);
+                    $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
+                    getFileBynum(json.num_file[k],name);
+
+                    console.log(json.num_file[k]);
+                    console.log(json.final_pref[k]);
+
                 /*
                 * classIds.forEach(function (ids) {
                 var name = "solution"+k;
