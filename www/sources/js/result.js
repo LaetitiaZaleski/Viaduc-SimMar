@@ -1,8 +1,11 @@
-
+idList = [];
+nbPlayers=-1;
 
 window.onload = function(){
 
-    getPreference();
+    let reload = true;
+
+
 
     setInterval(function () {
         let lastId = "0";
@@ -15,7 +18,23 @@ window.onload = function(){
 
     }, 1000);
 
-};
+
+
+
+
+    setInterval(function () {
+            if(reload){
+                getPreference();
+
+                if(idList.length === nbPlayers){
+                    reload = false;
+                    getAllFiles(false);
+                }
+                //getFile();
+
+        }},1000);
+
+    };
 
 function getNewMessage(id) {
 
@@ -69,6 +88,7 @@ function newMessage(id, name, message, date) {
 function getPreference() {
     let onAttendQlq = false;
 
+
     getXMLHttp('/api?fct=get_preference' +
         '&room_name=' + localStorage.getItem("roomName"),  function (ret) {
         //console.log(ret);
@@ -77,6 +97,7 @@ function getPreference() {
         console.log(obj);
         console.log(obj.length);
         if ( obj.length > 0){
+            nbPlayers = obj.length;
             for (indice=0 ;indice<obj.length; indice++ ){
                 switch (obj[indice].class_name) {
                     case "Maire" :
@@ -88,17 +109,18 @@ function getPreference() {
                     default :
                         cid = "3";
                 }
-                let idList = [];
+
                 var httpf = new XMLHttpRequest();
                 var finalPath =  "sources/output/" + localStorage.getItem("roomName") + "_" + cid + "_" +"finalfile.dat";
                 console.log(finalPath);
                 httpf.open('HEAD', finalPath, false);
                 httpf.send();
-                if (httpf.status !== 404) {
+
+                if (httpf.status !== 404 && (idList.indexOf(indice)===-1)) {
                     console.log(obj[indice]);
                   //  if(obj[indice].class_name+"oldAniMax"==="-1"){
                     setAllPreference(obj[indice]);
-
+                    idList.push(indice);
                    // }
 
                 } else {

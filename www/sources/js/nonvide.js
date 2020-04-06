@@ -34,6 +34,7 @@ var gFinalPref = null;
 var gFinalFiles = []; // numero de la solution qu'on garde
 var gNumFiles = []; // numero de fichier correspondant
 var precision = 8;
+var gdata;
 
 function letsFinish(multi = false) {
     if (gFinalFiles.length !== 1){
@@ -333,10 +334,15 @@ function calcTable(abs, pref, faux){
         console.log(PrefsInit1);
         console.log(PrefsInit2);
 
-        console.log("recherche 1");
+        console.log("*************************  recherche 1 **************************");
+        console.log("*************************  mono A: **************************");
+        console.log(mono);
         console.log(PrefsInit0);
-        let r1 = rechercheDiagonale(PrefsInit0, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100); // OK tout seul
 
+        let r1 = rechercheDiagonale(PrefsInit0, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100,mono); // OK tout seul
+
+        console.log("*************************  mono B: **************************");
+        console.log(mono);
         finalPrefs = [r1.data];
         finalFiles = [r1.numFile];
 
@@ -345,10 +351,13 @@ function calcTable(abs, pref, faux){
         console.log(PrefsInit1);
         console.log(PrefsInit2);
 
+        console.log("*************************  mono C: **************************");
+        console.log(mono);
+
         console.log("recherche 2");
         console.log("faux min max :");
         console.log(fauxMinMax);
-        let r2 =rechercheUnParUn(PrefsInit1, minMax,fauxMinMax); // OK tout seul
+        let r2 =rechercheUnParUn(PrefsInit1, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100,mono); // OK tout seul
         console.log(r2.data);
         console.log(r1.data);
         if (r1.data === r2.data){
@@ -361,8 +370,11 @@ function calcTable(abs, pref, faux){
 
         console.log("/******* recherche 3 ************/");
 
+        console.log("*************************  mono D: **************************");
+        console.log(mono);
 
-        let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax);
+
+        let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100,mono);
 
         console.log("priorité : ");
         console.log(priorite);
@@ -446,9 +458,12 @@ function calcTable(abs, pref, faux){
                 '&data=' + data,  function (json) {
             });
 
+            $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish(true)">Enregistrer cette solution et revenir aux préférences</div>');
 
 
-             }
+
+
+        }
 
 
 
@@ -535,24 +550,30 @@ function removeDomine(data){ // enlève les éléments dominés d'un tableau de 
 
 
 // renvoie un tableau de noyaux plus proches non vides
-function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,100.0], nbEtapes=100, ){
+function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,100.0], nbEtapes=100, mono = true){
 
     prefsInit = JSON.parse(JSON.stringify(Prefs));
     console.log(Prefs);
-    res = dichotomie(Prefs, minMax,fauxMinMax,importab, nbEtapes);
+    if(mono){
+        res = dichotomie(Prefs, minMax,fauxMinMax,importab, nbEtapes);
+    }else{
+        console.log("coucou on est dans recherche digonale")
+        res = dichotomieMulti(Prefs, minMax,fauxMinMax,importab, nbEtapes);
+    }
+
 
     /* Rafinement */
     console.log("fin dichotomie :");
     console.log(res.pref);
     console.log(res.data);
 
-    finalPrefs = rafinement(res.pref,prefsInit, res.mM,fauxMinMax,importab,nbEtapes);
+    finalPrefs = rafinement(res.pref,prefsInit, res.mM,fauxMinMax,importab,nbEtapes,mono);
 
     return finalPrefs
 
 }
 
-function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100) { //on se rapproche d'abord des plus important plutot que de tout faire en même temps
+function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100,mono=true) { //on se rapproche d'abord des plus important plutot que de tout faire en même temps
 
     var newPrefs = {
         pref : JSON.parse(JSON.stringify(Prefs)),
@@ -569,7 +590,12 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             newPrefs.pref[i].importance = 0;
         }
     }
-    newPrefs = dichotomie(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
+    if(mono){
+        newPrefs = dichotomie(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
+    }else {
+        newPrefs = dichotomieMulti(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
+    }
+
 
     for (i=0; i<newPrefs.pref.length; i++) {
         // newImportab = new Array(importab.length).fill(0.0);
@@ -582,11 +608,12 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     console.log(newPrefs.pref);
     console.log(newPrefs.mM);
 
-    newPrefs = rafinement(newPrefs.pref,Prefs, newPrefs.mM,fauxMinMax, -1, (importab[importab.length -2]+1));
+    newPrefs = rafinement(newPrefs.pref,Prefs, newPrefs.mM,fauxMinMax, -1, (importab[importab.length -2]+1),mono);
+
     return newPrefs
 }
 
-function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100) { // pour chacun des importants on se rapproche au maximum
+function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100,mono=true) { // pour chacun des importants on se rapproche au maximum
 
     let resTab = [];// tableau des noyaux non vide
     let modifImp = [];
@@ -601,7 +628,13 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
                 }
             }
             oldPref = Prefs.slice(0);
-            var nonVide = dichotomie(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
+            if(mono){
+                var nonVide = dichotomie(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
+            }else{
+                console.log("Coucou on est dans recherche priorité 1");
+                var nonVide = dichotomieMulti(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
+            }
+
             console.log("non vide :");
             console.log(nonVide);
 
@@ -621,7 +654,13 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
                 }
             console.log("newPrefs");
             console.log(nonVide.pref);
-            newNonVide = dichotomie(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+            if(mono){
+                newNonVide = dichotomie(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+            }else{
+                console.log("Coucou on est dans recherche priorité 2")
+                newNonVide = dichotomieMulti(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+            }
+
             console.log("new non vide :");
             console.log(newNonVide);
             resTab.push(newNonVide);
@@ -643,7 +682,7 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
 }
 
 
-function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMax=15,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100){
+function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMax=15,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, mono=true){
     i=0;
     console.log("Debut rafinement :");
     for (j = 0; j < newPrefs.length; j++){
@@ -665,8 +704,13 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
     console.log(minMax);
     console.log("fauxMinMax");
     console.log(fauxMinMax);
+    if(mono){
+        return dichotomie(newPrefs,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+    }else{
+        console.log("Coucou on est dans rafinement");
+        return dichotomieMulti(newPrefs,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+    }
 
-    return dichotomie(newPrefs,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
 }
 
 
@@ -1036,6 +1080,434 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
 
 
+
+function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, rafinement = false) {
+    console.log("*************************MULTI************************************");
+
+    let AniMin = Prefs[0];
+    let AniMax = Prefs[1];
+    let CapMin = Prefs[2];
+    let CapMax = Prefs[3];
+    let TourMin = Prefs[4];
+    let TourMax = Prefs[5];
+    let EnvMin = Prefs[6];
+    let EnvMax = Prefs[7];
+    let OuvMin = Prefs[8];
+    let OuvMax = Prefs[9];
+
+    let imp_ani_min= parseInt(localStorage.getItem("ImportanceAniMin"));
+    let imp_ani_max= parseInt(localStorage.getItem("ImportanceAniMax"));
+    let imp_tour_min= parseInt(localStorage.getItem("ImportanceTourMin"));
+    let imp_tour_max= parseInt(localStorage.getItem("ImportanceTourMax"));
+    let imp_cap_min= parseInt(localStorage.getItem("ImportanceCapMin"));
+    let imp_cap_max= parseInt(localStorage.getItem("ImportanceCapMax"));
+    let imp_env_min= parseInt(localStorage.getItem("ImportanceEnvMin"));
+    let imp_env_max= parseInt(localStorage.getItem("ImportanceEnvMax"));
+    let imp_ouv_min= parseInt(localStorage.getItem("ImportanceOuvMin"));
+    let imp_ouv_max= parseInt(localStorage.getItem("ImportanceOuvMax"));
+
+
+    console.log(Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas));
+    var nbFile = 0;
+    var http = new XMLHttpRequest();
+    let RoomName = localStorage.getItem("roomName");
+    let ClassId = localStorage.getItem("classId");
+
+    var faux = true; // est ce que ça marche avec les fauxminmax ?
+
+    if (!rafinement) {
+        for (var i = 0; i < Prefs.length; i++) {
+            if (Prefs[i].importance === "1" || Prefs[i].importance === 1) { // si pas important on prend pas en compte
+                Prefs[i].table = [0,0,0];
+            }
+            //  console.log(Prefs[i].name + Prefs[i].table);
+        }
+        value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin) ;
+        value_ani_max =  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + fauxMinMax.AMax) ;
+        value_tour_min = Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + fauxMinMax.TMin) ;
+        value_tour_max = Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + fauxMinMax.TMax) ;
+        value_cap_min = Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + fauxMinMax.CMin) ;
+        value_cap_max = Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + fauxMinMax.CMax) ;
+        value_env_min = Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + fauxMinMax.EnvMin) ;
+        value_env_max = Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + fauxMinMax.EnvMax) ;
+        value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin) ;
+        value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax);
+
+
+        // on test si avec les fauxMinMax ça marche :
+
+
+        var classIds = [];
+
+        for (id = 1; id < 4; id++) {
+            var httpf = new XMLHttpRequest();
+            var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
+            console.log(finalPath);
+            httpf.open('HEAD', finalPath, false);
+            httpf.send();
+            if (httpf.status !== 404) { // on regarde si le fichier a été créer
+                classIds.push(id);
+                console.log(id)
+            }
+        }
+
+
+        //si oui on remplace les minMax par les fauxMins max
+        //Pour chaque class ID et si au moins un est vide on stoppe
+
+
+        classIds.forEach(function (ids) {
+            let maxnbfile =0;
+            let nbFile = 0;
+
+            do {
+                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                http.open('HEAD', tmpPath, false);
+                http.send();
+                nbFile = nbFile + 1
+            } while (http.status !== 404);
+            if (nbFile > maxnbfile){
+                maxnbfile = nbFile
+            }
+            nbFile = maxnbfile - 1;
+
+
+            //Un jsonObj par classID
+            var jsonObj = {
+                "room_name": localStorage.getItem("roomName"),
+                "class_id": ids.toString(),
+                "value_ani_min":value_ani_min,
+                "value_ani_max": value_ani_max,
+                "value_tour_min":value_tour_min,
+                "value_tour_max":value_tour_max,
+                "value_cap_min":value_cap_min,
+                "value_cap_max":value_cap_max,
+                "value_env_min":value_env_min,
+                "value_env_max":value_env_max,
+                "value_ouv_min":value_ouv_min,
+                "value_ouv_max":value_ouv_max,
+                "value_ani_faux_min":Math.max(0,value_ani_min - (localStorage.getItem("AniMin") - fauxMinMax.AMin)),
+                "value_ani_faux_max":value_ani_max + (fauxMinMax.AMax - localStorage.getItem("AniMax")),
+                "value_tour_faux_min":Math.max(0,value_tour_min - (localStorage.getItem("TourMin") - fauxMinMax.TMin)),
+                "value_tour_faux_max":value_tour_max + (fauxMinMax.TMax - localStorage.getItem("TourMax")),
+                "value_cap_faux_min":Math.max(0,value_cap_min - (localStorage.getItem("CapMin") - fauxMinMax.CMin)),
+                "value_cap_faux_max":value_cap_max + (fauxMinMax.CMax - localStorage.getItem("CapMax")),
+                "value_env_faux_min":Math.max(0,value_env_min - (localStorage.getItem("EnvMin") - fauxMinMax.EnvMin)),
+                "value_env_faux_max":value_env_max + (fauxMinMax.EnvMax - localStorage.getItem("EnvMax")),
+                "value_ouv_faux_min":Math.max(0,value_ouv_min - (localStorage.getItem("OuvMin") - fauxMinMax.OuvMin)),
+                "value_ouv_faux_max":value_ouv_max + (fauxMinMax.OuvMax - localStorage.getItem("OuvMax")),
+                "imp_ani_min":imp_ani_min,
+                "imp_ani_max":imp_ani_max ,
+                "imp_tour_min":imp_tour_min,
+                "imp_tour_max":imp_tour_max,
+                "imp_cap_min":imp_cap_min,
+                "imp_cap_max":imp_cap_max,
+                "imp_env_min":imp_env_min,
+                "imp_env_max":imp_env_max,
+                "imp_ouv_min":imp_ouv_min,
+                "imp_ouv_max":imp_ouv_max
+            };
+            console.log("calcul faux mins et max");
+
+            gdata = JSON.stringify(jsonObj);
+            console.log(gdata);
+
+
+            postXMLHttp('/api?fct=lets_calc' +
+                '&data=' + gdata, function (ret) {
+                if(ret !== "Ce noyau est vide !"){
+                    console.log("non vide");
+                    minMax = JSON.parse(JSON.stringify(fauxMinMax));
+                    faux = true;
+                }
+            });
+
+
+            do {
+                console.log("id"+ids);
+                console.log(nbFile);
+                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                http.open('HEAD', tmpPath, false);
+                http.send();
+                sleep(1500);
+            }
+            while (http.status === 404);
+
+        });
+        if (faux){
+            for(var f=0; f<Prefs.length; f++){
+                Prefs[f].maxTable = Prefs[f].fauxMaxTable;
+                Prefs[f].table[2] = Prefs[f].fauxMaxTable;
+            }
+        }
+
+    }
+
+    console.log(Prefs);
+
+    //   debut de l'exploration :
+    i=0;
+    var lastNonVide = 0;
+    var newPrefs = [];
+    var newData = [];
+    var dontstop = false;
+    var prefsInit = JSON.parse(JSON.stringify(Prefs));
+
+    while (i<nbEtapes){
+        console.log("******** etape numero: "+i+" ******** "+ "rafinement : "+rafinement);
+
+        http = new XMLHttpRequest();
+
+        let AniMin = Prefs[0];
+        let AniMax = Prefs[1];
+        let CapMin = Prefs[2];
+        let CapMax = Prefs[3];
+        let TourMin = Prefs[4];
+        let TourMax = Prefs[5];
+        let EnvMin = Prefs[6];
+        let EnvMax = Prefs[7];
+        let OuvMin = Prefs[8];
+        let OuvMax = Prefs[9];
+
+        var classIds = [];
+
+        for (id = 1; id < 4; id++) {
+            var httpf = new XMLHttpRequest();
+            var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
+            console.log(finalPath);
+            httpf.open('HEAD', finalPath, false);
+            httpf.send();
+            if (httpf.status !== 404) { // on regarde si le fichier a été créer
+                classIds.push(id);
+                console.log(id)
+            }
+        }
+
+        let auMoinsUnvide = false;
+        dontstop = false;
+        console.log("classIds");
+        console.log(classIds);
+
+
+        classIds.forEach(function (ids) {
+
+            let maxnbfile =0;
+            let nbFile = 0;
+
+            do {
+                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                http.open('HEAD', tmpPath, false);
+                http.send();
+                nbFile = nbFile + 1
+            } while (http.status !== 404);
+            if (nbFile > maxnbfile){
+                maxnbfile = nbFile
+            }
+            nbFile = maxnbfile - 1;
+
+        if (faux){
+            value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin) ;
+            value_ani_max =  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + fauxMinMax.AMax) ;
+            value_tour_min = Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + fauxMinMax.TMin) ;
+            value_tour_max = Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + fauxMinMax.TMax) ;
+            value_cap_min = Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + fauxMinMax.CMin) ;
+            value_cap_max = Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + fauxMinMax.CMax) ;
+            value_env_min = Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + fauxMinMax.EnvMin) ;
+            value_env_max = Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + fauxMinMax.EnvMax) ;
+            value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin) ;
+            value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax);
+
+
+            // on test si avec les fauxMinMax ça marche :
+            var jsonObj = {
+                "room_name": localStorage.getItem("roomName"),
+                "class_id": ids.toString(),
+                "value_ani_min":value_ani_min,
+                "value_ani_max": value_ani_max,
+                "value_tour_min":value_tour_min,
+                "value_tour_max":value_tour_max,
+                "value_cap_min":value_cap_min,
+                "value_cap_max":value_cap_max,
+                "value_env_min":value_env_min,
+                "value_env_max":value_env_max,
+                "value_ouv_min":value_ouv_min,
+                "value_ouv_max":value_ouv_max,
+                "value_ani_faux_min":Math.max(0,value_ani_min - (localStorage.getItem("AniMin") - fauxMinMax.AMin)),
+                "value_ani_faux_max":value_ani_max + (fauxMinMax.AMax - localStorage.getItem("AniMax")),
+                "value_tour_faux_min":Math.max(0,value_tour_min - (localStorage.getItem("TourMin") - fauxMinMax.TMin)),
+                "value_tour_faux_max":value_tour_max + (fauxMinMax.TMax - localStorage.getItem("TourMax")),
+                "value_cap_faux_min":Math.max(0,value_cap_min - (localStorage.getItem("CapMin") - fauxMinMax.CMin)),
+                "value_cap_faux_max":value_cap_max + (fauxMinMax.CMax - localStorage.getItem("CapMax")),
+                "value_env_faux_min":Math.max(0,value_env_min - (localStorage.getItem("EnvMin") - fauxMinMax.EnvMin)),
+                "value_env_faux_max":value_env_max + (fauxMinMax.EnvMax - localStorage.getItem("EnvMax")),
+                "value_ouv_faux_min":Math.max(0,value_ouv_min - (localStorage.getItem("OuvMin") - fauxMinMax.OuvMin)),
+                "value_ouv_faux_max":value_ouv_max + (fauxMinMax.OuvMax - localStorage.getItem("OuvMax")),
+                "imp_ani_min":imp_ani_min,
+                "imp_ani_max":imp_ani_max ,
+                "imp_tour_min":imp_tour_min,
+                "imp_tour_max":imp_tour_max,
+                "imp_cap_min":imp_cap_min,
+                "imp_cap_max":imp_cap_max,
+                "imp_env_min":imp_env_min,
+                "imp_env_max":imp_env_max,
+                "imp_ouv_min":imp_ouv_min,
+                "imp_ouv_max":imp_ouv_max
+
+            };
+        }
+        else {
+            value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + minMax.AMin) ;
+            value_ani_max =  Math.floor(AniMax.table[1]*AniMax.signe*AniMax.pas + minMax.AMax) ;
+            value_tour_min = Math.ceil(TourMin.table[1]*TourMin.signe*TourMin.pas + minMax.TMin) ;
+            value_tour_max = Math.floor(TourMax.table[1]*TourMax.signe*TourMax.pas + minMax.TMax) ;
+            value_cap_min = Math.ceil(CapMin.table[1]*CapMin.signe*CapMin.pas + minMax.CMin) ;
+            value_cap_max = Math.floor(CapMax.table[1]*CapMax.signe*CapMax.pas + minMax.CMax) ;
+            value_env_min = Math.ceil(EnvMin.table[1]*EnvMin.signe*EnvMin.pas + minMax.EnvMin) ;
+            value_env_max = Math.floor(EnvMax.table[1]*EnvMax.signe*EnvMax.pas + minMax.EnvMax) ;
+            value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + minMax.OuvMin) ;
+            value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + minMax.OuvMax);
+
+            // on test si avec les fauxMinMax ça marche :
+            var jsonObj = {
+                "room_name": localStorage.getItem("roomName"),
+                "class_id": ids,
+                "value_ani_min":value_ani_min,
+                "value_ani_max": value_ani_max,
+                "value_tour_min":value_tour_min,
+                "value_tour_max":value_tour_max,
+                "value_cap_min":value_cap_min,
+                "value_cap_max":value_cap_max,
+                "value_env_min":value_env_min,
+                "value_env_max":value_env_max,
+                "value_ouv_min":value_ouv_min,
+                "value_ouv_max":value_ouv_max,
+                "value_ani_faux_min":Math.max(0,value_ani_min - (localStorage.getItem("AniMin") - fauxMinMax.AMin)),
+                "value_ani_faux_max":value_ani_max + (fauxMinMax.AMax - localStorage.getItem("AniMax")),
+                "value_tour_faux_min":Math.max(0,value_tour_min - (localStorage.getItem("TourMin") - fauxMinMax.TMin)),
+                "value_tour_faux_max":value_tour_max + (fauxMinMax.TMax - localStorage.getItem("TourMax")),
+                "value_cap_faux_min":Math.max(0,value_cap_min - (localStorage.getItem("CapMin") - fauxMinMax.CMin)),
+                "value_cap_faux_max":value_cap_max + (fauxMinMax.CMax - localStorage.getItem("CapMax")),
+                "value_env_faux_min":Math.max(0,value_env_min - (localStorage.getItem("EnvMin") - fauxMinMax.EnvMin)),
+                "value_env_faux_max":value_env_max + (fauxMinMax.EnvMax - localStorage.getItem("EnvMax")),
+                "value_ouv_faux_min":Math.max(0,value_ouv_min - (localStorage.getItem("OuvMin") - fauxMinMax.OuvMin)),
+                "value_ouv_faux_max":value_ouv_max + (fauxMinMax.OuvMax - localStorage.getItem("OuvMax")),
+                "imp_ani_min":imp_ani_min,
+                "imp_ani_max":imp_ani_max ,
+                "imp_tour_min":imp_tour_min,
+                "imp_tour_max":imp_tour_max,
+                "imp_cap_min":imp_cap_min,
+                "imp_cap_max":imp_cap_max,
+                "imp_env_min":imp_env_min,
+                "imp_env_max":imp_env_max,
+                "imp_ouv_min":imp_ouv_min,
+                "imp_ouv_max":imp_ouv_max
+            };
+        }
+
+        gdata = JSON.stringify(jsonObj);
+        console.log("*********************************** data ***********************************");
+        console.log(gdata);
+
+        // Dichotomie :
+        postXMLHttp('/api?fct=lets_calc' +
+            '&data=' + gdata, function (ret) {
+            if (ret === "Ce noyau est vide !"){
+
+                console.log("vide");
+                console.log("file num : "+nbFile);
+                console.log(Prefs);
+                auMoinsUnvide = true;
+
+            }
+            else {
+                if (ret === "Ce noyau est negatif !") {
+                    // si une iteration est negative c'est une erreur : on ne fait rien et on recommence
+                    newPrefs = JSON.parse(JSON.stringify(Prefs));
+                    console.log("negatif");
+                    dontstop = true;
+
+                } else {
+                    console.log("non vide ");
+                    console.log(ids)
+                }
+            }
+
+            nbFile = nbFile - 1;
+        });
+
+
+
+
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+           // console.log(tmpPath);
+            //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            sleep(1500)
+        }
+        while (http.status === 404);
+        });
+
+        if(auMoinsUnvide){
+            console.log("au moins un vide");
+            for (var j = 0; j < Prefs.length; j++) {
+
+                //   console.log(Prefs[j].name + Prefs[j].table);
+                Prefs[j].table[2] = Prefs[j].table[1];
+                Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
+                //   console.log(Prefs[j].name +Prefs[j].table);
+            }
+
+        }else{
+            console.log("tous non vides");
+            lastNonVide = nbFile;
+            newPrefs = JSON.parse(JSON.stringify(Prefs));
+            newData = gdata;
+            console.log(newPrefs);
+            console.log(Prefs);
+
+            for (j = 0; j < Prefs.length; j++) {
+                Prefs[j].table[0] = Prefs[j].table[1];
+                if (Prefs[j].table[1] === Prefs[j].table[0]) { // première iteration
+                    Prefs[j].table[1] = Math.ceil((Prefs[j].table[0] + Prefs[j].table[2]) / 2.0);
+
+                } else {
+                    Prefs[j].table[1] = Math.ceil((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
+                }
+
+                // console.log(Prefs[j].name +Prefs[j].table);
+            }
+        }
+
+        // pour toutes les pref si tab[1] == tab[2] on stoppe
+        var stop = 0;
+        for (var j = 0; j < Prefs.length; j++) {
+            //   console.log(Prefs[j].name + Prefs[j].table);
+            if ((Prefs[j].table[1] === Prefs[j].table[2])||((Prefs[j].table[1]+1) === Prefs[j].table[2])){
+                stop++
+            }
+        }
+
+        if(stop === Prefs.length && (dontstop === false)){
+            i=100;
+        }
+        i++;
+    }
+
+    const result = {
+        pref : newPrefs,
+        data : newData,
+        numFile : lastNonVide,
+        mM : minMax
+    };
+
+    console.log("dernier non vide : ");
+    console.log(result.data);
+    return result ;// non vide
+}
+
+
 function sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
@@ -1297,52 +1769,3 @@ function showPreferences(finalprefs,k){
 }
 
 
-/*
-function setPref(numFile,finalPref) {
-
-    prefAmin = finalprefs.value_ani_min;
-    prefAmax = finalprefs.value_ani_max;
-    prefCmin = finalprefs.value_tour_min;
-    prefCmax = finalprefs.value_tour_max;
-    prefTmin = finalprefs.value_cap_min;
-    prefTmax = finalprefs.value_cap_max;
-    prefEnvmin = finalprefs.value_env_min;
-    prefEnvmax = finalprefs.value_env_max;
-    prefOuvmin = finalprefs.value_ouv_min;
-    prefOuvmax = finalprefs.value_ouv_max;
-
-    let ClassId = localStorage.getItem("classId");
-
-    roles=["Maire", "Ecologiste","Pecheur"];
-
-    localStorage.setItem(roles[ClassId-1]+"AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
-    localStorage.setItem(roles[ClassId-1]+"AniMin", document.getElementById('valueAniSliderVal2').innerText);
-    localStorage.setItem(roles[ClassId-1]+"AniMax", document.getElementById('valueAniSliderVal3').innerText);
-    localStorage.setItem(roles[ClassId-1]+"AniFauxMax", document.getElementById('valueAniSliderVal4').innerText);
-
-    localStorage.setItem(roles[ClassId-1]+"CapFauxMin", document.getElementById('valueCapSliderVal1').innerText);
-    localStorage.setItem(roles[ClassId-1]+"CapMin", document.getElementById('valueCapSliderVal2').innerText);
-    localStorage.setItem(roles[ClassId-1]+"CapMax", document.getElementById('valueCapSliderVal3').innerText);
-    localStorage.setItem(roles[ClassId-1]+"CapFauxMax", document.getElementById('valueCapSliderVal4').innerText);
-
-    localStorage.setItem(roles[ClassId-1]+"TourFauxMin", document.getElementById('valueTourSliderVal1').innerText);
-    localStorage.setItem(roles[ClassId-1]+"TourMin", document.getElementById('valueTourSliderVal2').innerText);
-    localStorage.setItem(roles[ClassId-1]+"TourMax", document.getElementById('valueTourSliderVal3').innerText);
-    localStorage.setItem(roles[ClassId-1]+"TourFauxMax", document.getElementById('valueTourSliderVal4').innerText);
-
-    localStorage.setItem(roles[ClassId-1]+"EnvFauxMin", document.getElementById('valueEnvSliderVal1').innerText);
-    localStorage.setItem(roles[ClassId-1]+"EnvMin", document.getElementById('valueEnvSliderVal2').innerText);
-    localStorage.setItem(roles[ClassId-1]+"EnvMax", document.getElementById('valueEnvSliderVal3').innerText);
-    localStorage.setItem(roles[ClassId-1]+"EnvFauxMax", document.getElementById('valueEnvSliderVal4').innerText);
-
-    localStorage.setItem(roles[ClassId-1]+"OuvFauxMin", document.getElementById('valueOuvSliderVal1').innerText);
-    localStorage.setItem(roles[ClassId-1]+"OuvMin", document.getElementById('valueOuvSliderVal2').innerText);
-    localStorage.setItem(roles[ClassId-1]+"OuvMax", document.getElementById('valueOuvSliderVal3').innerText);
-    localStorage.setItem(roles[ClassId-1]+"OuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
-
-    localStorage.setItem(roles[ClassId-1]+"NumFile", numFile);
-
-}
-
-
-*/

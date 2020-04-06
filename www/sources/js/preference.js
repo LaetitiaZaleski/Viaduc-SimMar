@@ -120,9 +120,7 @@ function setValuesLS() {
     localStorage.setItem("oldOuvMax", document.getElementById('valueOuvSliderVal3').innerText);
     localStorage.setItem("oldOuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
 
-    console.log("lkkok");
-
-
+    console.log("ok");
 
     localStorage.setItem("AniFauxMin", document.getElementById('valueAniSliderVal1').innerText);
     localStorage.setItem("AniMin", document.getElementById('valueAniSliderVal2').innerText);
@@ -148,8 +146,6 @@ function setValuesLS() {
     localStorage.setItem("OuvMin", document.getElementById('valueOuvSliderVal2').innerText);
     localStorage.setItem("OuvMax", document.getElementById('valueOuvSliderVal3').innerText);
     localStorage.setItem("OuvFauxMax", document.getElementById('valueOuvSliderVal4').innerText);
-
-
 
 }
 

@@ -67,9 +67,7 @@
                     <span> {{.ValuePeche}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valuePeche" class="custom-range" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);calc();"/>
-                    {{/*                    <input type="range" min="1" max="100" value="{{.ValuePeche}}" class="slider" id="valuePeche"
-                           onchange="setMyValue(this);calc();">*/}}
+                    <input id="valuePeche" class="custom-range" type="range" min="15" max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);calc();"/>
                 </div>
             </div>
 

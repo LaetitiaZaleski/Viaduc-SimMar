@@ -12,8 +12,8 @@ function letsFinish() {
         getXMLHttp('/api?fct=rename_file' +
         '&room_name=' + RoomName + '&class_id=' + ClassId +
         '&file_id=' + nbFile + '&last_id=' + nbFile, function (ret) {
-
         });
+
         sleep(1000);
 
         let url = window.location.href;
@@ -124,7 +124,7 @@ async function setImportances() {
         http.send();
         sleep(1000)
     }
-    while (http.status == 404);
+    while (http.status === 404);
 
     return 0;
 }

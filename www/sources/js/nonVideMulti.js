@@ -4,10 +4,11 @@ function findNonVideMulti() {
 
     // regarder quels noyaux ont ete calculés :
     var classIds = [];
+    let RoomName = localStorage.getItem("roomName");
 
     for (id = 1; id < 4; id++) {
         var httpf = new XMLHttpRequest();
-        var finalPath = "sources/output/" + localStorage.getItem("roomName") + "_" + id + "_" + "finalfile.dat";
+        var finalPath = "sources/output/" + RoomName + "_" + id + "_" + "finalfile.dat";
         console.log(finalPath);
         httpf.open('HEAD', finalPath, false);
         httpf.send();
@@ -16,6 +17,50 @@ function findNonVideMulti() {
             console.log(id)
         }
     }
+
+
+    //Appel de la fonction qui va creer les json vide afin que tout le monde soit au même numero:
+
+    /*1) recuperer le max des nums */
+    let maxnbfile = 0;
+    let nbFile = 0;
+    var http = new XMLHttpRequest();
+    var http2 = new XMLHttpRequest();
+    classIds.forEach(function (ids) {
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            nbFile = nbFile + 1;
+            let tmpPath2 = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+            http2.open('HEAD', tmpPath2, false);
+            http2.send();
+        } while (http.status !== 404 || http2.status !== 404);
+        if (nbFile > maxnbfile){
+            maxnbfile = nbFile
+        }
+
+    });
+
+    nbFile = maxnbfile - 1;
+    console.log("nbFile");
+    console.log(nbFile);
+
+    /*2) appeler la fonction qui crée le fichier json vide quand il n'existe pas */
+    classIds.forEach(function (ids) {
+    for(var i=0; i<=nbFile; i++){
+            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + i + "-viab-0-bound.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+        if(http.status === 404){
+            getXMLHttp('/api?fct=create_empty_file' + '&id=' + ids.toString()+
+                '&room_name=' + RoomName + '&num_file='+ i.toString(),
+                function (ret) {
+                });
+        }
+        }
+
+    });
 
     getXMLHttp("api?fct=get_final_pref&room_name="+localStorage.getItem("roomName"), function (json) {
         json = JSON.parse(json);
@@ -204,8 +249,22 @@ function findNonVideMulti() {
 
                 findInter(Values[crit][0], Pas[crit][0], Importances[crit][0], Values[crit][1], Pas[crit][1], Importances[crit][1], LSid[crit])
             }
+
+            document.getElementById('PointDeDepartContainer').innerHTML+="Point de départ de la recherche :";
+            document.getElementById('PointDeDepartContainer').innerHTML+="<br>";
+
+
+            for ( crit = 0; crit < Values.length; crit++) {
+
+                printmin = localStorage.getItem(LSid[crit] + "Min");
+                printmax = localStorage.getItem(LSid[crit] + "Max");
+                document.getElementById('PointDeDepartContainer').innerHTML+="Minimum pour "+LSid[crit]+" "+printmin;
+                document.getElementById('PointDeDepartContainer').innerHTML+="Maximum pour "+LSid[crit]+" "+printmax;
+                console.log(printmin);
+            }
             console.log("lets go get pref !");
             getPrefs(false);
+
 
 
         } else if (json &&  json.final_pref && json.final_pref.length > 0) {
@@ -243,11 +302,7 @@ function findNonVideMulti() {
             alert("voir log")
         }
     });
-/*    var httpw = new XMLHttpRequest();
-    var pathwait = "sources/output/" + localStorage.getItem("roomName") + "_wait.txt";
-    httpw.open('HEAD', pathwait, false);
-    httpw.send();
-*/
+
 
 
 
@@ -371,7 +426,11 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
 
 
 
+
+
 }
+
+
 
 function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite individuelle
     console.log("equite");

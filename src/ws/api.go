@@ -188,6 +188,16 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, string(MyJson))
 
+	}else if strings.Compare(fnct, "create_empty_file") == 0 {
+		roomName := param["room_name"][0]
+		id := param["id"][0]
+		numFile := param["num_file"][0]
+		filename := "input/" + roomName +"_"+id+"_"+ numFile+".json"
+		cmdCreateEmptyJson := exec.Command("touch",filename)
+		cmdCreateEmptyJson.Run()
+		filenameKernel := "www/sources/output/" + roomName +"_"+id+"_"+ numFile+"-viab-0-bound.dat"
+		cmdCreateEmptyKernel := exec.Command("touch",filenameKernel)
+		cmdCreateEmptyKernel.Run()
 	} else if strings.Compare(fnct, "create_end") == 0 {
 		roomName := param["room_name"][0]
 		filename := "www/sources/output/" + roomName + "_end.txt"
@@ -451,7 +461,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 					fmt.Println("v3")
 					fmt.Println(err)
 				}
-				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 < 50000) || (v3 < 50000){
+				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 > 50000) || (v3 > 50000){
 					alerte = "Ce noyau est negatif !"
 				}else{
 					alerte = "Votre noyau n'est pas vide !"
