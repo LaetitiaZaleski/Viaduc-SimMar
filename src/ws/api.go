@@ -126,7 +126,9 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		var newId= strconv.Itoa(lastId)
 		log.Println(fmt.Sprintf("%v", lastId))
 		var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0-bound.dat"
+		//var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0.dat"
 		var fileViabNewName = strings.Replace(fileViabToRename, fileId, newId, -1)
+		//var fileJsonToRename = "input/" + roomName + "_" + classId + "_" + fileId + ".json"
 		var fileJsonToRename = "input/" + roomName + "_" + classId + "_" + fileId + ".json"
 		var fileJsonNewName = strings.Replace(fileJsonToRename, fileId, newId, -1)
 		var paramCp []string
@@ -149,13 +151,20 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		// fichier pour montrer qu'on a fini :
 
 		var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0-bound", "finalfile", -1)
+		//var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0", "finalfile", -1)
 		log.Println(fmt.Sprintf(fileFinish))
 		paramFinish := append(paramCp, pathViabToRename,fileFinish)
 		cmdCpF := exec.Command("cp", paramFinish...)
 		cmdCpF.Run()
 
 		/****************/
-	} else if strings.Compare(fnct, "create_wait") == 0  && IsInMap(param, "room_name") {
+	}else if strings.Compare(fnct, "delete_finalFile") == 0 {
+		roomName := param["room_name"][0]
+		classId := param["class_id"][0]
+		filename := "www/sources/output/" + roomName +"_"+classId+ "_finalfile.dat"
+		cmdDeleteFF := exec.Command("rm", filename)
+		cmdDeleteFF.Run()
+	}else if strings.Compare(fnct, "create_wait") == 0  && IsInMap(param, "room_name") {
 		g.GetRoom(param["room_name"][0]).Wait = true
 	} else if strings.Compare(fnct, "get_final_pref") == 0 && IsInMap(param, "room_name") {
 
@@ -196,6 +205,7 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		cmdCreateEmptyJson := exec.Command("touch",filename)
 		cmdCreateEmptyJson.Run()
 		filenameKernel := "www/sources/output/" + roomName +"_"+id+"_"+ numFile+"-viab-0-bound.dat"
+		//filenameKernel := "www/sources/output/" + roomName +"_"+id+"_"+ numFile+"-viab-0.dat"
 		cmdCreateEmptyKernel := exec.Command("touch",filenameKernel)
 		cmdCreateEmptyKernel.Run()
 	} else if strings.Compare(fnct, "create_end") == 0 {
@@ -272,8 +282,10 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			Lancement du calcul / creation du fichier
 		*/
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
+		//fileOut := strings.Replace(file, ".json", "-viab-0.dat", -1)
 		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
+		//var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
 		cmd := exec.Command("./bin/viabLabExe3", file )
 		//cmd := exec.Command("./bin/tmpexe")
@@ -388,8 +400,10 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		*/
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
 		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		//fileOut := strings.Replace(file, ".json","-viab-0.dat" , -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
-
+		//var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		log.Println(file)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
 		cmd := exec.Command("./bin/viabLabExe3", file )
 		//cmd := exec.Command("./bin/tmpexe")

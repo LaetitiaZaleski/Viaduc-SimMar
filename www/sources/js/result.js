@@ -6,7 +6,7 @@ window.onload = function(){
     let reload = true;
 
 
-
+/*
     setInterval(function () {
         let lastId = "0";
         if (document.getElementById('messageList').lastElementChild)
@@ -18,9 +18,7 @@ window.onload = function(){
 
     }, 1000);
 
-
-
-
+*/
 
     setInterval(function () {
             if(reload){
@@ -33,6 +31,9 @@ window.onload = function(){
                 //getFile();
 
         }},1000);
+
+
+
 
     };
 

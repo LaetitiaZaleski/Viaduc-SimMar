@@ -36,6 +36,7 @@ async function letsCalc() {
 
     do {
         let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+       // let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         nbFile= nbFile + 1
@@ -94,6 +95,7 @@ async function letsCalc() {
     nbFile = nbFile -1;
 
     let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+    //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
     do {
         //  console.log(tmpPath);
         //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
@@ -126,7 +128,7 @@ async function letsCalc() {
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
             //  console.log(tmpPath);
-            //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
+            //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             console.log("wait");
@@ -217,6 +219,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
     do {
         i++;
         let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
 
         http.open('HEAD', tmpPath, false);
         http.send();
@@ -226,6 +229,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
         let numFile = i - 1;
 
         let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
+        //let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
         console.log("Path : " + path);
 
         var allData = {
@@ -233,10 +237,17 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
             data2: [],
             data3: [] // pas du virgule après le dernier
         };
+        let l1=true;
 
         getXMLHttp(path, function (data) {
             // getXMLHttp("sources/output/SimMar_A0.000000_10.000000_C0.000000_10.000000_T0.000000_10.000000_eps0.000000_100.000000_zeta0.000000_20.000000_del0.100000_a100.000000_mp10.000000_g2.000000-viab-0-bound.dat", function (data) {
             let lineTab = data.split('\n');
+           /* if (l1){
+                console.log("lineTab");
+                console.log(lineTab);
+                l1 = false
+            }*/
+
             let aniTab = [];
             let capTab = [];
             let tourTab = [];
@@ -245,7 +256,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split('  ');
                 if (valueTab.length >= 3) {
-                    if (i % 3 === 0) { // on prend 1 point sur 10
+                    if (i%3  === 0) { // on prend un point sur 3
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
@@ -381,7 +392,7 @@ function getAllFiles(commun = true) {
 
 
 
- function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) { //affiche une noyau
+ function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) { //affiche un noyau
 
     // recuperation des valeurs
     var RoomName = localStorage.getItem("roomName");
@@ -392,6 +403,7 @@ function getAllFiles(commun = true) {
     var http = new XMLHttpRequest();
 
         let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
+       // let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
         console.log("Path : " + path);
 
         var allData = {

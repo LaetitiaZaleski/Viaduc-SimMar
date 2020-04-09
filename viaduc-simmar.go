@@ -38,7 +38,7 @@ func main() {
 	fs := http.FileServer(http.Dir("www/sources")) //Definition du PATH pour les fichiers sources (pour que le site puisse acceder aux autres fichiers (JS, CSS, etc.))
 	http.Handle("/sources/",  http.StripPrefix("/sources/", fs))
 	http.HandleFunc ("/api", games.Api) // Définition de L'URL pour les requetes serveurs.
-	log.Fatal(http.ListenAndServe(":8086", nil)) // lancement du serveur en HTTP sur le port 8086
+	log.Fatal(http.ListenAndServe(":8087", nil)) // lancement du serveur en HTTP sur le port 8086
 
 }
 

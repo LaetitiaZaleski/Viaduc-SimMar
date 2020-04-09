@@ -46,7 +46,6 @@ function letsFinish(multi = false) {
         let ClassId = localStorage.getItem("classId");
         localStorage.setItem("fileId", FileId);
         var http = new XMLHttpRequest();
-
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + LastId + "-viab-0-bound.dat";
             http.open('HEAD', tmpPath, false);
@@ -79,6 +78,14 @@ function letsFinish(multi = false) {
         }else{
             let newParam = url.split("?")[1].replace("result", "preference");
             window.location.href = "?" + newParam;
+
+
+            // delete final file :
+
+            getXMLHttp('/api?fct=delete_finalFile' +
+                '&room_name=' + RoomName + '&class_id=' + ClassId,
+                function (ret) {
+                });
         }
 
     }
