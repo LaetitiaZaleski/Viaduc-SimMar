@@ -1,7 +1,7 @@
 
 
 var graphC=[], graphA=[], graphT=[];
-var len = 100;
+var len = 100000;
 
 
 function draw() {
@@ -23,7 +23,7 @@ function draw() {
 
 // 6. Y scale will use the randomly generate number
     var yScale = d3.scaleLinear()
-        .domain([0, 40000]) // input
+        .domain([0, 42000]) // input
         .range([height, 0]); // output
 
 // 7. d3's line generator
@@ -49,7 +49,7 @@ function draw() {
     svg.append("circle").attr("cx",20).attr("cy",30).attr("r", 6).style("fill", "#a58d39");
     svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#417da5");
     svg.append("circle").attr("cx",20).attr("cy",70).attr("r", 6).style("fill", "#1c6c06");
-    svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche").style("font-size", "12px").attr("alignment-baseline","middle");
+    svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche divisé par 100").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 55).text("Nombre de touristes").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 75).text("Nombre de tortues").style("font-size", "12px").attr("alignment-baseline","middle");
 
@@ -129,49 +129,57 @@ function calc() {
 
     let integrationStep = 0.001; // 0.01
     sim.evaluate(" dt = 0.001");
-    let tfinal = 0.1 ;//0.05
+    let tfinal = len*integrationStep ;//0.05
     sim.evaluate(" tfinal = "+tfinal);
-    let l = 0.01;
-    sim.evaluate("l = 0.01");
-    //let g = 1.0;
-    let M = 5000;
-    sim.evaluate("M = 5000");
-    let c = 3;
-    sim.evaluate("c = 3");
-    let p = 0.3;
-    sim.evaluate("p = 0.3");
-    let p2 = 0.0003;
-    sim.evaluate("p2 = 0.0003");
-    //let a = 100.0;
-    let e = 0.001;
-    sim.evaluate("e = 0.001");
-    let eta = 0.0005;
-    sim.evaluate("eta = 0.0005");
-    let phi = 1.0;
-    sim.evaluate("phi = 1.0");
-    let phi2 = 1.0;
-    sim.evaluate("phi2 = 1.0");
-    let d = 1.0;
-    sim.evaluate("d = 1.0");
-    let h = 12000.0;
-    sim.evaluate("h = 12000.0");
-    //let mp = 20.0;
-    let mt = 0.5;
-    sim.evaluate("mt = 0.5");
 
-    let eps = 100;
-    sim.evaluate("eps = 100");
-    let zeta= 0.05;
-    sim.evaluate("zeta= 0.05");
+    sim.evaluate("zeta = 0.1");
+    sim.evaluate("l = 0.00052");
+//l = 0.00052
+    sim.evaluate("g=0.5");
+//g= (3.5 - 1.0)/12.0
+    sim.evaluate("M= 36000");
+//M= 36036
+
+//p= 0.0004
+    sim.evaluate("p= 1000");
+    sim.evaluate("a=1500");
+//a= 10000.0
+    sim.evaluate("eta = 0.00008");
+//eta= 0.0008
+    sim.evaluate("eps= 100");
+    sim.evaluate("phi= 1833");
+    sim.evaluate("phi2=1 ");
+    sim.evaluate("del=0.1");
+    sim.evaluate("mt=50");
+    sim.evaluate("mp=0.1");
+    sim.evaluate("alpha = 0.1");
+    sim.evaluate("T2=5000");
+    sim.evaluate("ip = 0.000001");
+    sim.evaluate("it = 0.001");
+    sim.evaluate("muE = 50");
+
+
 
     let del = parseInt(roomId = document.getElementById('valuePeche').value);
-    sim.evaluate(`del = ${del}`);
+    sim.evaluate(`del = ${del}*0.002`);
     let a = parseInt(roomId = document.getElementById('valueTortue').value);
-    sim.evaluate(`a = ${a}*4`);
+    sim.evaluate(`a = ${a}*30`);
     let mp = parseInt(roomId = document.getElementById('valuePoisson').value);
-    sim.evaluate(`mp = ${mp}*10`);
+    sim.evaluate(`mp = ${mp}*0.002`);
     let g = parseInt(roomId = document.getElementById('valueRepro').value);
-    sim.evaluate(`g = ${g}`);
+    sim.evaluate(`g = ${g}*0.01`); // g=0.5
+
+    let ip = parseInt(roomId = document.getElementById('valueIp').value);
+    let ipval = ip*0.00000001;
+    sim.evaluate(`ip = ${ipval}`);
+    console.log("ipval");
+    console.log(ipval);
+
+    let zeta = parseInt(roomId = document.getElementById('valueZeta').value);
+    let zetaval = zeta*0.002;
+    sim.evaluate(`zeta = ${zeta}* 0.002`);
+    console.log("zetaval");
+    console.log(zetaval);
 
     let valueCap = parseInt(roomId = document.getElementById('valueCap').value);
     sim.evaluate(`C0 = ${valueCap}`);
@@ -182,11 +190,20 @@ function calc() {
     let valueTour = parseInt(roomId = document.getElementById('valueTour').value);
     sim.evaluate(`T0 = ${valueTour}`);
 
+
+
+     //   sim.evaluate(`C0 = 40000`);
+
+     //   sim.evaluate(`A0 = 3000`);
+
+    //    sim.evaluate(`T0 = 4000`);
+
+
     console.log("T0"+valueTour);
 
-    sim.evaluate("dCdt(C, A, T) =  -del * C + p * A * mp + mt * T");
-    sim.evaluate("dAdt(C, A, T) = A * g * (1 -  A / (1 + M / (1 + eta * T / (eps + 1)))) - zeta * l *  A * T - p2 * A*C;");
-    sim.evaluate("dTdt(C, A, T) = T * (-c * T / (T + phi))  + a * zeta * A ");
+    sim.evaluate("dCdt(C, A, T) = (-del)*C + p*A*C*(mp)*ip + mt*T*it"); // p: nb poissons pour 1 tortues
+    sim.evaluate("dAdt(C, A, T) = A*g*(1-(A/(1+M/(1+eta*T/(1+eps)))))-zeta*l*T*A - A*C*ip;");
+    sim.evaluate("dTdt(C, A, T) = T*(muE*C/(C+phi) + a*zeta*A/(A+phi2)-alpha*T) ");
     sim.evaluate("result = ndsolve([dCdt, dAdt, dTdt], [C0, A0, T0], dt, tfinal)");
 
 
@@ -202,7 +219,11 @@ function calc() {
     let data = sim.evaluate("transpose(result).toArray()");
 
     console.log(data);
-     graphC=data[0];
+    for(let i =0; i< data[0].length;i++){
+        graphC.push(data[0][i]*0.01);
+    }
+
+    // graphC=data[0];
      graphA=data[1];
      graphT=data[2];
      console.log(graphC);
@@ -211,60 +232,3 @@ function calc() {
 
 calc();
 
-/*
-var integrationStep = 0.001 // 0.01
-var timeStep = 0.01 //0.05
-var l = 0.01
-var g = 1.0
-var M = 5000
-var c = 0.01
-var p = 0.3
-var a = 100.0
-var e = 0.001
-var eta = 0.0005
-var phi = 1.0
-var phi2 = 1.0
-var d = 1.0
-var del = 0.1
-var h = 12000.0
-var mp = 20.0
-var mt = 0.5
-
-
-  integrationStep: Double = 0.01,
-                   timeStep: Double = 0.05,
-                   //zeta: Double = 0.01,
-                   l: Double = 0.01,
-                   g: Double = 1.0,
-                   M: Double = 5000.0,
-                   c: Double = 0.01,
-                   p: Double = 0.3,
-                   a: Double = 100.0,
-                   e: Double = 0.001,
-                   eta: Double = 0.0005,
-                   //eps: Double = 10.0,
-                   phi: Double = 1.0,
-                   phi2: Double = 1.0,
-                   d: Double = 1.0,
-                   del: Double = 0.1,
-                   h: Double = 12000.0,
-                   mp: Double = 20.0,
-                   mt: Double = 0.5
-
-// valeurs de controle: eps control(1) et zeta control(0)
-
-
-
-def dynamic(state: Vector[Double], control: Vector[Double]) = {
-    // A: state(0), T: state(1), E: state(2)
-    def CDot(state: Vector[Double], t: Double) =  -del * state(0) + p * state(1) * mp + mt * state(2)
-
-def ADot(state: Vector[Double], t: Double) =  state(1) * g * (1 - state(1) / (1 + M / (1 + eta * state(2) / (control(1) + 1)))) - control(0) * l * state(1) * state(2) - p * state(1)
-
-def TDot(state: Vector[Double], t: Double) =  state(2) * (-c * state(2) / (state(2) + phi))  + a * control(0) * state(1)
-
-
-val dynamic = Dynamic(ADot, TDot, CDot)
-dynamic.integrate(state.toArray, integrationStep, timeStep)
-}
-*/

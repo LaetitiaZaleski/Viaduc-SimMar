@@ -545,7 +545,54 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, "ok")
 
-	} else {
+	}else if IsInMap(param, "fct") && param["fct"][0] == "lets_setPref" &&
+		IsInMap(param, "fp") &&
+		IsInMap(param, "room_name") &&
+		IsInMap(param, "classId") {
+		roomName := param["room_name"][0]
+		id := param["classId"][0]
+		fp := param["fp"][0]
+		filename := "input/" + roomName +"_"+id+"_"+ fp+".json"
+
+		type Json struct {
+			Settings Settings `json:"settings"`
+			Preferences Preferences `json:"preferences"`
+		}
+
+		var preference Preferences
+
+		file, _ := ioutil.ReadFile(filename)
+
+		var data Json
+
+
+
+		log.Println(fmt.Sprintf("reset les params \n"))
+
+		log.Println(fmt.Sprintf("%s \n", filename))
+
+		err := json.Unmarshal([]byte(file), &data)
+		if err != nil {
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		log.Println(fmt.Sprintf(" %v", data))
+		preference = data.Preferences
+
+		classId, err1 := strconv.ParseInt(preference.ClassId, 10, 64)
+		if err1 != nil {
+			log.Println(fmt.Sprintf("ERREUR 1 !!"))
+		}
+		room := g.GetRoom(preference.RoomName)
+
+		class := g.getClassFromRoom(room, classId)
+		class.Preferences = preference
+
+		log.Println(fmt.Sprintf("preferences : %v \n", preference))
+		log.Println(fmt.Sprintf("classID : %v \n", classId))
+		log.Println(fmt.Sprintf("Settings : %v \n", class.Settings))
+	}		else {
 		MyExit(w, errors.New("wrong format POST"))
 		return
 	}

@@ -107,6 +107,7 @@
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
             </div>
+
             <div style="padding: 50px">
                 <button id="start" onclick="document.location.reload(true)" class="btn btn-primary"> Réinitialiser les paramètres </button>
                 <br/>
@@ -117,19 +118,43 @@
 
             <div id="graph">
 
+
             </div>
 
             <div>
+                <div>
+                    <span> Paramètres correspondant aux moyens d'actions : </span>
+                </div>
+
+                <div id="ipdiv">
+                    <div>
+                        <span data-toggle="tooltip" data-placement="top" title="  ">  : </span>
+                        <span> 50 </span>
+                    </div>
+                    <div class="slidecontainer">
+                        <input id="valueIp" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="10" data-slider-value="50" onchange="setMyValue(this);calc();"/>
+                    </div>
+                </div>
+
+                <div id="zetadiv">
+                    <div>
+                        <span data-toggle="tooltip" data-placement="top" title="  ">  : </span>
+                        <span> 50 </span>
+                    </div>
+                    <div class="slidecontainer">
+                        <input id="valueZeta" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="10" data-slider-value="50" onchange="setMyValue(this);calc();"/>
+                    </div>
+                </div>
                 <div>
                     <span> Point de départ : </span>
                 </div>
                 <div>
                    <div>
                        <span> Nombre d'animaux : </span>
-                       <span> 10000</span>
+                       <span> 3000</span>
                    </div>
                     <div class="slidecontainer">
-                        <input id="valueAni" class="custom-range" type="range" type="text" min="0" max="40000" step="100" value="10000" onchange="setMyValue(this);calc();"/>
+                        <input id="valueAni" class="custom-range" type="range" type="text" min="0" max="10000" step="100" value="3000" onchange="setMyValue(this);calc();"/>
                         {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                     </div>
@@ -138,10 +163,10 @@
                 <div>
                     <div>
                         <span> Capital des Pêcheurs : </span>
-                        <span> 10000</span>
+                        <span> 50000</span>
                     </div>
                 <div class="slidecontainer">
-                    <input id="valueCap" class="custom-range" type="range" type="text" min="0" max="40000" step="100" value="10000" onchange="setMyValue(this);calc();"/>
+                    <input id="valueCap" class="custom-range" type="range" type="text" min="0" max="100000" step="100" value="50000" onchange="setMyValue(this);calc();"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -149,10 +174,10 @@
                 <div>
                     <div>
                         <span> Nombre de touristes : </span>
-                        <span>10000 </span>
+                        <span>2000 </span>
                     </div>
                 <div class="slidecontainer">
-                    <input id="valueTour" class="custom-range" type="range" type="text" min="0" max="40000" step="100" value="10000" onchange="setMyValue(this);calc();"/>
+                    <input id="valueTour" class="custom-range" type="range" type="text" min="0" max="10000" step="100" value="2000" onchange="setMyValue(this);calc();"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -164,62 +189,7 @@
         <div><img src="sources/img/dynamique.png" class="img-dyna-size" ></div>
 
     </div>
-<!--
-    <div class="dynamique-container">
-        <div class="">
-            <div >
-                <div>
-                    <div id="info"></div>
-                    <span id="texte" onmouseover="afficher(infos[1]);return false;" onmouseout="masquer();"> Dépreciation des infrastructures de pêche (en % par an) : </span>
-                    <span> {{.ValuePeche}} </span>
-                </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="50" value="{{.ValuePeche}}" class="slider" id="valuePeche"
-                           onchange="setMyValue(this);calc();">
-                </div>
 
-            </div>
-
-            <div id="tortues">
-                <div>
-                    <span onmouseover="afficher(infos[2]);return false;" onmouseout="masquer();">Attraction des touristes pour les tortues : </span>
-                    <span> {{.ValueTortue}} </span>
-                </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="{{.ValueTortue}}" class="slider" id="valueTortue"
-                           onchange="setMyValue(this);calc();">
-                </div>
-            </div>
-
-            <div id="poisson">
-                <div>
-                    <span onmouseover="afficher(infos[3]);return false;" onmouseout="masquer();"> Prix de la tonne de poisson (en dollard $): </span>
-                    <span> {{.ValuePoisson}} </span>
-                </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="20" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
-                           onchange="setMyValue(this);calc();">
-                </div>
-            </div>
-
-            <div id="repro">
-                <div >
-                    <span onmouseover="afficher(infos[4]);return false;" onmouseout="masquer();"> Taux de croissance des tortues : </span>
-                    <span> {{.ValueRepro}} </span>
-                </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="10" value="{{.ValueRepro}}" class="slider" id="valueRepro"
-                           onchange="setMyValue(this);calc();">
-                </div>
-            </div>
-            <div id="graph">
-
-            </div>
-        </div>
-
-        <div><img src="sources/img/dynamique.png" width="700px"></div>
-
-    </div> -->
 
 
     <div style="padding: 50px">

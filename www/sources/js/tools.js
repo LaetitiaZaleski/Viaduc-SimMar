@@ -30,39 +30,10 @@ function joinPreference() {
     window.location.href = "?" + newParam;
 }
 
-function setMinMaxRoles() {
-    localStorage.setItem("nonvides", "-1");
+function setFPRoles() {
     roles = ["Maire", "Ecologiste", "Pecheur"];
     for(var i = 0; i<roles.length; i++){
-        localStorage.setItem(roles[i]+"oldAniFauxMin", -1);
-        localStorage.setItem(roles[i]+"oldAniMin", -1);
-        localStorage.setItem(roles[i]+"oldAniMax", -1);
-        localStorage.setItem(roles[i]+"oldAniFauxMax", -1);
-        localStorage.setItem(roles[i]+"oldImpAniMax", -1);
-
-        localStorage.setItem(roles[i]+"oldCapFauxMin", -1);
-        localStorage.setItem(roles[i]+"oldCapMin", -1);
-        localStorage.setItem(roles[i]+"oldCapMax", -1);
-        localStorage.setItem(roles[i]+"oldCapFauxMax", -1);
-        localStorage.setItem(roles[i]+"oldImpCapMax", -1);
-
-        localStorage.setItem(roles[i]+"oldTourFauxMin", -1);
-        localStorage.setItem(roles[i]+"oldTourMin", -1);
-        localStorage.setItem(roles[i]+"oldTourMax", -1);
-        localStorage.setItem(roles[i]+"oldTourFauxMax", -1);
-        localStorage.setItem(roles[i]+"oldImpTourMax", -1);
-
-        localStorage.setItem(roles[i]+"oldEnvFauxMin", -1);
-        localStorage.setItem(roles[i]+"oldEnvMin", -1);
-        localStorage.setItem(roles[i]+"oldEnvMax", -1);
-        localStorage.setItem(roles[i]+"oldEnvFauxMax", -1);
-        localStorage.setItem(roles[i]+"oldImpEnvMax", -1);
-
-        localStorage.setItem(roles[i]+"oldOuvFauxMin", -1);
-        localStorage.setItem(roles[i]+"oldOuvMin", -1);
-        localStorage.setItem(roles[i]+"oldOuvMax", -1);
-        localStorage.setItem(roles[i]+"oldOuvFauxMax", -1);
-        localStorage.setItem(roles[i]+"oldImpOuvMax", -1);
+        localStorage.setItem(roles[i]+"FP", -1);
     }
 
 }

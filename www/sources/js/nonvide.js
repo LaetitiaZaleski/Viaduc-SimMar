@@ -78,7 +78,8 @@ function letsFinish(multi = false) {
         }else{
             let newParam = url.split("?")[1].replace("result", "preference");
             window.location.href = "?" + newParam;
-
+            //mettre son fp a -1 pour signaler que on est partit =
+            setMyFP(-1);
 
             // delete final file :
 
