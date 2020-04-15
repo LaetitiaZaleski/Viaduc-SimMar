@@ -111,7 +111,7 @@
 
             <h4 id="environnement"  onmouseenter="$(this).popover('show')" onmouseleave="$(this).popover('hide')" data-toggle="popover" title="{{.ValueEnvMin}},{{.ValueEnvMax}}" data-content="<div>{{.ValueEnvRole1}}</div><div>{{.ValueEnvRole2}}</div>">
                 <div>
-                    <span> Restauration de l'environnement : </span> <br /> <font size="4px"><span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
+                    <span> Nombre de tortues prises par tonne de poisson : </span> <br /> <font size="4px"><span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
                     </font></div>
                 <div>
                     <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
@@ -155,7 +155,7 @@
     <span> Pour faire disparaitre un noyaux, cliquez sur son nom. Pour isoler un noyau double cliquer sur son nom. </span>
 
     <span>
-        Si vous etes satisfait du dernier noyau calculé, appuyez sur le bouton "Continuer" qui apparaitra après le calcul d'un noyau non vide.
+        Si vous êtes satisfait du dernier noyau calculé, appuyez sur le bouton "Continuer" qui apparaitra après le calcul d'un noyau non vide.
     </span>
 
     <span>
@@ -197,7 +197,7 @@
         step: 20,
         range: {
             'min': [0],
-            'max': [4000]
+            'max': [5000]
         }
     });
 
@@ -261,7 +261,7 @@
         step: 20,
         range: {
             'min': [0],
-            'max': [4000]
+            'max': [5000]
         }
     });
 
@@ -291,10 +291,10 @@
     noUiSlider.create(sliderEnv, {
         start: [{{.ValueEnvFauxMin}}, {{.ValueEnvMin}}, {{.ValueEnvMax}}, {{.ValueEnvFauxMax}}],
         connect: [true, true, true, true, true],
-        step: 5,
+        step: 1,
         range: {
             'min': [0],
-            'max': [100]
+            'max': [10]
         }
     });
 

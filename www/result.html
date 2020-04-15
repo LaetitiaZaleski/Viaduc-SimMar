@@ -51,7 +51,7 @@
         si les préférences des utilisateurs ont une intersection non vide.</span>
     <span>
         En bas de page vous pouvez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
-        En bleu celui du maire, en rose celui du Pecheur et en vert celui de l'Ecologiste.
+        En bleu celui de l'opérateur de tourisme, en rose celui du Pecheur et en vert celui de l'Ecologiste.
     </span>
     <span>
         Ensuite, vous pouvez appuyer sur "Calculer un noyau commun" ce qui calculera, pour votre modèle,
@@ -72,7 +72,7 @@
 
                 <div id="tortues">
                     <span> <b>Nombre d'animaux : </b></span>
-                    <div> <span > Maire : </span></div> <span id="impAniMinMaire"></span><span id="valueAniMaireSliderVal1" class="orange"></span> - <span id="valueAniMaireSliderVal2" class="vert" ></span> - <span id="valueAniMaireSliderVal3" class="vert"></span> - <span id="valueAniMaireSliderVal4" class="orange"></span><span id="impAniMaxMaire"></span>
+                    <div> <span > Tourisme : </span></div> <span id="impAniMinTourisme"></span><span id="valueAniTourismeSliderVal1" class="orange"></span> - <span id="valueAniTourismeSliderVal2" class="vert" ></span> - <span id="valueAniTourismeSliderVal3" class="vert"></span> - <span id="valueAniTourismeSliderVal4" class="orange"></span><span id="impAniMaxTourisme"></span>
 
 
                     <section class="disabled-range-slider ">
@@ -80,7 +80,7 @@
 
 
                         <div>
-                            <div id="slider-Ani-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            <div id="slider-Ani-Tourisme" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
                         </div>
 
                     </section>
@@ -113,13 +113,13 @@
                     <div>
                         <span> <b>Capital des infrastructures de pêche </b></span>
                     </div>
-                    <div> <span > Maire : </span></div>  <span id="impCapMinMaire"></span><span id="valueCapMaireSliderVal1" class="orange"> </span> - <span id="valueCapMaireSliderVal2" class="vert" ></span> - <span id="valueCapMaireSliderVal3" class="vert"></span> - <span id="valueCapMaireSliderVal4" class="orange"></span><span id="impCapMaxMaire"></span>
+                    <div> <span > Tourisme : </span></div>  <span id="impCapMinTourisme"></span><span id="valueCapTourismeSliderVal1" class="orange"> </span> - <span id="valueCapTourismeSliderVal2" class="vert" ></span> - <span id="valueCapTourismeSliderVal3" class="vert"></span> - <span id="valueCapTourismeSliderVal4" class="orange"></span><span id="impCapMaxTourisme"></span>
 
                     <section class="disabled-range-slider ">
                         <span class="rangeValues"></span>
 
                         <div>
-                            <div id="slider-Cap-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            <div id="slider-Cap-Tourisme" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
                         </div>
                     </section>
                         <div> <span > Ecologiste : </span></div><span id="impCapMinEcologiste"></span><span id="valueCapEcologisteSliderVal1" class="orange"> </span> - <span id="valueCapEcologisteSliderVal2" class="vert" ></span> - <span id="valueCapEcologisteSliderVal3" class="vert"></span> - <span id="valueCapEcologisteSliderVal4" class="orange"></span><span id="impCapMaxEcologiste"></span>
@@ -144,13 +144,13 @@
                     <div>
                         <span> <b>Nombre de touristes : </b>  </span>
                     </div>
-                    <div> <span > Maire : </span></div>  <span id="impTourMinMaire"></span><span id="valueTourMaireSliderVal1" class="orange"></span> - <span id="valueTourMaireSliderVal2" class="vert" ></span> - <span id="valueTourMaireSliderVal3" class="vert"></span> - <span id="valueTourMaireSliderVal4" class="orange"></span><span id="impTourMaxMaire"></span>
+                    <div> <span > Tourisme : </span></div>  <span id="impTourMinTourisme"></span><span id="valueTourTourismeSliderVal1" class="orange"></span> - <span id="valueTourTourismeSliderVal2" class="vert" ></span> - <span id="valueTourTourismeSliderVal3" class="vert"></span> - <span id="valueTourTourismeSliderVal4" class="orange"></span><span id="impTourMaxTourisme"></span>
 
                     <section class="disabled-range-slider ">
                         <span class="rangeValues"></span>
 
                         <div>
-                            <div id="slider-Tour-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            <div id="slider-Tour-Tourisme" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
                         </div>
                     </section>
                 <div> <span > Ecologiste : </span></div><span id="impTourMinEcologiste"></span><span id="valueTourEcologisteSliderVal1" class="orange"></span> - <span id="valueTourEcologisteSliderVal2" class="vert" ></span> - <span id="valueTourEcologisteSliderVal3" class="vert"></span> - <span id="valueTourEcologisteSliderVal4" class="orange"></span><span id="impTourMaxEcologiste"></span>
@@ -183,13 +183,13 @@
 
                         <span class="rangeValues"></span>
 
-                    <div> <span > Maire : </span></div> <span id="impEnvMinMaire"></span> <span id="valueEnvMaireSliderVal1" class="orange"></span> - <span id="valueEnvMaireSliderVal2" class="vert" ></span> - <span id="valueEnvMaireSliderVal3" class="vert"></span> - <span id="valueEnvMaireSliderVal4" class="orange"></span> <span id="impEnvMaxMaire"></span>
+                    <div> <span > Tourisme : </span></div> <span id="impEnvMinTourisme"></span> <span id="valueEnvTourismeSliderVal1" class="orange"></span> - <span id="valueEnvTourismeSliderVal2" class="vert" ></span> - <span id="valueEnvTourismeSliderVal3" class="vert"></span> - <span id="valueEnvTourismeSliderVal4" class="orange"></span> <span id="impEnvMaxTourisme"></span>
 
 
                     <section class="disabled-range-slider ">
 
                         <div>
-                            <div id="slider-Env-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            <div id="slider-Env-Tourisme" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
                         </div>
 
                     </section>
@@ -217,12 +217,12 @@
                     </div>
                         <span class="rangeValues"></span>
 
-                    <div> <span > Maire : </span></div> <span id="impOuvMinMaire"></span><span id="valueOuvMaireSliderVal1" class="orange"></span> - <span id="valueOuvMaireSliderVal2" class="vert" ></span> - <span id="valueOuvMaireSliderVal3" class="vert"></span> - <span id="valueOuvMaireSliderVal4" class="orange"></span><span id="impOuvMaxMaire"></span>
+                    <div> <span > Tourisme : </span></div> <span id="impOuvMinTourisme"></span><span id="valueOuvTourismeSliderVal1" class="orange"></span> - <span id="valueOuvTourismeSliderVal2" class="vert" ></span> - <span id="valueOuvTourismeSliderVal3" class="vert"></span> - <span id="valueOuvTourismeSliderVal4" class="orange"></span><span id="impOuvMaxTourisme"></span>
 
                         <section class="disabled-range-slider ">
 
                         <div>
-                            <div id="slider-Ouv-Maire" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                            <div id="slider-Ouv-Tourisme" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
                         </div>
                         </section>
 
@@ -258,15 +258,16 @@
             <button  onclick="sendMessage()" class="btn btn-primary"> Envoyer </button>
         </div>
     </div>
+
+
     <div>
         <span>
-       Ici vous pouvez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau en appuyant sur le bouton "Affichez les noyaux".
-        En bleu celui du maire, en rose celui du Pecheur et en vert celui de l'Ecologiste.
+       Ici vous pouvez voir par chaque utilisateur ayant rendu public son noyau : en bleu celui de l'opérateur de tourisme, en rose celui du Pecheur et en vert celui de l'Ecologiste.
     </span>
         <span>
         Ensuite, vous pouvez appuyer sur "Calcul de noyaux dans l'intersection" ce qui calculera, pour votre modèle,
         s'il existe un noyau non vide dans l'intersection des préférences de tous les utilisateurs. Si c'est le cas il sera affiché sur le même graphe que
-            les autres noyaux. Si chacun a obtenu un noyaux non vide dans l'intersection des contraintes, et que ce noyau est satisfaisant pour tout le monde,
+            les autres noyaux. Si chacun a obtenu un noyau non vide dans l'intersection des contraintes, et que ce noyau est satisfaisant pour tout le monde,
             la partie peut s'arreter ici et nous choisissont l'intersection de vos préférences comme objectifs et moyen d'action commun.
     </span>
 
@@ -285,20 +286,20 @@
     <div style="padding: 50px">
         <button  onclick="getAllFiles(false)" class="btn btn-primary" id="affiche" hidden="true"> Afficher les noyaux </button>
        <button  onclick="letsCalcAll(false)" class="btn btn-primary" id="calcul" hidden="true"> Calcul de noyaux dans l'intersection </button>
-        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche"> Recherche de noyaux non vides </button>
-
+        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche" hidden="true"> Recherche de noyaux non vides </button>
+        <button  onclick="backToPref()" class="btn btn-primary" id="goback"> revenir aux préférences </button>
 
         <br/>
     </div>
 
-    <div id="kernelDiv" style="width:100%;height:800px"></div>
+
 
     <div id="patientezContainer"> </div>
     <div id="PointDeDepartContainer"> </div>
     <div id="finalPrefButtonContainer"> </div>
     <div id="finishButtonContainer"> </div>
 
-    <div class="preference-container">
+    <div class="preference-container" id="solutions-container" hidden="true">
         <div class="">
             <h4 id="tortues" ><div>
                     <span> Nombre d'animaux : </span></div> <span id="prefAniMin" class="purple"></span> <span id="prefAniMax" class="purple"></span>
@@ -328,6 +329,8 @@
             </h4>
         </div>
     </div>
+
+    <div id="kernelDiv" style="width:100%;height:800px"></div>
 
 
 </div>

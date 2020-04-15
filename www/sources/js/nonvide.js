@@ -186,7 +186,7 @@ function calcTable(abs, pref, faux){
 
         switch (localStorage.getItem("classId")) {
             case "1" :
-                className = "Maire";
+                className = "Tourisme";
                 break;
             case "2" :
                 className = "Pecheur";
@@ -404,6 +404,8 @@ function calcTable(abs, pref, faux){
         localStorage.setItem("nonvides", JSON.stringify(gNumFiles));
         localStorage.setItem("finalPref", JSON.stringify(gFinalPref));
         document.getElementById('patientezContainer').innerHTML="";
+        document.getElementById("solutions-container").hidden = false;
+
 
 
         for(k = 0; k<finalPrefs.length; k++){

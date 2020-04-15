@@ -1,7 +1,7 @@
 /*window.onload = function(){
 
     critTab=["Ani","Cap","Tour","Env","Ouv"];
-    roleTab = ["Maire","Ecologiste","Pecheur"];
+    roleTab = ["Tourisme","Ecologiste","Pecheur"];
     maxTab =[20000,20000,20000,100,50];
 
     for(var i=0; i<critTab.length; i++){

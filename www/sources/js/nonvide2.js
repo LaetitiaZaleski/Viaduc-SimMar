@@ -171,7 +171,7 @@ function getPrefs(mono=true) {
 
         switch (localStorage.getItem("classId")) {
             case "1" :
-                className = "Maire";
+                className = "Tourisme";
                 break;
             case "2" :
                 className = "Pecheur";
@@ -378,6 +378,8 @@ function getPrefs(mono=true) {
         localStorage.setItem("nonvides", JSON.stringify(gNumFiles));
         localStorage.setItem("finalPref", JSON.stringify(gFinalPref));
         document.getElementById('patientezContainer').innerHTML="";
+        document.getElementById("solutions-container").hidden = false;
+
 
 
         for(k = 0; k<finalPrefs.length; k++){
@@ -391,7 +393,7 @@ function getPrefs(mono=true) {
             $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
 
 
-            /** TODO : faire ça pour tout les id **/
+
             getFileBynum(gNumFiles[k],name)
 
         }

@@ -184,7 +184,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
     }
     else {
         if (ClassId == 1) {
-            prefix = "Maire";
+            prefix = "Tourisme";
         }
         if (ClassId == 2) {
             prefix = "Pecheur";
@@ -213,20 +213,24 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
 
 
     // recuperer le dernier fichier créé :
-    var i = -1;
+    var i = 0;
     var http = new XMLHttpRequest();
+    var http2 = new XMLHttpRequest();
 
     do {
-        i++;
         let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
         //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
-
         http.open('HEAD', tmpPath, false);
         http.send();
+        i++;
+        let tmpPath2 = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
+        http2.open('HEAD', tmpPath, false);
+        http2.send();
     }
-    while (http.status != 404);
+    while (http.status != 404 || http2.status != 404 );
     if (i > 0) {
-        let numFile = i - 1;
+        let numFile = i -2;
 
         let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
         //let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
@@ -256,12 +260,12 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split('  ');
                 if (valueTab.length >= 3) {
-                    if (i%3  === 0) { // on prend un point sur 3
+                    //if (i%3  === 0) { // on prend un point sur 3
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
 
-                    }
+                   // }
                 }
             }
 
@@ -297,7 +301,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
 
             if (ClassId == 1) {
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
-                role = "Maire";
+                role = "Tourisme";
                 console.log("b" + b)
             }
             if (ClassId == 2) {
@@ -444,7 +448,7 @@ function getAllFiles(commun = true) {
 
             if (ClassId == 1) {
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
-                role = "Maire";
+                role = "Tourisme";
                 console.log("b" + b)
             }
             if (ClassId == 2) {

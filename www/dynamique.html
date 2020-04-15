@@ -67,7 +67,7 @@
                     <span> {{.ValuePeche}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valuePeche" class="custom-range" type="range" min="15" max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valuePeche" class="custom-range" type="range" min="15" max="100" data-slider-step="1" data-slider-value="{{.ValuePeche}}" onchange="setMyValue(this);"/>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@
                     <span> {{.ValueTortue}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valueTortue" class="custom-range" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueTortue}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valueTortue" class="custom-range" type="range" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueTortue}}" onchange="setMyValue(this);"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValueTortue}}" class="slider" id="valueTortue"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -90,7 +90,7 @@
                     <span> {{.ValuePoisson}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valuePoisson" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePoisson}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valuePoisson" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValuePoisson}}" onchange="setMyValue(this);;"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -102,10 +102,15 @@
                     <span> {{.ValueRepro}} </span>
                 </div>
                 <div class="slidecontainer">
-                    <input id="valueRepro" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueRepro}}" onchange="setMyValue(this);calc();"/>
+                    <input id="valueRepro" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="{{.ValueRepro}}" onchange="setMyValue(this);"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValueRepro}}" class="slider" id="valueRepro"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
+            </div>
+
+            <div style="padding: 50px">
+                <button id="start" onclick="calc();" class="btn btn-primary"> Calculer </button>
+                <br/>
             </div>
 
             <div style="padding: 50px">
@@ -128,21 +133,21 @@
 
                 <div id="ipdiv">
                     <div>
-                        <span data-toggle="tooltip" data-placement="top" title="  ">  : </span>
-                        <span> 50 </span>
+                        <span data-toggle="tooltip" data-placement="top" title="Il est possible de faire varier de nombre en utilisant diffeérents types de filets mais ils sont parfois cher, ou  bien en utilisant des techniques de pêches plus contraignantes pour les pêcheurs.">  Nombre de tortues prises pour chaque tonne de poissons péchée: </span>
+                        <span> 5 </span>
                     </div>
                     <div class="slidecontainer">
-                        <input id="valueIp" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="10" data-slider-value="50" onchange="setMyValue(this);calc();"/>
+                        <input id="valueIp" class="custom-range" type="range" type="text" min="1" max="10" step="1" data-slider-value="5" onchange="setMyValue(this);"/>
                     </div>
                 </div>
 
                 <div id="zetadiv">
                     <div>
-                        <span data-toggle="tooltip" data-placement="top" title="  ">  : </span>
-                        <span> 50 </span>
+                        <span data-toggle="tooltip" data-placement="top" title="Il est possible de faire varier ce paramètre en fermant certaines zone du parc au tourisme.">  Proportion de l'aire protégée fermée au tourisme: </span>
+                        <span> 25 </span>
                     </div>
                     <div class="slidecontainer">
-                        <input id="valueZeta" class="custom-range" type="range" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="10" data-slider-value="50" onchange="setMyValue(this);calc();"/>
+                        <input id="valueZeta" class="custom-range" type="range" type="text" min="0" max="50" step="10" data-slider-value="25" onchange="setMyValue(this);"/>
                     </div>
                 </div>
                 <div>
@@ -154,7 +159,7 @@
                        <span> 3000</span>
                    </div>
                     <div class="slidecontainer">
-                        <input id="valueAni" class="custom-range" type="range" type="text" min="0" max="10000" step="100" value="3000" onchange="setMyValue(this);calc();"/>
+                        <input id="valueAni" class="custom-range" type="range" type="text" min="0" max="10000" step="100" value="3000" onchange="setMyValue(this);"/>
                         {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                     </div>
@@ -166,7 +171,7 @@
                         <span> 50000</span>
                     </div>
                 <div class="slidecontainer">
-                    <input id="valueCap" class="custom-range" type="range" type="text" min="0" max="100000" step="100" value="50000" onchange="setMyValue(this);calc();"/>
+                    <input id="valueCap" class="custom-range" type="range" type="text" min="0" max="100000" step="100" value="50000" onchange="setMyValue(this);"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -177,7 +182,7 @@
                         <span>2000 </span>
                     </div>
                 <div class="slidecontainer">
-                    <input id="valueTour" class="custom-range" type="range" type="text" min="0" max="10000" step="100" value="2000" onchange="setMyValue(this);calc();"/>
+                    <input id="valueTour" class="custom-range" type="range" type="text" min="0" max="10000" step="100" value="2000" onchange="setMyValue(this);"/>
                     {{/*<input type="range" min="1" max="100" value="{{.ValuePoisson}}" class="slider" id="valuePoisson"
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
@@ -196,7 +201,7 @@
         <button id="start" onclick="setSettings()" class="btn btn-primary"> Continuer </button>
         <br/>
     </div>
-</div>
+    </div>
 
 <script>
     localStorage.setItem("roomName",{{.RoomName}});

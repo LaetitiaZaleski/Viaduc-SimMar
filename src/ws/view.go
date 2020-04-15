@@ -105,25 +105,25 @@ type Preferences struct {
 func Initialisation() Games {
 
 	var g Games
-	g.ClassList = append(g.ClassList, Class{1, "Maire", "", Settings{},
-		Preferences{"", "", 16140, 8220, 12580, 40000,
-			35000, 27800, 50, 25, 100, 50,10000,
-			0, 6440,40000,40000, 30000, 25,
-			15,100,50,1,1,1,
+	g.ClassList = append(g.ClassList, Class{1, "Tourisme", "", Settings{},
+		Preferences{"", "", 1000, 10000, 500, 5000,
+			35000, 2000, 1, 25, 5, 50,500,
+			15000, 200,5000,37000, 3000, 0,
+			15,7,50,1,1,1,
 			1,1,1,1,1,1,1} })
 
 	g.ClassList = append(g.ClassList, Class{2, "Pecheur", "", Settings{},
-		Preferences{"", "", 16140, 8220, 12580, 40000,
-			35000, 27800, 50, 25, 100, 50,10000,
-			0, 6440,40000,40000, 30000, 25,
-			15,100,50,1,1,1,
+		Preferences{"", "", 1000, 10000, 500, 5000,
+			35000, 2000, 1, 25, 5, 50,500,
+			15000, 200,5000,37000, 3000, 0,
+			15,7,50,1,1,1,
 			1,1,1,1,1,1,1} })
 
-	g.ClassList = append(g.ClassList, Class{3, "Ecologiste", "", Settings{},
-		Preferences{"", "", 16140, 8220, 12580, 40000,
-			35000, 27800, 50, 25, 100, 50,10000,
-		0, 6440,40000,40000, 30000, 25,
-			15,100,50,1,1,1,
+	g.ClassList = append(g.ClassList, Class{3, "Ecologiste","", Settings{},
+		Preferences{"", "", 1000, 10000, 500, 5000,
+			35000, 2000, 1, 25, 5, 50,500,
+			15000, 200,5000,37000, 3000, 0,
+			15,7,50,1,1,1,
 			1,1,1,1,1,1,1} })
 
 	return g

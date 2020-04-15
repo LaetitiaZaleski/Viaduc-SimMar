@@ -1,10 +1,10 @@
 
 
 var graphC=[], graphA=[], graphT=[];
-var len = 100000;
+var len = 200000;
 
 
-function draw() {
+function draw(maxy=42000) {
     document.getElementById('graph').innerHTML = "";
 
 
@@ -23,7 +23,7 @@ function draw() {
 
 // 6. Y scale will use the randomly generate number
     var yScale = d3.scaleLinear()
-        .domain([0, 42000]) // input
+        .domain([0, maxy]) // input
         .range([height, 0]); // output
 
 // 7. d3's line generator
@@ -91,7 +91,7 @@ svg.append("path")
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate("+ (width/2) +","+(height+ margin.bottom - 10)+")")  // centre below axis
-        .text("Années");
+        .text("nombre de jours");
 }
 function ndsolve(f, x0, dt, tmax) {
 
@@ -170,14 +170,14 @@ function calc() {
     sim.evaluate(`g = ${g}*0.01`); // g=0.5
 
     let ip = parseInt(roomId = document.getElementById('valueIp').value);
-    let ipval = ip*0.00000001;
+    let ipval = ip*0.0000001;
     sim.evaluate(`ip = ${ipval}`);
     console.log("ipval");
     console.log(ipval);
 
     let zeta = parseInt(roomId = document.getElementById('valueZeta').value);
-    let zetaval = zeta*0.002;
-    sim.evaluate(`zeta = ${zeta}* 0.002`);
+    let zetaval = 0.2-(zeta*0.002);
+    sim.evaluate(`zeta = ${zetaval}`);
     console.log("zetaval");
     console.log(zetaval);
 
@@ -219,7 +219,8 @@ function calc() {
     let data = sim.evaluate("transpose(result).toArray()");
 
     console.log(data);
-    for(let i =0; i< data[0].length;i++){
+    graphC=[];
+    for(let i =0; i<data[0].length;i++){
         graphC.push(data[0][i]*0.01);
     }
 
@@ -227,7 +228,11 @@ function calc() {
      graphA=data[1];
      graphT=data[2];
      console.log(graphC);
-     draw();
+    let maxA = Math.max(...graphA);
+    let maxT = Math.max(...graphT);
+    let maxC = Math.max(...graphC);
+    let maxY = Math.max(maxC,maxA,maxT);
+    draw(maxY);
 }
 
 calc();

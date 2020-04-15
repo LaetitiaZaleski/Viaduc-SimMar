@@ -31,7 +31,7 @@ function joinPreference() {
 }
 
 function setFPRoles() {
-    roles = ["Maire", "Ecologiste", "Pecheur"];
+    roles = ["Tourisme", "Ecologiste", "Pecheur"];
     for(var i = 0; i<roles.length; i++){
         localStorage.setItem(roles[i]+"FP", -1);
     }

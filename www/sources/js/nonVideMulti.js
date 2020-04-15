@@ -121,7 +121,7 @@ function findNonVideMulti() {
                 console.log("ids : " + ids);
                 var cn = "";
                 if (ids === 1) {
-                    cn = "Maire"
+                    cn = "Tourisme"
                 }
                 if (ids === 2) {
                     cn = "Pecheur"
@@ -321,7 +321,7 @@ function findNonVideMulti() {
                 console.log("ids : " + ids);
                 var cn = "";
                 if (ids === 1) {
-                    cn = "Maire"
+                    cn = "Tourisme"
                 }
                 if (ids === 2) {
                     cn = "Pecheur"

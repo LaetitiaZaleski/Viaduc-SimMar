@@ -49,7 +49,7 @@ window.onload = function(){
                         switch (idPresent[i]) {
                             case 1 :
                             case "1" :
-                                role = "MaireFP";
+                                role = "TourismeFP";
                                 id = "1";
                                 break;
                             case 2 :
@@ -100,7 +100,7 @@ window.onload = function(){
                                 if (obj.length > 0) {
                                     for (indice = 0; indice < obj.length; indice++) {
                                         switch (obj[indice].class_name) {
-                                            case "Maire" :
+                                            case "Tourisme" :
                                                 cid = 1;
                                                 break;
                                             case "Pecheur" :
@@ -173,7 +173,7 @@ function qlqEstRevenu(){
         switch (idPresent[i]) {
                 case 1 :
                 case "1" :
-                    role = "MaireFP";
+                    role = "TourismeFP";
                     break;
                 case 2 :
                 case "2" :
@@ -199,7 +199,7 @@ function getMyFP(){
 
     switch (localStorage.getItem("classId")) {
         case "1" :
-            role = "MaireFP";
+            role = "TourismeFP";
             break;
         case "2" :
             role = "PecheurFP";
@@ -216,7 +216,7 @@ function setMyFP(fp="-1"){
     let role ="";
     switch (localStorage.getItem("classId")) {
         case "1" :
-            role = "MaireFP";
+            role = "TourismeFP";
             break;
         case "2" :
             role = "PecheurFP";
@@ -225,6 +225,22 @@ function setMyFP(fp="-1"){
             role = "EcologisteFP";
     }
     return localStorage.setItem(role,-1)
+
+}
+
+function backToPref(){
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("result", "preference");
+    window.location.href = "?" + newParam;
+    //mettre son fp a -1 pour signaler que on est partit =
+    setMyFP(-1);
+
+    // delete final file :
+
+    getXMLHttp('/api?fct=delete_finalFile' +
+        '&room_name=' + RoomName + '&class_id=' + ClassId,
+        function (ret) {
+        });
 
 }
 
@@ -244,7 +260,7 @@ function isEveryoneStillHere() {
                 switch (i) {
                     case 1 :
                     case "1" :
-                        role = "MaireFP";
+                        role = "TourismeFP";
                         break;
                     case 2 :
                     case "2" :
@@ -307,7 +323,7 @@ function setFPRole_i(i) {
         switch (i) {
             case 1 :
             case "1" :
-                role = "MaireFP";
+                role = "TourismeFP";
                 break;
             case 2 :
             case "2" :
@@ -373,7 +389,7 @@ function setFPRole_i(i) {
 
     function firstTime() {
         res = true;
-        roles = ["Maire", "Ecologiste", "Pecheur"];
+        roles = ["Tourisme", "Ecologiste", "Pecheur"];
         for (var i = 0; i < roles.length; i++) {
             console.log(res);
             res = res && (localStorage.getItem(roles[i] + "FP") === "-1");
@@ -398,7 +414,7 @@ function setFPRole_i(i) {
                 nbPlayers = obj.length;
                 for (indice = 0; indice < obj.length; indice++) {
                     switch (obj[indice].class_name) {
-                        case "Maire" :
+                        case "Tourisme" :
                             cid = "1";
                             break;
                         case "Pecheur" :
@@ -449,7 +465,7 @@ function setFPRole_i(i) {
         let Id2 = "slider-Cap" + "-" + obj.class_name;
         let spanId2 = "valueCap" + obj.class_name + "SliderVal";
         setValues(spanId2, Val2);
-        setSlider(Id2, Val2,create);
+        setSlider(Id2, Val2,create,40000);
         setImp("impCapMin" + obj.class_name, obj.preference.imp_cap_min);
         setImp("impCapMax" + obj.class_name, obj.preference.imp_cap_max);
 
@@ -467,7 +483,7 @@ function setFPRole_i(i) {
         let Id4 = "slider-Env" + "-" + obj.class_name;
         let spanId4 = "valueEnv" + obj.class_name + "SliderVal";
         setValues(spanId4, Val4);
-        setSlider(Id4, Val4,create, 100);
+        setSlider(Id4, Val4,create, 10);
         setImp("impEnvMin" + obj.class_name, obj.preference.imp_env_min);
         setImp("impEnvMax" + obj.class_name, obj.preference.imp_env_max);
 
@@ -482,7 +498,7 @@ function setFPRole_i(i) {
     }
 
 
-    function setSlider(sliderId, sliderVals,create = true, max = 40000) {
+    function setSlider(sliderId, sliderVals,create = true, max = 5000) {
         // console.log(sliderVals);
         var sliderAni = document.getElementById(sliderId);
         if (sliderVals[sliderVals.length - 1] < 110) {
@@ -600,7 +616,7 @@ function setFPRole_i(i) {
             console.log("ids : " + ids);
             var cn = "";
             if (ids == 1) {
-                cn = "Maire"
+                cn = "Tourisme"
             }
             if (ids == 2) {
                 cn = "Pecheur"
@@ -712,7 +728,7 @@ function setFPRole_i(i) {
                 console.log(ids);
                 var cn = "";
                 if (ids === 1) {
-                    cn = "Maire"
+                    cn = "Tourisme"
                 }
                 if (ids === 2) {
                     cn = "Pecheur"
