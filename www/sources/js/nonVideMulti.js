@@ -623,6 +623,7 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
             console.log("param equite : ");
             console.log(newMins);
             console.log(newPasMins);
+            console.log("newMaxs");
             console.log(newMaxs);
             console.log(newPasMaxs);
             equite(newMins, newPasMins, newImpMins, newMaxs, newPasMaxs, newImpMaxs,LSid);
@@ -642,7 +643,7 @@ function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite indiv
     console.log("Mins");
     console.log(Mins);
     console.log("Maxs");
-    Maxs=Maxs.slice(0, Mins.length);
+   // Maxs=Maxs.slice(0, Mins.length);
     console.log(Maxs);
     console.log(pasMins);
     console.log(pasMaxs);
@@ -656,7 +657,7 @@ function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite indiv
         for(var i = 0; i<Mins.length; i++){
             Mins[i]= Mins[i] - pasMins[i]
         }
-        for(var j = 0; j<Mins.length; j++){
+        for(var j = 0; j<Maxs.length; j++){
             Maxs[i]= Maxs[i] + pasMaxs[i]
         }
         min = Math.max(...Mins);

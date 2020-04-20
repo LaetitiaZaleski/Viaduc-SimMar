@@ -436,31 +436,46 @@ function getAllFiles(commun = true) {
                 }
             }
 
-            console.log("longeur : " + aniTab.length);
-            var role = "";
-             //pour la variation de couleur
-            var coulr = Math.floor(Math.random() * Math.floor(255));
-            var r = coulr ;
+            var r = 0 ;
             var g = 0;
             var b = 0;
+            console.log("longeur : " + aniTab.length);
+            var role = "";
+            var coulr = 0;
+             //pour la variation de couleur
+            switch (name) {
+                case "Tourisme":
+                    color = 'rgb(' + 91 + ',' + 122 + ',' + 213 + ')';
+                    break;
+                case "Pecheur":
+                    color = 'rgb(' + 218 + ',' + 153 + ',' + 171 + ')';
+                    break;
+                case "Ecologiste":
+                    color = 'rgb(' + 64 + ',' + 158 + ',' + 31 + ')';
+                    break;
+                default:
+                    coulr = Math.floor(Math.random() * Math.floor(255));
+                    r= coulr;
+                    color ='rgb(' + r + ',' + g + ',' + b + ')';
+            }
 
             // points de contraintes :
 
             if (ClassId == 1) {
-                col = 'rgb(' + r + ',' + g + ',' + b + ')';
+                col = color;
                 role = "Tourisme";
                 console.log("b" + b)
             }
             if (ClassId == 2) {
                 r =  coulr;
                 console.log("b" + b);
-                col = 'rgb(' + r + ',' + g + ',' + b + ')';
+                col = color;
                 role = "Pecheur"
             }
             if (ClassId == 3) {
                 r =  coulr;
                 console.log("b" + b);
-                col = 'rgb(' + r + ',' + g + ',' + b + ')';
+                col = color;
                 role = "Ecologiste"
             }
 

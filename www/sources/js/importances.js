@@ -28,7 +28,7 @@ function letsFinish() {
 
 function getImportances(){
     for (let i= 0; i < importances.length; i++) {
-        let imp =importances[i];
+        let imp = importances[i];
 
         let checked = document.getElementById(imp).checked;
 
@@ -55,7 +55,7 @@ async function setImportances() {
         http.send();
         nbFile= nbFile + 1
     }
-    while (http.status != 404);
+    while (http.status !== 404);
     // nb File = le nombre de fichier de cette partie pour ce joueur +1
 
 
@@ -85,16 +85,16 @@ async function setImportances() {
         "value_ouv_faux_min": parseInt(localStorage.getItem("OuvFauxMin")),
         "value_ouv_faux_max": parseInt(localStorage.getItem("OuvFauxMax")),
 
-        "imp_ani_min": parseInt(localStorage.getItem("ImportanceAniMax")),
-        "imp_ani_max": parseInt(localStorage.getItem("ImportanceAniMin")),
-        "imp_tour_min": parseInt(localStorage.getItem("ImportanceTourMax")),
-        "imp_tour_max": parseInt(localStorage.getItem("ImportanceTourMin")),
-        "imp_cap_min": parseInt(localStorage.getItem("ImportanceCapMax")),
-        "imp_cap_max": parseInt(localStorage.getItem("ImportanceCapMin")),
-        "imp_env_min": parseInt(localStorage.getItem("ImportanceEnvMax")),
-        "imp_env_max": parseInt(localStorage.getItem("ImportanceEnvMin")),
-        "imp_ouv_min": parseInt(localStorage.getItem("ImportanceOuvMax")),
-        "imp_ouv_max": parseInt(localStorage.getItem("ImportanceOuvMin"))
+        "imp_ani_min": parseInt(localStorage.getItem("ImportanceAniMin")),
+        "imp_ani_max": parseInt(localStorage.getItem("ImportanceAniMax")),
+        "imp_tour_min": parseInt(localStorage.getItem("ImportanceTourMin")),
+        "imp_tour_max": parseInt(localStorage.getItem("ImportanceTourMax")),
+        "imp_cap_min": parseInt(localStorage.getItem("ImportanceCapMin")),
+        "imp_cap_max": parseInt(localStorage.getItem("ImportanceCapMax")),
+        "imp_env_min": parseInt(localStorage.getItem("ImportanceEnvMin")),
+        "imp_env_max": parseInt(localStorage.getItem("ImportanceEnvMax")),
+        "imp_ouv_min": parseInt(localStorage.getItem("ImportanceOuvMin")),
+        "imp_ouv_max": parseInt(localStorage.getItem("ImportanceOuvMax"))
     };
 
     data = JSON.stringify(jsonObj);

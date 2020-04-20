@@ -50,11 +50,11 @@
         satisfaisant les préférences de tout les utilisateurs. Pour cela, nous commençons par regarder
         si les préférences des utilisateurs ont une intersection non vide.</span>
     <span>
-        En bas de page vous pouvez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
-        En bleu celui de l'opérateur de tourisme, en rose celui du Pecheur et en vert celui de l'Ecologiste.
+        En bas de page vous verrez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
+        En bleu celui de l'opérateur de tourisme, en rose celui du pecheur et en vert celui de l'ecologiste.
     </span>
     <span>
-        Ensuite, vous pouvez appuyer sur "Calculer un noyau commun" ce qui calculera, pour votre modèle,
+        Ensuite, vous pouvez appuyer sur "Calculer un noyau dans l'intersection" ce qui calculera, pour votre modèle,
         s'il existe un noyau non vide dans l'intersection des préférence de tous les utilisateurs.
     </span>
 
@@ -177,7 +177,7 @@
                 </h4>
                 <div>
                     <div>
-                        <span> <b>Restauration de l'environnement</b> </span>
+                        <span> <b>Prise accidentelle de tortues : </b> </span>
 
                     </div>
 
@@ -248,18 +248,6 @@
     </div>
 
 
-    <h1>
-        Discussion :
-    </h1>
-    <div>
-        <ul id="messageList">{{.MessageList}}</ul>
-        <div style="padding-top: 50px">
-            <input id="send-message" type="text">
-            <button  onclick="sendMessage()" class="btn btn-primary"> Envoyer </button>
-        </div>
-    </div>
-
-
     <div>
         <span>
        Ici vous pouvez voir par chaque utilisateur ayant rendu public son noyau : en bleu celui de l'opérateur de tourisme, en rose celui du Pecheur et en vert celui de l'Ecologiste.
@@ -276,7 +264,7 @@
             relachez vos contraintes pour vous aider à obtenir une combinaison d'objectifs et de moyens d'actions qui vous conviennent à tous.
             Pour cela appuyez sur le bouton "Recherche de Noyaux non vide". Le calcul peut prendre quelques minutes. Une fois le calcul fini, plusieurs solution sont proposées. Appuyer sur le bouton correspondant à la
         solution pour qu'elle apparaisse ci-dessous. Vous pouvez ainsi comparere plusieurs solution si vous appuyez sur plusieurs bouton. Réappuyez sur le
-        bouton correspondant à la solution pour qu'elle disparaisse. Vous pourrez ou bien vous mettre d'accord sur une des solution proposer ou bien revenir en
+        bouton correspondant à la solution pour qu'elle disparaisse. Vous pourrez ou bien vous mettre d'accord sur une des solution proposée ou bien revenir en
             arrière pour modifiez vos préférences.
     </span>
     </div>
@@ -284,10 +272,10 @@
 
 
     <div style="padding: 50px">
-        <button  onclick="getAllFiles(false)" class="btn btn-primary" id="affiche" hidden="true"> Afficher les noyaux </button>
+
        <button  onclick="letsCalcAll(false)" class="btn btn-primary" id="calcul" hidden="true"> Calcul de noyaux dans l'intersection </button>
         <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche" hidden="true"> Recherche de noyaux non vides </button>
-        <button  onclick="backToPref()" class="btn btn-primary" id="goback"> revenir aux préférences </button>
+        <button  onclick="backToPref()" class="btn btn-primary" id="goback"> Revenir aux préférences </button>
 
         <br/>
     </div>
@@ -332,8 +320,10 @@
 
     <div id="kernelDiv" style="width:100%;height:800px"></div>
 
+    <button onclick="window.location.href = 'https://framaforms.org/questionnaire-viaducbridge-1586863303';">Quitter la partie</button>
 
 </div>
+
 
 <script src="sources/js/result.js"></script>
 <script src="sources/js/setSliders.js"></script>

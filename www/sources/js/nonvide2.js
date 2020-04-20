@@ -133,13 +133,13 @@ function getPrefs(mono=true) {
 
         // Valeurs de min et max absolu :
         const minMax = {
-            AMax : 40000,
+            AMax : 5000,
             AMin : 0,
-            CMax : 40000,
+            CMax : 50000,
             CMin : 0,
-            TMax : 40000,
+            TMax : 5000,
             TMin : 0,
-            EnvMax : 100,
+            EnvMax : 10,
             EnvMin : 0,
             OuvMax : 50,
             OuvMin : 0
@@ -1005,7 +1005,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [40000]
+            'max': [5000]
         },
     });
 
@@ -1043,7 +1043,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [40000]
+            'max': [5000]
         }
     });
 
@@ -1083,7 +1083,7 @@ function showPreferences(finalprefs,k){
         step: 0,
         range: {
             'min': [0],
-            'max': [40000]
+            'max': [5000]
         }
     });
 
@@ -1123,7 +1123,7 @@ function showPreferences(finalprefs,k){
         step: 5,
         range: {
             'min': [0],
-            'max': [100]
+            'max': []
         }
     });
 
@@ -1163,7 +1163,7 @@ function showPreferences(finalprefs,k){
         step: 5,
         range: {
             'min': [0],
-            'max': [100]
+            'max': [10]
         }
     });
 

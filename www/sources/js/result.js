@@ -26,6 +26,7 @@ window.onload = function(){
 
     setInterval(function () {
             if(reload){
+                console.log("******CAS 1********");
                 getPreference();
 
                 if(idList.length === nbPlayers){
@@ -34,13 +35,15 @@ window.onload = function(){
                     // mettre les roles FP à leur bon num :
                     setFPRole()
                 }
-                console.log("******CAS 1********");
+
                 //getFile();
             }else {
+                console.log("******PAS CAS 1********");
                 if (getMyFP() === "-1") { // on a tous les final files mais nous on est à -1 : c'est nous qui etions partit
                     setFPRole_i(localStorage.getItem("classId")); //on met notre bon FP
                     let idPresent = setIdPresents();
                     let role = "";
+                    let rolefp = "";
                     let id = 0;
                     console.log("******CAS 3********");
                     console.log("idPresent");
@@ -49,20 +52,23 @@ window.onload = function(){
                         switch (idPresent[i]) {
                             case 1 :
                             case "1" :
-                                role = "TourismeFP";
+                                rolefp = "TourismeFP";
+                                role = "Tourisme";
                                 id = "1";
                                 break;
                             case 2 :
                             case "2" :
-                                role = "PecheurFP";
+                                rolefp = "PecheurFP";
+                                role = "Pecheur";
                                 id = "2";
                                 break;
                             default :
-                                role = "EcologisteFP";
+                                rolefp = "EcologisteFP";
+                                role = "Ecologiste";
                                 id = "3";
 
                         }
-                        let fp = localStorage.getItem(role);
+                        let fp = localStorage.getItem(rolefp);
                         if (fp !== "-1") {
                             console.log("FP : ");
                             console.log(fp);
@@ -78,12 +84,17 @@ window.onload = function(){
                             });
                             getPreference();
                             //afficher les anciens noyaux :
-                            getFileBynum(fp, "name", id);
+                            console.log("role :" + role);
+                            getFileBynum(fp, role, id);
                         }
 
                     }
+                    if(isEveryoneStillHere()){
+                        document.getElementById("calcul").hidden = false
+                    }
 
                 } else {
+                    console.log("******On attend le retour ********");
                     setNbPlayers();
                     isEveryoneStillHere(); //regarde si tout le monde est là vis a vis des final files
                     // si non mettre ceux qui sont partit à -1
@@ -234,6 +245,8 @@ function backToPref(){
     window.location.href = "?" + newParam;
     //mettre son fp a -1 pour signaler que on est partit =
     setMyFP(-1);
+    let RoomName = localStorage.getItem("roomName");
+    let ClassId = localStorage.getItem("classId");
 
     // delete final file :
 
@@ -444,7 +457,7 @@ function setFPRole_i(i) {
 
                 }
             }
-            document.getElementById("affiche").hidden = onAttendQlq
+            //document.getElementById("affiche").hidden = onAttendQlq
             //getFile();
         });
     }

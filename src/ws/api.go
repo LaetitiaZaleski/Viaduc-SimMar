@@ -344,19 +344,29 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 				}
 				var vals = strings.Split(string(data), " ")
 				v1, err := strconv.ParseFloat(vals[1], 32)
+
 				if err != nil {
 					fmt.Println("v1")
 					fmt.Println(err)
+				}else {
+					fmt.Println("v1")
+					fmt.Println(v1)
 				}
 				v2, err := strconv.ParseFloat(vals[3], 32)
 				if err != nil {
 					fmt.Println("v2")
 					fmt.Println(err)
+				}else {
+					fmt.Println("v2")
+					fmt.Println(v2)
 				}
 				v3, err := strconv.ParseFloat(vals[5], 32)
 				if err != nil {
 					fmt.Println("v3")
 					fmt.Println(err)
+				}else {
+					fmt.Println("v3")
+					fmt.Println(v3)
 				}
 				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 > 50000) || (v3 > 50000){
 					alerte = "Ce noyau est negatif !"
@@ -461,19 +471,29 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 				}
 				var vals = strings.Split(string(data), " ")
 				v1, err := strconv.ParseFloat(vals[1], 32)
+
 				if err != nil {
 					fmt.Println("v1")
 					fmt.Println(err)
+				}else {
+					fmt.Println("v1")
+					fmt.Println(v1)
 				}
 				v2, err := strconv.ParseFloat(vals[3], 32)
 				if err != nil {
 					fmt.Println("v2")
 					fmt.Println(err)
+				}else {
+					fmt.Println("v2")
+					fmt.Println(v2)
 				}
 				v3, err := strconv.ParseFloat(vals[5], 32)
 				if err != nil {
 					fmt.Println("v3")
 					fmt.Println(err)
+				}else {
+					fmt.Println("v3")
+					fmt.Println(v3)
 				}
 				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 > 50000) || (v3 > 50000){
 					alerte = "Ce noyau est negatif !"

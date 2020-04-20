@@ -1,7 +1,7 @@
 
 
 var graphC=[], graphA=[], graphT=[];
-var len = 200000;
+var len = 100000;
 
 
 function draw(maxy=42000) {
@@ -91,7 +91,7 @@ svg.append("path")
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate("+ (width/2) +","+(height+ margin.bottom - 10)+")")  // centre below axis
-        .text("nombre de jours");
+        .text("Temps");
 }
 function ndsolve(f, x0, dt, tmax) {
 
@@ -141,7 +141,7 @@ function calc() {
 //M= 36036
 
 //p= 0.0004
-    sim.evaluate("p= 1000");
+    sim.evaluate("p= 300");
     sim.evaluate("a=1500");
 //a= 10000.0
     sim.evaluate("eta = 0.00008");

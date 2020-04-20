@@ -39,12 +39,25 @@ var gdata;
 function letsFinish(multi = false) {
     if (gFinalFiles.length !== 1){
         alert("Merci de choisir UNE solution");
+        console.log("gFinalFiles");
+        console.log(gFinalFiles);
+        console.log("gNumFiles");
+        console.log(gNumFiles);
     }else{
         let FileId = parseInt(gNumFiles[gFinalFiles[0]],10);
+        console.log("FileId"+FileId);
         let LastId = FileId;
         let RoomName =localStorage.getItem("roomName");
         let ClassId = localStorage.getItem("classId");
         localStorage.setItem("fileId", FileId);
+
+        postXMLHttp('/api?fct=lets_setPref' +
+            '&fp=' + FileId +
+            '&room_name=' + localStorage.getItem("roomName") +
+            '&classId=' + localStorage.getItem("classId"), function (ret) {
+            //getFile();
+        });
+
         var http = new XMLHttpRequest();
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + LastId + "-viab-0-bound.dat";
@@ -148,13 +161,13 @@ function calcTable(abs, pref, faux){
 
         // Valeurs de min et max absolu :
         const minMax = {
-            AMax : 40000,
+            AMax : 5000,
             AMin : 0,
             CMax : 40000,
             CMin : 0,
-            TMax : 40000,
+            TMax : 5000,
             TMin : 0,
-            EnvMax : 100,
+            EnvMax : 10,
             EnvMin : 0,
             OuvMax : 50,
             OuvMin : 0
@@ -525,10 +538,19 @@ function showHide(k) {
         $("#slider-tour-"+k + ", #value-min-max-tour-" + k+", #text-"+ k).remove();
         $("#slider-env-"+k + ", #value-min-max-env-" + k+", #text-"+ k).remove();
         $("#slider-ouv-"+k + ", #value-min-max-ouv-" + k+", #text-"+ k).remove();
-        gFinalFiles.pop(parseInt(k));
+        gFinalFiles=removeFromArray(gFinalFiles,parseInt(k));
         console.log("gFinalFiles");
         console.log(gFinalFiles);
     }
+}
+
+function removeFromArray(arr, elem) {
+
+    for( let i = 0; i < arr.length; i++){
+        if ( arr[i] === elem) {
+            arr.splice(i, 1); }
+    }
+    return arr
 }
 
 function removeDomine(data){ // enlève les éléments dominés d'un tableau de datas
@@ -1595,7 +1617,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [40000]
+            'max': [5000]
         },
     });
 
@@ -1673,7 +1695,7 @@ function showPreferences(finalprefs,k){
         step: 0,
         range: {
             'min': [0],
-            'max': [40000]
+            'max': [5000]
         }
     });
 
@@ -1713,7 +1735,7 @@ function showPreferences(finalprefs,k){
         step: 5,
         range: {
             'min': [0],
-            'max': [100]
+            'max': [10]
         }
     });
 
@@ -1753,7 +1775,7 @@ function showPreferences(finalprefs,k){
         step: 5,
         range: {
             'min': [0],
-            'max': [100]
+            'max': [50]
         }
     });
 
