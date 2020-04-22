@@ -225,11 +225,11 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
         i++;
         let tmpPath2 = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
         //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
-        http2.open('HEAD', tmpPath, false);
+        http2.open('HEAD', tmpPath2, false);
         http2.send();
     }
-    while (http.status != 404 || http2.status != 404 );
-    if (i > 0) {
+    while (http.status !== 404 || http2.status !== 404 );
+    if (i > 1) {
         let numFile = i -2;
 
         let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";

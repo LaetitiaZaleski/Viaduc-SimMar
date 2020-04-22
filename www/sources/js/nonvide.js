@@ -1,6 +1,6 @@
 
 window.onload = function(){
-    if (localStorage.getItem("nonvides")!=="-1"){
+  /*  if (localStorage.getItem("nonvides")!=="-1"){
         gFinalFiles = [1,2];
 
         gFinalPref = JSON.parse(localStorage.getItem("finalPref"));
@@ -15,9 +15,7 @@ window.onload = function(){
         console.log(finalPrefs[0].value_ani_min);
 
         for(k = 0; k<finalPrefs.length; k++){
-            /*
-            *  CREATION DES BOUTONS : 1er click = ca affiche / 2eme click = ca efface
-            * */
+
             console.log("k :");
             console.log(finalPrefs[k]);
             var name = "solution "+ (k+1);
@@ -26,7 +24,7 @@ window.onload = function(){
             getFileBynum(gNumFiles[k],name)
         }
 
-    }
+    }*/
 };
 
 
@@ -125,16 +123,19 @@ function getImportances(){
 
 function calcPas(faux,pref){
 
-    pas = Math.max(Math.ceil(Math.max((pref-faux),(faux-pref))/precision),1);
+    let pas = Math.max(Math.ceil(Math.max((pref-faux),(faux-pref))/precision),1);
     return pas
 }
 
 function calcTable(abs, pref, faux){
+    console.log("calc pas : "+abs+","+pref+","+faux);
     if(abs===pref){
         return 0
     }
-    dist = Math.max((pref-abs),(abs-pref));
-    pas = calcPas(faux,pref);
+    let dist = Math.max((pref-abs),(abs-pref));
+    console.log("dist : "+dist);
+    let pas = calcPas(faux,pref);
+    console.log("dist : "+pas);
 
     //return Math.max(Math.floor(Math.max((abs-pref),(pref-abs))/ calcPas(faux,pref),1))
     return Math.max( Math.floor( dist/pas),  1)
@@ -589,7 +590,7 @@ function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,1
     if(mono){
         res = dichotomie(Prefs, minMax,fauxMinMax,importab, nbEtapes);
     }else{
-        console.log("coucou on est dans recherche digonale")
+        console.log("coucou on est dans recherche digonale");
         res = dichotomieMulti(Prefs, minMax,fauxMinMax,importab, nbEtapes);
     }
 
@@ -1029,12 +1030,10 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 console.log("file num : "+nbFile);
                 console.log(Prefs);
                 for (var j = 0; j < Prefs.length; j++) {
-
                     //   console.log(Prefs[j].name + Prefs[j].table);
                     Prefs[j].table[2] = Prefs[j].table[1];
                     Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
                     //   console.log(Prefs[j].name +Prefs[j].table);
-
                 }
             }
             else {
@@ -1043,7 +1042,6 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                     newPrefs = JSON.parse(JSON.stringify(Prefs));
                     console.log("negatif");
                     dontstop = true;
-
                 } else {
                     dontstop = false;
                     console.log("non vide");
@@ -1145,7 +1143,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     let RoomName = localStorage.getItem("roomName");
     let ClassId = localStorage.getItem("classId");
 
-    var faux = true; // est ce que ça marche avec les fauxminmax ?
+    var faux = false; // est ce que ça marche avec les fauxminmax ?
 
     if (!rafinement) {
         for (var i = 0; i < Prefs.length; i++) {
@@ -1203,11 +1201,24 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             }
             nbFile = maxnbfile - 1;
 
+            let class_id_ = "";
+            switch (ids) {
+                case 1:
+                    class_id_ = "1";
+                    break;
+                case 2 :
+                    class_id_ = "2";
+                    break;
+                default:
+                    class_id_ = "3";
+                    break;
+            }
+
 
             //Un jsonObj par classID
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
-                "class_id": ids.toString(),
+                "class_id": class_id_,
                 "value_ani_min":value_ani_min,
                 "value_ani_max": value_ani_max,
                 "value_tour_min":value_tour_min,
@@ -1349,11 +1360,23 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + fauxMinMax.OuvMin) ;
             value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + fauxMinMax.OuvMax);
 
+            let class_id_ = "";
+            switch (ids) {
+                case 1:
+                    class_id_ = "1";
+                    break;
+                case 2 :
+                    class_id_ = "2";
+                    break;
+                default:
+                    class_id_ = "3";
+                    break;
+            }
 
             // on test si avec les fauxMinMax ça marche :
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
-                "class_id": ids.toString(),
+                "class_id": class_id_,
                 "value_ani_min":value_ani_min,
                 "value_ani_max": value_ani_max,
                 "value_tour_min":value_tour_min,
@@ -1399,10 +1422,22 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             value_ouv_min = Math.ceil(OuvMin.table[1]*OuvMin.signe*OuvMin.pas + minMax.OuvMin) ;
             value_ouv_max = Math.floor(OuvMax.table[1]*OuvMax.signe*OuvMax.pas + minMax.OuvMax);
 
+            let class_id_ = "";
+            switch (ids) {
+                case 1:
+                    class_id_ = "1";
+                    break;
+                case 2 :
+                    class_id_ = "2";
+                    break;
+                default:
+                    class_id_ = "3";
+                    break;
+            }
             // on test si avec les fauxMinMax ça marche :
             var jsonObj = {
                 "room_name": localStorage.getItem("roomName"),
-                "class_id": ids,
+                "class_id": class_id_,
                 "value_ani_min":value_ani_min,
                 "value_ani_max": value_ani_max,
                 "value_tour_min":value_tour_min,
@@ -1485,10 +1520,10 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             console.log("au moins un vide");
             for (var j = 0; j < Prefs.length; j++) {
 
-                //   console.log(Prefs[j].name + Prefs[j].table);
+                console.log(Prefs[j].name + Prefs[j].table);
                 Prefs[j].table[2] = Prefs[j].table[1];
                 Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
-                //   console.log(Prefs[j].name +Prefs[j].table);
+                console.log(Prefs[j].name +Prefs[j].table);
             }
 
         }else{

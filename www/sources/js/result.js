@@ -26,7 +26,7 @@ window.onload = function(){
 
     setInterval(function () {
             if(reload){
-                console.log("******CAS 1********");
+           //     console.log("******CAS 1********");
                 getPreference();
 
                 if(idList.length === nbPlayers){
@@ -38,7 +38,7 @@ window.onload = function(){
 
                 //getFile();
             }else {
-                console.log("******PAS CAS 1********");
+            //    console.log("******PAS CAS 1********");
                 if (getMyFP() === "-1") { // on a tous les final files mais nous on est à -1 : c'est nous qui etions partit
                     setFPRole_i(localStorage.getItem("classId")); //on met notre bon FP
                     let idPresent = setIdPresents();
@@ -94,7 +94,7 @@ window.onload = function(){
                     }
 
                 } else {
-                    console.log("******On attend le retour ********");
+             //       console.log("******On attend le retour ********");
                     setNbPlayers();
                     isEveryoneStillHere(); //regarde si tout le monde est là vis a vis des final files
                     // si non mettre ceux qui sont partit à -1
@@ -590,11 +590,11 @@ function setFPRole_i(i) {
 
     function letsCalcAll() {
 
-        RoomName = localStorage.getItem("roomName");
+        let RoomName = localStorage.getItem("roomName");
 
         // regarder quels noyaux ont ete calculés :
         var classIds = [];
-        for (id = 1; id < 4; id++) {
+        for (let id = 1; id < 4; id++) {
             var i = -1;
             var http = new XMLHttpRequest();
             do {
@@ -613,16 +613,16 @@ function setFPRole_i(i) {
         }
 
         // trouver les nouveaux min et max :
-        var valueAniMin = [];
-        var valueAniMax = [];
-        var valueTourMin = [];
-        var valueTourMax = [];
-        var valueCapMin = [];
-        var valueCapMax = [];
-        var valueEnvMin = [];
-        var valueEnvMax = [];
-        var valueOuvMin = [];
-        var valueOuvMax = [];
+        let valueAniMin = [];
+        let valueAniMax = [];
+        let valueTourMin = [];
+        let valueTourMax = [];
+        let valueCapMin = [];
+        let valueCapMax = [];
+        let valueEnvMin = [];
+        let valueEnvMax = [];
+        let valueOuvMin = [];
+        let valueOuvMax = [];
 
 
         classIds.forEach(function (ids) {
@@ -674,47 +674,47 @@ function setFPRole_i(i) {
         });
         let boolAlert = true;
         // On prend le max des min et le min des max :
-        AniMax = valueAniMax.sort(function (a, b) {
+        let AniMax = valueAniMax.sort(function (a, b) {
             return a - b
         })[0];
         console.log("Ani max" + AniMax);
-        AniMin = valueAniMin.sort(function (a, b) {
+        let AniMin = valueAniMin.sort(function (a, b) {
             return b - a
         })[0];
         console.log("Ani min" + AniMin);
 
-        CapMax = valueCapMax.sort(function (a, b) {
+        let CapMax = valueCapMax.sort(function (a, b) {
             return a - b
         })[0];
         console.log("Cap max" + CapMax);
-        CapMin = valueCapMin.sort(function (a, b) {
+        let CapMin = valueCapMin.sort(function (a, b) {
             return b - a
         })[0];
         console.log("Cap min" + CapMin);
 
-        TourMax = valueTourMax.sort(function (a, b) {
+        let TourMax = valueTourMax.sort(function (a, b) {
             return a - b
         })[0];
         console.log("Tour max" + TourMax);
-        TourMin = valueTourMin.sort(function (a, b) {
+        let TourMin = valueTourMin.sort(function (a, b) {
             return b - a
         })[0];
         console.log("Tour min" + TourMin);
 
-        EnvMax = valueEnvMax.sort(function (a, b) {
+        let EnvMax = valueEnvMax.sort(function (a, b) {
             return a - b
         })[0];
         console.log("Env max" + EnvMax);
-        EnvMin = valueEnvMin.sort(function (a, b) {
+        let EnvMin = valueEnvMin.sort(function (a, b) {
             return b - a
         })[0];
         console.log("Env min" + EnvMin);
 
-        OuvMax = valueOuvMax.sort(function (a, b) {
+        let OuvMax = valueOuvMax.sort(function (a, b) {
             return a - b
         })[0];
         console.log("Ouv max" + OuvMax);
-        OuvMin = valueOuvMin.sort(function (a, b) {
+        let OuvMin = valueOuvMin.sort(function (a, b) {
             return b - a
         })[0];
         console.log("Ouv min" + OuvMin);
@@ -728,7 +728,7 @@ function setFPRole_i(i) {
 
 
             classIds.forEach(function (ids) {
-                nbFile = 0;
+                let nbFile = 0;
                 do {
                     let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
                     http.open('HEAD', tmpPath, false);
@@ -764,7 +764,7 @@ function setFPRole_i(i) {
                     "value_ouv_min": parseInt(OuvMin),
                     "value_ouv_max": parseInt(OuvMax)
                 };
-                data = JSON.stringify(jsonObj);
+                let data = JSON.stringify(jsonObj);
                 /*  console.log("ok 1");
 
                   console.log("ok 2");

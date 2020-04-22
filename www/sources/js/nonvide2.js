@@ -1,6 +1,6 @@
 
 window.onload = function(){
-    if (localStorage.getItem("nonvides")!=="-1"){
+ /*   if (localStorage.getItem("nonvides")!=="-1"){
 
         gFinalPref = JSON.parse(localStorage.getItem("finalPref"));
         finalPrefs = JSON.parse(localStorage.getItem("finalPref"));
@@ -14,9 +14,7 @@ window.onload = function(){
         console.log(finalPrefs[0].value_ani_min);
 
         for(k = 0; k<finalPrefs.length; k++){
-            /*
-            *  CREATION DES BOUTONS : 1er click = ca affiche / 2eme click = ca efface
-            * */
+
             console.log("k :");
             console.log(finalPrefs[k]);
             var name = "solution "+ (k+1);
@@ -25,7 +23,7 @@ window.onload = function(){
             getFileBynum(gNumFiles[k],name) // ajouter id
         }
 
-    }
+    }*/
 };
 
 

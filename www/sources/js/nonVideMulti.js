@@ -275,6 +275,7 @@ function findNonVideMulti() {
 
 
             // mettre la room.wait = true
+            document.getElementById("solutions-container").hidden = false;
 
 
 
@@ -463,12 +464,6 @@ function findNonVideMulti() {
                 console.log(printmin);
             }
             /**********************/
-
-
-
-
-
-
 
 
 
