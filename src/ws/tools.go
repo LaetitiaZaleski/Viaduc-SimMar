@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -12,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 func Exists(name string) bool {
@@ -97,4 +99,37 @@ func SendPostRequest (url string, filename string, filetype string) []byte {
 	}
 
 	return content
+}
+
+
+func isKernelEmpty(fileName string) bool{
+	boolEmpty := true
+
+	readFile, err := os.Open(fileName)
+
+	if err != nil {
+		log.Fatalf("failed to open file: %s", err)
+	}
+
+	fileScanner := bufio.NewScanner(readFile)
+	fileScanner.Split(bufio.ScanLines)
+	var fileTextLines []string
+
+	for fileScanner.Scan() {
+		fileTextLines = append(fileTextLines, fileScanner.Text())
+	}
+
+	readFile.Close()
+
+	for _, eachline := range fileTextLines {
+
+		var vals = strings.Split(eachline, " ")
+		if(vals[3]=="1.0"){
+			boolEmpty = false
+			break;
+		}
+	}
+
+	return boolEmpty
+
 }

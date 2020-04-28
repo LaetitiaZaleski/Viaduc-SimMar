@@ -23,7 +23,6 @@ window.onload = function(){
 
 */
 
-
     setInterval(function () {
             if(reload){
            //     console.log("******CAS 1********");
@@ -493,10 +492,13 @@ function setFPRole_i(i) {
 
 
         let Val4 = [obj.preference.value_env_faux_min, obj.preference.value_env_min, obj.preference.value_env_max, obj.preference.value_env_faux_max];
+        console.log(Val4);
         let Id4 = "slider-Env" + "-" + obj.class_name;
         let spanId4 = "valueEnv" + obj.class_name + "SliderVal";
         setValues(spanId4, Val4);
+        console.log(Val4);
         setSlider(Id4, Val4,create, 10);
+        console.log(Val4);
         setImp("impEnvMin" + obj.class_name, obj.preference.imp_env_min);
         setImp("impEnvMax" + obj.class_name, obj.preference.imp_env_max);
 
@@ -521,7 +523,7 @@ function setFPRole_i(i) {
             noUiSlider.create(sliderAni, {
                 start: sliderVals,
                 connect: [true, true, true, true, true],
-                step: 10,
+                step: 1,
                 range: {
                     'min': [0],
                     'max': [max]
@@ -544,12 +546,10 @@ function setFPRole_i(i) {
 
     function setValues(spanId, sliderVals) {
         for (i = 1; i <= sliderVals.length; i++) {
-
             id_i = spanId + i.toString();
             //   console.log(id_i);
             document.getElementById(id_i).innerHTML = sliderVals[(i - 1)].toString()
         }
-
     }
 
     function setImp(idImp, imp) {

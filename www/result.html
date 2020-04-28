@@ -51,19 +51,15 @@
         si les préférences des utilisateurs ont une intersection non vide.</span>
     <span>
         En bas de page vous verrez afficher les derniers noyaux calculés par chaque utilisateur ayant calculé un noyau.
-        En bleu celui de l'opérateur de tourisme, en rose celui du pecheur et en vert celui de l'ecologiste.
+        En bleu celui de l'opérateur de tourisme, en rose celui du pecheur et en vert celui de l'écologiste.
     </span>
     <span>
-        Ensuite, vous pouvez appuyer sur "Calculer un noyau dans l'intersection" ce qui calculera, pour votre modèle,
-        s'il existe un noyau non vide dans l'intersection des préférence de tous les utilisateurs.
-    </span>
-
-    <span>
-        A tout moment, vous pouvez revenir en arrière et modifier vos préférences.
+        Ensuite, vous pouvez appuyer sur "Calculer un noyau dans l'intersection" ce qui calculera, pour votre modèle (c'est à dire pour les valeurs que vous avez indiquée dans le première phase),
+        s'il existe un noyau non vide dans l'intersection des préférences de tous les utilisateurs.
     </span>
 
     <h3>
-        Préférence des utilisateurs :
+        Préférences des utilisateurs :
     </h3>
 
     <div>
@@ -250,21 +246,21 @@
 
     <div>
         <span>
-       Ici vous pouvez voir par chaque utilisateur ayant rendu public son noyau : en bleu celui de l'opérateur de tourisme, en rose celui du Pecheur et en vert celui de l'Ecologiste.
+       Ici vous pouvez voir le noyau de chaque utilisateur : en bleu celui de l'opérateur de tourisme, en rose celui du pêcheur et en vert celui de l'ecologiste.
     </span>
         <span>
         Ensuite, vous pouvez appuyer sur "Calcul de noyaux dans l'intersection" ce qui calculera, pour votre modèle,
         s'il existe un noyau non vide dans l'intersection des préférences de tous les utilisateurs. Si c'est le cas il sera affiché sur le même graphe que
             les autres noyaux. Si chacun a obtenu un noyau non vide dans l'intersection des contraintes, et que ce noyau est satisfaisant pour tout le monde,
-            la partie peut s'arreter ici et nous choisissont l'intersection de vos préférences comme objectifs et moyen d'action commun.
-    </span>
+            la partie peut s'arrêter ici en choisissant l'intersection de vos préférences comme objectifs et moyens d'action communs.
+        </span>
 
         <span>
-        Si au moins un de joueur a obtenu un noyau vide avec la méthode précédente (calcul dans l'intersection de contrantes) nous pouvons vous aider à
-            relachez vos contraintes pour vous aider à obtenir une combinaison d'objectifs et de moyens d'actions qui vous conviennent à tous.
-            Pour cela appuyez sur le bouton "Recherche de Noyaux non vide". Le calcul peut prendre quelques minutes. Une fois le calcul fini, plusieurs solution sont proposées. Appuyer sur le bouton correspondant à la
-        solution pour qu'elle apparaisse ci-dessous. Vous pouvez ainsi comparere plusieurs solution si vous appuyez sur plusieurs bouton. Réappuyez sur le
-        bouton correspondant à la solution pour qu'elle disparaisse. Vous pourrez ou bien vous mettre d'accord sur une des solution proposée ou bien revenir en
+        Si au moins un joueur a obtenu un noyau vide avec la méthode précédente (calcul dans l'intersection de contraintes) nous pouvons vous aider à
+            relâchez vos contraintes pour vous aider à obtenir une combinaison d'objectifs et de moyens d'action qui vous conviennent à tous.
+            Pour cela appuyez sur le bouton "Recherche de Noyaux non-vides". Le calcul peut prendre quelques minutes. Une fois le calcul fini, plusieurs solutions sont proposées. Appuyer sur le bouton correspondant à la
+        solution pour qu'elle apparaisse ci-dessous. Vous pouvez ainsi comparer plusieurs solutions si vous appuyez sur plusieurs boutons. Réappuyez sur le
+        bouton correspondant à la solution pour qu'elle disparaisse. Vous pourrez vous mettre d'accord sur une des solutions proposées ou bien revenir en
             arrière pour modifiez vos préférences.
     </span>
     </div>
@@ -274,7 +270,7 @@
     <div style="padding: 50px">
 
        <button  onclick="letsCalcAll(false)" class="btn btn-primary" id="calcul" hidden="true"> Calcul de noyaux dans l'intersection </button>
-        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche" hidden="true"> Recherche de noyaux non vides </button>
+        <button  onclick="findNonVideMulti()" class="btn btn-primary" id="recherche" hidden="true"> Recherche de noyaux non-vides </button>
         <button  onclick="backToPref()" class="btn btn-primary" id="goback"> Revenir aux préférences </button>
 
         <br/>

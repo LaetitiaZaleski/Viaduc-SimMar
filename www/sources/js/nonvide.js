@@ -25,6 +25,9 @@ window.onload = function(){
         }
 
     }*/
+
+
+
 };
 
 
@@ -58,7 +61,7 @@ function letsFinish(multi = false) {
 
         var http = new XMLHttpRequest();
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + LastId + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + LastId + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             LastId = LastId + 1
@@ -843,7 +846,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         var data = JSON.stringify(jsonObj);
         console.log(data);
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             nbFile = nbFile + 1
@@ -865,7 +868,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
         do {
             console.log(nbFile);
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             sleep(1500)
@@ -890,7 +893,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
         nbFile = 0;
 
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
             //    console.log(tmpPath);
             http.open('HEAD', tmpPath, false);
             http.send();
@@ -1072,7 +1075,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
         do {
 
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
           //  console.log(tmpPath);
           //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
             http.open('HEAD', tmpPath, false);
@@ -1191,7 +1194,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             let nbFile = 0;
 
             do {
-                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
                 http.open('HEAD', tmpPath, false);
                 http.send();
                 nbFile = nbFile + 1
@@ -1269,7 +1272,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             do {
                 console.log("id"+ids);
                 console.log(nbFile);
-                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
                 http.open('HEAD', tmpPath, false);
                 http.send();
                 sleep(1500);
@@ -1338,7 +1341,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             let nbFile = 0;
 
             do {
-                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
                 http.open('HEAD', tmpPath, false);
                 http.send();
                 nbFile = nbFile + 1
@@ -1506,7 +1509,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
 
 
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
            // console.log(tmpPath);
             //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
             http.open('HEAD', tmpPath, false);

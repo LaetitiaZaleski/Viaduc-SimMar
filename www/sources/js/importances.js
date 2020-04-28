@@ -22,7 +22,6 @@ function letsFinish() {
 
 
 
-
 }
 
 
@@ -50,7 +49,7 @@ async function setImportances() {
     ClassId = localStorage.getItem("classId");
 
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         nbFile= nbFile + 1
@@ -100,10 +99,7 @@ async function setImportances() {
     data = JSON.stringify(jsonObj);
 
     console.log(data);
-    neg = true;
 
-    while (neg) {
-        neg = false;
         postXMLHttp('/api?fct=lets_calc' +
             '&data=' + data, function (ret) {
             if (ret === "Ce noyau est negatif !") {
@@ -113,13 +109,12 @@ async function setImportances() {
             }
 
         });
-    }
 
     // on attend que le fichier soit créé :
     nbFile = nbFile -1;
 
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         sleep(1000)

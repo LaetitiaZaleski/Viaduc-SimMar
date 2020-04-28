@@ -35,8 +35,8 @@ async function letsCalc() {
     ClassId = localStorage.getItem("classId");
 
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
-       // let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+      //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         nbFile= nbFile + 1
@@ -94,8 +94,8 @@ async function letsCalc() {
     });
     nbFile = nbFile -1;
 
-    let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
-    //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+    //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+    let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
     do {
         //  console.log(tmpPath);
         //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
@@ -126,9 +126,9 @@ async function letsCalc() {
             });
             nbFile = nbFile+1;
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
+           // let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-bound.dat";
             //  console.log(tmpPath);
-            //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             console.log("wait");
@@ -218,13 +218,13 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
     var http2 = new XMLHttpRequest();
 
     do {
-        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
-        //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
+        //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
         http.open('HEAD', tmpPath, false);
         http.send();
         i++;
-        let tmpPath2 = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
-        //let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
+        //let tmpPath2 = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0-bound.dat";
+        let tmpPath2 = "sources/output/" + RoomName + "_" + ClassId + "_" + i + "-viab-0.dat";
         http2.open('HEAD', tmpPath2, false);
         http2.send();
     }
@@ -232,8 +232,8 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
     if (i > 1) {
         let numFile = i -2;
 
-        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
-        //let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
+        //let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
+        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
         console.log("Path : " + path);
 
         var allData = {
@@ -258,14 +258,14 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
 
 
             for (i = 0; i < lineTab.length; i++) {
-                let valueTab = lineTab[i].split('  ');
+                let valueTab = lineTab[i].split(' ');
                 if (valueTab.length >= 3) {
-                    //if (i%3  === 0) { // on prend un point sur 3
+                    if ((parseFloat(valueTab[3]) === 1.0) && (i%3 ==0)) { // on prend le point s'il est dans le noyau et un point sur 3
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
 
-                   // }
+                    }
                 }
             }
 

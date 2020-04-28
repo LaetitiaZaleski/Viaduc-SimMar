@@ -125,11 +125,11 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		lastId = lastId + 1
 		var newId= strconv.Itoa(lastId)
 		log.Println(fmt.Sprintf("%v", lastId))
-		var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0-bound.dat"
-		//var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0.dat"
+		//var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0-bound.dat"
+		var fileViabToRename = "www/sources/output/" + roomName + "_" + classId + "_" + fileId + "-viab-0.dat"
 		var fileViabNewName = strings.Replace(fileViabToRename, fileId, newId, -1)
-		//var fileJsonToRename = "input/" + roomName + "_" + classId + "_" + fileId + ".json"
 		var fileJsonToRename = "input/" + roomName + "_" + classId + "_" + fileId + ".json"
+		//var fileJsonToRename = "input/" + roomName + "_" + classId + "_" + fileId + ".json"
 		var fileJsonNewName = strings.Replace(fileJsonToRename, fileId, newId, -1)
 		var paramCp []string
 		var pathViabToRename = "./" + fileViabToRename
@@ -150,8 +150,8 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		}
 		// fichier pour montrer qu'on a fini :
 
-		var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0-bound", "finalfile", -1)
-		//var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0", "finalfile", -1)
+		//var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0-bound", "finalfile", -1)
+		var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0", "finalfile", -1)
 		log.Println(fmt.Sprintf(fileFinish))
 		paramFinish := append(paramCp, pathViabToRename,fileFinish)
 		cmdCpF := exec.Command("cp", paramFinish...)
@@ -282,10 +282,10 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 			Lancement du calcul / creation du fichier
 		*/
 		file := CreateFile(room.Name,preference.ClassId,class.Settings, class.Preferences)
-		//fileOut := strings.Replace(file, ".json", "-viab-0.dat", -1)
-		fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
-		var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
-		//var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		fileOut := strings.Replace(file, ".json", "-viab-0.dat", -1)
+		//fileOut := strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
+		//var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
+		var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
 		cmd := exec.Command("./bin/viabLabExe3", file )
 		//cmd := exec.Command("./bin/tmpexe")
@@ -331,14 +331,14 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 
 			fileOut := strings.Replace(fileOut, "input", "www/sources/output", -1)
 
-			fo, err := os.Stat(fileOut);
-			size := fo.Size()
-
 			var alerte = " "
-			if size == 0 {
+
+			boolEmpty := isKernelEmpty(fileOut)
+
+			if boolEmpty {
 				alerte = "Ce noyau est vide !"
 			} else {
-				data, err2 := ioutil.ReadFile(strings.Replace(fileOut, "input", "www/sources/output", -1))
+			/*	data, err2 := ioutil.ReadFile(strings.Replace(fileOut, "input", "www/sources/output", -1))
 				if err2 != nil {
 					fmt.Println(err2)
 				}
@@ -370,9 +370,9 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 				}
 				if (v1 < 0) || (v2 < 0) || (v3 < 0) || (v1 > 50000) || (v2 > 50000) || (v3 > 50000){
 					alerte = "Ce noyau est negatif !"
-				}else{
+				}else{ */
 					alerte = "Votre noyau n'est pas vide !"
-				}
+				//}
 
 			}
 			fmt.Fprint(w, alerte )
