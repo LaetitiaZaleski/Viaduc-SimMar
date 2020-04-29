@@ -1,3 +1,50 @@
+window.onload = function () {
+
+        setInterval(function () {
+
+        setNbPlayers();
+        isEveryoneStillHere(); //regarde si tout le monde est là vis a vis des final files
+        // si non mettre ceux qui sont partit à -1
+
+
+        let revenu = qlqEstRevenu();
+        // si il est revenu : final file et tt le monde n'est pas à -1
+        if (revenu.length !== 0) {
+            console.log("********revenu est pas vide: ****************");
+            console.log(revenu);
+            for (let i = 0; i < revenu.length; i++) {
+                // get preference de cet utilisateur :
+                getXMLHttp('/api?fct=get_preference' +
+                    '&room_name=' + localStorage.getItem("roomName"), function (ret) {
+                    obj = JSON.parse(ret);
+                    if (obj.length > 0) {
+                        for (indice = 0; indice < obj.length; indice++) {
+                            switch (obj[indice].class_name) {
+                                case "Tourisme" :
+                                    cid = 1;
+                                    break;
+                                case "Pecheur" :
+                                    cid = 2;
+                                    break;
+                                default :
+                                    cid = 3;
+                            }
+                            if (cid === revenu[i]) {
+                                console.log(revenu[i]);
+                                console.log(obj[indice]);
+                            }
+                        }
+                    }
+                });
+                //remettre son FP au bon numero :
+                setFPRole_i(revenu[i]);
+            }
+        }
+
+    })
+
+};
+
 
 function letsFinish() {
         //setPref(gNumFiles[gFinalFiles[0]]);

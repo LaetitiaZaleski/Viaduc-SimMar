@@ -319,11 +319,11 @@ function setFPRole_i(i) {
         let http2 = new XMLHttpRequest();
         do {
             console.log(nbFile);
-            let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + i + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + i + "_" + nbFile + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             nbFile++;
-            let tmpPath2 = "sources/output/" + localStorage.getItem("roomName") + "_" + i + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath2 = "sources/output/" + localStorage.getItem("roomName") + "_" + i + "_" + nbFile + "-viab-0.dat";
             http2.open('HEAD', tmpPath, false);
             http2.send();
         }
@@ -560,7 +560,7 @@ function setFPRole_i(i) {
         }
     }
 
-    function letsCalc() {
+    function letsCalc2() {
         var jsonObj = {
             "room_name": localStorage.getItem("roomName"),
             "class_id": localStorage.getItem("classId"),
@@ -599,7 +599,7 @@ function setFPRole_i(i) {
             var http = new XMLHttpRequest();
             do {
                 i++;
-                var tmpPath = "sources/output/" + RoomName + "_" + id + "_" + i + "-viab-0-bound.dat";
+                var tmpPath = "sources/output/" + RoomName + "_" + id + "_" + i + "-viab-0.dat";
                 console.log("tmpPath : " + tmpPath);
                 http.open('HEAD', tmpPath, false);
                 http.send();
@@ -607,7 +607,7 @@ function setFPRole_i(i) {
             while (http.status != 404);
             if (i > 0) {
                 var numFile = i - 1;
-                var path = "sources/output/" + RoomName + "_" + id + "_" + numFile + "-viab-0-bound.dat";
+                var path = "sources/output/" + RoomName + "_" + id + "_" + numFile + "-viab-0.dat";
                 classIds.push(id)
             }
         }
@@ -730,7 +730,7 @@ function setFPRole_i(i) {
             classIds.forEach(function (ids) {
                 let nbFile = 0;
                 do {
-                    let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                    let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0.dat";
                     http.open('HEAD', tmpPath, false);
                     http.send();
                     nbFile = nbFile + 1
@@ -795,7 +795,7 @@ function setFPRole_i(i) {
 
                     do {
                         console.log(nbFile);
-                        let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+                        let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0.dat";
                         http.open('HEAD', tmpPath, false);
                         http.send();
                         sleep(1500)

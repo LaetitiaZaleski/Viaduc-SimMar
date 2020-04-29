@@ -81,41 +81,53 @@ function findNonVideMulti() {
             console.log(classIds);
 
             // trouver les nouveaux min et max :
-            var valueAniMin = [];
-            var valueAniMax = [];
-            var valueTourMin = [];
-            var valueTourMax = [];
-            var valueCapMin = [];
-            var valueCapMax = [];
-            var valueEnvMin = [];
-            var valueEnvMax = [];
-            var valueOuvMin = [];
-            var valueOuvMax = [];
+            let valueAniMin = [];
+            let valueAniMax = [];
+            let valueTourMin = [];
+            let valueTourMax = [];
+            let valueCapMin = [];
+            let valueCapMax = [];
+            let valueEnvMin = [];
+            let valueEnvMax = [];
+            let valueOuvMin = [];
+            let valueOuvMax = [];
 
             // trouver les nouveaux pasMin et pasMax :
-            var pasAniMin = [];
-            var pasAniMax = [];
-            var pasTourMin = [];
-            var pasTourMax = [];
-            var pasCapMin = [];
-            var pasCapMax = [];
-            var pasEnvMin = [];
-            var pasEnvMax = [];
-            var pasOuvMin = [];
-            var pasOuvMax = [];
+            let pasAniMin = [];
+            let pasAniMax = [];
+            let pasTourMin = [];
+            let pasTourMax = [];
+            let pasCapMin = [];
+            let pasCapMax = [];
+            let pasEnvMin = [];
+            let pasEnvMax = [];
+            let pasOuvMin = [];
+            let pasOuvMax = [];
 
             // trouver les nouvelles importances :
-            var impAniMin = [];
-            var impAniMax = [];
-            var impTourMin = [];
-            var impTourMax = [];
-            var impCapMin = [];
-            var impCapMax = [];
-            var impEnvMin = [];
-            var impEnvMax = [];
-            var impOuvMin = [];
-            var impOuvMax = [];
+            let impAniMin = [];
+            let impAniMax = [];
+            let impTourMin = [];
+            let impTourMax = [];
+            let impCapMin = [];
+            let impCapMax = [];
+            let impEnvMin = [];
+            let impEnvMax = [];
+            let impOuvMin = [];
+            let impOuvMax = [];
 
+            console.log("valueAniMin The Origin :");
+            console.log(valueAniMin);
+            console.log("valueAniMin length :");
+            console.log(valueAniMin.length);
+
+            console.log("valueAniMax The Origin :");
+            console.log(valueAniMax);
+            console.log("valueAniMax length :");
+            console.log(valueAniMax.length);
+            for (let u=0; i<valueAniMax.length; u++){
+                console.log(u+" : "+valueAniMax[u]);
+            }
 
             classIds.forEach(function (ids) {
                 console.log("ids : " + ids);
@@ -137,10 +149,21 @@ function findNonVideMulti() {
                 console.log("newValueAniMin");
                 console.log(newValueAniMin);
 
+
+                console.log("*******************************");
                 newValueAniMax = parseInt(document.getElementById("valueAni" + cn + "SliderVal3").innerHTML);
                 valueAniMax.push(newValueAniMax);
                 console.log("newValueAniMax");
                 console.log(newValueAniMax);
+                console.log("valueAniMax");
+                console.log(valueAniMax);
+
+                console.log("valueAniMax length :");
+                console.log(valueAniMax.length);
+                for (let u=0; i<valueAniMax.length; u++){
+                    console.log(u+" : "+valueAniMax[u]);
+                }
+                console.log("*******************************");
 
                 newValueCapMin = parseInt(document.getElementById("valueCap" + cn + "SliderVal2").innerHTML);
                 valueCapMin.push(newValueCapMin);
@@ -232,14 +255,19 @@ function findNonVideMulti() {
 
             });
 
-            let Values = [[valueAniMin, valueAniMax.slice(0, valueAniMin.length)], [valueCapMin, valueCapMax.slice(0, valueCapMin.length)], [valueTourMin, valueTourMax.slice(0, valueTourMin.length)],
-                [valueEnvMin, valueEnvMax.slice(0, valueEnvMin.length)], [valueOuvMin, valueOuvMax.slice(0, valueEnvMin.length)]];
+           /* let Values = [[valueAniMin, valueAniMax.slice(0, valueAniMin.length)], [valueCapMin, valueCapMax.slice(0, valueCapMin.length)], [valueTourMin, valueTourMax.slice(0, valueTourMin.length)],
+                [valueEnvMin, valueEnvMax.slice(0, valueEnvMin.length)], [valueOuvMin, valueOuvMax.slice(0, valueEnvMin.length)]];*/
+            console.log("valueAniMax");
+            console.log(valueAniMax);
+            let Values = [[valueAniMin, valueAniMax], [valueCapMin, valueCapMax], [valueTourMin, valueTourMax],[valueEnvMin, valueEnvMax], [valueOuvMin, valueOuvMax]];
+            console.log("Values[0][1]");
+            console.log(Values[0][1]);
             let Pas = [[pasAniMin, pasAniMax], [pasCapMin, pasCapMax], [pasTourMin, pasTourMax], [pasEnvMin, pasEnvMax], [pasOuvMin, pasOuvMax]];
             let Importances = [[impAniMin, impAniMax], [impCapMin, impCapMax], [impTourMin, impTourMax], [impEnvMin, impEnvMax], [impOuvMin, impOuvMax]];
             let LSid = ["Ani", "Cap", "Tour", "Env", "Ouv"];
 
 
-            for (var crit = 0; crit < Values.length; crit++) {
+            for (let crit = 0; crit < Values.length; crit++) {
                 console.log(LSid[crit]);
                 console.log(Values[crit]);
                 console.log(Values[crit][0]);
@@ -544,13 +572,19 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
         } else { // cas 1.2
             console.log("cas1.2");
             // parcours de imp et mins, nouveau tab avec les importants, min = le max des importants
-            for (var i = 0; i < Mins.length; i++) {
+            for (let i = 0; i < Mins.length; i++) {
                 if (parseInt(impMins[i]) === 100) {
                     newMins.push(Mins[i]);
-                    newPasMins.push(pasMins[i])
                 }
 
             }
+            for (let i = 0; i < pasMins.length; i++) {
+                if (parseInt(impMins[i]) === 100) {
+                    newPasMins.push(pasMins[i]);
+                }
+
+            }
+
             let newMin= Math.max(...newMins);
             console.log("newMin");
             console.log(newMin);
@@ -564,12 +598,17 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
             localStorage.setItem(LSid + "FauxMax", Max+Math.min(...pasMaxs));
         } else { // cas 1.2
             // parcours de imp et maxs, nouveau tab avec les importants, max = le min des importants
-            for (var j = 0; j < Mins.length; j++) {
+            for (let j = 0; j < Maxs.length; j++) {
                 if (parseInt(impMaxs[j]) === 100) {
-                    newMaxs.push(Mins[j]);
+                    newMaxs.push(Maxs[j]);
+                }
+            }
+            for (let j = 0; j < pasMaxs.length; j++) {
+                if (parseInt(impMaxs[j]) === 100) {
                     newPasMaxs.push(pasMaxs[j])
                 }
             }
+
             let newMax = Math.min(...newMaxs);
             localStorage.setItem(LSid + "Max", newMax +Math.min(...pasMaxs))
         }
@@ -607,7 +646,7 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
                  newPasMaxs = pasMaxs;
                  newImpMaxs = impMaxs;
             } else {
-                for (var l = 0; l < Mins.length; l++) {
+                for (var l = 0; l < Maxs.length; l++) {
                     if (parseInt(impMaxs[l]) === 100) {
                         newMaxs.push(Maxs[l]);
                         newPasMaxs.push(pasMaxs[l]);
@@ -623,10 +662,6 @@ function findInter(Mins,pasMins, impMins, Maxs,pasMaxs, impMaxs,LSid) {
             console.log(newPasMaxs);
             equite(newMins, newPasMins, newImpMins, newMaxs, newPasMaxs, newImpMaxs,LSid);
     }
-
-
-
-
 
 }
 
@@ -653,10 +688,20 @@ function equite(Mins,pasMins,impMins,Maxs,pasMaxs,impMaxs,LSid){ // equite indiv
             Mins[i]= Mins[i] - pasMins[i]
         }
         for(var j = 0; j<Maxs.length; j++){
-            Maxs[i]= Maxs[i] + pasMaxs[i]
+            Maxs[j]= Maxs[j] + pasMaxs[j]
         }
-        min = Math.max(...Mins);
-        max = Math.min(...Maxs);
+        if(Mins.length>0){
+            min = Math.max(...Mins);
+        }
+        if(Maxs.length>0){
+            console.log(Maxs);
+            for (let i=0; i<Maxs.length; i++){
+                if (isNaN(Maxs[i])){
+                    Maxs.splice(i,1);
+                }
+            }
+            max = Math.min(...Maxs);
+        }
         sleep(1000)
     }
 
