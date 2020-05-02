@@ -297,7 +297,7 @@ function calcTable(abs, pref, faux){
                     const EnvMin = {
                         val: localStorage.getItem("EnvMin"),
                         fauxMaxTable : calcTable(fauxMinMax.EnvMin,localStorage.getItem("EnvMin"),fauxMinMax.EnvMin),
-                        name: "Minimum sur la restauration de l'environnement",
+                        name: "Minimum sur la prise accidentelle de tortues",
                         //    distVal: obj[i].preference.value_env_min - minMax.EnvMin,
                         importance: localStorage.getItem("ImportanceEnvMin"),
                         signe: 1,
@@ -309,7 +309,7 @@ function calcTable(abs, pref, faux){
                     const EnvMax = {
                         val: localStorage.getItem("EnvMax"),
                         fauxMaxTable :calcTable(fauxMinMax.EnvMax,localStorage.getItem("EnvMax"),fauxMinMax.EnvMax) ,
-                        name: "Maximum sur la restauration de l'environnement",
+                        name: "Maximum sur la prise accidentelle de tortues",
                         //    distVal: (minMax.EnvMax - obj[i].preference.value_env_max),
                         importance: localStorage.getItem("ImportanceEnvMax"),
                         signe: -1,
@@ -1646,7 +1646,7 @@ function showPreferences(finalprefs,k){
     var sliderAniValues2 = localStorage.getItem("oldAniMin");
     var sliderAniValues3 = localStorage.getItem("oldAniMax");
     var sliderAniValues4 = localStorage.getItem("oldAniFauxMax");
-    sprefsA = sortPref(sliderAniValues1,sliderAniValues2,sliderAniValues3,sliderAniValues4, prefAmin, prefAmax);
+    let sprefsA = sortPref(sliderAniValues1,sliderAniValues2,sliderAniValues3,sliderAniValues4, prefAmin, prefAmax);
 
 
     noUiSlider.create(sliderAni, {

@@ -204,7 +204,7 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		filename := "input/" + roomName +"_"+id+"_"+ numFile+".json"
 		cmdCreateEmptyJson := exec.Command("touch",filename)
 		cmdCreateEmptyJson.Run()
-		filenameKernel := "www/sources/output/" + roomName +"_"+id+"_"+ numFile+"-viab-0-bound.dat"
+		filenameKernel := "www/sources/output/" + roomName +"_"+id+"_"+ numFile+"-viab-0.dat"
 		//filenameKernel := "www/sources/output/" + roomName +"_"+id+"_"+ numFile+"-viab-0.dat"
 		cmdCreateEmptyKernel := exec.Command("touch",filenameKernel)
 		cmdCreateEmptyKernel.Run()

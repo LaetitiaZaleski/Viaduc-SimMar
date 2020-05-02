@@ -406,7 +406,7 @@ function getAllFiles(commun = true) {
     // recuperer le dernier fichier créé :
     var http = new XMLHttpRequest();
 
-        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0-bound.dat";
+        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
        // let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
         console.log("Path : " + path);
 
@@ -425,9 +425,9 @@ function getAllFiles(commun = true) {
 
 
             for (i = 0; i < lineTab.length; i++) {
-                let valueTab = lineTab[i].split('  ');
+                let valueTab = lineTab[i].split(' ');
                 if (valueTab.length >= 3) {
-                    if (i % 3 === 0) { // on prend 1 point sur 10
+                    if ((parseFloat(valueTab[3]) === 1.0) && (i%3===0)) { // on prend le point s'il est dans le noyau et un point sur 3
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));

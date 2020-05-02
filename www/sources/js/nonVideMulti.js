@@ -28,11 +28,11 @@ function findNonVideMulti() {
     var http2 = new XMLHttpRequest();
     classIds.forEach(function (ids) {
         do {
-            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
             nbFile = nbFile + 1;
-            let tmpPath2 = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0-bound.dat";
+            let tmpPath2 = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
             http2.open('HEAD', tmpPath2, false);
             http2.send();
         } while (http.status !== 404 || http2.status !== 404);
@@ -49,7 +49,7 @@ function findNonVideMulti() {
     /*2) appeler la fonction qui crée le fichier json vide quand il n'existe pas */
     classIds.forEach(function (ids) {
     for(var i=0; i<=nbFile; i++){
-            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + i + "-viab-0-bound.dat";
+            let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + i + "-viab-0.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
         if(http.status === 404){
@@ -116,15 +116,7 @@ function findNonVideMulti() {
             let impOuvMin = [];
             let impOuvMax = [];
 
-            console.log("valueAniMin The Origin :");
-            console.log(valueAniMin);
-            console.log("valueAniMin length :");
-            console.log(valueAniMin.length);
 
-            console.log("valueAniMax The Origin :");
-            console.log(valueAniMax);
-            console.log("valueAniMax length :");
-            console.log(valueAniMax.length);
             for (let u=0; i<valueAniMax.length; u++){
                 console.log(u+" : "+valueAniMax[u]);
             }
