@@ -396,7 +396,7 @@ function getAllFiles(commun = true) {
 
 
 
- function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId")) { //affiche un noyau
+ function getFileBynum(numFile,name, ClassId = localStorage.getItem("classId"), contraintesTab =[]) { //affiche un noyau
 
     // recuperation des valeurs
     var RoomName = localStorage.getItem("roomName");
@@ -479,6 +479,7 @@ function getAllFiles(commun = true) {
                 role = "Ecologiste"
             }
 
+
             var kerName = name;
 
 
@@ -501,8 +502,68 @@ function getAllFiles(commun = true) {
                 type: 'scatter3d'
             };
 
-
             var printData = [noyau];
+
+
+            if(contraintesTab.length !== 0){
+
+                console.log("contraintesTab :");
+                console.log(contraintesTab);
+                let contraintesJS = JSON.parse(contraintesTab);
+
+                // points de contraintes :
+
+                let ValueAniMin = contraintesJS.value_ani_min;
+                console.log(ValueAniMin);
+                let ValueAniMax = contraintesJS.value_ani_max;
+                console.log(ValueAniMax);
+                let ValueCapMin = contraintesJS.value_cap_min;
+                let ValueCapMax = contraintesJS.value_cap_max;
+
+                let ValueTourMin = contraintesJS.value_tour_min;
+                let ValueTourMax = contraintesJS.value_tour_max;
+
+                let p1 = [ValueAniMax, ValueCapMin, ValueTourMin];
+                console.log("p1 : "+p1 );
+                let p2 = [ValueAniMax, ValueCapMax, ValueTourMin];
+                let p3 = [ValueAniMin, ValueCapMin, ValueTourMin];
+                let p4 = [ValueAniMin, ValueCapMax, ValueTourMin];
+                console.log("p4 : "+p4 );
+                let p5 = [ValueAniMax, ValueCapMin, ValueTourMax];
+                let p6 = [ValueAniMax, ValueCapMax, ValueTourMax];
+                let p7 = [ValueAniMin, ValueCapMin, ValueTourMax];
+                let p8 = [ValueAniMin, ValueCapMax, ValueTourMax];
+
+                let contraintesAni = [p1[0], p2[0], p4[0], p3[0], p1[0], p5[0], p6[0], p2[0], p4[0], p8[0], p6[0], p8[0], p6[0], p8[0], p7[0], p5[0],p7[0], p3[0]];
+                let contraintesCap = [p1[1], p2[1], p4[1], p3[1], p1[1], p5[1], p6[1], p2[1], p4[1], p8[1], p6[1], p8[1], p6[1], p8[1], p7[1], p5[1], p7[1], p3[1]];
+                let contraintesTour = [p1[2], p2[2], p4[2], p3[2], p1[2], p5[2], p6[2], p2[2], p4[2], p8[2], p6[2], p8[2], p6[2], p8[2], p7[2], p5[2],p7[2], p3[2]];
+                let contraintesName = name+"_contraintes";
+
+                console.log(contraintesAni);
+                console.log(contraintesCap);
+                console.log(contraintesTour);
+                let contraintes = {
+                    x: contraintesAni,
+                    y: contraintesCap,
+                    z: contraintesTour,
+                    name: contraintesName,
+                    type: 'scatter3d',
+                    mode: 'lines+markers',
+                    marker: {
+                        color: col,
+                        size: 1,
+                        symbol: 'circle',
+                        line: {
+                            color: col,
+                            width: 1.0
+                        },
+                        opacity: 1.0
+                    },
+                };
+
+                printData = [noyau, contraintes];
+
+            }
 
             var layout = {
                 title: {

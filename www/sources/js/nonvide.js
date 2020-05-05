@@ -435,7 +435,9 @@ function calcTable(abs, pref, faux){
             console.log(finalPrefs[k]);
             var name = "solution "+ (k+1);
             $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
-            getFileBynum(gNumFiles[k],name)
+            getFileBynum(gNumFiles[k],name,localStorage.getItem("classId"), finalPrefs[k])
+
+
 
         }
         if(mono){
