@@ -44,9 +44,7 @@ window.onload = function(){
                     let role = "";
                     let rolefp = "";
                     let id = 0;
-                    console.log("******CAS 3********");
-                    console.log("idPresent");
-                    console.log(idPresent);
+
                     for (let i = 0; i < idPresent.length; i++) { // si il a un final file,
                         switch (idPresent[i]) {
                             case 1 :
@@ -100,8 +98,6 @@ window.onload = function(){
                     let revenu = qlqEstRevenu();
                     // si il est revenu : final file et tt le monde n'est pas à -1
                     if (revenu.length !== 0) {
-                        console.log("********revenu est pas vide: ****************");
-                        console.log(revenu);
                         for (let i = 0; i < revenu.length; i++) {
                             // get preference de cet utilisateur :
                             getXMLHttp('/api?fct=get_preference' +
@@ -132,12 +128,11 @@ window.onload = function(){
                             //remettre son FP au bon numero :
                             setFPRole_i(revenu[i]);
                         }
-                        console.log("******CAS 2********");
                     }
                 }
 
             }
-            },1000);
+            },3000);
 
  /*   setInterval(function () {
         if(qlqEstPartit){

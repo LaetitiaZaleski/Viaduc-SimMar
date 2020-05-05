@@ -350,7 +350,7 @@ function calcTable(abs, pref, faux){
         }
 
 
-        finalPrefs = [];
+        let finalPrefs = [];
         PrefsInit0 = JSON.parse(JSON.stringify(Prefs));
         PrefsInit1 = JSON.parse(JSON.stringify(Prefs)); // copie du tableau
         PrefsInit2 = JSON.parse(JSON.stringify(Prefs));
@@ -369,12 +369,9 @@ function calcTable(abs, pref, faux){
         console.log("*************************  mono B: **************************");
         console.log(mono);
         finalPrefs = [r1.data];
-        finalFiles = [r1.numFile];
+        let finalFiles = [r1.numFile];
 
-
-        console.log(Prefs);
-        console.log(PrefsInit1);
-        console.log(PrefsInit2);
+        console.log("finalFiles : "+finalFiles);
 
         console.log("*************************  mono C: **************************");
         console.log(mono);
@@ -393,6 +390,8 @@ function calcTable(abs, pref, faux){
             finalFiles = [r1.numFile,r2.numFile];
         }
 
+        console.log("finalFiles : "+finalFiles);
+
         console.log("/******* recherche 3 ************/");
 
         console.log("*************************  mono D: **************************");
@@ -410,6 +409,8 @@ function calcTable(abs, pref, faux){
                 finalFiles.push(priorite[k].numFile);
             }
         }
+
+        console.log("finalFiles : "+finalFiles);
 
         gNumFiles = finalFiles;
         gFinalPref = finalPrefs;
@@ -488,13 +489,7 @@ function calcTable(abs, pref, faux){
             $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish(true)">Enregistrer cette solution et revenir aux préférences</div>');
 
 
-
-
         }
-
-
-
-
 
         // showPreferences(JSON.parse(finalPrefs[0]))
 
@@ -592,18 +587,26 @@ function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,1
     console.log(Prefs);
     if(mono){
         res = dichotomie(Prefs, minMax,fauxMinMax,importab, nbEtapes);
+        /* Rafinement */
+        console.log("fin dichotomie :");
+        console.log(res.pref);
+        console.log(res.data);
+        console.log("mono = "+mono);
+
+        finalPrefs = rafinement(res.pref,prefsInit, res.mM,fauxMinMax,importab,nbEtapes,mono);
     }else{
         console.log("coucou on est dans recherche digonale");
         res = dichotomieMulti(Prefs, minMax,fauxMinMax,importab, nbEtapes);
+        /* Rafinement */
+        console.log("fin dichotomie :");
+        console.log(res.pref);
+        console.log(res.data);
+        console.log("mono = "+mono);
+        finalPrefs = rafinement(res.pref,prefsInit, res.mM,fauxMinMax,-1, 15,importab,nbEtapes,false);
     }
 
 
-    /* Rafinement */
-    console.log("fin dichotomie :");
-    console.log(res.pref);
-    console.log(res.data);
 
-    finalPrefs = rafinement(res.pref,prefsInit, res.mM,fauxMinMax,importab,nbEtapes,mono);
 
     return finalPrefs
 
@@ -629,6 +632,32 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     if(mono){
         newPrefs = dichotomie(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
     }else {
+        console.log("rechercheUnParUn");
+/*********************/
+
+        let http = new XMLHttpRequest();
+        let RoomName = localStorage.getItem("roomName");
+
+        let nbFile =0;
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_1_" + nbFile + "-viab-0.dat";
+            console.log(tmpPath);
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            nbFile = nbFile + 1
+        } while (http.status !== 404);
+
+        nbFile =0;
+
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_2_" + nbFile + "-viab-0.dat";
+            console.log(tmpPath);
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            nbFile = nbFile + 1
+        } while (http.status !== 404);
+/*********************/
+
         newPrefs = dichotomieMulti(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
     }
 
@@ -644,7 +673,7 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     console.log(newPrefs.pref);
     console.log(newPrefs.mM);
 
-    newPrefs = rafinement(newPrefs.pref,Prefs, newPrefs.mM,fauxMinMax, -1, (importab[importab.length -2]+1),mono);
+    newPrefs = rafinement(newPrefs.pref,Prefs, newPrefs.mM,fauxMinMax, -1, (importab[importab.length -2]+1),importab,nbEtapes, mono);
 
     return newPrefs
 }
@@ -693,7 +722,7 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
             if(mono){
                 newNonVide = dichotomie(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
             }else{
-                console.log("Coucou on est dans recherche priorité 2")
+                console.log("Coucou on est dans recherche priorité 2");
                 newNonVide = dichotomieMulti(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
             }
 
@@ -719,9 +748,8 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
 
 
 function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMax=15,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, mono=true){
-    i=0;
     console.log("Debut rafinement :");
-    for (j = 0; j < newPrefs.length; j++){
+    for (let j = 0; j < newPrefs.length; j++){
         // console.log("test : "+lastPrefsNonVide[j].name+" "+lastPrefsNonVide[j].importance);
         if (prefsInit[j].importance === 1){
             // si c'etait pas des importants on les traite comme des importants :
@@ -734,6 +762,7 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
         }
         // si c'etait des importants on garde comme avant
     }
+    console.log("mono = "+mono);
     console.log("newPrefs");
     console.log(newPrefs);
     console.log("minMax");
@@ -1146,7 +1175,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     let RoomName = localStorage.getItem("roomName");
     let ClassId = localStorage.getItem("classId");
 
-    var faux = false; // est ce que ça marche avec les fauxminmax ?
+    let faux = false; // est ce que ça marche avec les fauxminmax ?
 
     if (!rafinement) {
         for (var i = 0; i < Prefs.length; i++) {
@@ -1188,21 +1217,18 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
         //si oui on remplace les minMax par les fauxMins max
         //Pour chaque class ID et si au moins un est vide on stoppe
 
-
         classIds.forEach(function (ids) {
-            let maxnbfile =0;
             let nbFile = 0;
 
             do {
                 let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
                 http.open('HEAD', tmpPath, false);
                 http.send();
+                console.log(tmpPath);
                 nbFile = nbFile + 1
             } while (http.status !== 404);
-            if (nbFile > maxnbfile){
-                maxnbfile = nbFile
-            }
-            nbFile = maxnbfile - 1;
+
+            nbFile = nbFile - 1;
 
             let class_id_ = "";
             switch (ids) {
@@ -1273,6 +1299,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
                 console.log("id"+ids);
                 console.log(nbFile);
                 let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
+                console.log(tmpPath);
                 http.open('HEAD', tmpPath, false);
                 http.send();
                 sleep(1500);
@@ -1281,6 +1308,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
 
         });
         if (faux){
+            console.log("faux = "+faux);
             for(var f=0; f<Prefs.length; f++){
                 Prefs[f].maxTable = Prefs[f].fauxMaxTable;
                 Prefs[f].table[2] = Prefs[f].fauxMaxTable;
@@ -1337,19 +1365,16 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
 
         classIds.forEach(function (ids) {
 
-            let maxnbfile =0;
             let nbFile = 0;
 
             do {
                 let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
                 http.open('HEAD', tmpPath, false);
                 http.send();
+                console.log(tmpPath);
                 nbFile = nbFile + 1
             } while (http.status !== 404);
-            if (nbFile > maxnbfile){
-                maxnbfile = nbFile
-            }
-            nbFile = maxnbfile - 1;
+            nbFile = nbFile - 1;
 
         if (faux){
             value_ani_min = Math.ceil(AniMin.table[1]*AniMin.signe*AniMin.pas + fauxMinMax.AMin) ;
@@ -1482,47 +1507,33 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
         postXMLHttp('/api?fct=lets_calc' +
             '&data=' + gdata, function (ret) {
             if (ret === "Ce noyau est vide !"){
-
                 console.log("vide");
                 console.log("file num : "+nbFile);
                 console.log(Prefs);
                 auMoinsUnvide = true;
 
-            }
-            else {
-                if (ret === "Ce noyau est negatif !") {
-                    // si une iteration est negative c'est une erreur : on ne fait rien et on recommence
-                    newPrefs = JSON.parse(JSON.stringify(Prefs));
-                    console.log("negatif");
-                    dontstop = true;
-
-                } else {
+            } else {
                     console.log("non vide ");
+                    console.log("file num : "+nbFile);
                     console.log(ids)
-                }
             }
 
             nbFile = nbFile - 1;
         });
 
 
-
-
         do {
             let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
-           // console.log(tmpPath);
-            //  let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0-boundy.dat";
             http.open('HEAD', tmpPath, false);
             http.send();
-            sleep(1500)
+            sleep(1000)
         }
         while (http.status === 404);
         });
 
         if(auMoinsUnvide){
             console.log("au moins un vide");
-            for (var j = 0; j < Prefs.length; j++) {
-
+            for (let j = 0; j < Prefs.length; j++) {
                 console.log(Prefs[j].name + Prefs[j].table);
                 Prefs[j].table[2] = Prefs[j].table[1];
                 Prefs[j].table[1] = Math.floor((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
@@ -1530,8 +1541,19 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             }
 
         }else{
-            console.log("tous non vides");
+            let nbFile = 0;
+
+            do {
+                let tmpPath = "sources/output/" + RoomName + "_1_" + nbFile + "-viab-0.dat";
+                http.open('HEAD', tmpPath, false);
+                http.send();
+                console.log(tmpPath);
+                nbFile = nbFile + 1
+            } while (http.status !== 404);
+            nbFile = nbFile - 2;
+
             lastNonVide = nbFile;
+            console.log("tous non vides "+lastNonVide);
             newPrefs = JSON.parse(JSON.stringify(Prefs));
             newData = gdata;
             console.log(newPrefs);
@@ -1545,7 +1567,6 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
                 } else {
                     Prefs[j].table[1] = Math.ceil((Prefs[j].table[0] + Prefs[j].table[1]) / 2.0);
                 }
-
                 // console.log(Prefs[j].name +Prefs[j].table);
             }
         }
@@ -1559,7 +1580,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
             }
         }
 
-        if(stop === Prefs.length && (dontstop === false)){
+        if(stop === Prefs.length){
             i=100;
         }
         i++;
@@ -1574,6 +1595,7 @@ function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
 
     console.log("dernier non vide : ");
     console.log(result.data);
+    console.log(lastNonVide);
     return result ;// non vide
 }
 
@@ -1594,34 +1616,44 @@ function sleep(milliseconds) {
 /************** Sliders :*******************/
 
 function sortPref(sliderValues1,sliderValues2,sliderValues3,sliderValues4, prefMin, prefMax) {
-    if(prefMin < sliderValues1) { //prefMin est dans le rouge
-        if (sliderValues4 < prefMax) { //  prefMax est dans le rouge  et on a dans l'ordre :
-            sortedPref = [prefMin, sliderValues1,sliderValues2, sliderValues3, sliderValues4, prefMax];
-            handleClass = ["min", "max"]; // indices des pref
-            colors = ['c-1-color','c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color','c-5-color'];
-        }
-        else{ //prefMax est dans le orange
-            sortedPref = [prefMin, sliderValues1,sliderValues2, sliderValues3, prefMax, sliderValues4];
-            handleClass = ["min", "pmax"]; // indices des pref
-            colors = ['c-1-color','c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-4-color','c-5-color'];
-        }
-    }
-    else{ //prefMin est dans le orange
-        if (sliderValues4 < prefMax) { //  prefMax est dans le rouge  et on a dans l'ordre :
-            sortedPref = [sliderValues1,prefMin,sliderValues2, sliderValues3, sliderValues4, prefMax];
-            handleClass = ["pmin", "max"]; // indices des pref
-            colors = ['c-1-color','c-2-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color','c-5-color'];
-        }
-        else{ //prefMax est dans le orange
-            sortedPref = [sliderValues1,prefMin, sliderValues2, sliderValues3, prefMax, sliderValues4];
-            handleClass = ["pmin", "pmax"]; // indices des pref
-            colors = ['c-1-color','c-2-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-4-color','c-5-color'];
-        }
 
+    let Prefs = [prefMin, sliderValues1,sliderValues2, sliderValues3, sliderValues4, prefMax];
+    let sortedPref = Prefs.sort(function(a, b){return a - b});
+
+    let indexmin = Prefs.indexOf(prefMin);
+    let indexmax = Prefs.indexOf(prefMax);
+
+    if(indexmin === indexmax){
+        indexmax = indexmax +1;
     }
-    return [sortedPref,colors,handleClass];
+
+    let colors = [];
+    let col_i = "";
+
+
+
+    for (let i = 1; i<6; i++){
+        col_i = 'c-'+i+'-color';
+        colors.push(col_i);
+        if((indexmin === i-1)|| (indexmax === i)){
+            colors.push(col_i);
+        }
+    }
+
+    let classmin = "p"+indexmin.toString() ;
+    let classmax = "p"+indexmax.toString() ;
+    let handleClass = [classmin, classmax];
+
+    let res = [sortedPref,colors,handleClass];
+    console.log(res);
+    return res;
 
 }
+
+
+
+
+
 
 function showPreferences(finalprefs,k){
 
@@ -1770,9 +1802,9 @@ function showPreferences(finalprefs,k){
     noUiSlider.create(sliderEnv, {
         start: sprefsEnv[0],
         connect: [true, true, true, true, true,true,true],
-        step: 5,
+        step: 1,
         range: {
-            'min': [0],
+            'min': [1],
             'max': [10]
         }
     });

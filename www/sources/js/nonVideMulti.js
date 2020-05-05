@@ -35,21 +35,23 @@ function findNonVideMulti() {
             let tmpPath2 = "sources/output/" + RoomName + "_" + ids + "_" + nbFile + "-viab-0.dat";
             http2.open('HEAD', tmpPath2, false);
             http2.send();
+
         } while (http.status !== 404 || http2.status !== 404);
         if (nbFile > maxnbfile){
             maxnbfile = nbFile
         }
 
     });
-
-    nbFile = maxnbfile - 1;
+    nbFile = maxnbfile-1;
     console.log("nbFile");
     console.log(nbFile);
 
     /*2) appeler la fonction qui crée le fichier json vide quand il n'existe pas */
-    classIds.forEach(function (ids) {
-    for(var i=0; i<=nbFile; i++){
+
+    for(let i=0; i<=nbFile; i++){
+        classIds.forEach(function (ids) {
             let tmpPath = "sources/output/" + RoomName + "_" + ids + "_" + i + "-viab-0.dat";
+            console.log(tmpPath);
             http.open('HEAD', tmpPath, false);
             http.send();
         if(http.status === 404){
@@ -57,7 +59,6 @@ function findNonVideMulti() {
                 '&room_name=' + RoomName + '&num_file='+ i.toString(),
                 function (ret) {
                 });
-        }
         }
 
     });
@@ -294,7 +295,7 @@ function findNonVideMulti() {
             RoomName = localStorage.getItem("roomName");
 
 
-            // mettre la room.wait = true
+
             document.getElementById("solutions-container").hidden = false;
 
 

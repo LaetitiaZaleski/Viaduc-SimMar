@@ -1,23 +1,34 @@
 
-.max .noUi-handle[data-handle="5"] {
+.p0 .noUi-handle[data-handle="0"] {
     color: #6f42c1;
     background-color: #6f42c1;
 }
 
-.min .noUi-handle[data-handle="0"] {
+.p1 .noUi-handle[data-handle="1"] {
     color: #6f42c1;
     background-color: #6f42c1;
 }
 
-.pmin .noUi-handle[data-handle="1"] {
+.p2 .noUi-handle[data-handle="2"] {
     color: #6f42c1;
     background-color: #6f42c1;
 }
 
-.pmax .noUi-handle[data-handle="4"] {
+.p3 .noUi-handle[data-handle="3"] {
     color: #6f42c1;
     background-color: #6f42c1;
 }
+
+.p4 .noUi-handle[data-handle="4"] {
+    color: #6f42c1;
+    background-color: #6f42c1;
+}
+
+.p5 .noUi-handle[data-handle="5"] {
+    color: #6f42c1;
+    background-color: #6f42c1;
+}
+
 
 .purple {
     color: #6f42c1;
@@ -28,5 +39,5 @@
 [disabled] .c-1-color { background: #ca0000 !important; }
 [disabled] .c-2-color { background: #fd7e14 !important; }
 [disabled] .c-3-color { background: #00ab00 !important; }
-[disabled] .c-5-color { background: #ca0000 !important; }
 [disabled] .c-4-color { background: #fd7e14 !important; }
+[disabled] .c-5-color { background: #ca0000 !important; }
