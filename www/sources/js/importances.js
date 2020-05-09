@@ -67,8 +67,6 @@ function letsFinish() {
         let newParam = url.split("?")[1].replace("importances", "result");
         window.location.href = "?" + newParam;
 
-
-
 }
 
 

@@ -77,11 +77,11 @@
             </div>
 
     <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
-                <span> Prise accidentelle de tortue minimum </span> (<span id="valueEnvMin"></span>)
+                <span> Taille maximale des mailles des filets </span> (<span id="valueEnvMin"></span>)
             </div>
 
     <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
-                <span> Prise accidentelle de tortue maximum </span> (<span id="valueEnvMax"></span>)
+                <span>  Taille maximale des mailles des filets </span> (<span id="valueEnvMax"></span>)
 
             </div>
 
@@ -112,43 +112,47 @@
 <div  onclick="getPrefs()" class="btn btn-primary"> Lancer la recherche </div>
 <div id="patientezContainer"> </div>
 <div id="finalPrefButtonContainer"> </div>
-<div id="finishButtonContainer"> </div>
+
 
 
 <div class="preference-container" id="solutions-container" hidden="true">
     <div class="">
         <h4 id="tortues" ><div>
-                <span> Nombre d'animaux : </span></div> <span id="prefAniMin" class="purple"></span> <span id="prefAniMax" class="purple"></span>
+                <span> Nombre d'animaux : <img src="sources/img/animaux.png" width="40px"></span></div> <span id="prefAniMin" class="purple"></span> <span id="prefAniMax" class="purple"></span>
             <div id="sliderAniContainer"></div>
 
 
         </h4>
 
         <h4 id="capital" ><div>
-                <span> Capital des pêcheurs : </span></div>  <span id="prefCapMin" class="purple"></span> <span id="prefCapMax" class="purple"></span>
+                <span> Capital des pêcheurs : <img src="sources/img/capital.png" width="40px"></span></div>  <span id="prefCapMin" class="purple"></span> <span id="prefCapMax" class="purple"></span>
             <div id="sliderCapContainer"></div>
         </h4>
 
         <h4 id="touristes" ><div>
-                <span> Nombres de touristes : </span></div> <span id="prefTourMin" class="purple"></span> <span id="prefTourMax" class="purple"></span>
+                <span> Nombres de touristes : <img src="sources/img/touristes.png" width="40px"></span></div> <span id="prefTourMin" class="purple"></span> <span id="prefTourMax" class="purple"></span>
             <div id="sliderTourContainer" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>
 
         <h4 id="environnement" ><div>
-                <span> Restauration de l'environnement : </span></div> <span id="prefEnvMin" class="purple"></span>  <span id="prefEnvMax" class="purple"></span>
+                <span> Taille des mailles des filets :  <img src="sources/img/mailles.png" width="40px"></span></div> <span id="prefEnvMin" class="purple"></span>  <span id="prefEnvMax" class="purple"></span>
             <div id="sliderEnvContainer" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
 
         </h4>
 
         <h4 id="ouvert" ><div>
-                <span> Proportion du parc fermée au tourisme : </span></div> <span id="prefOuvMin" class="purple"></span>  <span id="prefOuvMax" class="purple"></span>
+                <span> Proportion du parc fermée au tourisme : <img src="sources/img/proportion.png" width="40px"></span></div> <span id="prefOuvMin" class="purple"></span>  <span id="prefOuvMax" class="purple"></span>
             <div id="sliderOuvContainer" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
         </h4>
 
     </div>
 </div>
+<div id="finishButtonContainer"> </div>
 <div id="kernelDiv" style="width:100%;height:100%"></div>
+
+
+
 
 
 <script>

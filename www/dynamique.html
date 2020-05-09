@@ -22,6 +22,7 @@
     <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
 
     <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/preference.css">
     <link rel="stylesheet" href="sources/styles/dynamique.css">
     <link rel="stylesheet" href="sources/styles/home2.css">
 
@@ -60,7 +61,7 @@
 
     <div class="dynamique-container">
         <h4 class="">
-            <div>
+            <div style="color:#4B0082">
                 <div>
 
                     <span data-toggle="tooltip" data-placement="top" title="En économie, une dépréciation est une perte de valeur d'un bien. Ici il s'agit de la perte de la valeur des infrastructures de pêche (bateaux, filets, locaux,...). Chaque année la valeur de ces biens est dimunée d'un certain pourcentage, à definir ici.">Dépreciation des infrastructures de pêche (en % sur 10 ans) : </span>
@@ -71,7 +72,7 @@
                 </div>
             </div>
 
-            <div id="tortues">
+            <div id="tortues" style="color:#4B0082">
                 <div>
 
                     <span data-toggle="tooltip" data-placement="top" title="Avec ce paramètre vous pouvez moduler l'attraction des touristes pour les tortues, c'est à dire si la présence de tortues jouent un rôle important ou non dans la venue des touristes."> Attraction des touristes pour les tortues (de 0 à 100): </span>
@@ -84,7 +85,7 @@
                 </div>
             </div>
 
-            <div id="poisson">
+            <div id="poisson" style="color:#4B0082">
                 <div>
                     <span data-toggle="tooltip" data-placement="top" title="En moyenne pour les poissons pêchés dans cette région."> Prix pour 10 kilos de poisson (en dollard $) : </span>
                     <span> {{.ValuePoisson}} </span>
@@ -96,7 +97,7 @@
                 </div>
             </div>
 
-            <div id="repro">
+            <div id="repro" style="color:#4B0082">
                 <div >
                     <span data-toggle="tooltip" data-placement="top" title="Il s'agit de la différence entre le nombre de tortues à un moment donné et le nombre de tortues un an avant, lorsque l'on imagine que l'influence des pêcheurs et des touristes est nulle."> Taux de reproduction des tortues : </span>
                     <span> {{.ValueRepro}} </span>
@@ -128,12 +129,12 @@
 
             <div>
                 <div>
-                    <span> Paramètres correspondant aux moyens d'actions : </span>
+                    <span style="color:#800080"> <b>Paramètres correspondant aux moyens d'actions : </b></span>
                 </div>
 
-                <div id="ipdiv">
+                <div id="ipdiv" style="color:#800080">
                     <div>
-                        <span data-toggle="tooltip" data-placement="top" title="Il est possible de faire varier de nombre en utilisant diffeérents types de filets mais ils sont parfois cher, ou  bien en utilisant des techniques de pêches plus contraignantes pour les pêcheurs.">  Nombre de tortues prises pour chaque tonne de poissons péchée: </span>
+                        <span data-toggle="tooltip" data-placement="top" title="La tailles des filet influe sur le nombre de tortues prises accidentellement dans les filet ainsi que sur le capital des pêcheurs. Plus les filets ont de grandes mailles plus il est facile pour les tortues de s'echapper, mais moins les pecheurs vont prendre de poissons.">  Taille des mailles des filets (1: taille la plus grande, 10: taille la plus petite): <img src="sources/img/mailles.png" width="40px"></span>
                         <span> 5 </span>
                     </div>
                     <div class="slidecontainer">
@@ -141,9 +142,9 @@
                     </div>
                 </div>
 
-                <div id="zetadiv">
+                <div id="zetadiv" style="color:#800080">
                     <div>
-                        <span data-toggle="tooltip" data-placement="top" title="Il est possible de faire varier ce paramètre en fermant certaines zone du parc au tourisme.">  Proportion de l'aire protégée fermée au tourisme: </span>
+                        <span data-toggle="tooltip" data-placement="top" title="Il est possible de faire varier ce paramètre en fermant certaines zone du parc au tourisme.">  Proportion de l'aire protégée fermée au tourisme: <img src="sources/img/proportion.png" width="40px"> </span>
                         <span> 25 </span>
                     </div>
                     <div class="slidecontainer">
@@ -151,11 +152,11 @@
                     </div>
                 </div>
                 <div>
-                    <span> Point de départ : </span>
+                    <span style="color:#191970"> <b>Point de départ : </b></span>
                 </div>
-                <div>
+                <div style="color:#191970">
                    <div>
-                       <span> Nombre d'animaux : </span>
+                       <span id="tortues"> Nombre d'animaux : <img src="sources/img/animaux.png" width="40px"></span>
                        <span> 3000</span>
                    </div>
                     <div class="slidecontainer">
@@ -165,9 +166,9 @@
                     </div>
 
                 </div>
-                <div>
+                <div style="color:#191970">
                     <div>
-                        <span> Capital des Pêcheurs : </span>
+                        <span id="capital"> Capital des Pêcheurs : <img src="sources/img/capital.png" width="40px"></span>
                         <span> 50000</span>
                     </div>
                 <div class="slidecontainer">
@@ -176,9 +177,9 @@
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
                 </div>
-                <div>
+                <div style="color:#191970">
                     <div>
-                        <span> Nombre de touristes : </span>
+                        <span id="touristes"> Nombre de touristes : <img src="sources/img/touristes.png" width="40px"> </span>
                         <span>2000 </span>
                     </div>
                 <div class="slidecontainer">
@@ -187,6 +188,10 @@
                            onchange="setMyValue(this);calc();">*/}}
                 </div>
             </div>
+            </div>
+            <div style="padding: 50px">
+                <button id="start" onclick="calc();" class="btn btn-primary"> Calculer </button>
+                <br/>
             </div>
 
         </h4>

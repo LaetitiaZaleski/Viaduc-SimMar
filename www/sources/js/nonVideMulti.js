@@ -61,7 +61,11 @@ function findNonVideMulti() {
                 });
         }
 
-    });
+        //sleep(3000)
+        });
+    }
+
+
 
     getXMLHttp("api?fct=get_final_pref&room_name="+localStorage.getItem("roomName"), function (json) {
         json = JSON.parse(json);
@@ -271,18 +275,6 @@ function findNonVideMulti() {
                 findInter(Values[crit][0], Pas[crit][0], Importances[crit][0], Values[crit][1], Pas[crit][1], Importances[crit][1], LSid[crit])
             }
 
-            document.getElementById('PointDeDepartContainer').innerHTML+="Point de départ de la recherche :";
-            document.getElementById('PointDeDepartContainer').innerHTML+="<br>";
-
-
-            for ( crit = 0; crit < Values.length; crit++) {
-
-                printmin = localStorage.getItem(LSid[crit] + "Min");
-                printmax = localStorage.getItem(LSid[crit] + "Max");
-                document.getElementById('PointDeDepartContainer').innerHTML+="Minimum pour "+LSid[crit]+" "+printmin;
-                document.getElementById('PointDeDepartContainer').innerHTML+="Maximum pour "+LSid[crit]+" "+printmax;
-                console.log(printmin);
-            }
             console.log("lets go get pref !");
             getPrefs(false);
 
@@ -472,18 +464,6 @@ function findNonVideMulti() {
                 findInter(Values[crit][0], Pas[crit][0], Importances[crit][0], Values[crit][1], Pas[crit][1], Importances[crit][1], LSid[crit])
             }
 
-            document.getElementById('PointDeDepartContainer').innerHTML+="Point de départ de la recherche :";
-            document.getElementById('PointDeDepartContainer').innerHTML+="<br>";
-
-
-            for ( crit = 0; crit < Values.length; crit++) {
-
-                printmin = localStorage.getItem(LSid[crit] + "Min");
-                printmax = localStorage.getItem(LSid[crit] + "Max");
-                document.getElementById('PointDeDepartContainer').innerHTML+="Minimum pour "+LSid[crit]+" "+printmin;
-                document.getElementById('PointDeDepartContainer').innerHTML+="Maximum pour "+LSid[crit]+" "+printmax;
-                console.log(printmin);
-            }
             /**********************/
 
 
@@ -505,7 +485,7 @@ function findNonVideMulti() {
                     console.log(json.final_pref[k]);
                     var name = "solution "+ (k+1);
                     $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
-                    getFileBynum(json.num_file[k],name);
+                    getFileBynum(json.num_file[k],name, localStorage.getItem("classId"),json.final_pref[k]);
 
                     console.log(json.num_file[k]);
                     console.log(json.final_pref[k]);

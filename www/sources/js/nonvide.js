@@ -87,7 +87,7 @@ function letsFinish(multi = false) {
 
         let url = window.location.href;
         if(!multi){
-            let newParam = url.split("?")[1].replace("nonvide", "result");
+            let newParam = url.split("?")[1].replace("nonvide", "importances");
             window.location.href = "?" + newParam;
         }else{
             let newParam = url.split("?")[1].replace("result", "preference");
@@ -167,7 +167,7 @@ function calcTable(abs, pref, faux){
         const minMax = {
             AMax : 5000,
             AMin : 0,
-            CMax : 40000,
+            CMax : 10000,
             CMin : 0,
             TMax : 5000,
             TMin : 0,
@@ -531,7 +531,8 @@ function showHide(k) {
         if (gFinalPref == null) {
             gFinalPref = JSON.parse(localStorage.getItem("finalPref"))
         }
-
+        console.log("final pref:");
+        console.log(gFinalPref[parseInt(k)]);
         showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {
         $("#slider-ani-"+k + ", #value-min-max-ani-" + k+", #text-"+ k).remove();
@@ -911,11 +912,11 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
     //   debut de l'exploration :
     i=0;
-    var lastNonVide = 0;
-    var newPrefs = [];
-    var newData = [];
-    var dontstop = false;
-    var prefsInit = JSON.parse(JSON.stringify(Prefs));
+    let lastNonVide = 0;
+    let newPrefs = [];
+    let newData = [];
+    let dontstop = false;
+    let prefsInit = JSON.parse(JSON.stringify(Prefs));
 
     while (i<nbEtapes){
         console.log("******** etape numero: "+i+" ******** "+ "rafinement : "+rafinement);
@@ -1071,12 +1072,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                 }
             }
             else {
-                if (ret === "Ce noyau est negatif !") {
-                    // si une iteration est negative c'est une erreur : on ne fait rien et on recommence
-                    newPrefs = JSON.parse(JSON.stringify(Prefs));
-                    console.log("negatif");
-                    dontstop = true;
-                } else {
+
                     dontstop = false;
                     console.log("non vide");
                     lastNonVide = nbFile;
@@ -1095,7 +1091,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
                         }
 
                         // console.log(Prefs[j].name +Prefs[j].table);
-                    }
+
 
                 }
             }
@@ -1727,7 +1723,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [40000]
+            'max': [10000]
         }
     });
 
@@ -1871,5 +1867,7 @@ function showPreferences(finalprefs,k){
     document.getElementById('prefOuvMax-' + k).innerHTML=prefOuvmax;
 
 }
+
+
 
 

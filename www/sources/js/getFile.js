@@ -366,6 +366,10 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
 
             var printData = [noyau, contraintes];
 
+            if (commun){
+                printData = [noyau];
+            }
+
             var layout = {
                 title: {
                     text: 'Noyau de viabilité'

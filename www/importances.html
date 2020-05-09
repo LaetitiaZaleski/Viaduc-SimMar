@@ -37,13 +37,12 @@
 
 </head>
 <body>
-
+<center>
 <h1>
     Choix de l'importances des paramètres
 </h1>
 
-<div>  <span>  Pour chacunes de vos préférences, cocher la case associée si ce critére est important pour vous,
-        c'est à dire que si c'est un maximum vous ne voulez pas qu'il diminue et si c'est un minimum vous ne voulez pas qu'il augmente.
+<div>  <span>  Merci de cocher les critéres lse plus importants pour vous (<b>trois maximum</b>), c'est à dire que si c'est un maximum vous ne voulez pas qu'il diminue et si c'est un minimum vous ne voulez pas qu'il augmente.
     </span>
 </div>
 
@@ -52,42 +51,42 @@
         <h4>
             <ul>
                 <li> <div>
-                        <input type="checkbox" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span> (<span id="valueAniMin"></span>)
+                        <input type="checkbox" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span>
                     </div>
                 <li>  <div>
-                        <input type="checkbox" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span> (<span id="valueAniMax"></span>)
+                        <input type="checkbox" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span>
                     </div>
                 <li>  <div>  <input type="checkbox" id="ImportanceCapMin" value="checkbox">
-                        <span> Le Capital minimum des pêcheurs </span> (<span id="valueCapMin"></span>)
+                        <span> Le Capital minimum des pêcheurs </span>
 
                     </div>
                 <li> <div>  <input type="checkbox" id="ImportanceCapMax" value="checkbox">
-                        <span> Le Capital maximum des pêcheurs </span> (<span id="valueCapMax"></span>)
+                        <span> Le Capital maximum des pêcheurs </span>
 
                     </div>
                 <li> <div>  <input type="checkbox" id="ImportanceTourMin" value="checkbox">
-                        <span> Le nombre minimum de touristes </span> (<span id="valueTourMin"></span>)
+                        <span> Le nombre minimum de touristes </span>
                     </div>
 
                 <li> <div>  <input type="checkbox" id="ImportanceTourMax" value="checkbox">
-                        <span> Le nombre maximum de touristes </span> (<span id="valueTourMax"></span>)
+                        <span> Le nombre maximum de touristes </span>
                     </div>
 
                 <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
-                        <span> Prises accidentelles de tortues (minimum) </span> (<span id="valueEnvMin"></span>)
+                        <span> Taille maximale des mailles de filets </span>
                     </div>
 
                 <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
-                        <span> Prises accidentelles de tortues (maximum) </span> (<span id="valueEnvMax"></span>)
+                        <span> Taille minimale des mailles de filets </span>
 
                     </div>
 
                 <li>  <div>  <input type="checkbox" id="ImportanceOuvMin" value="checkbox">
-                        <span> La proportion minimum du parc fermée aux touristes </span> (<span id="valueOuvMin"></span>)
+                        <span> La proportion minimum du parc fermée aux touristes </span>
                     </div>
 
                 <li>  <div>  <input type="checkbox" id="ImportanceOuvMax" value="checkbox">
-                        <span> La proportion maximum du parc fermée aux touristes </span> (<span id="valueOuvMax"></span>)
+                        <span> La proportion maximum du parc fermée aux touristes </span>
                     </div>
             </ul>
 
@@ -98,8 +97,76 @@
 </div>
 
 
+<div>
+<h2>
+ Phase suivante : Négociation
+</h2>
+<span>
+        Maintenant que votre noyau est non vide et que vous avez indiquez les critères qui vous semblent importants, nous pouvons regarder s'il existe un noyau non vide
+        satisfaisant les préférences de tout les utilisateurs. Sur la page suivante, lorsque tout les utilisateurs auront choisit leurs préférences,
+       les verrez apparaitre, ainsi que leurs noyaux :
+
+
+<div><img src="sources/img/MultiFig1.png"  width="1000px" ></div>
+
+
+
+    Afin de vérifier s'il existe un noyau non vide, nous commençons par regarder si les préférences des utilisateurs ont une intersection non vide.
+    Vous pouvez lancer le calcul en appuyant sur le bouton "Calcul de noyaux dans l'intersection".
+Il y a donc deux cas possible : </span>
+
+<h3>
+    Cas de l'intersection non-vide et noyaux dans l'intersection non-vides:
+</h3>
+
+<span>
+        Ensuite, vous pouvez appuyer sur "Calcul de noyaux dans l'intersection" ce qui calculera, pour votre modèle,
+        s'il existe un noyau non vide dans l'intersection des préférences de tous les utilisateurs. Si c'est le cas il sera affiché sur le même graphe que
+            les autres noyaux. Si chacun a obtenu un noyau non vide dans l'intersection des contraintes, et que ce noyau est satisfaisant pour tout le monde,
+            la partie peut s'arrêter ici en choisissant l'intersection de vos préférences comme objectifs et moyens d'action communs.
+        </span>
+
+
+<div><img src="sources/img/MultiFig2.png"  width="1000px" ></div>
+
+
+<h3>
+    Cas de l'intersection vide ou noyau dans l'intersection vide :
+</h3>
+<span>
+        Si au moins un joueur a obtenu un noyau vide avec la méthode précédente (calcul dans l'intersection de contraintes) nous pouvons vous aider à
+            relâchez vos contraintes pour vous aider à obtenir une combinaison d'objectifs et de moyens d'action qui vous conviennent à tous.
+            Pour cela appuyez sur le bouton "Recherche de Noyaux non-vides".
+    </span>
+
+<div><img src="sources/img/MultiFig3_1.png"  width="1000px" ></div>
+<span>
+        Le calcul peut prendre quelques minutes. Une fois le calcul fini, plusieurs solutions sont proposées. Appuyer sur le bouton correspondant à la
+        solution pour qu'elle apparaisse. Vous pouvez ainsi comparer plusieurs solutions si vous appuyez sur plusieurs boutons. Réappuyez sur le
+        bouton correspondant à la solution pour qu'elle disparaisse. Vous pourrez vous mettre d'accord sur une des solutions proposées ou bien revenir en
+            arrière pour modifiez vos préférences en appuyant sur le bouton correspondant.
+    </span>
+<div><img src="sources/img/MultiFig3_2.png"  width="1000px" ></div>
+
+<span>
+    Un fois que vous êtes d'accord sur une solution, ou bien sur des préférences
+    (minimum et maximum sur le nombre de tortues, touristes ect...), vous pouvez appuyez sur le bouton "quitter la partie" afin de répondre au questionnaire.
+    Si vous n'etes pas d'accord avec les autres membres, vous n'etes pas obligé d'atteindre un consensus, dans ce cas la solution proposée par le pêcheur sera celle mise en place.
+</span>
+
+
+
+
+
+</div>
+
+
+
+
 <div id="finishButtonContainer"onclick="letsFinish()" class="btn btn-primary"> Passer à la négociation </div>
-<div id="patientezContainer"> </div>
+    <div id="patientezContainer"> </div></center>
+
+
 
 
 

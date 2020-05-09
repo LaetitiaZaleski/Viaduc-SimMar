@@ -472,7 +472,7 @@ function setFPRole_i(i) {
         let Id2 = "slider-Cap" + "-" + obj.class_name;
         let spanId2 = "valueCap" + obj.class_name + "SliderVal";
         setValues(spanId2, Val2);
-        setSlider(Id2, Val2,create,40000);
+        setSlider(Id2, Val2,create,10000);
         setImp("impCapMin" + obj.class_name, obj.preference.imp_cap_min);
         setImp("impCapMax" + obj.class_name, obj.preference.imp_cap_max);
 
@@ -584,6 +584,8 @@ function setFPRole_i(i) {
 
 
     function letsCalcAll() {
+
+        document.getElementById('patientezContainer').innerHTML="Calcul en cours...";
 
         let RoomName = localStorage.getItem("roomName");
 
@@ -724,13 +726,18 @@ function setFPRole_i(i) {
 
             classIds.forEach(function (ids) {
                 let nbFile = 0;
+                let http = new XMLHttpRequest();
+                let http2 = new XMLHttpRequest();
                 do {
                     let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0.dat";
                     http.open('HEAD', tmpPath, false);
                     http.send();
-                    nbFile = nbFile + 1
-                } while (http.status !== 404);
-                nbFile--;
+                    nbFile = nbFile + 1;
+                    let tmpPath2 = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0.dat";
+                    http2.open('HEAD', tmpPath2, false);
+                    http2.send();
+                } while (http.status !== 404 || http2.status !== 404);
+                nbFile= nbFile - 2;
 
 
                 console.log(ids);
@@ -760,32 +767,18 @@ function setFPRole_i(i) {
                     "value_ouv_max": parseInt(OuvMax)
                 };
                 let data = JSON.stringify(jsonObj);
-                /*  console.log("ok 1");
 
-                  console.log("ok 2");
-                  console.log(data);
-                  console.log("ok 3"); */
-                let dontstop = true;
-                while (dontstop) {
                     postXMLHttp('/api?fct=lets_calc' +
                         '&data=' + data, function (ret) {
-                        console.log(dontstop);
                         console.log(ret);
 
                         if (ret === "Ce noyau est vide !") {
                             alert("Le noyau : \"" + cn + "\" est  vide");
-                            dontstop = false;
                             document.getElementById("recherche").hidden = false;
 
                         } else if (ret === "Votre noyau n'est pas vide !") {
                             alert("Le noyau : \"" + cn + "\" n'est pas vide");
-                            dontstop = false
-                        } else {
-                            alert("noyaux vide");
-                            dontstop = true
                         }
-
-                        console.log(dontstop);
                     });
 
                     do {
@@ -793,13 +786,12 @@ function setFPRole_i(i) {
                         let tmpPath = "sources/output/" + localStorage.getItem("roomName") + "_" + ids + "_" + nbFile + "-viab-0.dat";
                         http.open('HEAD', tmpPath, false);
                         http.send();
-                        sleep(1500)
+                        sleep(1000)
                     }
                     while (http.status === 404);
-                }
-
 
             });
+            sleep(3000);
             getAllFiles();
 
         } else {
@@ -807,6 +799,8 @@ function setFPRole_i(i) {
             alert("Votre intersection est vide");
             document.getElementById("recherche").hidden = false
         }
+
+        document.getElementById('patientezContainer').innerHTML="";
 
     }
 

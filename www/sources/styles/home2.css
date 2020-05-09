@@ -1,7 +1,7 @@
 /* Style the lines by removing the fill and applying a stroke */
 .lineA {
     fill: none;
-    stroke: #385723;
+    stroke: #5C9FE7;
     stroke-width: 3;
 }
 .lineC {
@@ -11,7 +11,7 @@
 }
 .lineT {
     fill: none;
-    stroke: #5996cf;
+    stroke: #C86A6A;
     stroke-width: 3;
 }
 

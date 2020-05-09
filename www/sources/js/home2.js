@@ -47,8 +47,8 @@ function draw(maxy=42000) {
     // legende :
 
     svg.append("circle").attr("cx",20).attr("cy",30).attr("r", 6).style("fill", "#a58d39");
-    svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#417da5");
-    svg.append("circle").attr("cx",20).attr("cy",70).attr("r", 6).style("fill", "#1c6c06");
+    svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#C86A6A");
+    svg.append("circle").attr("cx",20).attr("cy",70).attr("r", 6).style("fill", "#5C9FE7");
     svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche divisé par 100").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 55).text("Nombre de touristes").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 75).text("Nombre de tortues").style("font-size", "12px").attr("alignment-baseline","middle");
@@ -156,14 +156,14 @@ function calc() {
     sim.evaluate("T2=5000");
     sim.evaluate("ip = 0.000001");
     sim.evaluate("it = 0.001");
-    sim.evaluate("muE = 50");
+    sim.evaluate("muE = 0.001");
 
 
 
     let del = parseInt(roomId = document.getElementById('valuePeche').value);
     sim.evaluate(`del = ${del}*0.002`);
     let a = parseInt(roomId = document.getElementById('valueTortue').value);
-    sim.evaluate(`a = ${a}*30`);
+    sim.evaluate(`a = ${a}*0.01`);//*30`);
     let mp = parseInt(roomId = document.getElementById('valuePoisson').value);
     sim.evaluate(`mp = ${mp}*0.002`);
     let g = parseInt(roomId = document.getElementById('valueRepro').value);
@@ -192,7 +192,7 @@ function calc() {
 
 
 
-     //   sim.evaluate(`C0 = 40000`);
+     //   sim.evaluate(`C0 = 10000`);
 
      //   sim.evaluate(`A0 = 3000`);
 
@@ -203,7 +203,9 @@ function calc() {
 
     sim.evaluate("dCdt(C, A, T) = (-del)*C + p*A*C*(mp)*ip + mt*T*it"); // p: nb poissons pour 1 tortues
     sim.evaluate("dAdt(C, A, T) = A*g*(1-(A/(1+M/(1+eta*T/(1+eps)))))-zeta*l*T*A - A*C*ip;");
-    sim.evaluate("dTdt(C, A, T) = T*(muE*C/(C+phi) + a*zeta*A/(A+phi2)-alpha*T) ");
+    sim.evaluate("dTdt(C, A, T) = a*zeta*A -alpha*T + muE*C ");
+    //sim.evaluate("dTdt(C, A, T) = T*(muE*C + a*zeta*A -alpha*T) ");
+    //sim.evaluate("dTdt(C, A, T) = T*(muE*C/(C+phi) + a*zeta*A/(A+phi2)-alpha*T) ");
     sim.evaluate("result = ndsolve([dCdt, dAdt, dTdt], [C0, A0, T0], dt, tfinal)");
 
 
@@ -221,12 +223,17 @@ function calc() {
     console.log(data);
     graphC=[];
     for(let i =0; i<data[0].length;i++){
-        graphC.push(data[0][i]*0.01);
+        graphC.push(data[0][i]*0.1);
     }
 
+   /* graphT=[];
+    for(let i =0; i<data[2].length;i++){
+        graphT.push(data[2][i]*0.1);
+    }*/
     // graphC=data[0];
      graphA=data[1];
      graphT=data[2];
+
      console.log(graphC);
     let maxA = Math.max(...graphA);
     let maxT = Math.max(...graphT);
