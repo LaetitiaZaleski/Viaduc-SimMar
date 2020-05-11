@@ -152,10 +152,14 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 
 		//var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0-bound", "finalfile", -1)
 		var fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0", "finalfile", -1)
+		if (param["bool_finalfile"][0]=="false"){
+			 fileFinish = strings.Replace(fileViabToRename, fileId +"-viab-0", "unused", -1)
+		}
 		log.Println(fmt.Sprintf(fileFinish))
 		paramFinish := append(paramCp, pathViabToRename,fileFinish)
 		cmdCpF := exec.Command("cp", paramFinish...)
 		cmdCpF.Run()
+
 
 		/****************/
 	}else if strings.Compare(fnct, "delete_finalFile") == 0 {
@@ -287,7 +291,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		//var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
-		cmd := exec.Command("./bin/viabLabExe3", file )
+		cmd := exec.Command("./bin/viabLabExe30", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
@@ -415,7 +419,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		//var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		log.Println(file)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
-		cmd := exec.Command("./bin/viabLabExe3", file )
+		cmd := exec.Command("./bin/viabLabExe30", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer

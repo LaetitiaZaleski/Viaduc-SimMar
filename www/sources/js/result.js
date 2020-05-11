@@ -472,7 +472,7 @@ function setFPRole_i(i) {
         let Id2 = "slider-Cap" + "-" + obj.class_name;
         let spanId2 = "valueCap" + obj.class_name + "SliderVal";
         setValues(spanId2, Val2);
-        setSlider(Id2, Val2,create,10000);
+        setSlider(Id2, Val2,create,100000);
         setImp("impCapMin" + obj.class_name, obj.preference.imp_cap_min);
         setImp("impCapMax" + obj.class_name, obj.preference.imp_cap_max);
 
@@ -508,7 +508,7 @@ function setFPRole_i(i) {
     }
 
 
-    function setSlider(sliderId, sliderVals,create = true, max = 5000) {
+    function setSlider(sliderId, sliderVals,create = true, max = 10000) {
         // console.log(sliderVals);
         var sliderAni = document.getElementById(sliderId);
         if (sliderVals[sliderVals.length - 1] < 110) {

@@ -48,7 +48,7 @@
             Deux moyens d'action sont proposés : la fermeture/ouverture de l'aire protégée au tourime (en pourcentage) et
         la prise accidentelle de tortues dans les filets de pêche.
 
-        Les valeurs maximales ne sont pas prises en compte si elles correspondent au maximum autorisé (5000 pour les animaux et les touriste, 50000 pour le capital)
+        Les valeurs maximales ne sont pas prises en compte si elles correspondent au maximum autorisé (10000 pour les animaux et les touriste, 100000 pour le capital)
 
     </span>
 
@@ -172,9 +172,12 @@
 
     <div style="padding: 50px">
         <button id="draw" onclick="getFile(true)" class="btn btn-primary"> Calculer et afficher le noyau </button>
-        <button id="continue" onclick="letsFinish()" class="btn btn-primary" hidden="true"> Continuer </button>
         <button id="help" onclick="letsNotEmpty()" class="btn btn-primary" hidden="true" > Aide pour trouver un noyau non-vide </button>
         <br/>
+    </div>
+
+    <div>
+        <button id="continue" onclick="letsFinish()" class="btn btn-primary" hidden="true"> Continuer </button>
     </div>
 
     <div id="kernelDiv" style="width:100%;height:100%"></div>
@@ -200,7 +203,10 @@
         step: 20,
         range: {
             'min': [0],
-            'max': [5000]
+            '10%': [500, 50],
+            '50%': [3000, 100],
+            'max': [10000]
+
         }
     });
 
@@ -233,7 +239,7 @@
         step: 20,
         range: {
             'min': [0],
-            'max': [10000]
+            'max': [100000]
         }
     });
 
@@ -264,7 +270,10 @@
         step: 20,
         range: {
             'min': [0],
-            'max': [5000]
+            '10%': [500, 50],
+            '50%': [3000, 100],
+            'max': [10000]
+
         }
     });
 

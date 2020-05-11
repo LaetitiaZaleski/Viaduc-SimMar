@@ -76,10 +76,12 @@ function letsFinish(multi = false) {
             getXMLHttp('/api?fct=rename_file' +
                 '&room_name=' + RoomName + '&class_id=' + ClassId +
                 '&file_id=' + localStorage.getItem("fileId")+
-                '&last_id=' + localStorage.getItem("lastId"),
+                '&last_id=' + localStorage.getItem("lastId")+'&bool_finalfile=' + "false",
                 function (ret) {
 
             });
+
+
 
         //setPref(gNumFiles[gFinalFiles[0]]);
         document.getElementById('patientezContainer').innerHTML="Enregistrement des préférences...";
@@ -165,11 +167,11 @@ function calcTable(abs, pref, faux){
 
         // Valeurs de min et max absolu :
         const minMax = {
-            AMax : 5000,
+            AMax : 10000,
             AMin : 0,
-            CMax : 10000,
+            CMax : 100000,
             CMin : 0,
-            TMax : 5000,
+            TMax : 10000,
             TMin : 0,
             EnvMax : 10,
             EnvMin : 0,
@@ -360,25 +362,23 @@ function calcTable(abs, pref, faux){
         console.log(PrefsInit2);
 
         console.log("*************************  recherche 1 **************************");
-        console.log("*************************  mono A: **************************");
-        console.log(mono);
         console.log(PrefsInit0);
 
         let r1 = rechercheDiagonale(PrefsInit0, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100,mono); // OK tout seul
 
-        console.log("*************************  mono B: **************************");
-        console.log(mono);
         finalPrefs = [r1.data];
         let finalFiles = [r1.numFile];
 
         console.log("finalFiles : "+finalFiles);
 
-        console.log("*************************  mono C: **************************");
-        console.log(mono);
-
         console.log("recherche 2");
         console.log("faux min max :");
         console.log(fauxMinMax);
+        if (!mono){
+            precision = 4
+        }
+        console.log("*************************  recherche 2 **************************");
+
         let r2 =rechercheUnParUn(PrefsInit1, minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100,mono); // OK tout seul
         console.log(r2.data);
         console.log(r1.data);
@@ -393,20 +393,18 @@ function calcTable(abs, pref, faux){
         console.log("finalFiles : "+finalFiles);
 
         console.log("/******* recherche 3 ************/");
+        if (mono) {
 
-        console.log("*************************  mono D: **************************");
-        console.log(mono);
+            let priorite = recherchePriorite(PrefsInit2, minMax, fauxMinMax, [0.0, 10.0, 50.0, 100.0], 100, mono);
 
+            console.log("priorité : ");
+            console.log(priorite);
 
-        let priorite = recherchePriorite(PrefsInit2,minMax,fauxMinMax,[0.0,10.0,50.0,100.0],100,mono);
-
-        console.log("priorité : ");
-        console.log(priorite);
-
-        for(k = 0; k<priorite.length; k++){
-            if(!finalPrefs.includes(priorite[k].data)){
-                finalPrefs.push(priorite[k].data);
-                finalFiles.push(priorite[k].numFile);
+            for (k = 0; k < priorite.length; k++) {
+                if (!finalPrefs.includes(priorite[k].data)) {
+                    finalPrefs.push(priorite[k].data);
+                    finalFiles.push(priorite[k].numFile);
+                }
             }
         }
 
@@ -434,7 +432,8 @@ function calcTable(abs, pref, faux){
             console.log(k);
             console.log(finalPrefs[k]);
             var name = "solution "+ (k+1);
-            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
+            let buttonId = "solution"+k;
+            $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')" id="' + buttonId + '">'+name+'</div>');
             getFileBynum(gNumFiles[k],name,localStorage.getItem("classId"), finalPrefs[k])
 
 
@@ -500,9 +499,12 @@ function calcTable(abs, pref, faux){
 }
 
 function showHide(k) {
-
+    let buttonId = "solution"+k;
 
     if($("#slider-ani-"+k).length === 0) {
+
+        document.getElementById(buttonId).style.backgroundColor = "#004084";
+
         // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
         let num = parseInt(k)+1
         $("#sliderAniContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
@@ -535,6 +537,8 @@ function showHide(k) {
         console.log(gFinalPref[parseInt(k)]);
         showPreferences(JSON.parse(gFinalPref[parseInt(k)]),k);
     } else {
+
+        document.getElementById(buttonId).style.backgroundColor = "#007bff";
         $("#slider-ani-"+k + ", #value-min-max-ani-" + k+", #text-"+ k).remove();
         $("#slider-cap-"+k + ", #value-min-max-cap-" + k+", #text-"+ k).remove();
         $("#slider-tour-"+k + ", #value-min-max-tour-" + k+", #text-"+ k).remove();
@@ -599,7 +603,7 @@ function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,1
         finalPrefs = rafinement(res.pref,prefsInit, res.mM,fauxMinMax,importab,nbEtapes,mono);
     }else{
         console.log("coucou on est dans recherche digonale");
-        res = dichotomieMulti(Prefs, minMax,fauxMinMax,importab, nbEtapes);
+        res = dichotomieMulti(Prefs, minMax,fauxMinMax,importab, 10);
         /* Rafinement */
         console.log("fin dichotomie :");
         console.log(res.pref);
@@ -661,7 +665,7 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
         } while (http.status !== 404);
 /*********************/
 
-        newPrefs = dichotomieMulti(newPrefs.pref, minMax,fauxMinMax, importab, nbEtapes);
+        newPrefs = dichotomieMulti(newPrefs.pref, minMax,fauxMinMax, importab, 10);
     }
 
 
@@ -685,9 +689,21 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
 
     let resTab = [];// tableau des noyaux non vide
     let modifImp = [];
+    let impTab = [];
     for(var i=0; i<Prefs.length; i++){
         console.log(Prefs[i]);
-        if (parseInt(Prefs[i].importance) === 100){ // si c'etait un très important
+        if (parseInt(Prefs[i].importance) === 100 && (Prefs[i].val !== minMax.AMax) &&(Prefs[i].val !== minMax.CMax)){
+            impTab.push(i);
+        }
+    }
+    while ((impTab.length >=3) && (!mono)){
+        impTab = shuffle(impTab);
+        impTab.pop();
+    }
+
+    for(i=0; i<Prefs.length; i++){
+        console.log(Prefs[i]);
+        if (impTab.includes(i)){ // si c'etait un très important et pas dejà au max
             console.log(Prefs[i].name);
             for(var j=0; j<Prefs.length; j++) { // on met tout les autres critères à pas important
                 if ((j !== i)&&(parseInt(Prefs[j].importance) !== 1)) {
@@ -700,7 +716,7 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
                 var nonVide = dichotomie(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
             }else{
                 console.log("Coucou on est dans recherche priorité 1");
-                var nonVide = dichotomieMulti(Prefs,minMax,fauxMinMax,importab, nbEtapes); // on calcule
+                var nonVide = dichotomieMulti(Prefs,minMax,fauxMinMax,importab, 10); // on calcule
             }
 
             console.log("non vide :");
@@ -726,7 +742,7 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
                 newNonVide = dichotomie(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
             }else{
                 console.log("Coucou on est dans recherche priorité 2");
-                newNonVide = dichotomieMulti(nonVide.pref,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+                newNonVide = dichotomieMulti(nonVide.pref,minMax,fauxMinMax,importab,10,true); // non vide
             }
 
             console.log("new non vide :");
@@ -776,7 +792,7 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
         return dichotomie(newPrefs,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
     }else{
         console.log("Coucou on est dans rafinement");
-        return dichotomieMulti(newPrefs,minMax,fauxMinMax,importab,nbEtapes,true); // non vide
+        return dichotomieMulti(newPrefs,minMax,fauxMinMax,importab,10,true); // non vide
     }
 
 }
@@ -1141,7 +1157,7 @@ function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nb
 
 
 
-function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, rafinement = false) {
+function dichotomieMulti(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 10, rafinement = false) {
     console.log("*************************MULTI************************************");
 
     let AniMin = Prefs[0];
@@ -1685,7 +1701,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [5000]
+            'max': [10000]
         },
     });
 
@@ -1723,7 +1739,7 @@ function showPreferences(finalprefs,k){
         step: 20,
         range: {
             'min': [0],
-            'max': [10000]
+            'max': [100000]
         }
     });
 
@@ -1763,7 +1779,7 @@ function showPreferences(finalprefs,k){
         step: 0,
         range: {
             'min': [0],
-            'max': [5000]
+            'max': [10000]
         }
     });
 

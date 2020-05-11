@@ -260,7 +260,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split(' ');
                 if (valueTab.length >= 3) {
-                    if ((parseFloat(valueTab[3]) === 1.0) && (i%3 ==0)) { // on prend le point s'il est dans le noyau et un point sur 3
+                    if ((parseFloat(valueTab[3]) === 1.0) /*&& (i%3 ==0)*/) { // on prend le point s'il est dans le noyau et un point sur 3
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));
@@ -431,7 +431,7 @@ function getAllFiles(commun = true) {
             for (i = 0; i < lineTab.length; i++) {
                 let valueTab = lineTab[i].split(' ');
                 if (valueTab.length >= 3) {
-                    if ((parseFloat(valueTab[3]) === 1.0) && (i%3===0)) { // on prend le point s'il est dans le noyau et un point sur 3
+                    if ((parseFloat(valueTab[3]) === 1.0) /*&& (i%3===0)*/) { // on prend le point s'il est dans le noyau et un point sur 3
                         aniTab.push(parseFloat(valueTab[0]));
                         capTab.push(parseFloat(valueTab[1]));
                         tourTab.push(parseFloat(valueTab[2]));

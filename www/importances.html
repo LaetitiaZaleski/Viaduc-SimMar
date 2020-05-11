@@ -73,11 +73,11 @@
                     </div>
 
                 <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
-                        <span> Taille maximale des mailles de filets </span>
+                        <span> Taille minimale des mailles de filets </span>
                     </div>
 
                 <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
-                        <span> Taille minimale des mailles de filets </span>
+                        <span> Taille maximale des mailles de filets </span>
 
                     </div>
 
@@ -185,6 +185,86 @@ Il y a donc deux cas possible : </span>
 
     document.getElementById('valueOuvMin').innerHTML = localStorage.getItem("OuvMin");
     document.getElementById('valueOuvMax').innerHTML = localStorage.getItem("OuvMax");
+
+
+
+    async function setImportances() {
+        var http = new XMLHttpRequest();
+        nbFile = 0;
+
+        RoomName = localStorage.getItem("roomName");
+        ClassId = localStorage.getItem("classId");
+
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            nbFile= nbFile + 1
+        }
+        while (http.status !== 404);
+        // nb File = le nombre de fichier de cette partie pour ce joueur +1
+
+
+        var jsonObj = {
+            "room_name": localStorage.getItem("roomName"),
+            "class_id": localStorage.getItem("classId"),
+
+            "value_ani_min": {{.ValueAniMin}},
+            "value_ani_max": {{.ValueAniMax}},
+            "value_tour_min": {{.ValueTourMin}},
+            "value_tour_max": {{.ValueTourMax}},
+            "value_cap_min": {{.ValueCapMin}},
+            "value_cap_max":{{.ValueCapMax}},
+            "value_env_min":{{.ValueEnvMin}},
+            "value_env_max":{{.ValueEnvMax}},
+            "value_ouv_min":{{.ValueOuvMin}},
+            "value_ouv_max":{{.ValueOuvMax}},
+
+            "value_ani_faux_min": {{.ValueAniFauxMin}},
+            "value_ani_faux_max": {{.ValueAniFauxMax}},
+            "value_tour_faux_min": {{.ValueTourFauxMin}},
+            "value_tour_faux_max": {{.ValueTourFauxMax}},
+            "value_cap_faux_min": {{.ValueCapFauxMin}},
+            "value_cap_faux_max": {{.ValueCapFauxMax}},
+            "value_env_faux_min": {{.ValueEnvFauxMin}},
+            "value_env_faux_max": {{.ValueEnvFauxMax}},
+            "value_ouv_faux_min": {{.ValueOuvFauxMin}},
+            "value_ouv_faux_max": {{.ValueOuvFauxMax}},
+
+            "imp_ani_min": parseInt(localStorage.getItem("ImportanceAniMin")),
+            "imp_ani_max": parseInt(localStorage.getItem("ImportanceAniMax")),
+            "imp_tour_min": parseInt(localStorage.getItem("ImportanceTourMin")),
+            "imp_tour_max": parseInt(localStorage.getItem("ImportanceTourMax")),
+            "imp_cap_min": parseInt(localStorage.getItem("ImportanceCapMin")),
+            "imp_cap_max": parseInt(localStorage.getItem("ImportanceCapMax")),
+            "imp_env_min": parseInt(localStorage.getItem("ImportanceEnvMin")),
+            "imp_env_max": parseInt(localStorage.getItem("ImportanceEnvMax")),
+            "imp_ouv_min": parseInt(localStorage.getItem("ImportanceOuvMin")),
+            "imp_ouv_max": parseInt(localStorage.getItem("ImportanceOuvMax"))
+        };
+
+        data = JSON.stringify(jsonObj);
+
+        console.log(data);
+
+        postXMLHttp('/api?fct=lets_calc' +
+            '&data=' + data, function (ret) {
+        });
+
+        // on attend que le fichier soit créé :
+        nbFile = nbFile -1;
+
+        do {
+            let tmpPath = "sources/output/" + RoomName + "_" + ClassId + "_" + nbFile + "-viab-0.dat";
+            http.open('HEAD', tmpPath, false);
+            http.send();
+            sleep(1000)
+        }
+        while (http.status === 404);
+
+        return 0;
+    }
+
 </script>
 
 

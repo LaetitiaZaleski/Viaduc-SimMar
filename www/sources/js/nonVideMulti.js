@@ -484,7 +484,8 @@ function findNonVideMulti() {
                     console.log(k);
                     console.log(json.final_pref[k]);
                     var name = "solution "+ (k+1);
-                    $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')">'+name+'</div>');
+                    let buttonId = "solution"+k;
+                    $("#finalPrefButtonContainer").append('<div class="btn btn-primary" onclick="showHide(\'' + k + '\')" id="' + buttonId + '">'+name+'</div>');
                     getFileBynum(json.num_file[k],name, localStorage.getItem("classId"),json.final_pref[k]);
 
                     console.log(json.num_file[k]);

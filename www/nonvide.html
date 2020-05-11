@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="sources/styles/default.css">
     <link rel="stylesheet" href="sources/styles/preference.css">
     <link rel="stylesheet" href="sources/styles/home2.css">
-    <link rel="stylesheet" href="sources/styles/result.css">
     <link rel="stylesheet" href="sources/styles/nonvide.css">
 
     <script type="text/javascript" src="sources/js/tools.js"></script>
@@ -47,12 +46,13 @@
         Pour chacunes de vos préférences, cocher la case associée si ce critére est important pour vous,
         c'est à dire que si c'est un maximum vous ne voulez surtout pas qu'il diminue et si c'est un minimum vous ne voulez pas qu'il augmente.
         Plus vous choisissez de critères importants, plus le calcul sera long.
+        Les valeurs entre parenthèses correspondent aux valeurs choisies sur la page précédente.
     </span>
 </div>
 
 <div>
     <div class="importance-container" >
-        <h4>
+        <h4 class="preference-container">
             <ul>
                 <li> <div>
                         <input type="checkbox" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span> (<span id="valueAniMin"></span>)
@@ -60,14 +60,20 @@
     <li>  <div>
                         <input type="checkbox" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span> (<span id="valueAniMax"></span>)
                  </div>
+
+
                 <li>  <div>  <input type="checkbox" id="ImportanceCapMin" value="checkbox">
                 <span> Le Capital minimum des pêcheurs </span> (<span id="valueCapMin"></span>)
 
                  </div>
-    <li> <div>  <input type="checkbox" id="ImportanceCapMax" value="checkbox">
-                <span> Le Capital maximum des pêcheurs </span> (<span id="valueCapMax"></span>)
 
-                 </div>
+    <li><div>  <input type="checkbox" id="ImportanceCapMax" value="checkbox">
+                        <span> Le Capital maximum des pêcheurs </span> (<span id="valueCapMax"></span>)
+                    </div>
+
+
+
+
     <li> <div>  <input type="checkbox" id="ImportanceTourMin" value="checkbox">
                 <span> Le nombre minimum de touristes </span> (<span id="valueTourMin"></span>)
             </div>
@@ -76,14 +82,21 @@
                 <span> Le nombre maximum de touristes </span> (<span id="valueTourMax"></span>)
             </div>
 
+
+
+
     <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
-                <span> Taille maximale des mailles des filets </span> (<span id="valueEnvMin"></span>)
+                <span> Taille minimale des mailles des filets </span> (<span id="valueEnvMin"></span>)
             </div>
 
     <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
                 <span>  Taille maximale des mailles des filets </span> (<span id="valueEnvMax"></span>)
 
             </div>
+
+
+
+
 
                 <li>  <div>  <input type="checkbox" id="ImportanceOuvMin" value="checkbox">
                 <span> La proportion minimum du parc fermée aux touristes </span> (<span id="valueOuvMin"></span>)
@@ -92,10 +105,66 @@
                 <li>  <div>  <input type="checkbox" id="ImportanceOuvMax" value="checkbox">
                 <span> La proportion maximum du parc fermée aux touristes </span> (<span id="valueOuvMax"></span>)
             </div>
+
+
+
             </ul>
 
+            <div class="rappel"><center>
+                <div> <span> Pour rappel, voici les valeurs que vous avez choisies à la page précedentes (pour les modifier, revenir en arrière):</span>
+                </div>
+                <div>
+                    <span id="tortues"> Nombre d'animaux : <img src="sources/img/animaux.png" width="20px"></span>
+                </div>
+                <span id="valueAniSliderVal1" class="orange"></span> - <span id="valueAniSliderVal2" class="vert" ></span> - <span id="valueAniSliderVal3" class="vert"></span> - <span id="valueAniSliderVal4" class="orange"></span>
+
+                <section class="disabled-range-slider" >
+                    <div id="slider-ani" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </section>
+
+                    <div>
+                        <span id="capital"> Capital des pêcheurs : <img src="sources/img/capital.png" width="25px"></span>
+                    </div>
+                    <span id="valueCapSliderVal1" class="orange"></span> - <span id="valueCapSliderVal2" class="vert" ></span> - <span id="valueCapSliderVal3" class="vert"></span> - <span id="valueCapSliderVal4" class="orange"></span>
+
+
+                    <section class="disabled-range-slider ">
+                    <div id="slider-cap" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </section>
+
+                    <div>
+                        <span id="touristes"> Nombre de Touristes : <img src="sources/img/touristes.png" width="25px"></span>
+                    </div>
+                    <span id="valueTourSliderVal1" class="orange"></span> - <span id="valueTourSliderVal2" class="vert" ></span> - <span id="valueTourSliderVal3" class="vert"></span> - <span id="valueTourSliderVal4" class="orange"></span>
+
+
+                    <section class="disabled-range-slider ">
+                    <div id="slider-tour" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </section>
+
+                    <div>
+                        <span > Taille des mailles de filets : <img src="sources/img/mailles.png" width="25px"></span>
+                    </div>
+                    <span id="valueEnvSliderVal1" class="orange"></span> - <span id="valueEnvSliderVal2" class="vert" ></span> - <span id="valueEnvSliderVal3" class="vert"></span> - <span id="valueEnvSliderVal4" class="orange"></span>
+
+
+                    <section class="disabled-range-slider ">
+                    <div id="slider-env" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </section>
+
+                    <div>
+                        <span > Proportion du parc fermée au tourisme : <img src="sources/img/proportion.png" width="25px"></span>
+                    </div>
+                    <span id="valueOuvSliderVal1" class="orange"></span> - <span id="valueOuvSliderVal2" class="vert" ></span> - <span id="valueOuvSliderVal3" class="vert"></span> - <span id="valueOuvSliderVal4" class="orange"></span>
+
+                    <section class="disabled-range-slider ">
+                    <div id="slider-ouv" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </section>
+
+                </center></div>
 
         </h4>
+
 
     </div>
 </div>
@@ -106,7 +175,6 @@
         Le calcul peut prendre quelques minutes. Une fois le calcul fini, plusieurs solutions sont proposées. Appuyer sur le bouton correspondant à la
         solution pour qu'elle apparaisse ci-dessous. Vous pouvez ainsi comparer plusieurs solution si vous appuyez sur plusieurs bouton. Réappuyez sur le
         bouton correspondant à la solution pour qu'elle disparaisse.
-        Lorsque vous êtes satisfait d'une solution faites disparaitre les autres et appuyez sur le bouton "Continuer".
     </span>
 </div>
 <div  onclick="getPrefs()" class="btn btn-primary"> Lancer la recherche </div>
@@ -119,8 +187,7 @@
     <div class="">
         <h4 id="tortues" ><div>
                 <span> Nombre d'animaux : <img src="sources/img/animaux.png" width="40px"></span></div> <span id="prefAniMin" class="purple"></span> <span id="prefAniMax" class="purple"></span>
-            <div id="sliderAniContainer"></div>
-
+            <div id="sliderAniContainer" disabled="true"></div>
 
         </h4>
 
@@ -145,10 +212,11 @@
                 <span> Proportion du parc fermée au tourisme : <img src="sources/img/proportion.png" width="40px"></span></div> <span id="prefOuvMin" class="purple"></span>  <span id="prefOuvMax" class="purple"></span>
             <div id="sliderOuvContainer" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
         </h4>
-
+        <b>Lorsque vous êtes satisfait d'une solution faites disparaitre les autres et appuyez sur le bouton "Continuer".</b>
     </div>
+
 </div>
-<div id="finishButtonContainer"> </div>
+<center><div id="finishButtonContainer"> </div></center>
 <div id="kernelDiv" style="width:100%;height:100%"></div>
 
 
@@ -172,9 +240,177 @@
     document.getElementById('valueOuvMax').innerHTML = localStorage.getItem("OuvMax");
 </script>
 
+
+<script>
+
+    var sliderAni = document.getElementById('slider-ani');
+
+    noUiSlider.create(sliderAni, {
+        start: [{{.ValueAniFauxMin}}, {{.ValueAniMin}}, {{.ValueAniMax}}, {{.ValueAniFauxMax}}],
+        connect: [true, true, true, true, true],
+        step: 20,
+        range: {
+            'min': [0],
+            'max': [10000]
+        }
+    });
+
+    var connect = sliderAni.querySelectorAll('.noUi-connect');
+    var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
+
+    for (var i = 0; i < connect.length; i++) {
+        connect[i].classList.add(classes[i]);
+    }
+
+    var sliderAniValues1 = document.getElementById('valueAniSliderVal1');
+    var sliderAniValues2 = document.getElementById('valueAniSliderVal2');
+    var sliderAniValues3 = document.getElementById('valueAniSliderVal3');
+    var sliderAniValues4 = document.getElementById('valueAniSliderVal4');
+
+
+    sliderAni.noUiSlider.on('update', function (values) {
+        sliderAniValues1.innerHTML = values[0];
+        sliderAniValues2.innerHTML = values[1];
+        sliderAniValues3.innerHTML = values[2];
+        sliderAniValues4.innerHTML = values[3];
+    });
+
+    sliderAni.setAttribute('height', '10px');
+
+
+
+    var sliderCap = document.getElementById('slider-cap');
+
+    noUiSlider.create(sliderCap, {
+        start: [{{.ValueCapFauxMin}}, {{.ValueCapMin}}, {{.ValueCapMax}}, {{.ValueCapFauxMax}}],
+        connect: [true, true, true, true, true],
+        step: 20,
+        range: {
+            'min': [0],
+            'max': [100000]
+        }
+    });
+
+    connect = sliderCap.querySelectorAll('.noUi-connect');
+
+    for (var i = 0; i < connect.length; i++) {
+        connect[i].classList.add(classes[i]);
+    }
+
+    var sliderCapValues1 = document.getElementById('valueCapSliderVal1');
+    var sliderCapValues2 = document.getElementById('valueCapSliderVal2');
+    var sliderCapValues3 = document.getElementById('valueCapSliderVal3');
+    var sliderCapValues4 = document.getElementById('valueCapSliderVal4');
+
+
+    sliderCap.noUiSlider.on('update', function (values) {
+        sliderCapValues1.innerHTML = values[0];
+        sliderCapValues2.innerHTML = values[1];
+        sliderCapValues3.innerHTML = values[2];
+        sliderCapValues4.innerHTML = values[3];
+    });
+
+    var sliderTour = document.getElementById('slider-tour');
+
+    noUiSlider.create(sliderTour, {
+        start: [{{.ValueTourFauxMin}}, {{.ValueTourMin}}, {{.ValueTourMax}}, {{.ValueTourFauxMax}}],
+        connect: [true, true, true, true, true],
+        step: 20,
+        range: {
+            'min': [0],
+            'max': [10000]
+        }
+    });
+
+    connect = sliderTour.querySelectorAll('.noUi-connect');
+
+    for (var i = 0; i < connect.length; i++) {
+        connect[i].classList.add(classes[i]);
+    }
+
+    var sliderTourValues1 = document.getElementById('valueTourSliderVal1');
+    var sliderTourValues2 = document.getElementById('valueTourSliderVal2');
+    var sliderTourValues3 = document.getElementById('valueTourSliderVal3');
+    var sliderTourValues4 = document.getElementById('valueTourSliderVal4');
+
+
+    sliderTour.noUiSlider.on('update', function (values) {
+        sliderTourValues1.innerHTML = values[0];
+        sliderTourValues2.innerHTML = values[1];
+        sliderTourValues3.innerHTML = values[2];
+        sliderTourValues4.innerHTML = values[3];
+    });
+
+
+
+    var sliderEnv = document.getElementById('slider-env');
+
+    noUiSlider.create(sliderEnv, {
+        start: [{{.ValueEnvFauxMin}}, {{.ValueEnvMin}}, {{.ValueEnvMax}}, {{.ValueEnvFauxMax}}],
+        connect: [true, true, true, true, true],
+        step: 1,
+        range: {
+            'min': [1],
+            'max': [10]
+        }
+    });
+
+    connect = sliderEnv.querySelectorAll('.noUi-connect');
+
+    for (var i = 0; i < connect.length; i++) {
+        connect[i].classList.add(classes[i]);
+    }
+
+    var sliderEnvValues1 = document.getElementById('valueEnvSliderVal1');
+    var sliderEnvValues2 = document.getElementById('valueEnvSliderVal2');
+    var sliderEnvValues3 = document.getElementById('valueEnvSliderVal3');
+    var sliderEnvValues4 = document.getElementById('valueEnvSliderVal4');
+
+
+    sliderEnv.noUiSlider.on('update', function (values) {
+        sliderEnvValues1.innerHTML = values[0];
+        sliderEnvValues2.innerHTML = values[1];
+        sliderEnvValues3.innerHTML = values[2];
+        sliderEnvValues4.innerHTML = values[3];
+    });
+
+
+    var sliderOuv = document.getElementById('slider-ouv');
+
+    noUiSlider.create(sliderOuv, {
+        start: [{{.ValueOuvFauxMin}}, {{.ValueOuvMin}}, {{.ValueOuvMax}}, {{.ValueOuvFauxMax}}],
+        connect: [true, true, true, true, true],
+        step: 5,
+        range: {
+            'min': [0],
+            'max': [50]
+        }
+    });
+
+    connect = sliderOuv.querySelectorAll('.noUi-connect');
+
+    for (var i = 0; i < connect.length; i++) {
+        connect[i].classList.add(classes[i]);
+    }
+
+    var sliderOuvValues1 = document.getElementById('valueOuvSliderVal1');
+    var sliderOuvValues2 = document.getElementById('valueOuvSliderVal2');
+    var sliderOuvValues3 = document.getElementById('valueOuvSliderVal3');
+    var sliderOuvValues4 = document.getElementById('valueOuvSliderVal4');
+
+
+    sliderOuv.noUiSlider.on('update', function (values) {
+        sliderOuvValues1.innerHTML = values[0];
+        sliderOuvValues2.innerHTML = values[1];
+        sliderOuvValues3.innerHTML = values[2];
+        sliderOuvValues4.innerHTML = values[3];
+    });
+
+
+</script>
+
 <script type="text/javascript" src="sources/js/home.js"></script>
 <script type="text/javascript" src="sources/js/nonvide.js"></script>
-
 
 
 </body>

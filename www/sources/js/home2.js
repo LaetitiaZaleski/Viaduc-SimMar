@@ -1,7 +1,7 @@
 
 
 var graphC=[], graphA=[], graphT=[];
-var len = 100000;
+var len = 50000;
 
 
 function draw(maxy=42000) {
@@ -49,7 +49,7 @@ function draw(maxy=42000) {
     svg.append("circle").attr("cx",20).attr("cy",30).attr("r", 6).style("fill", "#a58d39");
     svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#C86A6A");
     svg.append("circle").attr("cx",20).attr("cy",70).attr("r", 6).style("fill", "#5C9FE7");
-    svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche divisé par 100").style("font-size", "12px").attr("alignment-baseline","middle");
+    svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche / 10").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 55).text("Nombre de touristes").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 75).text("Nombre de tortues").style("font-size", "12px").attr("alignment-baseline","middle");
 
@@ -137,7 +137,7 @@ function calc() {
 //l = 0.00052
     sim.evaluate("g=0.5");
 //g= (3.5 - 1.0)/12.0
-    sim.evaluate("M= 36000");
+    sim.evaluate("M= 15000");
 //M= 36036
 
 //p= 0.0004
@@ -157,8 +157,6 @@ function calc() {
     sim.evaluate("ip = 0.000001");
     sim.evaluate("it = 0.001");
     sim.evaluate("muE = 0.001");
-
-
 
     let del = parseInt(roomId = document.getElementById('valuePeche').value);
     sim.evaluate(`del = ${del}*0.002`);
