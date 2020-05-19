@@ -46,6 +46,8 @@ window.onload = function () {
 };
 
 
+
+
 function letsFinish() {
         //setPref(gNumFiles[gFinalFiles[0]]);
     document.getElementById('patientezContainer').innerHTML="Enregistrement des préférences...";

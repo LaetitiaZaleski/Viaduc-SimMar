@@ -1,7 +1,7 @@
 
 
 var graphC=[], graphA=[], graphT=[];
-var len = 50000;
+var len = 60000;
 
 
 function draw(maxy=42000) {
@@ -47,8 +47,9 @@ function draw(maxy=42000) {
     // legende :
 
     svg.append("circle").attr("cx",20).attr("cy",30).attr("r", 6).style("fill", "#a58d39");
-    svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#C86A6A");
+    svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "#B314B6");
     svg.append("circle").attr("cx",20).attr("cy",70).attr("r", 6).style("fill", "#5C9FE7");
+
     svg.append("text").attr("x", 30).attr("y", 35).text("Capital des infrastrutures de pêche / 10").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 55).text("Nombre de touristes").style("font-size", "12px").attr("alignment-baseline","middle");
     svg.append("text").attr("x", 30).attr("y", 75).text("Nombre de tortues").style("font-size", "12px").attr("alignment-baseline","middle");
@@ -152,11 +153,12 @@ function calc() {
     sim.evaluate("del=0.1");
     sim.evaluate("mt=50");
     sim.evaluate("mp=0.1");
-    sim.evaluate("alpha = 0.1");
+    sim.evaluate("alpha = 0.01");
     sim.evaluate("T2=5000");
     sim.evaluate("ip = 0.000001");
     sim.evaluate("it = 0.001");
-    sim.evaluate("muE = 0.001");
+    sim.evaluate("muE = 0.0005");
+    sim.evaluate("phi = 1000.0");
 
     let del = parseInt(roomId = document.getElementById('valuePeche').value);
     sim.evaluate(`del = ${del}*0.002`);
@@ -168,7 +170,7 @@ function calc() {
     sim.evaluate(`g = ${g}*0.01`); // g=0.5
 
     let ip = parseInt(roomId = document.getElementById('valueIp').value);
-    let ipval = ip*0.0000001;
+    let ipval = 0.000005/ip;
     sim.evaluate(`ip = ${ipval}`);
     console.log("ipval");
     console.log(ipval);
@@ -200,8 +202,11 @@ function calc() {
     console.log("T0"+valueTour);
 
     sim.evaluate("dCdt(C, A, T) = (-del)*C + p*A*C*(mp)*ip + mt*T*it"); // p: nb poissons pour 1 tortues
+    //sim.evaluate("dCdt(C, A, T) = (-del)*C + p*A*C*(mp)*ip*0.7 + mt*T*it"); // p: nb poissons pour 1 tortues
     sim.evaluate("dAdt(C, A, T) = A*g*(1-(A/(1+M/(1+eta*T/(1+eps)))))-zeta*l*T*A - A*C*ip;");
-    sim.evaluate("dTdt(C, A, T) = a*zeta*A -alpha*T + muE*C ");
+    sim.evaluate("dTdt(C, A, T) = T *(muE*C + a*zeta*A/(A+phi) -alpha*T)");//T *(muE*C + a*zeta*A/(A+phi) -alpha*T) ");
+    //sim.evaluate("dTdt(C, A, T) = a*zeta*A/(1+T*0.1) - alpha*T  + muE*C ");
+
     //sim.evaluate("dTdt(C, A, T) = T*(muE*C + a*zeta*A -alpha*T) ");
     //sim.evaluate("dTdt(C, A, T) = T*(muE*C/(C+phi) + a*zeta*A/(A+phi2)-alpha*T) ");
     sim.evaluate("result = ndsolve([dCdt, dAdt, dTdt], [C0, A0, T0], dt, tfinal)");

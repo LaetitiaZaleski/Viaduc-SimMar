@@ -34,10 +34,10 @@ window.onload = function(){
 var gFinalPref = null;
 var gFinalFiles = []; // numero de la solution qu'on garde
 var gNumFiles = []; // numero de fichier correspondant
-var precision = 8;
+var precision = 4; //8 TODO baisser la precision
 var gdata;
 
-function letsFinish(multi = false) {
+function letsFinish(multi = false, save = false) {
     if (gFinalFiles.length !== 1){
         alert("Merci de choisir UNE solution");
         console.log("gFinalFiles");
@@ -89,8 +89,14 @@ function letsFinish(multi = false) {
 
         let url = window.location.href;
         if(!multi){
-            let newParam = url.split("?")[1].replace("nonvide", "importances");
-            window.location.href = "?" + newParam;
+            if (save){
+                let newParam = url.split("?")[1].replace("nonvide", "preference");
+                window.location.href = "?" + newParam;
+            }else{
+                let newParam = url.split("?")[1].replace("nonvide", "importances");
+                window.location.href = "?" + newParam;
+            }
+
         }else{
             let newParam = url.split("?")[1].replace("result", "preference");
             window.location.href = "?" + newParam;
@@ -393,6 +399,7 @@ function calcTable(abs, pref, faux){
         console.log("finalFiles : "+finalFiles);
 
         console.log("/******* recherche 3 ************/");
+        /*
         if (mono) {
 
             let priorite = recherchePriorite(PrefsInit2, minMax, fauxMinMax, [0.0, 10.0, 50.0, 100.0], 100, mono);
@@ -408,6 +415,7 @@ function calcTable(abs, pref, faux){
             }
         }
 
+         */
         console.log("finalFiles : "+finalFiles);
 
         gNumFiles = finalFiles;
@@ -441,6 +449,7 @@ function calcTable(abs, pref, faux){
         }
         if(mono){
             $("#finishButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish()">Continuer</div>');
+            $("#SaveButtonContainer").append('<div class="btn btn-primary" onclick="letsFinish(false,true)">Sauvegarder cette solution et revenir aux préférences</div>');
         }else{
             console.log("******************************************");
             console.log("******************************************");
@@ -506,7 +515,7 @@ function showHide(k) {
         document.getElementById(buttonId).style.backgroundColor = "#004084";
 
         // CREATION DU SLIDER POUR K + CREATION DES VMIN ET VMAX POUR K
-        let num = parseInt(k)+1
+        let num = parseInt(k)+1;
         $("#sliderAniContainer").append('<span id="text-'+ k+'"> Solution '+num+'</span>');
         $("#sliderAniContainer").append('<div id="value-min-max-ani-' + k + '"><span id="prefAniMin-'+k+'" class="purple"></span> - <span id="prefAniMax-'+k+'" class="purple"></span></div>');
         $("#sliderAniContainer").append('<div id="slider-ani-' + k + '" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>');
@@ -565,7 +574,7 @@ function removeDomine(data){ // enlève les éléments dominés d'un tableau de 
         for( var j = 0; j<data.length; j++){
             dcompare = JSON.parse(data[i]);
             if(d.value_ani_min <= dcompare.value_ani_min && d.value_tour_min){
-                // TODO retirer la date
+
             }
         }
 

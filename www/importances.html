@@ -51,41 +51,41 @@
         <h4>
             <ul>
                 <li> <div>
-                        <input type="checkbox" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span>
+                        <input type="checkbox" name="vehicle" id="ImportanceAniMin" value="checkbox"> <span> Le nombre minimum d'animaux </span>
                     </div>
                 <li>  <div>
-                        <input type="checkbox" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span>
+                        <input type="checkbox" name="vehicle" id="ImportanceAniMax" value="checkbox"> <span> Le nombre maximum d'animaux </span>
                     </div>
-                <li>  <div>  <input type="checkbox" id="ImportanceCapMin" value="checkbox">
+                <li>  <div>  <input type="checkbox" name="vehicle" id="ImportanceCapMin" value="checkbox">
                         <span> Le Capital minimum des pêcheurs </span>
 
                     </div>
-                <li> <div>  <input type="checkbox" id="ImportanceCapMax" value="checkbox">
+                <li> <div>  <input type="checkbox" name="vehicle" id="ImportanceCapMax" value="checkbox">
                         <span> Le Capital maximum des pêcheurs </span>
 
                     </div>
-                <li> <div>  <input type="checkbox" id="ImportanceTourMin" value="checkbox">
+                <li> <div>  <input type="checkbox" name="vehicle" id="ImportanceTourMin" value="checkbox">
                         <span> Le nombre minimum de touristes </span>
                     </div>
 
-                <li> <div>  <input type="checkbox" id="ImportanceTourMax" value="checkbox">
+                <li> <div>  <input type="checkbox" name="vehicle" id="ImportanceTourMax" value="checkbox">
                         <span> Le nombre maximum de touristes </span>
                     </div>
 
-                <li>  <div>  <input type="checkbox" id="ImportanceEnvMin" value="checkbox">
+                <li>  <div>  <input type="checkbox" name="vehicle" id="ImportanceEnvMin" value="checkbox">
                         <span> Taille minimale des mailles de filets </span>
                     </div>
 
-                <li> <div>  <input type="checkbox" id="ImportanceEnvMax" value="checkbox">
+                <li> <div>  <input type="checkbox" name="vehicle" id="ImportanceEnvMax" value="checkbox">
                         <span> Taille maximale des mailles de filets </span>
 
                     </div>
 
-                <li>  <div>  <input type="checkbox" id="ImportanceOuvMin" value="checkbox">
+                <li>  <div>  <input type="checkbox" name="vehicle" id="ImportanceOuvMin" value="checkbox">
                         <span> La proportion minimum du parc fermée aux touristes </span>
                     </div>
 
-                <li>  <div>  <input type="checkbox" id="ImportanceOuvMax" value="checkbox">
+                <li>  <div>  <input type="checkbox"name="vehicle" id="ImportanceOuvMax" value="checkbox">
                         <span> La proportion maximum du parc fermée aux touristes </span>
                     </div>
             </ul>
@@ -171,6 +171,21 @@ Il y a donc deux cas possible : </span>
 
 
 <script>
+
+
+    $(document).ready(function () {
+        $("input[name='vehicle']").change(function () {
+            var maxAllowed = 3;
+            var cnt = $("input[name='vehicle']:checked").length;
+            if (cnt > maxAllowed)
+            {
+                $(this).prop("checked", "");
+                alert('Merci de selectionner' + maxAllowed + ' critères uniquement');
+            }
+        });
+    });
+
+
     document.getElementById('valueAniMin').innerHTML = localStorage.getItem("AniMin");
     document.getElementById('valueAniMax').innerHTML = localStorage.getItem("AniMax");
 

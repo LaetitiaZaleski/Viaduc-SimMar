@@ -291,7 +291,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		//var fileToRemove = strings.Replace(file, ".json", "-viab-0.dat", -1)
 		var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
-		cmd := exec.Command("./bin/viabLabExe30", file )
+		cmd := exec.Command("./bin/viabLabExeTest2", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
@@ -419,7 +419,7 @@ func (g *Games) PostMethod(w http.ResponseWriter, r *http.Request) {
 		//var fileToRemove = strings.Replace(file, ".json", "-viab-0-bound.dat", -1)
 		log.Println(file)
 		//cmd := exec.Command("./bin/viabLabExe1", file )
-		cmd := exec.Command("./bin/viabLabExe30", file )
+		cmd := exec.Command("./bin/viabLabExeTest2", file )
 		//cmd := exec.Command("./bin/tmpexe")
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer

@@ -271,12 +271,12 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
 
             console.log("longeur : " + aniTab.length);
             var role = "";
-            var coulb = Math.floor(Math.random() * Math.floor(100)); //pour la variation de couleur
-            var coulr = Math.floor(Math.random() * Math.floor(100));
-            var coulg = Math.floor(Math.random() * Math.floor(100));
-            var r = 6 + coulr;
+            var coulb = Math.floor(Math.random() * Math.floor(255)); //pour la variation de couleur
+            var coulr = Math.floor(Math.random() * Math.floor(255));
+            var coulg = Math.floor(Math.random() * Math.floor(255));
+            var r = coulr;//6 + coulr;
             var g = coulg;
-            var b = 165 + coulb;
+            var b = coulb;//165 + coulb;
 
             // points de contraintes :
 
@@ -305,17 +305,17 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
                 console.log("b" + b)
             }
             if (ClassId == 2) {
-                r = 204 + coulr;
-                g = 121 + coulg;
-                b = 184 + coulb;
+                r = coulr;//204 + coulr;
+                g = coulg; //121 + coulg;
+                b = coulb;//184 + coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Pecheur"
             }
             if (ClassId == 3) {
-                r = 28 + coulr;
-                g = 108 + coulg;
-                b = 6 + coulb;
+                r = coulr;//28 + coulr;
+                g = coulg;//108 + coulg;
+                b = coulb; //6 + coulb;
                 console.log("b" + b);
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
                 role = "Ecologiste"
@@ -406,11 +406,12 @@ function getAllFiles(commun = true) {
     var RoomName = localStorage.getItem("roomName");
     console.log(numFile);
     console.log(name);
+    let nF = numFile+1;
 
     // recuperer le dernier fichier créé :
     var http = new XMLHttpRequest();
 
-        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
+        let path = "sources/output/" + RoomName + "_" + ClassId + "_" + nF + "-viab-0.dat";
        // let path = "sources/output/" + RoomName + "_" + ClassId + "_" + numFile + "-viab-0.dat";
         console.log("Path : " + path);
 
@@ -440,7 +441,7 @@ function getAllFiles(commun = true) {
                 }
             }
 
-            var r = 0 ;
+            var r = 0;
             var g = 0;
             var b = 0;
             console.log("longeur : " + aniTab.length);
@@ -460,6 +461,8 @@ function getAllFiles(commun = true) {
                 default:
                     coulr = Math.floor(Math.random() * Math.floor(255));
                     r= coulr;
+                    g =  Math.floor(Math.random() * Math.floor(255));
+                    b = Math.floor(Math.random() * Math.floor(255));
                     color ='rgb(' + r + ',' + g + ',' + b + ')';
             }
 
