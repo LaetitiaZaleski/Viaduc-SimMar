@@ -1,0 +1,28 @@
+.noyau-container {
+    display: flex;
+    padding: 20px;
+}
+
+.noyau-container > div {
+    margin: auto;
+}
+
+.noyau-container > div:first-child {
+    width: 33%;
+    margin-right: 0px;
+    padding: 5px;
+    padding-right: 10px;
+}
+
+.noyau-container > div:last-child {
+    width: 33%;
+    margin-left: 0px;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.txt-center {
+    text-align: center;
+    margin:  0px;
+    padding:10px;
+}

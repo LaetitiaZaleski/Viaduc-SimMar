@@ -39,6 +39,7 @@
 
 </head>
 <body>
+<img src="sources/img/Negociation.png" width="100%"></img>
 
 <div class="txt-center">
 
@@ -59,16 +60,19 @@
     </span>
 
     <h3>
-        Préférences des utilisateurs :
+        Récapitulatif des préférences des utilisateurs :
     </h3>
 
-    <div>
+        <div class="preference-container">
         <div class="">
+            <h4>
+                Objectifs :
+            </h4>
             <div>
 
                 <div id="tortues">
                     <span> <b>Nombre d'animaux : </b><img src="sources/img/animaux.png" width="50px"></span>
-                    <div> <span > Tourisme :  <img src="sources/img/iconeOperateur.png" width="30px"></span></div> <span id="impAniMinTourisme"></span><span id="valueAniTourismeSliderVal1" class="orange"></span> - <span id="valueAniTourismeSliderVal2" class="vert" ></span> - <span id="valueAniTourismeSliderVal3" class="vert"></span> - <span id="valueAniTourismeSliderVal4" class="orange"></span><span id="impAniMaxTourisme"></span>
+                    <div> <span > Opérateur de Tourisme :  <img src="sources/img/iconeOperateur.png" width="30px"></span></div> <span id="impAniMinTourisme"></span><span id="valueAniTourismeSliderVal1" class="orange"></span> - <span id="valueAniTourismeSliderVal2" class="vert" ></span> - <span id="valueAniTourismeSliderVal3" class="vert"></span> - <span id="valueAniTourismeSliderVal4" class="orange"></span><span id="impAniMaxTourisme"></span>
 
 
                     <section class="disabled-range-slider ">
@@ -109,7 +113,7 @@
                     <div>
                         <span> <b>Capital des infrastructures de pêche </b> <img src="sources/img/capital.png" width="50px"></span>
                     </div>
-                    <div> <span > Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div>  <span id="impCapMinTourisme"></span><span id="valueCapTourismeSliderVal1" class="orange"> </span> - <span id="valueCapTourismeSliderVal2" class="vert" ></span> - <span id="valueCapTourismeSliderVal3" class="vert"></span> - <span id="valueCapTourismeSliderVal4" class="orange"></span><span id="impCapMaxTourisme"></span>
+                    <div> <span > Opérateur de Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div>  <span id="impCapMinTourisme"></span><span id="valueCapTourismeSliderVal1" class="orange"> </span> - <span id="valueCapTourismeSliderVal2" class="vert" ></span> - <span id="valueCapTourismeSliderVal3" class="vert"></span> - <span id="valueCapTourismeSliderVal4" class="orange"></span><span id="impCapMaxTourisme"></span>
 
                     <section class="disabled-range-slider ">
                         <span class="rangeValues"></span>
@@ -140,7 +144,7 @@
                     <div>
                         <span> <b>Nombre de touristes : </b> <img src="sources/img/touristes.png" width="50px"> </span>
                     </div>
-                    <div> <span > Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div>  <span id="impTourMinTourisme"></span><span id="valueTourTourismeSliderVal1" class="orange"></span> - <span id="valueTourTourismeSliderVal2" class="vert" ></span> - <span id="valueTourTourismeSliderVal3" class="vert"></span> - <span id="valueTourTourismeSliderVal4" class="orange"></span><span id="impTourMaxTourisme"></span>
+                    <div> <span > Opérateur de Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div>  <span id="impTourMinTourisme"></span><span id="valueTourTourismeSliderVal1" class="orange"></span> - <span id="valueTourTourismeSliderVal2" class="vert" ></span> - <span id="valueTourTourismeSliderVal3" class="vert"></span> - <span id="valueTourTourismeSliderVal4" class="orange"></span><span id="impTourMaxTourisme"></span>
 
                     <section class="disabled-range-slider ">
                         <span class="rangeValues"></span>
@@ -167,9 +171,10 @@
                     </section>
                 </div>
             </div>
+        </div>
             <div>
                 <h4>
-                    Choix des moyens d'actions :
+                    Moyens d'actions :
                 </h4>
                 <div>
                     <div>
@@ -179,7 +184,7 @@
 
                         <span class="rangeValues"></span>
 
-                    <div> <span > Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div> <span id="impEnvMinTourisme"></span> <span id="valueEnvTourismeSliderVal1" class="orange"></span> - <span id="valueEnvTourismeSliderVal2" class="vert" ></span> - <span id="valueEnvTourismeSliderVal3" class="vert"></span> - <span id="valueEnvTourismeSliderVal4" class="orange"></span> <span id="impEnvMaxTourisme"></span>
+                    <div> <span > Opérateur de Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div> <span id="impEnvMinTourisme"></span> <span id="valueEnvTourismeSliderVal1" class="orange"></span> - <span id="valueEnvTourismeSliderVal2" class="vert" ></span> - <span id="valueEnvTourismeSliderVal3" class="vert"></span> - <span id="valueEnvTourismeSliderVal4" class="orange"></span> <span id="impEnvMaxTourisme"></span>
 
 
                     <section class="disabled-range-slider ">
@@ -213,7 +218,7 @@
                     </div>
                         <span class="rangeValues"></span>
 
-                    <div> <span > Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div> <span id="impOuvMinTourisme"></span><span id="valueOuvTourismeSliderVal1" class="orange"></span> - <span id="valueOuvTourismeSliderVal2" class="vert" ></span> - <span id="valueOuvTourismeSliderVal3" class="vert"></span> - <span id="valueOuvTourismeSliderVal4" class="orange"></span><span id="impOuvMaxTourisme"></span>
+                    <div> <span > Opérateur de Tourisme : <img src="sources/img/iconeOperateur.png" width="30px"></span></div> <span id="impOuvMinTourisme"></span><span id="valueOuvTourismeSliderVal1" class="orange"></span> - <span id="valueOuvTourismeSliderVal2" class="vert" ></span> - <span id="valueOuvTourismeSliderVal3" class="vert"></span> - <span id="valueOuvTourismeSliderVal4" class="orange"></span><span id="impOuvMaxTourisme"></span>
 
                         <section class="disabled-range-slider ">
 
@@ -240,9 +245,8 @@
                     </section>
                 </div>
             </div>
-        </div>
-    </div>
 
+    </div>
 
     <div>
         <span>
@@ -316,7 +320,9 @@
 
     <div id="kernelDiv" style="width:100%;height:800px"></div>
 
-    <button onclick="window.location.href = 'https://framaforms.org/questionnaire-viaducbridge-1586863303';">Quitter la partie</button>
+
+    <button  onclick="goToConclu()" class="btn btn-primary" id="gotoconclu"> Terminer la partie </button>
+
 
 </div>
 

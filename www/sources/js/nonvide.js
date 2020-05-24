@@ -597,7 +597,7 @@ function removeDomine(data){ // enlève les éléments dominés d'un tableau de 
 
 
 // renvoie un tableau de noyaux plus proches non vides
-function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,100.0], nbEtapes=100, mono = true){
+function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,100.0], nbEtapes=10, mono = true){
 
     prefsInit = JSON.parse(JSON.stringify(Prefs));
     console.log(Prefs);
@@ -628,7 +628,7 @@ function rechercheDiagonale(Prefs, minMax,fauxMinMax, importab =[0.0,10.0,50.0,1
 
 }
 
-function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100,mono=true) { //on se rapproche d'abord des plus important plutot que de tout faire en même temps
+function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=10,mono=true) { //on se rapproche d'abord des plus important plutot que de tout faire en même temps
 
     var newPrefs = {
         pref : JSON.parse(JSON.stringify(Prefs)),
@@ -694,7 +694,7 @@ function rechercheUnParUn(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0
     return newPrefs
 }
 
-function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=100,mono=true) { // pour chacun des importants on se rapproche au maximum
+function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes=10,mono=true) { // pour chacun des importants on se rapproche au maximum
 
     let resTab = [];// tableau des noyaux non vide
     let modifImp = [];
@@ -775,7 +775,7 @@ function recherchePriorite(Prefs,minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.
 }
 
 
-function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMax=15,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, mono=true){
+function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMax=15,importab =[0.0,10.0,50.0,100.0], nbEtapes = 10, mono=true){
     console.log("Debut rafinement :");
     for (let j = 0; j < newPrefs.length; j++){
         // console.log("test : "+lastPrefsNonVide[j].name+" "+lastPrefsNonVide[j].importance);
@@ -809,7 +809,7 @@ function rafinement(newPrefs,prefsInit, minMax,fauxMinMax,importMin=-1, importMa
 
 // prend en entree le tableau des pref et le tableau des minMax et le nombres d'étapes max
 // renvoie le tableau correspondant au dernier noyau non vide
-function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 100, rafinement = false) {
+function dichotomie(Prefs, minMax,fauxMinMax,importab =[0.0,10.0,50.0,100.0], nbEtapes = 10, rafinement = false) {
 
 
     let AniMin = Prefs[0];

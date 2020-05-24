@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Viaduc</title>
+    <!-- INCLUDE DES LIBS (BOOTSTRAP + AUTRES)-->
+    <script type="text/javascript" src="sources/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="sources/lib/bootstrap-4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="sources/lib/bootstrap-4.3.1/css/bootstrap-reboot.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/bootstrap-slider.min.css">
+
+    <script type="text/javascript" src="sources/lib/bootstrap-slider/nouislider.min.js"></script>
+    <link rel="stylesheet" href="sources/lib/bootstrap-slider/nouislider.min.css">
+
+
+
+    <script type="text/javascript"  src="sources/lib/plotly/plotly-latest.min.js"></script>
+
+    <!-- INCLUDE DES STYLES ET SCRIPT DE LA PAGE -->
+
+    <link rel="stylesheet" href="sources/styles/default.css">
+    <link rel="stylesheet" href="sources/styles/preference.css">
+    <link rel="stylesheet" href="sources/styles/conclusion.css">
+    <link rel="stylesheet" href="sources/styles/home2.css">
+    <link rel="stylesheet" href="sources/styles/result.css">
+    <link rel="stylesheet" href="sources/styles/nonvide.css">
+
+    <script type="text/javascript" src="sources/js/tools.js"></script>
+    <script type="text/javascript" src="sources/js/getFile.js"></script>
+    <script type="text/javascript" src="sources/js/preference.js"></script>
+    <script type="text/javascript" src="sources/js/nonVideMulti.js"></script>
+    <script type="text/javascript" src="sources/js/nonvide.js"></script>
+
+
+</head>
+<body>
+<img src="sources/img/Conclusion.png" width="100%"> </img>
+
+<div class="txt-center">
+        <span>
+Merci d'avoir joué à Viaduc ! Voici un récapitulatif des évolutions des préférences de chaques personnes.
+    Lorsque vous êtes prêt, vous pouvez cliquer sur le bouton ci-dessous qui nous permettra
+    de recueillir votre opinion concernant votre expérience du jeu.
+ </span>
+    <div class="noyau-container">
+        <div>
+            <div> <h4 > Opérateur de Tourisme :  <img src="sources/img/iconeOperateur.png" width="50px"></h4></div>
+
+            <div id="tortues">
+                <span> <b>Nombre d'animaux : </b><img src="sources/img/animaux.png" width="30px"></span>
+            <div>
+            <span>Premier noyau calculé :</span><span id="valueAniTourismeSliderVal1_0" class="orange"></span> - <span id="valueAniTourismeSliderVal2_0" class="vert" ></span> - <span id="valueAniTourismeSliderVal3_0" class="vert"></span> - <span id="valueAniTourismeSliderVal4_0" class="orange"></span>
+
+                </div><section class="disabled-range-slider ">
+            <div>
+
+                <div id="slider-Ani-Tourisme-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+            </div>
+
+            </section>
+            <span>Noyau final individuel :</span><span id="valueAniTourismeSliderVal1_1" class="orange"></span> - <span id="valueAniTourismeSliderVal2_1" class="vert" ></span> - <span id="valueAniTourismeSliderVal3_1" class="vert"></span> - <span id="valueAniTourismeSliderVal4_1" class="orange"></span>
+            <section class="disabled-range-slider ">
+
+                <div>
+
+                    <div id="slider-Ani-Tourisme-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </div>
+
+            </section>
+            <span>Noyau final :</span><span id="valueAniTourismeSliderVal1_2" class="orange"></span> - <span id="valueAniTourismeSliderVal2_2" class="vert" ></span> - <span id="valueAniTourismeSliderVal3_2" class="vert"></span> - <span id="valueAniTourismeSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                <div>
+
+                    <div id="slider-Ani-Tourisme-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </div>
+
+            </section>
+            </div>
+
+
+            <div id="capital">
+                <div>
+                    <span> <b>Capital des infrastructures de pêche </b> <img src="sources/img/capital.png" width="30px"></span>
+                </div>
+            <span>Premier noyau calculé :</span><span id="valueCapTourismeSliderVal1_0" class="orange"></span> - <span id="valueCapTourismeSliderVal2_0" class="vert" ></span> - <span id="valueCapTourismeSliderVal3_0" class="vert"></span> - <span id="valueCapTourismeSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                <div>
+
+                    <div id="slider-Cap-Tourisme-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </div>
+
+
+
+            </section>
+            <span>Noyau final individuel :</span><span id="valueCapTourismeSliderVal1_1" class="orange"></span> - <span id="valueCapTourismeSliderVal2_1" class="vert" ></span> - <span id="valueCapTourismeSliderVal3_1" class="vert"></span> - <span id="valueCapTourismeSliderVal4_1" class="orange"></span>
+            <section class="disabled-range-slider ">
+
+                <div>
+
+                    <div id="slider-Cap-Tourisme-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </div>
+
+
+            </section>
+            <span>Noyau final :</span><span id="valueCapTourismeSliderVal1_2" class="orange"></span> - <span id="valueCapTourismeSliderVal2_2" class="vert" ></span> - <span id="valueCapTourismeSliderVal3_2" class="vert"></span> - <span id="valueCapTourismeSliderVal4_2" class="orange"></span>
+            <section class="disabled-range-slider ">
+
+                <div>
+
+                    <div id="slider-Cap-Tourisme-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </div>
+
+            </section>
+
+            </div>
+
+            <div id="touristes">
+                <div>
+                    <span> <b>Nombre de touristes </b> <img src="sources/img/touristes.png" width="30px"></span>
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueTourTourismeSliderVal1_0" class="orange"></span> - <span id="valueTourTourismeSliderVal2_0" class="vert" ></span> - <span id="valueTourTourismeSliderVal3_0" class="vert"></span> - <span id="valueTourTourismeSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Tour-Tourisme-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueTourTourismeSliderVal1_1" class="orange"></span> - <span id="valueTourTourismeSliderVal2_1" class="vert" ></span> - <span id="valueTourTourismeSliderVal3_1" class="vert"></span> - <span id="valueTourTourismeSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Tour-Tourisme-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+                </section>
+                <span>Noyau final :</span><span id="valueTourTourismeSliderVal1_2" class="orange"></span> - <span id="valueTourTourismeSliderVal2_2" class="vert" ></span> - <span id="valueTourTourismeSliderVal3_2" class="vert"></span> - <span id="valueTourTourismeSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Tour-Tourisme-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <div >
+                <div>
+                    <span> <b>Taille des mailles des filets :  <img src="sources/img/mailles.png" width="30px"></b> </span>
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueEnvTourismeSliderVal1_0" class="orange"></span> - <span id="valueEnvTourismeSliderVal2_0" class="vert" ></span> - <span id="valueEnvTourismeSliderVal3_0" class="vert"></span> - <span id="valueEnvTourismeSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Env-Tourisme-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueEnvTourismeSliderVal1_1" class="orange"></span> - <span id="valueEnvTourismeSliderVal2_1" class="vert" ></span> - <span id="valueEnvTourismeSliderVal3_1" class="vert"></span> - <span id="valueEnvTourismeSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Env-Tourisme-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+                </section>
+                <span>Noyau final  :</span><span id="valueEnvTourismeSliderVal1_2" class="orange"></span> - <span id="valueEnvTourismeSliderVal2_2" class="vert" ></span> - <span id="valueEnvTourismeSliderVal3_2" class="vert"></span> - <span id="valueEnvTourismeSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Env-Tourisme-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+
+            <div >
+                <div>
+                    <span> <b>Proportion de l'aire protégée fermée au tourisme <img src="sources/img/proportion.png" width="30px"></b></span>
+
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueOuvTourismeSliderVal1_0" class="orange"></span> - <span id="valueOuvTourismeSliderVal2_0" class="vert" ></span> - <span id="valueOuvTourismeSliderVal3_0" class="vert"></span> - <span id="valueOuvTourismeSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ouv-Tourisme-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueOuvTourismeSliderVal1_1" class="orange"></span> - <span id="valueOuvTourismeSliderVal2_1" class="vert" ></span> - <span id="valueOuvTourismeSliderVal3_1" class="vert"></span> - <span id="valueOuvTourismeSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ouv-Tourisme-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+                </section>
+                <span>Noyau final :</span><span id="valueOuvTourismeSliderVal1_2" class="orange"></span> - <span id="valueOuvTourismeSliderVal2_2" class="vert" ></span> - <span id="valueOuvTourismeSliderVal3_2" class="vert"></span> - <span id="valueOuvTourismeSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ouv-Tourisme-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+        </div>
+            <div>
+                <div>  <h4 > Ecologiste : <img src="sources/img/iconeEcolo.png" width="50px"></h4></div>
+                <div id="tortues">
+                    <span> <b>Nombre d'animaux : </b><img src="sources/img/animaux.png" width="30px"></span>
+                    <div>
+                        <span>Premier noyau calculé :</span><span id="valueAniEcologisteSliderVal1_0" class="orange"></span> - <span id="valueAniEcologisteSliderVal2_0" class="vert" ></span> - <span id="valueAniEcologisteSliderVal3_0" class="vert"></span> - <span id="valueAniEcologisteSliderVal4_0" class="orange"></span>
+
+                    </div><section class="disabled-range-slider ">
+                        <div>
+
+                            <div id="slider-Ani-Ecologiste-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+                    <span>Noyau final individuel :</span><span id="valueAniEcologisteSliderVal1_1" class="orange"></span> - <span id="valueAniEcologisteSliderVal2_1" class="vert" ></span> - <span id="valueAniEcologisteSliderVal3_1" class="vert"></span> - <span id="valueAniEcologisteSliderVal4_1" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Ani-Ecologiste-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+                    <span>Noyau final :</span><span id="valueAniEcologisteSliderVal1_2" class="orange"></span> - <span id="valueAniEcologisteSliderVal2_2" class="vert" ></span> - <span id="valueAniEcologisteSliderVal3_2" class="vert"></span> - <span id="valueAniEcologisteSliderVal4_2" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Ani-Ecologiste-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+                </div>
+
+
+                <div id="capital">
+                    <div>
+                        <span> <b>Capital des infrastructures de pêche </b> <img src="sources/img/capital.png" width="30px"></span>
+                    </div>
+                    <span>Premier noyau calculé :</span><span id="valueCapEcologisteSliderVal1_0" class="orange"></span> - <span id="valueCapEcologisteSliderVal2_0" class="vert" ></span> - <span id="valueCapEcologisteSliderVal3_0" class="vert"></span> - <span id="valueCapEcologisteSliderVal4_0" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Cap-Ecologiste-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+
+                    </section>
+                    <span>Noyau final individuel :</span><span id="valueCapEcologisteSliderVal1_1" class="orange"></span> - <span id="valueCapEcologisteSliderVal2_1" class="vert" ></span> - <span id="valueCapEcologisteSliderVal3_1" class="vert"></span> - <span id="valueCapEcologisteSliderVal4_1" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Cap-Ecologiste-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+                    </section>
+                    <span>Noyau final :</span><span id="valueCapEcologisteSliderVal1_2" class="orange"></span> - <span id="valueCapEcologisteSliderVal2_2" class="vert" ></span> - <span id="valueCapEcologisteSliderVal3_2" class="vert"></span> - <span id="valueCapEcologisteSliderVal4_2" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Cap-Ecologiste-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div id="touristes">
+                    <div>
+                        <span> <b>Nombre de touristes </b> <img src="sources/img/touristes.png" width="30px"></span>
+                    </div>
+                    <span>Premier noyau calculé :</span><span id="valueTourEcologisteSliderVal1_0" class="orange"></span> - <span id="valueTourEcologisteSliderVal2_0" class="vert" ></span> - <span id="valueTourEcologisteSliderVal3_0" class="vert"></span> - <span id="valueTourEcologisteSliderVal4_0" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Tour-Ecologiste-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+
+                    </section>
+                    <span>Noyau final individuel :</span><span id="valueTourEcologisteSliderVal1_1" class="orange"></span> - <span id="valueTourEcologisteSliderVal2_1" class="vert" ></span> - <span id="valueTourEcologisteSliderVal3_1" class="vert"></span> - <span id="valueTourEcologisteSliderVal4_1" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Tour-Ecologiste-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+                    </section>
+                    <span>Noyau final :</span><span id="valueTourEcologisteSliderVal1_2" class="orange"></span> - <span id="valueTourEcologisteSliderVal2_2" class="vert" ></span> - <span id="valueTourEcologisteSliderVal3_2" class="vert"></span> - <span id="valueTourEcologisteSliderVal4_2" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Tour-Ecologiste-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <div >
+                    <div>
+                        <span> <b>Taille des mailles des filets :  <img src="sources/img/mailles.png" width="30px"></b> </span>
+                    </div>
+                    <span>Premier noyau calculé :</span><span id="valueEnvEcologisteSliderVal1_0" class="orange"></span> - <span id="valueEnvEcologisteSliderVal2_0" class="vert" ></span> - <span id="valueEnvEcologisteSliderVal3_0" class="vert"></span> - <span id="valueEnvEcologisteSliderVal4_0" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Env-Ecologiste-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+
+                    </section>
+                    <span>Noyau final individuel :</span><span id="valueEnvEcologisteSliderVal1_1" class="orange"></span> - <span id="valueEnvEcologisteSliderVal2_1" class="vert" ></span> - <span id="valueEnvEcologisteSliderVal3_1" class="vert"></span> - <span id="valueEnvEcologisteSliderVal4_1" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Env-Ecologiste-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </section>
+                    <span>Noyau final :</span><span id="valueEnvEcologisteSliderVal1_2" class="orange"></span> - <span id="valueEnvEcologisteSliderVal2_2" class="vert" ></span> - <span id="valueEnvEcologisteSliderVal3_2" class="vert"></span> - <span id="valueEnvEcologisteSliderVal4_2" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Env-Ecologiste-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div >
+                    <div>
+                        <span> <b>Proportion de l'aire protégée fermée au tourisme <img src="sources/img/proportion.png" width="30px"></b></span>
+
+                    </div>
+                    <span>Premier noyau calculé :</span><span id="valueOuvEcologisteSliderVal1_0" class="orange"></span> - <span id="valueOuvEcologisteSliderVal2_0" class="vert" ></span> - <span id="valueOuvEcologisteSliderVal3_0" class="vert"></span> - <span id="valueOuvEcologisteSliderVal4_0" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Ouv-Ecologiste-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+
+                    </section>
+                    <span>Noyau final individuel :</span><span id="valueOuvEcologisteSliderVal1_1" class="orange"></span> - <span id="valueOuvEcologisteSliderVal2_1" class="vert" ></span> - <span id="valueOuvEcologisteSliderVal3_1" class="vert"></span> - <span id="valueOuvEcologisteSliderVal4_1" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Ouv-Ecologiste-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+
+                    </section>
+                    <span>Noyau final :</span><span id="valueOuvEcologisteSliderVal1_2" class="orange"></span> - <span id="valueOuvEcologisteSliderVal2_2" class="vert" ></span> - <span id="valueOuvEcologisteSliderVal3_2" class="vert"></span> - <span id="valueOuvEcologisteSliderVal4_2" class="orange"></span>
+                    <section class="disabled-range-slider ">
+
+                        <div>
+
+                            <div id="slider-Ouv-Ecologiste-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                        </div>
+
+                    </section>
+
+                </div>
+            </div>
+        <div>
+            <div> <h4 > Pecheur : <img src="sources/img/iconePecheur.png" width="50px"></h4></div>
+            <div id="tortues">
+                <span> <b>Nombre d'animaux : </b><img src="sources/img/animaux.png" width="30px"></span>
+                <div>
+                    <span>Premier noyau calculé :</span><span id="valueAniPecheurSliderVal1_0" class="orange"></span> - <span id="valueAniPecheurSliderVal2_0" class="vert" ></span> - <span id="valueAniPecheurSliderVal3_0" class="vert"></span> - <span id="valueAniPecheurSliderVal4_0" class="orange"></span>
+
+                </div><section class="disabled-range-slider ">
+                    <div>
+
+                        <div id="slider-Ani-Pecheur-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueAniPecheurSliderVal1_1" class="orange"></span> - <span id="valueAniPecheurSliderVal2_1" class="vert" ></span> - <span id="valueAniPecheurSliderVal3_1" class="vert"></span> - <span id="valueAniPecheurSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ani-Pecheur-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+                <span>Noyau final :</span><span id="valueAniPecheurSliderVal1_2" class="orange"></span> - <span id="valueAniPecheurSliderVal2_2" class="vert" ></span> - <span id="valueAniPecheurSliderVal3_2" class="vert"></span> - <span id="valueAniPecheurSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ani-Pecheur-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+            </div>
+
+
+            <div id="capital">
+                <div>
+                    <span> <b>Capital des infrastructures de pêche </b> <img src="sources/img/capital.png" width="30px"></span>
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueCapPecheurSliderVal1_0" class="orange"></span> - <span id="valueCapPecheurSliderVal2_0" class="vert" ></span> - <span id="valueCapPecheurSliderVal3_0" class="vert"></span> - <span id="valueCapPecheurSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Cap-Pecheur-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueCapPecheurSliderVal1_1" class="orange"></span> - <span id="valueCapPecheurSliderVal2_1" class="vert" ></span> - <span id="valueCapPecheurSliderVal3_1" class="vert"></span> - <span id="valueCapPecheurSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Cap-Pecheur-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+                </section>
+                <span>Noyau final :</span><span id="valueCapPecheurSliderVal1_2" class="orange"></span> - <span id="valueCapPecheurSliderVal2_2" class="vert" ></span> - <span id="valueCapPecheurSliderVal3_2" class="vert"></span> - <span id="valueCapPecheurSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Cap-Pecheur-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+
+            <div id="touristes">
+                <div>
+                    <span> <b>Nombre de touristes </b> <img src="sources/img/touristes.png" width="30px"></span>
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueTourPecheurSliderVal1_0" class="orange"></span> - <span id="valueTourPecheurSliderVal2_0" class="vert" ></span> - <span id="valueTourPecheurSliderVal3_0" class="vert"></span> - <span id="valueTourPecheurSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Tour-Pecheur-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueTourPecheurSliderVal1_1" class="orange"></span> - <span id="valueTourPecheurSliderVal2_1" class="vert" ></span> - <span id="valueTourPecheurSliderVal3_1" class="vert"></span> - <span id="valueTourPecheurSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Tour-Pecheur-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+                </section>
+                <span>Noyau final :</span><span id="valueTourPecheurSliderVal1_2" class="orange"></span> - <span id="valueTourPecheurSliderVal2_2" class="vert" ></span> - <span id="valueTourPecheurSliderVal3_2" class="vert"></span> - <span id="valueTourPecheurSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Tour-Pecheur-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <div >
+                <div>
+                    <span> <b>Taille des mailles des filets :  <img src="sources/img/mailles.png" width="30px"></b> </span>
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueEnvPecheurSliderVal1_0" class="orange"></span> - <span id="valueEnvPecheurSliderVal2_0" class="vert" ></span> - <span id="valueEnvPecheurSliderVal3_0" class="vert"></span> - <span id="valueEnvPecheurSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Env-Pecheur-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueEnvPecheurSliderVal1_1" class="orange"></span> - <span id="valueEnvPecheurSliderVal2_1" class="vert" ></span> - <span id="valueEnvPecheurSliderVal3_1" class="vert"></span> - <span id="valueEnvPecheurSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Env-Pecheur-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                </section>
+                <span>Noyau final :</span><span id="valueEnvPecheurSliderVal1_2" class="orange"></span> - <span id="valueEnvPecheurSliderVal2_2" class="vert" ></span> - <span id="valueEnvPecheurSliderVal3_2" class="vert"></span> - <span id="valueEnvPecheurSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Env-Pecheur-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+
+            <div >
+                <div>
+                    <span> <b>Proportion de l'aire protégée fermée au tourisme <img src="sources/img/proportion.png" width="30px"></b></span>
+
+                </div>
+                <span>Premier noyau calculé :</span><span id="valueOuvPecheurSliderVal1_0" class="orange"></span> - <span id="valueOuvPecheurSliderVal2_0" class="vert" ></span> - <span id="valueOuvPecheurSliderVal3_0" class="vert"></span> - <span id="valueOuvPecheurSliderVal4_0" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ouv-Pecheur-0" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+
+                </section>
+                <span>Noyau final individuel :</span><span id="valueOuvPecheurSliderVal1_1" class="orange"></span> - <span id="valueOuvPecheurSliderVal2_1" class="vert" ></span> - <span id="valueOuvPecheurSliderVal3_1" class="vert"></span> - <span id="valueOuvPecheurSliderVal4_1" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ouv-Pecheur-1" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+
+                </section>
+                <span>Noyau final :</span><span id="valueOuvPecheurSliderVal1_2" class="orange"></span> - <span id="valueOuvPecheurSliderVal2_2" class="vert" ></span> - <span id="valueOuvPecheurSliderVal3_2" class="vert"></span> - <span id="valueOuvPecheurSliderVal4_2" class="orange"></span>
+                <section class="disabled-range-slider ">
+
+                    <div>
+
+                        <div id="slider-Ouv-Pecheur-2" style="top: 0px; right: 1px; margin: 10px 25px;" disabled="true"></div>
+                    </div>
+
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div>
+
+    </div>
+    <div>
+        <button class="btn btn-primary" onclick="window.location.href = 'https://framaforms.org/questionnaire-viaducbridge-1586863303';">Répondre au questionnaire</button>
+    </div>
+
+
+</div>
+<script type="text/javascript" src="sources/js/conclusion.js"></script>
+
+</body>
+</html>

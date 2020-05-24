@@ -301,7 +301,7 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
 
             if (ClassId == 1) {
                 col = 'rgb(' + r + ',' + g + ',' + b + ')';
-                role = "Tourisme";
+                role = "Operateur_de_Tourisme";
                 console.log("b" + b)
             }
             if (ClassId == 2) {
@@ -362,7 +362,6 @@ async function getFile(calcul, commun = false, ClassId = localStorage.getItem("c
                 },
                 type: 'scatter3d'
             };
-
 
             var printData = [noyau, contraintes];
 

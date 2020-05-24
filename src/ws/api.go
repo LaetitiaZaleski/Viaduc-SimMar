@@ -100,6 +100,42 @@ func (g *Games) GetMethod(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusOK)
 		io.WriteString(w, string(json))
+	}else if strings.Compare(fnct, "get_recap_preference") == 0 &&
+		IsInMap(param, "file_name"){
+
+		filename := "input/"+param["file_name"][0]
+
+		type Json struct {
+			Settings Settings `json:"settings"`
+			Preferences Preferences `json:"preferences"`
+		}
+
+		var preference Preferences
+
+		file, _ := ioutil.ReadFile(filename)
+
+		var data Json
+		log.Println(fmt.Sprintf("%s \n", filename))
+
+		err := json.Unmarshal([]byte(file), &data)
+		if err != nil {
+			log.Println(fmt.Sprintf("JSON Data problem. current var : %v\nerr: %v", param, err))
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		log.Println(fmt.Sprintf(" %v", data))
+		preference = data.Preferences
+
+		json,err := json.Marshal(preference)
+		if err != nil {
+			MyExit(w, err)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, string(json))
+
+	}else if strings.Compare(fnct, "save_for_conclu") == 0 {
+
 	} else if strings.Compare(fnct, "rename_file") == 0 {
 		log.Println(fmt.Sprintf("nom ok"))
 		if IsInMap(param, "room_name") {

@@ -806,3 +806,8 @@ function setFPRole_i(i) {
 
 
 
+function goToConclu() {
+    let url = window.location.href;
+    let newParam = url.split("?")[1].replace("result", "conclusion");
+    window.location.href = "?" + newParam;
+}
